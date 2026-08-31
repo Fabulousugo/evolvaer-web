@@ -1,26 +1,730 @@
 @import "tailwindcss";
 
+/* ============================================================
+   EVOLVAER TECHNOLOGIES
+   Global Design System
+   ============================================================ */
+
+/*
+  Tailwind v4 dark mode
+  ---------------------
+  We use a .dark class rather than prefers-color-scheme directly
+  because next-themes will control the active theme.
+*/
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ============================================================
+   BRAND TOKENS
+   ============================================================ */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* ----------------------------------------------------------
+     Core Evolvaer palette
+     ---------------------------------------------------------- */
+
+  --midnight-blue: #0d1b2a;
+  --peacock-teal: #00897b;
+  --royal-purple: #6b4eff;
+  --amber-gold: #f4a62a;
+  --ruby-maroon: #b23a48;
+  --stone-gray: #64748b;
+
+  /* ----------------------------------------------------------
+     RGB versions
+     Useful for transparent effects / shadows / glows
+     ---------------------------------------------------------- */
+
+  --midnight-rgb: 13, 27, 42;
+  --teal-rgb: 0, 137, 123;
+  --purple-rgb: 107, 78, 255;
+  --gold-rgb: 244, 166, 42;
+  --maroon-rgb: 178, 58, 72;
+
+  /* ----------------------------------------------------------
+     Light mode
+     ---------------------------------------------------------- */
+
+  --background: #f8f7f3;
+  --background-secondary: #f1efe9;
+
+  --foreground: #0d1b2a;
+  --foreground-muted: #64748b;
+  --foreground-subtle: #8793a2;
+
+  --surface: #ffffff;
+  --surface-secondary: #f5f4ef;
+
+  --border: rgba(13, 27, 42, 0.1);
+  --border-strong: rgba(13, 27, 42, 0.16);
+
+  /* Glass */
+  --glass: rgba(255, 255, 255, 0.56);
+  --glass-strong: rgba(255, 255, 255, 0.78);
+  --glass-border: rgba(255, 255, 255, 0.7);
+
+  /* Shadows */
+  --shadow-soft:
+    0 10px 40px rgba(13, 27, 42, 0.07);
+
+  --shadow-medium:
+    0 20px 60px rgba(13, 27, 42, 0.1);
+
+  --shadow-glass:
+    0 24px 80px rgba(13, 27, 42, 0.12);
+
+  /* ----------------------------------------------------------
+     Semantic colours
+     ---------------------------------------------------------- */
+
+  --primary: var(--midnight-blue);
+  --accent: var(--amber-gold);
+
+  --research: var(--royal-purple);
+  --engineering: var(--peacock-teal);
+  --scale: var(--amber-gold);
+  --impact: var(--ruby-maroon);
+
+  /* ----------------------------------------------------------
+     Layout
+     ---------------------------------------------------------- */
+
+  --page-padding: clamp(1.25rem, 4vw, 5rem);
+  --section-spacing: clamp(6rem, 12vw, 11rem);
+  --content-width: 1440px;
+
+  /* ----------------------------------------------------------
+     Radius
+     ---------------------------------------------------------- */
+
+  --radius-sm: 0.75rem;
+  --radius-md: 1.25rem;
+  --radius-lg: 2rem;
+  --radius-xl: 2.75rem;
+  --radius-full: 9999px;
+
+  /* ----------------------------------------------------------
+     Motion
+     ---------------------------------------------------------- */
+
+  --ease-evolvaer: cubic-bezier(0.22, 1, 0.36, 1);
 }
+
+
+/* ============================================================
+   DARK MODE — FLAGSHIP EVOLVAER EXPERIENCE
+   ============================================================ */
+
+.dark {
+  --background: #0d1b2a;
+  --background-secondary: #081522;
+
+  --foreground: #f7f4ee;
+  --foreground-muted: #a9b1ba;
+  --foreground-subtle: #74808d;
+
+  --surface: #0a1928;
+  --surface-secondary: #0d2032;
+
+  --border: rgba(255, 255, 255, 0.09);
+  --border-strong: rgba(244, 166, 42, 0.22);
+
+  --glass: rgba(8, 21, 34, 0.54);
+  --glass-strong: rgba(8, 21, 34, 0.78);
+  --glass-border: rgba(255, 255, 255, 0.11);
+
+  --shadow-soft:
+    0 14px 50px rgba(0, 0, 0, 0.24);
+
+  --shadow-medium:
+    0 24px 80px rgba(0, 0, 0, 0.36);
+
+  --shadow-glass:
+    0 30px 100px rgba(0, 0, 0, 0.42);
+
+  --primary: #f7f4ee;
+}
+
+
+/* ============================================================
+   TAILWIND THEME
+   ============================================================ */
 
 @theme inline {
   --color-background: var(--background);
+  --color-background-secondary: var(--background-secondary);
+
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-muted: var(--foreground-muted);
+  --color-subtle: var(--foreground-subtle);
+
+  --color-surface: var(--surface);
+  --color-surface-secondary: var(--surface-secondary);
+
+  --color-border: var(--border);
+
+  /* Evolvaer colours */
+
+  --color-midnight: var(--midnight-blue);
+  --color-teal: var(--peacock-teal);
+  --color-purple: var(--royal-purple);
+  --color-gold: var(--amber-gold);
+  --color-maroon: var(--ruby-maroon);
+  --color-stone: var(--stone-gray);
+
+  /*
+    These variables will be provided by next/font
+    inside layout.tsx.
+  */
+
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-playfair);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+
+/* ============================================================
+   RESET / BASE
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--background);
 }
 
 body {
+  min-height: 100vh;
+  margin: 0;
+
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+
+  font-family:
+    var(--font-inter),
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  transition:
+    background-color 500ms var(--ease-evolvaer),
+    color 500ms var(--ease-evolvaer);
+}
+
+button,
+a,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+
+/* ============================================================
+   TYPOGRAPHY
+   ============================================================ */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+}
+
+.font-display {
+  font-family:
+    var(--font-playfair),
+    Georgia,
+    "Times New Roman",
+    serif;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.text-pretty {
+  text-wrap: pretty;
+}
+
+
+/* ============================================================
+   SELECTION
+   ============================================================ */
+
+::selection {
+  background: rgba(var(--gold-rgb), 0.28);
+  color: var(--foreground);
+}
+
+
+/* ============================================================
+   SCROLLBAR
+   ============================================================ */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(var(--midnight-rgb), 0.22);
+  border-radius: var(--radius-full);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--amber-gold);
+}
+
+
+/* ============================================================
+   PAGE LAYOUT
+   ============================================================ */
+
+.evolvaer-container {
+  width: min(
+    calc(100% - (var(--page-padding) * 2)),
+    var(--content-width)
+  );
+
+  margin-inline: auto;
+}
+
+.evolvaer-section {
+  position: relative;
+  padding-block: var(--section-spacing);
+}
+
+
+/* ============================================================
+   EVOLVAER ARCHITECTURAL GLASS
+   ============================================================ */
+
+.glass {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.09),
+      rgba(255, 255, 255, 0.025)
+    ),
+    var(--glass);
+
+  border: 1px solid var(--glass-border);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    var(--shadow-glass);
+
+  backdrop-filter:
+    blur(24px)
+    saturate(125%);
+
+  -webkit-backdrop-filter:
+    blur(24px)
+    saturate(125%);
+}
+
+.glass-strong {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.11),
+      rgba(255, 255, 255, 0.025)
+    ),
+    var(--glass-strong);
+
+  border: 1px solid var(--glass-border);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    var(--shadow-medium);
+
+  backdrop-filter:
+    blur(32px)
+    saturate(130%);
+
+  -webkit-backdrop-filter:
+    blur(32px)
+    saturate(130%);
+}
+
+.dark .glass {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.055),
+      rgba(255, 255, 255, 0.012)
+    ),
+    rgba(8, 21, 34, 0.58);
+
+  border-color: rgba(255, 255, 255, 0.1);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.07),
+    0 24px 80px rgba(0, 0, 0, 0.34);
+}
+
+.dark .glass-strong {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.065),
+      rgba(255, 255, 255, 0.014)
+    ),
+    rgba(8, 21, 34, 0.76);
+
+  border-color: rgba(255, 255, 255, 0.11);
+}
+
+.glass-gold {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(var(--gold-rgb), 0.12),
+      rgba(var(--gold-rgb), 0.025)
+    ),
+    var(--glass);
+
+  border: 1px solid rgba(var(--gold-rgb), 0.28);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 216, 148, 0.18),
+    0 20px 60px rgba(var(--gold-rgb), 0.07);
+
+  backdrop-filter: blur(24px) saturate(125%);
+  -webkit-backdrop-filter: blur(24px) saturate(125%);
+}
+
+
+
+/* ============================================================
+   EVOLVAER CINEMATIC ENVIRONMENT
+   Midnight / Gold dominant
+   Teal used as controlled secondary light
+   ============================================================ */
+
+.cinematic-background {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--background) 0%,
+      var(--background-secondary) 100%
+    );
+}
+
+.cinematic-background::before {
+  content: "";
+
+  position: absolute;
+  inset: -20%;
+
+  z-index: -2;
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      ellipse at 76% 42%,
+      rgba(var(--gold-rgb), 0.08),
+      transparent 28%
+    ),
+    radial-gradient(
+      ellipse at 72% 56%,
+      rgba(var(--teal-rgb), 0.045),
+      transparent 34%
+    ),
+    radial-gradient(
+      ellipse at 20% 10%,
+      rgba(255, 255, 255, 0.04),
+      transparent 25%
+    );
+}
+
+.dark .cinematic-background {
+  background:
+    linear-gradient(
+      125deg,
+      #050e17 0%,
+      #07131f 38%,
+      #091827 70%,
+      #06111c 100%
+    );
+}
+
+.dark .cinematic-background::before {
+  background:
+    radial-gradient(
+      ellipse at 76% 38%,
+      rgba(var(--gold-rgb), 0.12),
+      transparent 24%
+    ),
+    radial-gradient(
+      ellipse at 72% 55%,
+      rgba(var(--teal-rgb), 0.075),
+      transparent 30%
+    ),
+    radial-gradient(
+      ellipse at 94% 80%,
+      rgba(var(--purple-rgb), 0.035),
+      transparent 22%
+    ),
+    radial-gradient(
+      ellipse at 10% 12%,
+      rgba(255, 255, 255, 0.035),
+      transparent 25%
+    );
+}
+
+
+/* ============================================================
+   CINEMATIC NOISE
+   ============================================================ */
+
+.noise-overlay {
+  position: relative;
+}
+
+.noise-overlay::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  pointer-events: none;
+
+  z-index: 20;
+
+  opacity: 0.025;
+
+  background-image:
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='.55'/%3E%3C/svg%3E");
+}
+
+.dark .noise-overlay::after {
+  opacity: 0.035;
+}
+
+
+/* ============================================================
+   BRAND GRADIENTS
+   ============================================================ */
+
+.brand-gradient {
+  background:
+    linear-gradient(
+      120deg,
+      var(--peacock-teal),
+      var(--royal-purple) 35%,
+      var(--amber-gold) 70%,
+      var(--ruby-maroon)
+    );
+}
+
+.brand-gradient-text {
+  color: transparent;
+
+  background:
+    linear-gradient(
+      110deg,
+      var(--peacock-teal),
+      var(--royal-purple) 32%,
+      var(--amber-gold) 67%,
+      var(--ruby-maroon)
+    );
+
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+
+/* ============================================================
+   GOLD TEXT
+   ============================================================ */
+
+.text-gold {
+  color: var(--amber-gold);
+}
+
+
+/* ============================================================
+   CINEMATIC GOLD
+   Slightly richer than plain flat gold.
+   ============================================================ */
+
+.gold-gradient-text {
+  color: transparent;
+
+  background:
+    linear-gradient(
+      115deg,
+      #c98214 0%,
+      #f4a62a 32%,
+      #ffd27a 52%,
+      #f4a62a 72%,
+      #c98214 100%
+    );
+
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+
+/* ============================================================
+   GLASS HIGHLIGHT
+   Gives cards a subtle reflective top edge.
+   ============================================================ */
+
+.glass-highlight {
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-highlight::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 8%;
+  right: 8%;
+
+  height: 1px;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.75),
+      transparent
+    );
+
+  opacity: 0.65;
+}
+
+.dark .glass-highlight::before {
+  opacity: 0.35;
+}
+
+
+/* ============================================================
+   AMBIENT GLOW UTILITIES
+   ============================================================ */
+
+.glow-gold {
+  box-shadow:
+    0 0 80px rgba(var(--gold-rgb), 0.16);
+}
+
+.glow-teal {
+  box-shadow:
+    0 0 80px rgba(var(--teal-rgb), 0.14);
+}
+
+.glow-purple {
+  box-shadow:
+    0 0 80px rgba(var(--purple-rgb), 0.14);
+}
+
+.glow-maroon {
+  box-shadow:
+    0 0 80px rgba(var(--maroon-rgb), 0.12);
+}
+
+
+/* ============================================================
+   CINEMATIC MEDIA
+   ============================================================ */
+
+.cinematic-media {
+  position: relative;
+  overflow: hidden;
+
+  background: var(--surface);
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+
+  box-shadow: var(--shadow-medium);
+}
+
+.cinematic-media img,
+.cinematic-media video {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+
+/* ============================================================
+   ACCESSIBILITY / REDUCED MOTION
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+
+    transition-duration: 0.01ms !important;
+  }
+}
+
+
+/* ============================================================
+   MOBILE
+   ============================================================ */
+
+@media (max-width: 768px) {
+  :root {
+    --page-padding: 1.25rem;
+    --section-spacing: 6rem;
+  }
 }
