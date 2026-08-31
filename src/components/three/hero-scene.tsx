@@ -1,283 +1,323 @@
 "use client";
 
-import {
-  Canvas,
-  useFrame,
-} from "@react-three/fiber";
-
-import * as THREE from "three";
-
+import { Canvas, useFrame } from "@react-three/fiber";
 import {
   useEffect,
   useMemo,
   useRef,
   useState,
 } from "react";
+import * as THREE from "three";
 
-function Sculpture({
+type Theme = "light" | "dark";
+
+function useSiteTheme() {
+  const [theme, setTheme] = useState<Theme>("light");
+
+  useEffect(() => {
+    const root = document.documentElement;
+
+    const update = () => {
+      setTheme(
+        root.classList.contains("dark")
+          ? "dark"
+          : "light",
+      );
+    };
+
+    update();
+
+    const observer = new MutationObserver(update);
+
+    observer.observe(root, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  return theme;
+}
+
+function SculpturalForm({
   isDark,
 }: {
   isDark: boolean;
 }) {
-  const root = useRef<THREE.Group>(null);
+  const group = useRef<THREE.Group>(null);
+
+  const glassMaterial = useMemo(
+    () =>
+      new THREE.MeshPhysicalMaterial({
+        color: isDark ? "#8fa8b2" : "#e4ebec",
+        roughness: 0.08,
+        metalness: 0.02,
+        transmission: isDark ? 0.83 : 0.72,
+        thickness: 0.65,
+        ior: 1.38,
+        transparent: true,
+        opacity: isDark ? 0.78 : 0.67,
+        clearcoat: 1,
+        clearcoatRoughness: 0.04,
+      }),
+    [isDark],
+  );
+
+  const navyMaterial = useMemo(
+    () =>
+      new THREE.MeshPhysicalMaterial({
+        color: isDark ? "#071522" : "#0D1B2A",
+        metalness: 0.62,
+        roughness: 0.16,
+        clearcoat: 1,
+        clearcoatRoughness: 0.06,
+      }),
+    [isDark],
+  );
 
   const goldMaterial = useMemo(
     () =>
       new THREE.MeshPhysicalMaterial({
         color: "#F4A62A",
-        metalness: 0.88,
+        metalness: 0.92,
         roughness: 0.2,
         clearcoat: 1,
-        clearcoatRoughness: 0.1,
+        clearcoatRoughness: 0.07,
       }),
     [],
   );
 
-  const midnightMaterial = useMemo(
+  const tealGlass = useMemo(
     () =>
       new THREE.MeshPhysicalMaterial({
-        color: isDark ? "#061522" : "#0D1B2A",
-        metalness: 0.72,
-        roughness: 0.16,
+        color: isDark ? "#5a9f98" : "#a7cbc6",
+        roughness: 0.1,
+        metalness: 0.02,
+        transmission: 0.74,
+        thickness: 0.42,
+        transparent: true,
+        opacity: isDark ? 0.48 : 0.34,
         clearcoat: 1,
-        clearcoatRoughness: 0.08,
       }),
-    [],
+    [isDark],
   );
 
-  const glassMaterial = useMemo(
-  () =>
-    new THREE.MeshPhysicalMaterial({
-      color: isDark ? "#789aa5" : "#d8e4e4",
-      metalness: 0.03,
-      roughness: isDark ? 0.06 : 0.1,
-      transmission: isDark ? 0.88 : 0.78,
-      thickness: 0.5,
-      ior: 1.3,
-      transparent: true,
-      opacity: isDark ? 0.82 : 0.68,
-      clearcoat: 1,
-      clearcoatRoughness: 0.04,
-      side: THREE.DoubleSide,
-    }),
-  [isDark],
-);
   useFrame((state) => {
-    if (!root.current) return;
+    if (!group.current) return;
 
-    const pointerX = state.pointer.x;
-    const pointerY = state.pointer.y;
+    const targetY = -0.28 + state.pointer.x * 0.055;
+    const targetX = 0.08 - state.pointer.y * 0.025;
 
-    root.current.rotation.y =
+    group.current.rotation.y =
       THREE.MathUtils.lerp(
-        root.current.rotation.y,
-        -0.23 + pointerX * 0.07,
+        group.current.rotation.y,
+        targetY,
         0.025,
       );
 
-    root.current.rotation.x =
+    group.current.rotation.x =
       THREE.MathUtils.lerp(
-        root.current.rotation.x,
-        0.08 - pointerY * 0.035,
+        group.current.rotation.x,
+        targetX,
         0.025,
       );
 
-    root.current.position.y =
-      Math.sin(state.clock.elapsedTime * 0.32) *
-      0.035;
+    group.current.position.y =
+      Math.sin(state.clock.elapsedTime * 0.3) *
+      0.025;
   });
 
   return (
     <group
-      ref={root}
-      scale={1.08}
-      rotation={[0.08, -0.23, -0.04]}
-      position={[0.15, 0, 0]}
+      ref={group}
+      position={[0.25, 0.05, 0]}
+      rotation={[0.08, -0.28, -0.08]}
+      scale={0.96}
     >
-      {/* Large glass ring */}
+      {/* Main architectural glass loop */}
       <mesh
-        rotation={[
-          Math.PI * 0.2,
-          Math.PI * 0.1,
-          Math.PI * 0.18,
-        ]}
-        position={[0.05, 0.28, -0.18]}
         material={glassMaterial}
+        rotation={[
+          Math.PI * 0.43,
+          Math.PI * 0.12,
+          Math.PI * 0.14,
+        ]}
+        scale={[1.15, 0.78, 1]}
       >
-        <torusGeometry
-          args={[1.62, 0.11, 36, 180]}
-        />
+        <torusGeometry args={[1.62, 0.12, 48, 220]} />
       </mesh>
 
-      {/* Second glass ring */}
+      {/* Crossing glass loop */}
       <mesh
-        rotation={[
-          Math.PI * 0.58,
-          Math.PI * 0.06,
-          -Math.PI * 0.28,
-        ]}
-        position={[0.15, -0.05, 0.05]}
         material={glassMaterial}
-      >
-        <torusGeometry
-          args={[1.46, 0.115, 36, 180]}
-        />
-      </mesh>
-
-      {/* Third glass ring */}
-      <mesh
         rotation={[
-          Math.PI * 0.4,
-          Math.PI * 0.48,
-          Math.PI * 0.05,
-        ]}
-        position={[-0.18, -0.18, -0.2]}
-        material={glassMaterial}
-      >
-        <torusGeometry
-          args={[1.28, 0.085, 32, 160]}
-        />
-      </mesh>
-
-      {/* Midnight structural band */}
-      <mesh
-        rotation={[
-          Math.PI * 0.53,
-          Math.PI * 0.38,
-          Math.PI * 0.12,
-        ]}
-        position={[-0.12, 0.02, 0.06]}
-        material={midnightMaterial}
-      >
-        <torusGeometry
-          args={[1.42, 0.245, 42, 180]}
-        />
-      </mesh>
-
-      {/* Gold signature line */}
-      <mesh
-        rotation={[
-          Math.PI * 0.53,
-          Math.PI * 0.38,
-          Math.PI * 0.12,
-        ]}
-        position={[-0.12, 0.02, 0.06]}
-        material={goldMaterial}
-      >
-        <torusGeometry
-          args={[1.42, 0.268, 32, 180]}
-        />
-      </mesh>
-
-      {/* Inner midnight overlay — hides most of gold,
-          leaving a refined golden edge */}
-      <mesh
-        rotation={[
-          Math.PI * 0.53,
-          Math.PI * 0.38,
-          Math.PI * 0.12,
-        ]}
-        position={[-0.12, 0.02, 0.075]}
-        material={midnightMaterial}
-      >
-        <torusGeometry
-          args={[1.42, 0.235, 42, 180]}
-        />
-      </mesh>
-
-      {/* Fine secondary gold ring */}
-      <mesh
-        rotation={[
-          Math.PI * 0.18,
-          Math.PI * 0.48,
+          Math.PI * 0.61,
+          -Math.PI * 0.2,
           -Math.PI * 0.2,
         ]}
-        position={[0.05, -0.05, -0.32]}
-        material={goldMaterial}
+        scale={[1, 0.82, 1.1]}
       >
-        <torusGeometry
-          args={[1.08, 0.025, 20, 140]}
-        />
+        <torusGeometry args={[1.42, 0.095, 42, 210]} />
+      </mesh>
+
+      {/* Structural navy loop */}
+      <mesh
+        material={navyMaterial}
+        rotation={[
+          Math.PI * 0.5,
+          Math.PI * 0.43,
+          Math.PI * 0.1,
+        ]}
+        scale={[1.04, 0.86, 1]}
+      >
+        <torusGeometry args={[1.34, 0.13, 44, 210]} />
+      </mesh>
+
+      {/* Fine gold signature ring */}
+      <mesh
+        material={goldMaterial}
+        rotation={[
+          Math.PI * 0.49,
+          Math.PI * 0.43,
+          Math.PI * 0.1,
+        ]}
+        scale={[1.04, 0.86, 1]}
+      >
+        <torusGeometry args={[1.34, 0.035, 26, 210]} />
+      </mesh>
+
+      {/* Secondary gold arc / orbital feel */}
+      <mesh
+        material={goldMaterial}
+        rotation={[
+          Math.PI * 0.2,
+          Math.PI * 0.55,
+          -Math.PI * 0.17,
+        ]}
+        position={[0.08, -0.08, -0.22]}
+        scale={[1, 0.84, 1.05]}
+      >
+        <torusGeometry args={[1.09, 0.022, 22, 180]} />
+      </mesh>
+
+      {/* Restrained teal glass detail */}
+      <mesh
+        material={tealGlass}
+        rotation={[
+          Math.PI * 0.72,
+          -Math.PI * 0.06,
+          Math.PI * 0.24,
+        ]}
+        position={[-0.1, 0.02, -0.35]}
+        scale={[0.94, 0.82, 1]}
+      >
+        <torusGeometry args={[1.16, 0.055, 28, 180]} />
+      </mesh>
+
+      {/* Small inner nucleus */}
+      <mesh
+        material={navyMaterial}
+        position={[0.05, -0.03, 0.1]}
+      >
+        <sphereGeometry args={[0.14, 48, 48]} />
+      </mesh>
+
+      <mesh
+        material={goldMaterial}
+        position={[0.05, -0.03, 0.1]}
+        scale={1.18}
+      >
+        <sphereGeometry args={[0.14, 48, 48]} />
+      </mesh>
+
+      <mesh
+        material={navyMaterial}
+        position={[0.05, -0.03, 0.11]}
+        scale={0.91}
+      >
+        <sphereGeometry args={[0.14, 48, 48]} />
       </mesh>
     </group>
   );
 }
 
-export function HeroScene() {
-    const [isDark, setIsDark] = useState(false);
-
-useEffect(() => {
-  const root = document.documentElement;
-
-  const updateTheme = () => {
-    setIsDark(root.classList.contains("dark"));
-  };
-
-  updateTheme();
-
-  const observer = new MutationObserver(updateTheme);
-
-  observer.observe(root, {
-    attributes: true,
-    attributeFilter: ["class"],
-  });
-
-  return () => {
-    observer.disconnect();
-  };
-}, []);
+function Scene({
+  isDark,
+}: {
+  isDark: boolean;
+}) {
   return (
-    <Canvas
-      camera={{
-        position: [0, 0, 6.4],
-        fov: 38,
-      }}
-      dpr={[1, 1.5]}
-      gl={{
-        antialias: true,
-        alpha: true,
-        powerPreference: "high-performance",
-      }}
-      onCreated={({ gl }) => {
-        gl.outputColorSpace =
-          THREE.SRGBColorSpace;
+    <>
+      <ambientLight
+        intensity={isDark ? 0.55 : 1.15}
+      />
 
-        gl.toneMapping =
-          THREE.ACESFilmicToneMapping;
+      {/* Main neutral key light */}
+      <directionalLight
+        position={[5, 7, 6]}
+        intensity={isDark ? 3.1 : 4.2}
+        color={isDark ? "#fff4dc" : "#ffffff"}
+      />
 
-        gl.toneMappingExposure = 1.1;
-      }}
-    >
-     <ambientLight intensity={isDark ? 0.75 : 1.35} />
+      {/* Gold rim */}
+      <pointLight
+        position={[4, 1.8, 4]}
+        intensity={isDark ? 20 : 13}
+        distance={9}
+        color="#F4A62A"
+      />
 
-<directionalLight
-  position={[4, 6, 7]}
-  intensity={isDark ? 3.6 : 4.4}
-  color={isDark ? "#fff7e9" : "#ffffff"}
-/>
+      {/* Teal reflection */}
+      <pointLight
+        position={[-4, -1, 3]}
+        intensity={isDark ? 10 : 5}
+        distance={8}
+        color="#00897B"
+      />
 
-<pointLight
-  position={[3.8, 1.7, 3.5]}
-  intensity={isDark ? 28 : 18}
-  color="#F4A62A"
-  distance={9}
-/>
+      {/* Cool fill */}
+      <pointLight
+        position={[0, 4, -2]}
+        intensity={isDark ? 4 : 2}
+        distance={8}
+        color="#d8e7ee"
+      />
 
-<pointLight
-  position={[-3.5, -1.5, 3]}
-  intensity={isDark ? 18 : 8}
-  color="#00897B"
-  distance={8}
-/>
+      <SculpturalForm isDark={isDark} />
+    </>
+  );
+}
 
-<pointLight
-  position={[1, 3, -2]}
-  intensity={isDark ? 7 : 2}
-  color="#6B4EFF"
-  distance={7}
-/>
+export function HeroScene() {
+  const theme = useSiteTheme();
+  const isDark = theme === "dark";
 
-<Sculpture isDark={isDark} />
-    </Canvas>
+  return (
+    <div className="h-full w-full">
+      <Canvas
+        camera={{
+          position: [0, 0, 6.8],
+          fov: 36,
+        }}
+        dpr={[1, 1.5]}
+        gl={{
+          antialias: true,
+          alpha: true,
+          powerPreference: "high-performance",
+        }}
+        onCreated={({ gl }) => {
+          gl.outputColorSpace =
+            THREE.SRGBColorSpace;
+
+          gl.toneMapping =
+            THREE.ACESFilmicToneMapping;
+
+          gl.toneMappingExposure = 1.05;
+        }}
+      >
+        <Scene isDark={isDark} />
+      </Canvas>
+    </div>
   );
 }

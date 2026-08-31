@@ -156,8 +156,8 @@ export function Hero() {
 
             <div className="pointer-events-none absolute bottom-[14%] left-[12%] hidden h-24 w-[55%] rounded-[50%] bg-teal/[0.08] blur-[60px] dark:block" />
 
-            <div className="absolute inset-[-8%_-10%_-6%_-8%]">
-              <HeroScene />
+            <div className="absolute inset-[0_-2%_2%_2%]">
+            <HeroScene />
             </div>
           </div>
         </div>
