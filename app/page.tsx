@@ -1,31 +1,84 @@
 import { Hero } from "@/src/components/hero/hero";
+
 import { Navbar } from "@/src/components/layout/navbar";
+import { Footer } from "@/src/components/layout/footer";
+
 import { ApproachSection } from "@/src/components/sections/approach-section";
 import { ExplorationSection } from "@/src/components/sections/exploration-section";
 import { VenturesSection } from "@/src/components/sections/ventures-section";
 import { ResearchSection } from "@/src/components/sections/research-section";
 import { PhilosophySection } from "@/src/components/sections/philosophy-section";
 import { FinalCta } from "@/src/components/sections/final-cta";
-import { Footer } from "@/src/components/layout/footer";
+
+import { SiteScene } from "@/src/components/three/site-scene";
+import { SceneSection } from "@/src/components/three/scene-section";
+import { SceneExperienceProvider } from "@/src/components/three/scene-experience";
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen overflow-x-clip bg-background text-foreground">
-      <Navbar />
+    <SceneExperienceProvider>
+      <main
+        className="
+          relative
+          min-h-screen
+          overflow-x-clip
+          bg-background
+          text-foreground
+        "
+      >
+        <Navbar />
 
-      <Hero />
-      <ApproachSection />
-      <ExplorationSection />
-      <VenturesSection />
-      <ResearchSection />
-      <PhilosophySection />
-      <FinalCta />
+        {/* ======================================
+            GLOBAL THREE.JS WORLD
+        ====================================== */}
 
-      <Footer />
-    </main>
+        <div
+          className="
+            pointer-events-none
+            fixed
+            inset-0
+            z-0
+          "
+        >
+          <SiteScene />
+        </div>
+
+        {/* ======================================
+            HTML CONTENT
+        ====================================== */}
+
+        <div className="relative z-10">
+          <SceneSection scene="hero">
+            <Hero />
+          </SceneSection>
+
+          <SceneSection scene="approach">
+            <ApproachSection />
+          </SceneSection>
+
+          <SceneSection scene="exploration">
+            <ExplorationSection />
+          </SceneSection>
+
+          <SceneSection scene="ventures">
+            <VenturesSection />
+          </SceneSection>
+
+          <SceneSection scene="research">
+            <ResearchSection />
+          </SceneSection>
+
+          <SceneSection scene="philosophy">
+            <PhilosophySection />
+          </SceneSection>
+
+          <SceneSection scene="final">
+            <FinalCta />
+          </SceneSection>
+
+          <Footer />
+        </div>
+      </main>
+    </SceneExperienceProvider>
   );
 }
-
-
-
-// <main className="relative min-h-screen overflow-x-clip bg-background text-foreground"></main>

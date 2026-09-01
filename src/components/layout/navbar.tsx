@@ -1,6 +1,7 @@
 "use client";
-
+import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   Menu,
   Moon,
@@ -11,9 +12,10 @@ import {
   useEffect,
   useState,
 } from "react";
-import { usePathname } from "next/navigation";
 
-type Theme = "light" | "dark";
+
+
+import { useTheme } from "@/src/components/theme-provider";
 
 const navItems = [
   {
@@ -41,8 +43,10 @@ const navItems = [
 export function Navbar() {
   const pathname = usePathname();
 
-  const [theme, setTheme] =
-    useState<Theme>("light");
+  const {
+    theme,
+    toggleTheme,
+  } = useTheme();
 
   const [mounted, setMounted] =
     useState(false);
@@ -51,29 +55,6 @@ export function Navbar() {
     useState(false);
 
   useEffect(() => {
-    const root = document.documentElement;
-
-    const storedTheme =
-      localStorage.getItem(
-        "evolvaer-theme",
-      ) as Theme | null;
-
-    const initialTheme: Theme =
-      storedTheme ??
-      (window.matchMedia(
-        "(prefers-color-scheme: dark)",
-      ).matches
-        ? "dark"
-        : "light");
-
-    root.classList.remove(
-      "light",
-      "dark",
-    );
-
-    root.classList.add(initialTheme);
-
-    setTheme(initialTheme);
     setMounted(true);
   }, []);
 
@@ -95,35 +76,6 @@ export function Navbar() {
     };
   }, [mobileOpen]);
 
-  const applyTheme = (
-    nextTheme: Theme,
-  ) => {
-    const root =
-      document.documentElement;
-
-    root.classList.remove(
-      "light",
-      "dark",
-    );
-
-    root.classList.add(nextTheme);
-
-    localStorage.setItem(
-      "evolvaer-theme",
-      nextTheme,
-    );
-
-    setTheme(nextTheme);
-  };
-
-  const toggleTheme = () => {
-    applyTheme(
-      theme === "dark"
-        ? "light"
-        : "dark",
-    );
-  };
-
   const isActive = (
     href: string,
   ) => {
@@ -141,38 +93,122 @@ export function Navbar() {
 
   return (
     <>
+      {/* =====================================================
+          DESKTOP / TABLET HEADER
+          ===================================================== */}
+
       <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-4 sm:pt-4">
         <div className="evolvaer-container">
-          <div className="relative flex min-h-[4.4rem] items-center justify-between rounded-[1.3rem] border border-midnight/[0.08] bg-[#f7f4ee]/72 px-4 shadow-[0_12px_45px_rgba(13,27,42,0.055)] backdrop-blur-2xl transition-colors duration-500 dark:border-white/[0.09] dark:bg-[#07131f]/72 dark:shadow-[0_14px_50px_rgba(0,0,0,0.18)] sm:px-5">
-            {/* Logo */}
-            <Link
-              href="/"
-              aria-label="Evolvaer Technologies home"
-              className="group relative z-20 flex items-center gap-3"
-            >
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-midnight/[0.09] bg-midnight text-white transition-all duration-300 group-hover:border-gold/35 dark:border-white/[0.1] dark:bg-white/[0.035]">
-                <span className="font-display text-[1.05rem] font-semibold tracking-[-0.05em] text-white">
-                  ET
-                </span>
-              </div>
+          <div
+            className="
+              relative flex min-h-[4.5rem]
+              items-center justify-between
+              rounded-[1.25rem]
+              border border-navy/[0.08]
+              bg-white/80
+              px-4
+              shadow-[0_14px_50px_rgba(10,29,47,0.06)]
+              backdrop-blur-2xl
+              transition-all duration-500
 
-              <div className="leading-none">
-                <p className="text-[0.72rem] font-semibold tracking-[0.235em] text-midnight dark:text-white">
-                  EVOLVAER
-                </p>
+              dark:border-white/[0.08]
+              dark:bg-[#0d1117]/78
+              dark:shadow-[0_18px_60px_rgba(0,0,0,0.25)]
 
-                <p className="mt-1.5 text-[0.48rem] font-semibold tracking-[0.31em] text-gold">
-                  TECHNOLOGIES
-                </p>
-              </div>
-            </Link>
+              sm:px-5
+            "
+          >
+            {/* =================================================
+    LOGO
+    ================================================= */}
 
-            {/* Desktop nav */}
+<Link
+  href="/"
+  aria-label="Evolvaer Technologies home"
+  className="
+    group relative z-20
+    flex items-center
+  "
+>
+  <div
+    className="
+      relative
+      h-[38px]
+      w-[150px]
+
+      sm:h-[42px]
+      sm:w-[166px]
+
+      lg:h-[44px]
+      lg:w-[176px]
+    "
+  >
+    {/* Light mode logo */}
+    <Image
+      src="/brand/evolvaer-logo-light.png"
+      alt="Evolvaer Technologies"
+      fill
+      priority
+      sizes="(max-width: 640px) 150px, (max-width: 1024px) 166px, 176px"
+      className="
+        object-contain
+        object-left
+        transition-all
+        duration-300
+
+        group-hover:scale-[1.015]
+
+        dark:hidden
+      "
+    />
+
+    {/* Dark mode logo */}
+    <Image
+      src="/brand/evolvaer-logo-dark.png"
+      alt="Evolvaer Technologies"
+      fill
+      priority
+      sizes="(max-width: 640px) 150px, (max-width: 1024px) 166px, 176px"
+      className="
+        hidden
+        object-contain
+        object-left
+        transition-all
+        duration-300
+
+        group-hover:scale-[1.015]
+
+        dark:block
+      "
+    />
+  </div>
+</Link>
+            {/* =================================================
+                DESKTOP NAVIGATION
+                ================================================= */}
+
             <nav
               aria-label="Primary navigation"
-              className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 items-center lg:flex"
+              className="
+                absolute left-1/2 top-1/2
+                hidden
+                -translate-x-1/2 -translate-y-1/2
+                items-center
+                lg:flex
+              "
             >
-              <div className="flex items-center rounded-full border border-midnight/[0.065] bg-white/25 p-1 dark:border-white/[0.07] dark:bg-white/[0.02]">
+              <div
+                className="
+                  flex items-center
+                  rounded-full
+                  border border-navy/[0.065]
+                  bg-navy/[0.025]
+                  p-1
+
+                  dark:border-white/[0.07]
+                  dark:bg-white/[0.025]
+                "
+              >
                 {navItems.map(
                   (item) => {
                     const active =
@@ -193,18 +229,53 @@ export function Navbar() {
                             ? "page"
                             : undefined
                         }
-                        className={`relative rounded-full px-4 py-2.5 text-[0.73rem] font-medium transition-all duration-300 ${
-                          active
-                            ? "bg-midnight text-white shadow-[0_5px_16px_rgba(13,27,42,0.12)] dark:bg-white/[0.09] dark:text-white dark:shadow-none"
-                            : "text-midnight/55 hover:text-midnight dark:text-white/48 dark:hover:text-white"
-                        }`}
+                        className={`
+                          relative
+                          rounded-full
+                          px-4 py-2.5
+                          text-[0.73rem]
+                          font-medium
+                          transition-all
+                          duration-300
+
+                          ${
+                            active
+                              ? `
+                                bg-white
+                                text-navy
+                                shadow-[0_4px_18px_rgba(10,29,47,0.08)]
+
+                                dark:bg-white/[0.08]
+                                dark:text-white
+                                dark:shadow-none
+                              `
+                              : `
+                                text-navy/55
+                                hover:text-blue
+
+                                dark:text-white/48
+                                dark:hover:text-blue
+                              `
+                          }
+                        `}
                       >
                         {
                           item.label
                         }
 
                         {active && (
-                          <span className="absolute bottom-[0.33rem] left-1/2 h-[2px] w-3 -translate-x-1/2 rounded-full bg-gold" />
+                          <span
+                            className="
+                              absolute
+                              bottom-[0.28rem]
+                              left-1/2
+                              h-[2px]
+                              w-3
+                              -translate-x-1/2
+                              rounded-full
+                              bg-blue
+                            "
+                          />
                         )}
                       </Link>
                     );
@@ -213,8 +284,13 @@ export function Navbar() {
               </div>
             </nav>
 
-            {/* Right actions */}
+            {/* =================================================
+                RIGHT ACTIONS
+                ================================================= */}
+
             <div className="relative z-20 flex items-center gap-2">
+              {/* Theme */}
+
               <button
                 type="button"
                 onClick={toggleTheme}
@@ -230,7 +306,29 @@ export function Navbar() {
                     ? "Light mode"
                     : "Dark mode"
                 }
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-midnight/[0.08] bg-white/25 text-midnight/55 transition-all duration-300 hover:border-gold/30 hover:text-gold dark:border-white/[0.08] dark:bg-white/[0.025] dark:text-white/48 dark:hover:text-gold"
+                className="
+                  flex h-10 w-10
+                  items-center justify-center
+                  rounded-full
+
+                  border border-navy/[0.08]
+                  bg-navy/[0.025]
+                  text-navy/55
+
+                  transition-all duration-300
+
+                  hover:border-blue/25
+                  hover:bg-blue/[0.055]
+                  hover:text-blue
+
+                  dark:border-white/[0.08]
+                  dark:bg-white/[0.025]
+                  dark:text-white/50
+
+                  dark:hover:border-blue/30
+                  dark:hover:bg-blue/[0.08]
+                  dark:hover:text-blue
+                "
               >
                 {!mounted ? (
                   <span className="h-4 w-4" />
@@ -242,6 +340,8 @@ export function Navbar() {
                 )}
               </button>
 
+              {/* CTA */}
+
               <Link
                 href="/contact"
                 aria-current={
@@ -251,17 +351,47 @@ export function Navbar() {
                     ? "page"
                     : undefined
                 }
-                className={`hidden min-h-10 items-center rounded-full px-5 text-[0.73rem] font-semibold transition-all duration-300 sm:inline-flex ${
-                  isActive(
-                    "/contact",
-                  )
-                    ? "bg-gold text-midnight shadow-[0_8px_26px_rgba(244,166,42,0.2)]"
-                    : "bg-midnight text-white hover:-translate-y-0.5 hover:bg-[#152b40] dark:bg-gold dark:text-midnight dark:hover:bg-[#ffc15d]"
-                }`}
+                className={`
+                  hidden min-h-10
+                  items-center
+                  rounded-full
+                  px-5
+                  text-[0.73rem]
+                  font-semibold
+                  transition-all
+                  duration-300
+                  sm:inline-flex
+
+                  ${
+                    isActive(
+                      "/contact",
+                    )
+                      ? `
+                        bg-blue
+                        !text-white
+                        shadow-[0_8px_28px_rgba(37,99,235,0.22)]
+                      `
+                      : `
+                        bg-navy
+                        !text-white
+
+                        hover:-translate-y-0.5
+                        hover:bg-blue
+                        hover:shadow-[0_10px_30px_rgba(37,99,235,0.2)]
+
+                        dark:bg-blue
+                        dark:!text-white
+
+                        dark:hover:bg-[#4b8df8]
+                        dark:hover:shadow-[0_10px_35px_rgba(59,130,246,0.25)]
+                      `
+                  }
+                `}
               >
-                Start a
-                conversation
+                Start a conversation
               </Link>
+
+              {/* Mobile trigger */}
 
               <button
                 type="button"
@@ -280,7 +410,30 @@ export function Navbar() {
                   mobileOpen
                 }
                 aria-controls="mobile-navigation"
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-midnight/[0.08] bg-white/25 text-midnight transition-all duration-300 hover:border-gold/30 hover:text-gold dark:border-white/[0.08] dark:bg-white/[0.025] dark:text-white lg:hidden"
+                className="
+                  flex h-10 w-10
+                  items-center justify-center
+                  rounded-full
+
+                  border border-navy/[0.08]
+                  bg-navy/[0.025]
+                  text-navy
+
+                  transition-all
+                  duration-300
+
+                  hover:border-blue/25
+                  hover:text-blue
+
+                  dark:border-white/[0.08]
+                  dark:bg-white/[0.025]
+                  dark:text-white
+
+                  dark:hover:border-blue/30
+                  dark:hover:text-blue
+
+                  lg:hidden
+                "
               >
                 {mobileOpen ? (
                   <X className="h-[1.1rem] w-[1.1rem]" />
@@ -289,55 +442,172 @@ export function Navbar() {
                 )}
               </button>
             </div>
+
+            {/* =================================================
+                SUBTLE BRAND LINE
+                ================================================= */}
+
+            <div
+              aria-hidden="true"
+              className="
+                pointer-events-none
+                absolute bottom-0
+                left-[8%] right-[8%]
+                h-px
+
+                bg-gradient-to-r
+                from-transparent
+                via-blue/20
+                to-transparent
+
+                dark:via-blue/25
+              "
+            />
           </div>
         </div>
       </header>
 
-      {/* Mobile menu */}
+      {/* =====================================================
+          MOBILE MENU
+          ===================================================== */}
+
       <div
         id="mobile-navigation"
-        className={`fixed inset-0 z-40 transition-all duration-500 lg:hidden ${
-          mobileOpen
-            ? "pointer-events-auto visible opacity-100"
-            : "pointer-events-none invisible opacity-0"
-        }`}
+        className={`
+          fixed inset-0 z-40
+          transition-all duration-500
+          lg:hidden
+
+          ${
+            mobileOpen
+              ? "pointer-events-auto visible opacity-100"
+              : "pointer-events-none invisible opacity-0"
+          }
+        `}
       >
         {/* Background */}
+
         <div
           aria-hidden="true"
-          className="absolute inset-0 bg-[#f7f4ee]/96 backdrop-blur-3xl dark:bg-[#050e17]/97"
+          className="
+            absolute inset-0
+            bg-white/[0.97]
+            backdrop-blur-3xl
+
+            dark:bg-[#0d1117]/[0.98]
+          "
         />
 
+        {/* Ambient environment */}
+
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 overflow-hidden"
+          className="
+            pointer-events-none
+            absolute inset-0
+            overflow-hidden
+          "
         >
-          <div className="absolute right-[-10rem] top-[-8rem] h-[30rem] w-[30rem] rounded-full bg-gold/[0.07] blur-[140px]" />
+          <div
+            className="
+              absolute
+              right-[-10rem]
+              top-[-8rem]
 
-          <div className="absolute bottom-[-11rem] left-[-9rem] h-[28rem] w-[28rem] rounded-full bg-teal/[0.04] blur-[140px] dark:bg-teal/[0.05]" />
+              h-[30rem]
+              w-[30rem]
+
+              rounded-full
+              bg-blue/[0.09]
+              blur-[140px]
+
+              dark:bg-blue/[0.13]
+            "
+          />
 
           <div
-            className="absolute inset-0 opacity-[0.018] dark:opacity-[0.025]"
-            style={{
-              backgroundImage: `
-                linear-gradient(rgba(13,27,42,.13) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(13,27,42,.13) 1px, transparent 1px)
-              `,
-              backgroundSize:
-                "80px 80px",
-            }}
+            className="
+              absolute
+              bottom-[-11rem]
+              left-[-9rem]
+
+              h-[28rem]
+              w-[28rem]
+
+              rounded-full
+              bg-teal/[0.07]
+              blur-[140px]
+
+              dark:bg-teal/[0.08]
+            "
+          />
+
+          <div
+            className="
+              absolute
+              bottom-[12%]
+              right-[-8rem]
+
+              h-[22rem]
+              w-[22rem]
+
+              rounded-full
+              bg-violet/[0.05]
+              blur-[130px]
+
+              dark:bg-violet/[0.08]
+            "
+          />
+
+          {/* Grid */}
+
+          <div
+            className="
+              brand-grid
+              absolute inset-0
+              opacity-40
+
+              dark:opacity-30
+            "
           />
         </div>
 
+        {/* ===================================================
+            MOBILE NAVIGATION CONTENT
+            =================================================== */}
+
         <nav
           aria-label="Mobile navigation"
-          className="evolvaer-container relative z-10 flex min-h-screen flex-col pb-8 pt-32 sm:pt-36"
+          className="
+            evolvaer-container
+            relative z-10
+            flex min-h-screen
+            flex-col
+            pb-8 pt-32
+            sm:pt-36
+          "
         >
-          <p className="mb-7 text-[0.6rem] font-semibold uppercase tracking-[0.3em] text-gold">
+          <p
+            className="
+              mb-7
+              text-[0.6rem]
+              font-semibold
+              uppercase
+              tracking-[0.3em]
+              text-blue
+            "
+          >
             Explore Evolvaer
           </p>
 
-          <div className="border-t border-midnight/[0.09] dark:border-white/[0.08]">
+          <div
+            className="
+              border-t
+              border-navy/[0.09]
+
+              dark:border-white/[0.08]
+            "
+          >
             {navItems.map(
               (item, index) => {
                 const active =
@@ -358,38 +628,96 @@ export function Navbar() {
                         ? "page"
                         : undefined
                     }
-                    className="group flex items-center gap-5 border-b border-midnight/[0.08] py-5 dark:border-white/[0.075]"
+                    className="
+                      group
+                      flex items-center
+                      gap-5
+
+                      border-b
+                      border-navy/[0.08]
+                      py-5
+
+                      dark:border-white/[0.075]
+                    "
                   >
-                    <span
-                      className={`w-8 font-display text-sm italic ${
-                        active
-                          ? "text-gold"
-                          : "text-midnight/24 dark:text-white/22"
-                      }`}
-                    >
-                      0
-                      {index +
-                        1}
-                    </span>
+                    {/* Number */}
 
                     <span
-                      className={`flex-1 font-display text-[clamp(2rem,8vw,3.2rem)] leading-none tracking-[-0.04em] transition-colors ${
-                        active
-                          ? "text-gold"
-                          : "text-midnight group-hover:text-gold dark:text-white dark:group-hover:text-gold"
-                      }`}
+                      className={`
+                        w-8
+                        text-sm
+                        font-semibold
+
+                        ${
+                          active
+                            ? "text-blue"
+                            : `
+                              text-navy/24
+                              dark:text-white/22
+                            `
+                        }
+                      `}
+                    >
+                      0
+                      {index + 1}
+                    </span>
+
+                    {/* Label */}
+
+                    <span
+                      className={`
+                        flex-1
+
+                        text-[clamp(2rem,8vw,3.2rem)]
+                        font-bold
+                        leading-none
+                        tracking-[-0.045em]
+
+                        transition-colors
+
+                        ${
+                          active
+                            ? "text-blue"
+                            : `
+                              text-navy
+                              group-hover:text-blue
+
+                              dark:text-white
+                              dark:group-hover:text-blue
+                            `
+                        }
+                      `}
                     >
                       {
                         item.label
                       }
                     </span>
 
+                    {/* Status dot */}
+
                     <span
-                      className={`h-2 w-2 rounded-full transition-all duration-300 ${
-                        active
-                          ? "bg-gold shadow-[0_0_16px_rgba(244,166,42,0.5)]"
-                          : "bg-midnight/12 group-hover:bg-gold dark:bg-white/12"
-                      }`}
+                      className={`
+                        h-2 w-2
+                        rounded-full
+                        transition-all
+                        duration-300
+
+                        ${
+                          active
+                            ? `
+                              bg-teal
+                              shadow-[0_0_18px_rgba(16,185,129,0.45)]
+
+                              dark:shadow-[0_0_18px_rgba(34,211,238,0.45)]
+                            `
+                            : `
+                              bg-navy/12
+                              group-hover:bg-blue
+
+                              dark:bg-white/12
+                            `
+                        }
+                      `}
                     />
                   </Link>
                 );
@@ -397,26 +725,81 @@ export function Navbar() {
             )}
           </div>
 
+          {/* ===================================================
+              MOBILE BOTTOM CTA
+              =================================================== */}
+
           <div className="mt-auto pt-10">
             <Link
               href="/contact"
-              className="flex min-h-14 w-full items-center justify-center rounded-full bg-midnight px-6 text-sm font-semibold text-white transition-all hover:bg-[#152b40] dark:bg-gold dark:text-midnight dark:hover:bg-[#ffc15d]"
+              className="
+                flex min-h-14
+                w-full
+                items-center
+                justify-center
+
+                rounded-full
+                bg-navy
+                px-6
+
+                text-sm
+                font-semibold
+                text-white
+
+                shadow-[0_10px_35px_rgba(10,29,47,0.12)]
+
+                transition-all
+                duration-300
+
+                hover:bg-blue
+
+                dark:bg-blue
+                dark:text-white
+                dark:shadow-[0_12px_40px_rgba(59,130,246,0.2)]
+
+                dark:hover:bg-[#4b8df8]
+              "
             >
-              Start a
-              conversation
+              Start a conversation
             </Link>
 
-            <div className="mt-6 flex items-center justify-between border-t border-midnight/[0.08] pt-5 text-[0.59rem] font-semibold uppercase tracking-[0.22em] text-midnight/30 dark:border-white/[0.08] dark:text-white/26">
+            {/* Brand disciplines */}
+
+            <div
+              className="
+                mt-6
+                flex items-center
+                justify-between
+
+                border-t
+                border-navy/[0.08]
+                pt-5
+
+                text-[0.59rem]
+                font-semibold
+                uppercase
+                tracking-[0.22em]
+
+                text-navy/30
+
+                dark:border-white/[0.08]
+                dark:text-white/26
+              "
+            >
               <span>
                 Research
               </span>
 
               <span>
-                Engineering
+                Engineer
               </span>
 
               <span>
-                Ventures
+                Build
+              </span>
+
+              <span>
+                Scale
               </span>
             </div>
           </div>

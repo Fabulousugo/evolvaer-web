@@ -1,6 +1,14 @@
 "use client";
 
-import { Canvas, useFrame } from "@react-three/fiber";
+import {
+  Canvas,
+  useFrame,
+} from "@react-three/fiber";
+import {
+  Environment,
+  Float,
+  Sparkles,
+} from "@react-three/drei";
 import {
   useEffect,
   useMemo,
@@ -12,10 +20,12 @@ import * as THREE from "three";
 type Theme = "light" | "dark";
 
 function useSiteTheme() {
-  const [theme, setTheme] = useState<Theme>("light");
+  const [theme, setTheme] =
+    useState<Theme>("light");
 
   useEffect(() => {
-    const root = document.documentElement;
+    const root =
+      document.documentElement;
 
     const update = () => {
       setTheme(
@@ -27,220 +37,589 @@ function useSiteTheme() {
 
     update();
 
-    const observer = new MutationObserver(update);
+    const observer =
+      new MutationObserver(update);
 
     observer.observe(root, {
       attributes: true,
       attributeFilter: ["class"],
     });
 
-    return () => observer.disconnect();
+    return () =>
+      observer.disconnect();
   }, []);
 
   return theme;
 }
 
-function SculpturalForm({
+/* ============================================================
+   EVOLVAER CORE
+   ============================================================ */
+
+function EvolvaerCore({
   isDark,
 }: {
   isDark: boolean;
 }) {
-  const group = useRef<THREE.Group>(null);
+  const group =
+    useRef<THREE.Group>(null);
 
-  const glassMaterial = useMemo(
-    () =>
-      new THREE.MeshPhysicalMaterial({
-        color: isDark ? "#8fa8b2" : "#e4ebec",
-        roughness: 0.08,
-        metalness: 0.02,
-        transmission: isDark ? 0.83 : 0.72,
-        thickness: 0.65,
-        ior: 1.38,
-        transparent: true,
-        opacity: isDark ? 0.78 : 0.67,
-        clearcoat: 1,
-        clearcoatRoughness: 0.04,
-      }),
-    [isDark],
-  );
+  const outerRing =
+    useRef<THREE.Mesh>(null);
 
-  const navyMaterial = useMemo(
-    () =>
-      new THREE.MeshPhysicalMaterial({
-        color: isDark ? "#071522" : "#0D1B2A",
-        metalness: 0.62,
-        roughness: 0.16,
-        clearcoat: 1,
-        clearcoatRoughness: 0.06,
-      }),
-    [isDark],
-  );
+  const midRing =
+    useRef<THREE.Mesh>(null);
 
-  const goldMaterial = useMemo(
-    () =>
-      new THREE.MeshPhysicalMaterial({
-        color: "#F4A62A",
-        metalness: 0.92,
-        roughness: 0.2,
-        clearcoat: 1,
-        clearcoatRoughness: 0.07,
-      }),
-    [],
-  );
+  const innerRing =
+    useRef<THREE.Mesh>(null);
 
-  const tealGlass = useMemo(
-    () =>
-      new THREE.MeshPhysicalMaterial({
-        color: isDark ? "#5a9f98" : "#a7cbc6",
-        roughness: 0.1,
-        metalness: 0.02,
-        transmission: 0.74,
-        thickness: 0.42,
-        transparent: true,
-        opacity: isDark ? 0.48 : 0.34,
-        clearcoat: 1,
-      }),
-    [isDark],
-  );
+  const nucleus =
+    useRef<THREE.Mesh>(null);
+
+  /* ----------------------------------------------------------
+     MATERIALS
+     ---------------------------------------------------------- */
+
+  const glassMaterial =
+    useMemo(
+      () =>
+        new THREE.MeshPhysicalMaterial({
+          color: isDark
+            ? "#6aa9ff"
+            : "#d7e7ff",
+
+          roughness: 0.06,
+          metalness: 0.04,
+
+          transmission:
+            isDark ? 0.82 : 0.72,
+
+          thickness: 0.7,
+
+          ior: 1.42,
+
+          transparent: true,
+
+          opacity:
+            isDark ? 0.62 : 0.56,
+
+          clearcoat: 1,
+
+          clearcoatRoughness:
+            0.035,
+        }),
+      [isDark],
+    );
+
+  const blueMaterial =
+    useMemo(
+      () =>
+        new THREE.MeshPhysicalMaterial({
+          color: isDark
+            ? "#3B82F6"
+            : "#2563EB",
+
+          metalness: 0.72,
+          roughness: 0.16,
+
+          clearcoat: 1,
+
+          clearcoatRoughness:
+            0.055,
+        }),
+      [isDark],
+    );
+
+  const tealMaterial =
+    useMemo(
+      () =>
+        new THREE.MeshPhysicalMaterial({
+          color: isDark
+            ? "#22D3EE"
+            : "#10B981",
+
+          metalness: 0.55,
+          roughness: 0.16,
+
+          clearcoat: 1,
+
+          clearcoatRoughness:
+            0.055,
+        }),
+      [isDark],
+    );
+
+  const violetMaterial =
+    useMemo(
+      () =>
+        new THREE.MeshPhysicalMaterial({
+          color: isDark
+            ? "#A855F7"
+            : "#7C3AED",
+
+          metalness: 0.62,
+          roughness: 0.18,
+
+          clearcoat: 1,
+
+          clearcoatRoughness:
+            0.05,
+        }),
+      [isDark],
+    );
+
+  const coreMaterial =
+    useMemo(
+      () =>
+        new THREE.MeshPhysicalMaterial({
+          color: isDark
+            ? "#f8fafc"
+            : "#0a1d2f",
+
+          metalness: 0.65,
+          roughness: 0.12,
+
+          clearcoat: 1,
+
+          emissive: isDark
+            ? new THREE.Color(
+                "#17345f",
+              )
+            : new THREE.Color(
+                "#07131f",
+              ),
+
+          emissiveIntensity:
+            isDark ? 0.35 : 0.08,
+        }),
+      [isDark],
+    );
+
+  /* ----------------------------------------------------------
+     MOTION
+     ---------------------------------------------------------- */
 
   useFrame((state) => {
     if (!group.current) return;
 
-    const targetY = -0.28 + state.pointer.x * 0.055;
-    const targetX = 0.08 - state.pointer.y * 0.025;
+    const elapsed =
+      state.clock.elapsedTime;
+
+    const pointerX =
+      state.pointer.x;
+
+    const pointerY =
+      state.pointer.y;
+
+    const targetY =
+      -0.26 +
+      pointerX * 0.14;
+
+    const targetX =
+      0.07 -
+      pointerY * 0.08;
 
     group.current.rotation.y =
       THREE.MathUtils.lerp(
         group.current.rotation.y,
         targetY,
-        0.025,
+        0.028,
       );
 
     group.current.rotation.x =
       THREE.MathUtils.lerp(
         group.current.rotation.x,
         targetX,
-        0.025,
+        0.028,
       );
 
     group.current.position.y =
-      Math.sin(state.clock.elapsedTime * 0.3) *
-      0.025;
+      Math.sin(
+        elapsed * 0.55,
+      ) * 0.05;
+
+    group.current.position.x =
+      Math.cos(
+        elapsed * 0.3,
+      ) * 0.015;
+
+    if (outerRing.current) {
+      outerRing.current.rotation.z =
+        elapsed * 0.06;
+    }
+
+    if (midRing.current) {
+      midRing.current.rotation.y =
+        elapsed * -0.09;
+    }
+
+    if (innerRing.current) {
+      innerRing.current.rotation.x =
+        elapsed * 0.11;
+    }
+
+    if (nucleus.current) {
+      const pulse =
+        1 +
+        Math.sin(
+          elapsed * 1.7,
+        ) *
+          0.045;
+
+      nucleus.current.scale.setScalar(
+        pulse,
+      );
+    }
   });
 
   return (
-    <group
-      ref={group}
-      position={[0.25, 0.05, 0]}
-      rotation={[0.08, -0.28, -0.08]}
-      scale={0.96}
+    <Float
+      speed={1.1}
+      rotationIntensity={0.12}
+      floatIntensity={0.22}
     >
-      {/* Main architectural glass loop */}
-      <mesh
-        material={glassMaterial}
+      <group
+        ref={group}
+        position={[0.3, 0, 0]}
         rotation={[
-          Math.PI * 0.43,
-          Math.PI * 0.12,
-          Math.PI * 0.14,
+          0.08,
+          -0.26,
+          -0.07,
         ]}
-        scale={[1.15, 0.78, 1]}
+        scale={0.98}
       >
-        <torusGeometry args={[1.62, 0.12, 48, 220]} />
-      </mesh>
+        {/* =====================================================
+            GLASS SHELL
+            ===================================================== */}
 
-      {/* Crossing glass loop */}
-      <mesh
-        material={glassMaterial}
-        rotation={[
-          Math.PI * 0.61,
-          -Math.PI * 0.2,
-          -Math.PI * 0.2,
-        ]}
-        scale={[1, 0.82, 1.1]}
-      >
-        <torusGeometry args={[1.42, 0.095, 42, 210]} />
-      </mesh>
+        <mesh
+          material={glassMaterial}
+          rotation={[
+            Math.PI * 0.42,
+            Math.PI * 0.14,
+            Math.PI * 0.11,
+          ]}
+          scale={[
+            1.16,
+            0.8,
+            1,
+          ]}
+        >
+          <torusGeometry
+            args={[
+              1.66,
+              0.11,
+              48,
+              220,
+            ]}
+          />
+        </mesh>
 
-      {/* Structural navy loop */}
-      <mesh
-        material={navyMaterial}
-        rotation={[
-          Math.PI * 0.5,
-          Math.PI * 0.43,
-          Math.PI * 0.1,
-        ]}
-        scale={[1.04, 0.86, 1]}
-      >
-        <torusGeometry args={[1.34, 0.13, 44, 210]} />
-      </mesh>
+        <mesh
+          material={glassMaterial}
+          rotation={[
+            Math.PI * 0.63,
+            -Math.PI * 0.19,
+            -Math.PI * 0.2,
+          ]}
+          scale={[
+            1,
+            0.84,
+            1.1,
+          ]}
+        >
+          <torusGeometry
+            args={[
+              1.43,
+              0.085,
+              42,
+              220,
+            ]}
+          />
+        </mesh>
 
-      {/* Fine gold signature ring */}
-      <mesh
-        material={goldMaterial}
-        rotation={[
-          Math.PI * 0.49,
-          Math.PI * 0.43,
-          Math.PI * 0.1,
-        ]}
-        scale={[1.04, 0.86, 1]}
-      >
-        <torusGeometry args={[1.34, 0.035, 26, 210]} />
-      </mesh>
+        {/* =====================================================
+            BRAND ORBITS
+            ===================================================== */}
 
-      {/* Secondary gold arc / orbital feel */}
-      <mesh
-        material={goldMaterial}
-        rotation={[
-          Math.PI * 0.2,
-          Math.PI * 0.55,
-          -Math.PI * 0.17,
-        ]}
-        position={[0.08, -0.08, -0.22]}
-        scale={[1, 0.84, 1.05]}
-      >
-        <torusGeometry args={[1.09, 0.022, 22, 180]} />
-      </mesh>
+        <mesh
+          ref={outerRing}
+          material={
+            blueMaterial
+          }
+          rotation={[
+            Math.PI * 0.49,
+            Math.PI * 0.4,
+            Math.PI * 0.1,
+          ]}
+          scale={[
+            1.08,
+            0.88,
+            1,
+          ]}
+        >
+          <torusGeometry
+            args={[
+              1.36,
+              0.11,
+              40,
+              220,
+            ]}
+          />
+        </mesh>
 
-      {/* Restrained teal glass detail */}
-      <mesh
-        material={tealGlass}
-        rotation={[
-          Math.PI * 0.72,
-          -Math.PI * 0.06,
-          Math.PI * 0.24,
-        ]}
-        position={[-0.1, 0.02, -0.35]}
-        scale={[0.94, 0.82, 1]}
-      >
-        <torusGeometry args={[1.16, 0.055, 28, 180]} />
-      </mesh>
+        <mesh
+          ref={midRing}
+          material={
+            tealMaterial
+          }
+          rotation={[
+            Math.PI * 0.21,
+            Math.PI * 0.56,
+            -Math.PI * 0.14,
+          ]}
+          position={[
+            0.06,
+            -0.06,
+            -0.2,
+          ]}
+          scale={[
+            1,
+            0.85,
+            1.05,
+          ]}
+        >
+          <torusGeometry
+            args={[
+              1.12,
+              0.045,
+              28,
+              200,
+            ]}
+          />
+        </mesh>
 
-      {/* Small inner nucleus */}
-      <mesh
-        material={navyMaterial}
-        position={[0.05, -0.03, 0.1]}
-      >
-        <sphereGeometry args={[0.14, 48, 48]} />
-      </mesh>
+        <mesh
+          ref={innerRing}
+          material={
+            violetMaterial
+          }
+          rotation={[
+            Math.PI * 0.72,
+            -Math.PI * 0.05,
+            Math.PI * 0.25,
+          ]}
+          position={[
+            -0.1,
+            0.02,
+            -0.3,
+          ]}
+          scale={[
+            0.94,
+            0.82,
+            1,
+          ]}
+        >
+          <torusGeometry
+            args={[
+              0.94,
+              0.032,
+              24,
+              180,
+            ]}
+          />
+        </mesh>
 
-      <mesh
-        material={goldMaterial}
-        position={[0.05, -0.03, 0.1]}
-        scale={1.18}
-      >
-        <sphereGeometry args={[0.14, 48, 48]} />
-      </mesh>
+        {/* =====================================================
+            INNER ENERGY LINES
+            ===================================================== */}
 
-      <mesh
-        material={navyMaterial}
-        position={[0.05, -0.03, 0.11]}
-        scale={0.91}
-      >
-        <sphereGeometry args={[0.14, 48, 48]} />
-      </mesh>
-    </group>
+        <mesh
+          material={
+            blueMaterial
+          }
+          rotation={[
+            Math.PI * 0.52,
+            Math.PI * 0.1,
+            Math.PI * 0.4,
+          ]}
+        >
+          <torusGeometry
+            args={[
+              0.76,
+              0.018,
+              18,
+              160,
+            ]}
+          />
+        </mesh>
+
+        <mesh
+          material={
+            tealMaterial
+          }
+          rotation={[
+            Math.PI * 0.22,
+            -Math.PI * 0.46,
+            Math.PI * 0.22,
+          ]}
+        >
+          <torusGeometry
+            args={[
+              0.63,
+              0.015,
+              18,
+              150,
+            ]}
+          />
+        </mesh>
+
+        {/* =====================================================
+            CORE
+            ===================================================== */}
+
+        <mesh
+          ref={nucleus}
+          material={
+            violetMaterial
+          }
+          position={[
+            0.04,
+            -0.02,
+            0.08,
+          ]}
+        >
+          <icosahedronGeometry
+            args={[
+              0.22,
+              4,
+            ]}
+          />
+        </mesh>
+
+        <mesh
+          material={
+            coreMaterial
+          }
+          position={[
+            0.04,
+            -0.02,
+            0.08,
+          ]}
+          scale={0.66}
+        >
+          <icosahedronGeometry
+            args={[
+              0.22,
+              3,
+            ]}
+          />
+        </mesh>
+
+        {/* =====================================================
+            ORBITAL NODES
+            ===================================================== */}
+
+        <mesh
+          material={
+            blueMaterial
+          }
+          position={[
+            1.1,
+            0.54,
+            0.38,
+          ]}
+        >
+          <sphereGeometry
+            args={[
+              0.055,
+              30,
+              30,
+            ]}
+          />
+        </mesh>
+
+        <mesh
+          material={
+            tealMaterial
+          }
+          position={[
+            -0.82,
+            -0.72,
+            0.55,
+          ]}
+        >
+          <sphereGeometry
+            args={[
+              0.045,
+              30,
+              30,
+            ]}
+          />
+        </mesh>
+
+        <mesh
+          material={
+            violetMaterial
+          }
+          position={[
+            0.2,
+            1.04,
+            -0.72,
+          ]}
+        >
+          <sphereGeometry
+            args={[
+              0.048,
+              30,
+              30,
+            ]}
+          />
+        </mesh>
+      </group>
+    </Float>
   );
 }
+
+/* ============================================================
+   CAMERA
+   ============================================================ */
+
+function CameraRig() {
+  useFrame((state) => {
+    const targetX =
+      state.pointer.x * 0.18;
+
+    const targetY =
+      state.pointer.y * 0.1;
+
+    state.camera.position.x =
+      THREE.MathUtils.lerp(
+        state.camera.position.x,
+        targetX,
+        0.02,
+      );
+
+    state.camera.position.y =
+      THREE.MathUtils.lerp(
+        state.camera.position.y,
+        targetY,
+        0.02,
+      );
+
+    state.camera.lookAt(
+      0.15,
+      0,
+      0,
+    );
+  });
+
+  return null;
+}
+
+/* ============================================================
+   LIGHTING
+   ============================================================ */
 
 function Scene({
   isDark,
@@ -250,73 +629,175 @@ function Scene({
   return (
     <>
       <ambientLight
-        intensity={isDark ? 0.55 : 1.15}
+        intensity={
+          isDark ? 0.42 : 1.05
+        }
       />
 
-      {/* Main neutral key light */}
+      {/* Main key */}
       <directionalLight
-        position={[5, 7, 6]}
-        intensity={isDark ? 3.1 : 4.2}
-        color={isDark ? "#fff4dc" : "#ffffff"}
+        position={[
+          5,
+          7,
+          6,
+        ]}
+        intensity={
+          isDark ? 3.2 : 4.2
+        }
+        color="#ffffff"
       />
 
-      {/* Gold rim */}
+      {/* Blue key rim */}
       <pointLight
-        position={[4, 1.8, 4]}
-        intensity={isDark ? 20 : 13}
+        position={[
+          4,
+          2.4,
+          4,
+        ]}
+        intensity={
+          isDark ? 22 : 14
+        }
+        distance={10}
+        color={
+          isDark
+            ? "#3B82F6"
+            : "#2563EB"
+        }
+      />
+
+      {/* Cyan / teal reflection */}
+      <pointLight
+        position={[
+          -4,
+          -1.2,
+          3,
+        ]}
+        intensity={
+          isDark ? 13 : 7
+        }
         distance={9}
-        color="#F4A62A"
+        color={
+          isDark
+            ? "#22D3EE"
+            : "#10B981"
+        }
       />
 
-      {/* Teal reflection */}
+      {/* Violet depth */}
       <pointLight
-        position={[-4, -1, 3]}
-        intensity={isDark ? 10 : 5}
-        distance={8}
-        color="#00897B"
+        position={[
+          1,
+          3,
+          -4,
+        ]}
+        intensity={
+          isDark ? 8 : 3
+        }
+        distance={10}
+        color={
+          isDark
+            ? "#A855F7"
+            : "#7C3AED"
+        }
       />
 
-      {/* Cool fill */}
+      {/* Soft neutral fill */}
       <pointLight
-        position={[0, 4, -2]}
-        intensity={isDark ? 4 : 2}
-        distance={8}
-        color="#d8e7ee"
+        position={[
+          -1,
+          5,
+          2,
+        ]}
+        intensity={
+          isDark ? 4 : 2
+        }
+        distance={9}
+        color="#dbeafe"
       />
 
-      <SculpturalForm isDark={isDark} />
+      {/* Small atmospheric particles */}
+      <Sparkles
+        count={42}
+        scale={[
+          6,
+          5,
+          5,
+        ]}
+        size={
+          isDark ? 1.25 : 0.8
+        }
+        speed={0.18}
+        opacity={
+          isDark ? 0.35 : 0.18
+        }
+        color={
+          isDark
+            ? "#93c5fd"
+            : "#2563eb"
+        }
+      />
+
+      <Environment
+        preset="city"
+        environmentIntensity={
+          isDark ? 0.32 : 0.48
+        }
+      />
+
+      <CameraRig />
+
+      <EvolvaerCore
+        isDark={isDark}
+      />
     </>
   );
 }
 
+/* ============================================================
+   HERO SCENE
+   ============================================================ */
+
 export function HeroScene() {
-  const theme = useSiteTheme();
-  const isDark = theme === "dark";
+  const theme =
+    useSiteTheme();
+
+  const isDark =
+    theme === "dark";
 
   return (
     <div className="h-full w-full">
       <Canvas
         camera={{
-          position: [0, 0, 6.8],
-          fov: 36,
+          position: [
+            0,
+            0,
+            6.7,
+          ],
+          fov: 35,
         }}
         dpr={[1, 1.5]}
         gl={{
           antialias: true,
           alpha: true,
-          powerPreference: "high-performance",
+          powerPreference:
+            "high-performance",
         }}
-        onCreated={({ gl }) => {
+        onCreated={({
+          gl,
+        }) => {
           gl.outputColorSpace =
             THREE.SRGBColorSpace;
 
           gl.toneMapping =
             THREE.ACESFilmicToneMapping;
 
-          gl.toneMappingExposure = 1.05;
+          gl.toneMappingExposure =
+            isDark ? 1.08 : 1;
         }}
       >
-        <Scene isDark={isDark} />
+        <Scene
+          isDark={isDark}
+        />
       </Canvas>
     </div>
   );

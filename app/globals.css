@@ -2,16 +2,17 @@
 
 /* ============================================================
    EVOLVAER TECHNOLOGIES
-   Global Design System
+   Global Design System — 2026 Brand
    ============================================================ */
 
 /*
-  Tailwind v4 dark mode
-  ---------------------
-  We use a .dark class rather than prefers-color-scheme directly
-  because next-themes will control the active theme.
+   Tailwind v4 dark mode
+   ---------------------
+   Theme state is controlled by the .dark class.
 */
+
 @custom-variant dark (&:where(.dark, .dark *));
+
 
 /* ============================================================
    BRAND TOKENS
@@ -19,81 +20,152 @@
 
 :root {
   /* ----------------------------------------------------------
-     Core Evolvaer palette
+     EVOLVAER LIGHT PALETTE
      ---------------------------------------------------------- */
 
-  --midnight-blue: #0d1b2a;
-  --peacock-teal: #00897b;
-  --royal-purple: #6b4eff;
-  --amber-gold: #f4a62a;
-  --ruby-maroon: #b23a48;
-  --stone-gray: #64748b;
+  --deep-navy: #0d1117;
+  --azure-blue: #2563eb;
+  --emerald-teal: #10b981;
+  --brand-violet: #7c3aed;
+  --brand-amber: #f59e0b;
+  --brand-slate: #64748b;
 
   /* ----------------------------------------------------------
-     RGB versions
-     Useful for transparent effects / shadows / glows
+     Compatibility aliases
+     Keep existing components working while we migrate them.
      ---------------------------------------------------------- */
 
-  --midnight-rgb: 13, 27, 42;
-  --teal-rgb: 0, 137, 123;
-  --purple-rgb: 107, 78, 255;
-  --gold-rgb: 244, 166, 42;
-  --maroon-rgb: 178, 58, 72;
+  --midnight-blue: var(--deep-navy);
+  --peacock-teal: var(--emerald-teal);
+  --royal-purple: var(--brand-violet);
+  --amber-gold: var(--brand-amber);
+  --ruby-maroon: var(--azure-blue);
+  --stone-gray: var(--brand-slate);
 
   /* ----------------------------------------------------------
-     Light mode
+     RGB VALUES
      ---------------------------------------------------------- */
 
-  --background: #f8f7f3;
-  --background-secondary: #f1efe9;
+  --navy-rgb: 10, 29, 47;
+  --blue-rgb: 37, 99, 235;
+  --teal-rgb: 16, 185, 129;
+  --violet-rgb: 124, 58, 237;
+  --amber-rgb: 245, 158, 11;
+  --slate-rgb: 100, 116, 139;
 
-  --foreground: #0d1b2a;
-  --foreground-muted: #64748b;
-  --foreground-subtle: #8793a2;
+  /* Compatibility */
+
+  --midnight-rgb: var(--navy-rgb);
+  --purple-rgb: var(--violet-rgb);
+  --gold-rgb: var(--amber-rgb);
+  --maroon-rgb: var(--blue-rgb);
+
+  /* ----------------------------------------------------------
+     LIGHT MODE SURFACES
+     ---------------------------------------------------------- */
+
+  --background: #ffffff;
+  --background-secondary: #f8fafc;
+  --background-tertiary: #f1f5f9;
+
+  --foreground: #0a1d2f;
+  --foreground-muted: #475569;
+  --foreground-subtle: #64748b;
 
   --surface: #ffffff;
-  --surface-secondary: #f5f4ef;
-
-  --border: rgba(13, 27, 42, 0.1);
-  --border-strong: rgba(13, 27, 42, 0.16);
-
-  /* Glass */
-  --glass: rgba(255, 255, 255, 0.56);
-  --glass-strong: rgba(255, 255, 255, 0.78);
-  --glass-border: rgba(255, 255, 255, 0.7);
-
-  /* Shadows */
-  --shadow-soft:
-    0 10px 40px rgba(13, 27, 42, 0.07);
-
-  --shadow-medium:
-    0 20px 60px rgba(13, 27, 42, 0.1);
-
-  --shadow-glass:
-    0 24px 80px rgba(13, 27, 42, 0.12);
+  --surface-secondary: #f8fafc;
+  --surface-elevated: #ffffff;
 
   /* ----------------------------------------------------------
-     Semantic colours
+     BORDERS
      ---------------------------------------------------------- */
 
-  --primary: var(--midnight-blue);
-  --accent: var(--amber-gold);
-
-  --research: var(--royal-purple);
-  --engineering: var(--peacock-teal);
-  --scale: var(--amber-gold);
-  --impact: var(--ruby-maroon);
+  --border: rgba(10, 29, 47, 0.1);
+  --border-strong: rgba(10, 29, 47, 0.17);
+  --border-brand: rgba(37, 99, 235, 0.22);
 
   /* ----------------------------------------------------------
-     Layout
+     GLASS
+     ---------------------------------------------------------- */
+
+  --glass: rgba(255, 255, 255, 0.68);
+  --glass-strong: rgba(255, 255, 255, 0.84);
+  --glass-border: rgba(10, 29, 47, 0.09);
+
+  /* ----------------------------------------------------------
+     SHADOWS
+     ---------------------------------------------------------- */
+
+  --shadow-soft:
+    0 12px 40px rgba(10, 29, 47, 0.06);
+
+  --shadow-medium:
+    0 24px 70px rgba(10, 29, 47, 0.1);
+
+  --shadow-glass:
+    0 28px 90px rgba(10, 29, 47, 0.11);
+
+  --shadow-brand:
+    0 20px 70px rgba(37, 99, 235, 0.14);
+
+  /* ----------------------------------------------------------
+     SEMANTIC COLOURS
+     ---------------------------------------------------------- */
+
+  --primary: var(--deep-navy);
+  --accent: var(--azure-blue);
+
+  --research: var(--azure-blue);
+  --engineering: var(--emerald-teal);
+  --build: var(--brand-violet);
+  --scale: var(--brand-amber);
+  --impact: var(--azure-blue);
+
+  /* ----------------------------------------------------------
+     BRAND GRADIENTS
+     ---------------------------------------------------------- */
+
+  --brand-gradient:
+    linear-gradient(
+      135deg,
+      var(--azure-blue) 0%,
+      var(--emerald-teal) 48%,
+      var(--brand-violet) 100%
+    );
+
+  --brand-gradient-wide:
+    linear-gradient(
+      90deg,
+      var(--azure-blue) 0%,
+      var(--emerald-teal) 34%,
+      var(--brand-violet) 68%,
+      var(--brand-amber) 100%
+    );
+
+  --blue-teal-gradient:
+    linear-gradient(
+      120deg,
+      var(--azure-blue),
+      var(--emerald-teal)
+    );
+
+  --blue-violet-gradient:
+    linear-gradient(
+      120deg,
+      var(--azure-blue),
+      var(--brand-violet)
+    );
+
+  /* ----------------------------------------------------------
+     LAYOUT
      ---------------------------------------------------------- */
 
   --page-padding: clamp(1.25rem, 4vw, 5rem);
-  --section-spacing: clamp(6rem, 12vw, 11rem);
+  --section-spacing: clamp(6rem, 11vw, 10rem);
   --content-width: 1440px;
 
   /* ----------------------------------------------------------
-     Radius
+     RADII
      ---------------------------------------------------------- */
 
   --radius-sm: 0.75rem;
@@ -103,7 +175,7 @@
   --radius-full: 9999px;
 
   /* ----------------------------------------------------------
-     Motion
+     MOTION
      ---------------------------------------------------------- */
 
   --ease-evolvaer: cubic-bezier(0.22, 1, 0.36, 1);
@@ -111,37 +183,107 @@
 
 
 /* ============================================================
-   DARK MODE — FLAGSHIP EVOLVAER EXPERIENCE
+   DARK MODE
    ============================================================ */
 
 .dark {
-  --background: #0d1b2a;
-  --background-secondary: #081522;
+  /* Brand board dark palette */
 
-  --foreground: #f7f4ee;
-  --foreground-muted: #a9b1ba;
-  --foreground-subtle: #74808d;
+  --deep-navy: #0d1117;
+  --azure-blue: #3b82f6;
+  --emerald-teal: #22d3ee;
+  --brand-violet: #a855f7;
+  --brand-amber: #f97316;
+  --brand-slate: #94a3b8;
 
-  --surface: #0a1928;
-  --surface-secondary: #0d2032;
+  /* Compatibility */
 
-  --border: rgba(255, 255, 255, 0.09);
-  --border-strong: rgba(244, 166, 42, 0.22);
+  --midnight-blue: var(--deep-navy);
+  --peacock-teal: var(--emerald-teal);
+  --royal-purple: var(--brand-violet);
+  --amber-gold: var(--brand-amber);
+  --ruby-maroon: var(--azure-blue);
+  --stone-gray: var(--brand-slate);
 
-  --glass: rgba(8, 21, 34, 0.54);
-  --glass-strong: rgba(8, 21, 34, 0.78);
-  --glass-border: rgba(255, 255, 255, 0.11);
+  /* RGB */
+
+  --navy-rgb: 13, 17, 23;
+  --blue-rgb: 59, 130, 246;
+  --teal-rgb: 34, 211, 238;
+  --violet-rgb: 168, 85, 247;
+  --amber-rgb: 249, 115, 22;
+  --slate-rgb: 148, 163, 184;
+
+  --midnight-rgb: var(--navy-rgb);
+  --purple-rgb: var(--violet-rgb);
+  --gold-rgb: var(--amber-rgb);
+  --maroon-rgb: var(--blue-rgb);
+
+  /* Surfaces */
+
+  --background: #0d1117;
+  --background-secondary: #101722;
+  --background-tertiary: #131c29;
+
+  --foreground: #f8fafc;
+  --foreground-muted: #cbd5e1;
+  --foreground-subtle: #94a3b8;
+
+  --surface: #111927;
+  --surface-secondary: #131d2b;
+  --surface-elevated: #162131;
+
+  /* Borders */
+
+  --border: rgba(148, 163, 184, 0.14);
+  --border-strong: rgba(148, 163, 184, 0.26);
+  --border-brand: rgba(59, 130, 246, 0.3);
+
+  /* Glass */
+
+  --glass: rgba(13, 17, 23, 0.64);
+  --glass-strong: rgba(16, 23, 34, 0.82);
+  --glass-border: rgba(148, 163, 184, 0.14);
+
+  /* Shadows */
 
   --shadow-soft:
-    0 14px 50px rgba(0, 0, 0, 0.24);
+    0 14px 50px rgba(0, 0, 0, 0.28);
 
   --shadow-medium:
-    0 24px 80px rgba(0, 0, 0, 0.36);
+    0 26px 80px rgba(0, 0, 0, 0.38);
 
   --shadow-glass:
-    0 30px 100px rgba(0, 0, 0, 0.42);
+    0 32px 100px rgba(0, 0, 0, 0.44);
 
-  --primary: #f7f4ee;
+  --shadow-brand:
+    0 24px 90px rgba(59, 130, 246, 0.18);
+
+  --primary: #f8fafc;
+  --accent: var(--azure-blue);
+
+  --research: var(--azure-blue);
+  --engineering: var(--emerald-teal);
+  --build: var(--brand-violet);
+  --scale: var(--brand-amber);
+  --impact: var(--emerald-teal);
+
+  --brand-gradient:
+    linear-gradient(
+      135deg,
+      var(--azure-blue) 0%,
+      var(--emerald-teal) 46%,
+      var(--brand-violet) 100%
+    );
+
+  --brand-gradient-wide:
+    linear-gradient(
+      90deg,
+      var(--azure-blue) 0%,
+      var(--emerald-teal) 32%,
+      var(--brand-violet) 67%,
+      var(--brand-amber) 100%
+    );
 }
 
 
@@ -152,6 +294,7 @@
 @theme inline {
   --color-background: var(--background);
   --color-background-secondary: var(--background-secondary);
+  --color-background-tertiary: var(--background-tertiary);
 
   --color-foreground: var(--foreground);
   --color-muted: var(--foreground-muted);
@@ -162,18 +305,26 @@
 
   --color-border: var(--border);
 
-  /* Evolvaer colours */
+  /* New brand */
+
+  --color-navy: var(--deep-navy);
+  --color-blue: var(--azure-blue);
+  --color-teal: var(--emerald-teal);
+  --color-violet: var(--brand-violet);
+  --color-amber: var(--brand-amber);
+  --color-slate: var(--brand-slate);
+
+  /* Compatibility */
 
   --color-midnight: var(--midnight-blue);
-  --color-teal: var(--peacock-teal);
   --color-purple: var(--royal-purple);
   --color-gold: var(--amber-gold);
   --color-maroon: var(--ruby-maroon);
   --color-stone: var(--stone-gray);
 
   /*
-    These variables will be provided by next/font
-    inside layout.tsx.
+     We will change these to Plus Jakarta Sans
+     when we edit app/layout.tsx.
   */
 
   --font-sans: var(--font-inter);
@@ -210,12 +361,13 @@ body {
     sans-serif;
 
   text-rendering: optimizeLegibility;
+
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
   transition:
-    background-color 500ms var(--ease-evolvaer),
-    color 500ms var(--ease-evolvaer);
+    background-color 400ms var(--ease-evolvaer),
+    color 400ms var(--ease-evolvaer);
 }
 
 button,
@@ -281,8 +433,12 @@ p {
    ============================================================ */
 
 ::selection {
-  background: rgba(var(--gold-rgb), 0.28);
+  background: rgba(var(--blue-rgb), 0.22);
   color: var(--foreground);
+}
+
+.dark ::selection {
+  background: rgba(var(--teal-rgb), 0.25);
 }
 
 
@@ -299,16 +455,16 @@ p {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(var(--midnight-rgb), 0.22);
+  background: rgba(var(--navy-rgb), 0.22);
   border-radius: var(--radius-full);
 }
 
 .dark ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.18);
+  background: rgba(148, 163, 184, 0.24);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--amber-gold);
+  background: var(--azure-blue);
 }
 
 
@@ -332,14 +488,47 @@ p {
 
 
 /* ============================================================
-   EVOLVAER ARCHITECTURAL GLASS
+   BRAND GRID
+   ============================================================ */
+
+.brand-grid {
+  background-image:
+    linear-gradient(
+      rgba(var(--blue-rgb), 0.045) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(var(--blue-rgb), 0.045) 1px,
+      transparent 1px
+    );
+
+  background-size: 48px 48px;
+}
+
+.dark .brand-grid {
+  background-image:
+    linear-gradient(
+      rgba(var(--blue-rgb), 0.055) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(var(--blue-rgb), 0.055) 1px,
+      transparent 1px
+    );
+}
+
+
+/* ============================================================
+   GLASS
    ============================================================ */
 
 .glass {
   background:
     linear-gradient(
       135deg,
-      rgba(255, 255, 255, 0.09),
+      rgba(255, 255, 255, 0.12),
       rgba(255, 255, 255, 0.025)
     ),
     var(--glass);
@@ -347,7 +536,7 @@ p {
   border: 1px solid var(--glass-border);
 
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
     var(--shadow-glass);
 
   backdrop-filter:
@@ -363,15 +552,15 @@ p {
   background:
     linear-gradient(
       135deg,
-      rgba(255, 255, 255, 0.11),
-      rgba(255, 255, 255, 0.025)
+      rgba(255, 255, 255, 0.14),
+      rgba(255, 255, 255, 0.03)
     ),
     var(--glass-strong);
 
   border: 1px solid var(--glass-border);
 
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
     var(--shadow-medium);
 
   backdrop-filter:
@@ -387,15 +576,15 @@ p {
   background:
     linear-gradient(
       135deg,
-      rgba(255, 255, 255, 0.055),
-      rgba(255, 255, 255, 0.012)
+      rgba(59, 130, 246, 0.04),
+      rgba(168, 85, 247, 0.018)
     ),
-    rgba(8, 21, 34, 0.58);
+    rgba(13, 17, 23, 0.66);
 
-  border-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(148, 163, 184, 0.13);
 
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.07),
+    inset 0 1px 0 rgba(255, 255, 255, 0.055),
     0 24px 80px rgba(0, 0, 0, 0.34);
 }
 
@@ -403,39 +592,45 @@ p {
   background:
     linear-gradient(
       135deg,
-      rgba(255, 255, 255, 0.065),
-      rgba(255, 255, 255, 0.014)
+      rgba(59, 130, 246, 0.055),
+      rgba(168, 85, 247, 0.02)
     ),
-    rgba(8, 21, 34, 0.76);
+    rgba(16, 23, 34, 0.82);
 
-  border-color: rgba(255, 255, 255, 0.11);
+  border-color: rgba(148, 163, 184, 0.15);
 }
 
-.glass-gold {
+
+/* ============================================================
+   ACCENT GLASS
+   Compatibility with .glass-gold while moving to blue
+   ============================================================ */
+
+.glass-gold,
+.glass-brand {
   background:
     linear-gradient(
       135deg,
-      rgba(var(--gold-rgb), 0.12),
-      rgba(var(--gold-rgb), 0.025)
+      rgba(var(--blue-rgb), 0.09),
+      rgba(var(--teal-rgb), 0.025)
     ),
     var(--glass);
 
-  border: 1px solid rgba(var(--gold-rgb), 0.28);
+  border: 1px solid rgba(var(--blue-rgb), 0.22);
 
   box-shadow:
-    inset 0 1px 0 rgba(255, 216, 148, 0.18),
-    0 20px 60px rgba(var(--gold-rgb), 0.07);
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 20px 60px rgba(var(--blue-rgb), 0.08);
 
   backdrop-filter: blur(24px) saturate(125%);
   -webkit-backdrop-filter: blur(24px) saturate(125%);
 }
 
 
-
 /* ============================================================
-   EVOLVAER CINEMATIC ENVIRONMENT
-   Midnight / Gold dominant
-   Teal used as controlled secondary light
+   EVOLVAER ENVIRONMENT
+   Blue / Teal dominant
+   Violet used as controlled creative energy
    ============================================================ */
 
 .cinematic-background {
@@ -462,19 +657,19 @@ p {
 
   background:
     radial-gradient(
-      ellipse at 76% 42%,
-      rgba(var(--gold-rgb), 0.08),
+      ellipse at 78% 38%,
+      rgba(var(--blue-rgb), 0.09),
       transparent 28%
     ),
     radial-gradient(
-      ellipse at 72% 56%,
-      rgba(var(--teal-rgb), 0.045),
-      transparent 34%
+      ellipse at 72% 60%,
+      rgba(var(--teal-rgb), 0.065),
+      transparent 32%
     ),
     radial-gradient(
-      ellipse at 20% 10%,
-      rgba(255, 255, 255, 0.04),
-      transparent 25%
+      ellipse at 28% 18%,
+      rgba(var(--violet-rgb), 0.035),
+      transparent 30%
     );
 }
 
@@ -482,34 +677,34 @@ p {
   background:
     linear-gradient(
       125deg,
-      #050e17 0%,
-      #07131f 38%,
-      #091827 70%,
-      #06111c 100%
+      #0d1117 0%,
+      #0d1520 38%,
+      #101927 70%,
+      #0b1119 100%
     );
 }
 
 .dark .cinematic-background::before {
   background:
     radial-gradient(
-      ellipse at 76% 38%,
-      rgba(var(--gold-rgb), 0.12),
-      transparent 24%
+      ellipse at 78% 36%,
+      rgba(var(--blue-rgb), 0.16),
+      transparent 25%
     ),
     radial-gradient(
-      ellipse at 72% 55%,
-      rgba(var(--teal-rgb), 0.075),
+      ellipse at 72% 57%,
+      rgba(var(--teal-rgb), 0.10),
       transparent 30%
     ),
     radial-gradient(
-      ellipse at 94% 80%,
-      rgba(var(--purple-rgb), 0.035),
-      transparent 22%
+      ellipse at 90% 82%,
+      rgba(var(--violet-rgb), 0.09),
+      transparent 25%
     ),
     radial-gradient(
-      ellipse at 10% 12%,
-      rgba(255, 255, 255, 0.035),
-      transparent 25%
+      ellipse at 12% 16%,
+      rgba(var(--blue-rgb), 0.045),
+      transparent 27%
     );
 }
 
@@ -529,17 +724,16 @@ p {
   inset: 0;
 
   pointer-events: none;
-
   z-index: 20;
 
-  opacity: 0.025;
+  opacity: 0.018;
 
   background-image:
     url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='.55'/%3E%3C/svg%3E");
 }
 
 .dark .noise-overlay::after {
-  opacity: 0.035;
+  opacity: 0.025;
 }
 
 
@@ -548,27 +742,35 @@ p {
    ============================================================ */
 
 .brand-gradient {
-  background:
-    linear-gradient(
-      120deg,
-      var(--peacock-teal),
-      var(--royal-purple) 35%,
-      var(--amber-gold) 70%,
-      var(--ruby-maroon)
-    );
+  background: var(--brand-gradient);
+}
+
+.brand-gradient-wide {
+  background: var(--brand-gradient-wide);
 }
 
 .brand-gradient-text {
   color: transparent;
 
-  background:
-    linear-gradient(
-      110deg,
-      var(--peacock-teal),
-      var(--royal-purple) 32%,
-      var(--amber-gold) 67%,
-      var(--ruby-maroon)
-    );
+  background: var(--brand-gradient);
+
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+.blue-teal-gradient-text {
+  color: transparent;
+
+  background: var(--blue-teal-gradient);
+
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+.blue-violet-gradient-text {
+  color: transparent;
+
+  background: var(--blue-violet-gradient);
 
   background-clip: text;
   -webkit-background-clip: text;
@@ -576,17 +778,35 @@ p {
 
 
 /* ============================================================
-   GOLD TEXT
+   ACCENT TEXT
    ============================================================ */
 
+.text-blue {
+  color: var(--azure-blue);
+}
+
+.text-teal {
+  color: var(--emerald-teal);
+}
+
+.text-violet {
+  color: var(--brand-violet);
+}
+
+.text-amber {
+  color: var(--brand-amber);
+}
+
+/* Legacy component compatibility */
+
 .text-gold {
-  color: var(--amber-gold);
+  color: var(--azure-blue);
 }
 
 
 /* ============================================================
-   CINEMATIC GOLD
-   Slightly richer than plain flat gold.
+   LEGACY GOLD GRADIENT
+   Now translated into Evolvaer Blue
    ============================================================ */
 
 .gold-gradient-text {
@@ -595,11 +815,11 @@ p {
   background:
     linear-gradient(
       115deg,
-      #c98214 0%,
-      #f4a62a 32%,
-      #ffd27a 52%,
-      #f4a62a 72%,
-      #c98214 100%
+      #1d4ed8 0%,
+      #2563eb 32%,
+      #38bdf8 52%,
+      #2563eb 72%,
+      #1d4ed8 100%
     );
 
   background-clip: text;
@@ -609,7 +829,6 @@ p {
 
 /* ============================================================
    GLASS HIGHLIGHT
-   Gives cards a subtle reflective top edge.
    ============================================================ */
 
 .glass-highlight {
@@ -638,21 +857,21 @@ p {
       transparent
     );
 
-  opacity: 0.65;
+  opacity: 0.55;
 }
 
 .dark .glass-highlight::before {
-  opacity: 0.35;
+  opacity: 0.3;
 }
 
 
 /* ============================================================
-   AMBIENT GLOW UTILITIES
+   AMBIENT GLOWS
    ============================================================ */
 
-.glow-gold {
+.glow-blue {
   box-shadow:
-    0 0 80px rgba(var(--gold-rgb), 0.16);
+    0 0 80px rgba(var(--blue-rgb), 0.16);
 }
 
 .glow-teal {
@@ -660,14 +879,71 @@ p {
     0 0 80px rgba(var(--teal-rgb), 0.14);
 }
 
-.glow-purple {
+.glow-purple,
+.glow-violet {
   box-shadow:
-    0 0 80px rgba(var(--purple-rgb), 0.14);
+    0 0 80px rgba(var(--violet-rgb), 0.14);
+}
+
+.glow-amber {
+  box-shadow:
+    0 0 80px rgba(var(--amber-rgb), 0.12);
+}
+
+/* Legacy compatibility */
+
+.glow-gold {
+  box-shadow:
+    0 0 80px rgba(var(--blue-rgb), 0.14);
 }
 
 .glow-maroon {
   box-shadow:
-    0 0 80px rgba(var(--maroon-rgb), 0.12);
+    0 0 80px rgba(var(--violet-rgb), 0.12);
+}
+
+
+/* ============================================================
+   BRAND ORBS
+   Useful for hero / section ambient illumination
+   ============================================================ */
+
+.brand-orb {
+  position: absolute;
+  border-radius: 9999px;
+  pointer-events: none;
+  filter: blur(90px);
+}
+
+.brand-orb-blue {
+  background: rgba(var(--blue-rgb), 0.18);
+}
+
+.brand-orb-teal {
+  background: rgba(var(--teal-rgb), 0.14);
+}
+
+.brand-orb-violet {
+  background: rgba(var(--violet-rgb), 0.13);
+}
+
+
+/* ============================================================
+   BRAND DIVIDER
+   ============================================================ */
+
+.brand-divider {
+  height: 1px;
+  border: 0;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(var(--blue-rgb), 0.45),
+      rgba(var(--teal-rgb), 0.4),
+      transparent
+    );
 }
 
 
@@ -726,5 +1002,9 @@ p {
   :root {
     --page-padding: 1.25rem;
     --section-spacing: 6rem;
+  }
+
+  .brand-grid {
+    background-size: 36px 36px;
   }
 }

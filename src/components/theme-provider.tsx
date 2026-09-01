@@ -33,10 +33,26 @@ export function ThemeProvider({
     const storedTheme =
       window.localStorage.getItem("evolvaer-theme");
 
+    const systemPrefersDark =
+      window.matchMedia(
+        "(prefers-color-scheme: dark)",
+      ).matches;
+
     const initialTheme: Theme =
-      storedTheme === "dark" ? "dark" : "light";
+      storedTheme === "dark" ||
+      (!storedTheme && systemPrefersDark)
+        ? "dark"
+        : "light";
 
     setThemeState(initialTheme);
+
+    const root = document.documentElement;
+
+    root.classList.remove("light", "dark");
+    root.classList.add(initialTheme);
+
+    root.style.colorScheme = initialTheme;
+
     setMounted(true);
   }, []);
 
@@ -47,6 +63,8 @@ export function ThemeProvider({
 
     root.classList.remove("light", "dark");
     root.classList.add(theme);
+
+    root.style.colorScheme = theme;
 
     window.localStorage.setItem(
       "evolvaer-theme",
