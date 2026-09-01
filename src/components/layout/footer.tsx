@@ -1,5 +1,11 @@
+"use client";
+
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
+import { useEffect, useState } from "react";
+
+import { useTheme } from "@/src/components/theme-provider";
 
 const companyLinks = [
   { label: "About", href: "/about" },
@@ -14,51 +20,146 @@ const exploreLinks = [
 ];
 
 export function Footer() {
+  const { theme } = useTheme();
+
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const isDark = mounted && theme === "dark";
+
   return (
-    <footer className="bg-[#050e17] text-white">
+    <footer
+      className="
+        border-t border-navy/[0.06]
+        bg-[#f8fafc]
+        text-navy
+        transition-colors duration-500
+
+        dark:border-white/[0.06]
+        dark:bg-[#050e17]
+        dark:text-white
+      "
+    >
       <div className="evolvaer-container">
         <div className="grid gap-14 py-14 lg:grid-cols-[1.35fr_0.65fr_0.65fr] lg:py-18">
-          {/* Brand */}
+          {/* =====================================================
+              BRAND
+              ===================================================== */}
+
           <div>
             <Link
               href="/"
-              className="inline-flex items-center gap-3"
+              aria-label="Evolvaer Technologies home"
+              className="group inline-flex"
             >
-              <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03]">
-                <span className="font-display text-lg font-semibold">
-                  ET
-                </span>
-              </div>
+              <div
+                className="
+                  relative
+                  h-[52px] w-[205px]
+                  sm:h-[58px] sm:w-[230px]
+                "
+              >
+                <Image
+                  key={isDark ? "dark" : "light"}
+                  src={
+                    isDark
+                      ? "/brand/evolvaer-logo-dark.png"
+                      : "/brand/evolvaer-logo-light.png"
+                  }
+                  alt="Evolvaer Technologies"
+                  fill
+                  sizes="(max-width: 640px) 205px, 230px"
+                  className={`
+                    object-contain
+                    object-left
+                    transition-transform
+                    duration-300
 
-              <div>
-                <p className="text-[0.8rem] font-semibold tracking-[0.24em]">
-                  EVOLVAER
-                </p>
+                    ${
+                      isDark
+                        ? "scale-100"
+                        : "origin-left scale-[1.18]"
+                    }
 
-                <p className="mt-1 text-[0.53rem] tracking-[0.34em] text-gold">
-                  TECHNOLOGIES
-                </p>
+                    group-hover:scale-[1.02]
+                  `}
+                />
               </div>
             </Link>
 
-            <p className="mt-7 max-w-md font-display text-[1.65rem] leading-[1.2] tracking-[-0.02em] text-white/78">
+            {/* Tagline */}
+
+            <p
+              className="
+                mt-7
+                max-w-md
+                font-display
+                text-[1.65rem]
+                leading-[1.2]
+                tracking-[-0.02em]
+                text-navy/75
+
+                dark:text-white/78
+              "
+            >
               Exploring what&apos;s next.
               <br />
               Building what matters.
             </p>
 
+            {/* CTA */}
+
             <Link
               href="/contact"
-              className="group mt-7 inline-flex items-center gap-2 text-sm text-white/48 transition-colors hover:text-gold"
+              className="
+                group
+                mt-7
+                inline-flex
+                items-center
+                gap-2
+                text-sm
+                text-navy/45
+                transition-colors
+
+                hover:text-blue
+
+                dark:text-white/48
+                dark:hover:text-teal
+              "
             >
               Start a conversation
 
-              <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              <ArrowUpRight
+                className="
+                  h-3.5 w-3.5
+                  transition-transform
+
+                  group-hover:translate-x-0.5
+                  group-hover:-translate-y-0.5
+                "
+              />
             </Link>
           </div>
 
+          {/* =====================================================
+              COMPANY
+              ===================================================== */}
+
           <div>
-            <p className="text-[0.58rem] font-semibold uppercase tracking-[0.26em] text-white/28">
+            <p
+              className="
+                text-[0.58rem]
+                font-semibold
+                uppercase
+                tracking-[0.26em]
+                text-navy/30
+
+                dark:text-white/28
+              "
+            >
               Company
             </p>
 
@@ -67,7 +168,16 @@ export function Footer() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-sm text-white/48 transition-colors hover:text-gold"
+                  className="
+                    text-sm
+                    text-navy/50
+                    transition-colors
+
+                    hover:text-blue
+
+                    dark:text-white/48
+                    dark:hover:text-teal
+                  "
                 >
                   {link.label}
                 </Link>
@@ -75,8 +185,22 @@ export function Footer() {
             </nav>
           </div>
 
+          {/* =====================================================
+              EXPLORE
+              ===================================================== */}
+
           <div>
-            <p className="text-[0.58rem] font-semibold uppercase tracking-[0.26em] text-white/28">
+            <p
+              className="
+                text-[0.58rem]
+                font-semibold
+                uppercase
+                tracking-[0.26em]
+                text-navy/30
+
+                dark:text-white/28
+              "
+            >
               Explore
             </p>
 
@@ -85,7 +209,16 @@ export function Footer() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-sm text-white/48 transition-colors hover:text-gold"
+                  className="
+                    text-sm
+                    text-navy/50
+                    transition-colors
+
+                    hover:text-blue
+
+                    dark:text-white/48
+                    dark:hover:text-teal
+                  "
                 >
                   {link.label}
                 </Link>
@@ -94,8 +227,34 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-white/[0.08] py-7">
-          <div className="flex flex-col gap-4 text-[0.68rem] text-white/27 sm:flex-row sm:items-center sm:justify-between">
+        {/* =====================================================
+            BOTTOM
+            ===================================================== */}
+
+        <div
+          className="
+            border-t
+            border-navy/[0.08]
+            py-7
+
+            dark:border-white/[0.08]
+          "
+        >
+          <div
+            className="
+              flex
+              flex-col
+              gap-4
+              text-[0.68rem]
+              text-navy/35
+
+              sm:flex-row
+              sm:items-center
+              sm:justify-between
+
+              dark:text-white/27
+            "
+          >
             <p>
               © {new Date().getFullYear()} Evolvaer
               Technologies. All rights reserved.

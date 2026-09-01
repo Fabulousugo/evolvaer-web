@@ -125,61 +125,41 @@ export function Navbar() {
 <Link
   href="/"
   aria-label="Evolvaer Technologies home"
-  className="
-    group relative z-20
-    flex items-center
-  "
+  className="group relative z-20 flex items-center"
 >
   <div
     className="
       relative
-      h-[38px]
-      w-[150px]
-
-      sm:h-[42px]
-      sm:w-[166px]
-
-      lg:h-[44px]
-      lg:w-[176px]
+      h-[38px] w-[150px]
+      sm:h-[42px] sm:w-[166px]
+      lg:h-[44px] lg:w-[176px]
     "
   >
-    {/* Light mode logo */}
     <Image
-      src="/brand/evolvaer-logo-light.png"
+      key={mounted ? theme : "light"}
+      src={
+        mounted && theme === "dark"
+          ? "/brand/evolvaer-logo-dark.png"
+          : "/brand/evolvaer-logo-light.png"
+      }
       alt="Evolvaer Technologies"
       fill
       priority
       sizes="(max-width: 640px) 150px, (max-width: 1024px) 166px, 176px"
-      className="
+      className={`
         object-contain
         object-left
-        transition-all
+        transition-transform
         duration-300
 
-        group-hover:scale-[1.015]
+        ${
+          mounted && theme === "dark"
+            ? "scale-100"
+            : "scale-[3.00] origin-left"
+        }
 
-        dark:hidden
-      "
-    />
-
-    {/* Dark mode logo */}
-    <Image
-      src="/brand/evolvaer-logo-dark.png"
-      alt="Evolvaer Technologies"
-      fill
-      priority
-      sizes="(max-width: 640px) 150px, (max-width: 1024px) 166px, 176px"
-      className="
-        hidden
-        object-contain
-        object-left
-        transition-all
-        duration-300
-
-        group-hover:scale-[1.015]
-
-        dark:block
-      "
+        group-hover:scale-[1.02]
+      `}
     />
   </div>
 </Link>
