@@ -74,6 +74,8 @@ export default function WhatWeDoPage() {
           <WorkSceneSection scene="cta">
             <WhatWeDoCta />
           </WorkSceneSection>
+
+          <Footer />
         </main>
       </div>
     </WorkSceneExperienceProvider>
