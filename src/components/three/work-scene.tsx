@@ -416,13 +416,13 @@ function HeroWorld({
         />
       </points>
 
-      <line geometry={curveGeometry}>
+      <lineSegments geometry={curveGeometry}>
         <lineBasicMaterial
           color={TEAL}
           transparent
           opacity={0.5}
         />
-      </line>
+      </lineSegments>
 
       <Float
         speed={
@@ -623,7 +623,7 @@ function ExploreWorld({
           geometry,
           index,
         ) => (
-          <line
+          <lineSegments
             key={index}
             geometry={geometry}
           >
@@ -636,7 +636,7 @@ function ExploreWorld({
               transparent
               opacity={0.43}
             />
-          </line>
+          </lineSegments>
         ),
       )}
 

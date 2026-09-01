@@ -297,7 +297,7 @@ function Connection({
   }, [from, to]);
 
   return (
-    <line geometry={geometry}>
+    <lineSegments geometry={geometry}>
       <lineBasicMaterial
         color={color}
         transparent
@@ -305,7 +305,7 @@ function Connection({
         blending={AdditiveBlending}
         depthWrite={false}
       />
-    </line>
+    </lineSegments>
   );
 }
 
