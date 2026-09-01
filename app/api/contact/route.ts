@@ -4,10 +4,6 @@ import {
 } from "next/server";
 import { Resend } from "resend";
 
-const resend = new Resend(
-  process.env.RESEND_API_KEY,
-);
-
 type ContactPayload = {
   name?: string;
   email?: string;
@@ -25,21 +21,15 @@ const enquiryLabels: Record<
   string,
   string
 > = {
-  technology:
-    "Technology opportunity",
-  "product-venture":
-    "Product or venture",
-  research:
-    "Research collaboration",
+  technology: "Technology opportunity",
+  "product-venture": "Product or venture",
+  research: "Research collaboration",
   partnership: "Partnership",
-  careers:
-    "Careers & collaboration",
+  careers: "Careers & collaboration",
   general: "General enquiry",
 };
 
-function escapeHtml(
-  value: string,
-) {
+function escapeHtml(value: string) {
   return value
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
@@ -52,9 +42,16 @@ export async function POST(
   request: NextRequest,
 ) {
   try {
-    if (
-      !process.env.RESEND_API_KEY
-    ) {
+    const resendApiKey =
+      process.env.RESEND_API_KEY;
+
+    const toEmail =
+      process.env.CONTACT_TO_EMAIL;
+
+    const fromEmail =
+      process.env.CONTACT_FROM_EMAIL;
+
+    if (!resendApiKey) {
       console.error(
         "Missing RESEND_API_KEY",
       );
@@ -71,16 +68,7 @@ export async function POST(
       );
     }
 
-    const toEmail =
-      process.env.CONTACT_TO_EMAIL;
-
-    const fromEmail =
-      process.env.CONTACT_FROM_EMAIL;
-
-    if (
-      !toEmail ||
-      !fromEmail
-    ) {
+    if (!toEmail || !fromEmail) {
       console.error(
         "Missing contact email configuration",
       );
@@ -97,6 +85,17 @@ export async function POST(
       );
     }
 
+    /*
+     * Create the Resend client only when
+     * the API route is actually called.
+     *
+     * This prevents Next.js from trying
+     * to initialise Resend during build.
+     */
+    const resend = new Resend(
+      resendApiKey,
+    );
+
     const body =
       (await request.json()) as ContactPayload;
 
@@ -107,8 +106,7 @@ export async function POST(
       body.email?.trim() ?? "";
 
     const organisation =
-      body.organisation?.trim() ??
-      "";
+      body.organisation?.trim() ?? "";
 
     const enquiry =
       body.enquiry?.trim() ?? "";
@@ -118,6 +116,21 @@ export async function POST(
 
     const message =
       body.message?.trim() ?? "";
+
+    /*
+     * Honeypot field.
+     *
+     * Bots may fill this hidden field.
+     * Return success so they do not know
+     * the submission was rejected.
+     */
+    if (body.website?.trim()) {
+      return NextResponse.json({
+        success: true,
+        message:
+          "Your enquiry has been sent successfully.",
+      });
+    }
 
     if (
       !name ||
@@ -138,9 +151,7 @@ export async function POST(
       );
     }
 
-    if (
-      !EMAIL_PATTERN.test(email)
-    ) {
+    if (!EMAIL_PATTERN.test(email)) {
       return NextResponse.json(
         {
           success: false,
@@ -156,8 +167,7 @@ export async function POST(
     if (
       name.length > 120 ||
       email.length > 200 ||
-      organisation.length >
-        200 ||
+      organisation.length > 200 ||
       enquiry.length > 80 ||
       subject.length > 250 ||
       message.length > 5000
@@ -175,8 +185,7 @@ export async function POST(
     }
 
     const enquiryLabel =
-      enquiryLabels[enquiry] ??
-      enquiry;
+      enquiryLabels[enquiry] ?? enquiry;
 
     const safeName =
       escapeHtml(name);
@@ -186,14 +195,11 @@ export async function POST(
 
     const safeOrganisation =
       escapeHtml(
-        organisation ||
-          "Not provided",
+        organisation || "Not provided",
       );
 
     const safeEnquiry =
-      escapeHtml(
-        enquiryLabel,
-      );
+      escapeHtml(enquiryLabel);
 
     const safeSubject =
       escapeHtml(subject);
@@ -204,10 +210,7 @@ export async function POST(
         "<br />",
       );
 
-    const {
-      data,
-      error,
-    } =
+    const { data, error } =
       await resend.emails.send({
         from: fromEmail,
 
@@ -222,6 +225,7 @@ export async function POST(
           <html>
             <head>
               <meta charset="utf-8" />
+
               <meta
                 name="viewport"
                 content="width=device-width"
@@ -278,8 +282,7 @@ export async function POST(
 
                     <h1
                       style="
-                        margin:
-                          16px 0 0;
+                        margin:16px 0 0;
                         color:#ffffff;
                         font-family:
                           Georgia,
@@ -446,8 +449,7 @@ export async function POST(
                           color:#F4A62A;
                           font-size:11px;
                           font-weight:700;
-                          letter-spacing:
-                            2px;
+                          letter-spacing:2px;
                           text-transform:
                             uppercase;
                         "
