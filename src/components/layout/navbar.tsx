@@ -155,7 +155,7 @@ export function Navbar() {
         ${
           mounted && theme === "dark"
             ? "scale-100"
-            : "scale-[3.00] origin-left"
+            : "scale-[1.35] origin-left"
         }
 
         group-hover:scale-[1.02]
