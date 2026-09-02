@@ -8,94 +8,46 @@ import { VentureStages } from "@/src/components/ventures/venture-stages";
 import { VenturesCta } from "@/src/components/ventures/ventures-cta";
 import { VenturesHero } from "@/src/components/ventures/ventures-hero";
 
-import { VenturesScene } from "@/src/components/three/ventures-scene";
-import { VenturesSceneExperienceProvider } from "@/src/components/three/ventures-scene-experience";
-import { VenturesSceneSection } from "@/src/components/three/ventures-scene-section";
-
 import { Footer } from "@/src/components/layout/footer";
 import { Navbar } from "@/src/components/layout/navbar";
 
+import { VenturesScene } from "@/src/components/three/ventures-scene";
+
 export default function VenturesPage() {
   return (
-    <VenturesSceneExperienceProvider>
+    <main className="relative min-h-screen overflow-x-clip bg-[#F8FAFC] text-[#0A1D2F] dark:bg-[#0D1117] dark:text-white">
       <Navbar />
-      <div className="relative isolate min-h-screen overflow-x-clip bg-[#F8FAFC] text-[#0A1D2F] dark:bg-[#0D1117] dark:text-white">
-        {/* =====================================================
-            PERSISTENT 3D ENVIRONMENT
 
-            One Canvas remains mounted for the entire Ventures page.
-            Individual sections only tell it which venture state
-            should currently be active.
-        ===================================================== */}
+      {/* =====================================================
+          STATIC 3D ENVIRONMENT
+      ===================================================== */}
 
-        <div
-          aria-hidden="true"
-          className="pointer-events-none fixed inset-0 z-0"
-        >
-          <VenturesScene />
-        </div>
+      <div
+        aria-hidden="true"
+        className="pointer-events-none fixed inset-0 z-0"
+      >
+        <VenturesScene />
+      </div>
 
-        {/* =====================================================
-            PAGE CONTENT
-        ===================================================== */}
+      {/* =====================================================
+          PAGE CONTENT
+      ===================================================== */}
 
-        <main className="relative z-10">
-          {/* 01 — POSSIBILITY FIELD */}
+      <div className="relative z-10">
+        <VenturesHero />
+        <VenturePhilosophy />
+        <VenturePortfolio />
+        <FeaturedVenture />
+        <VentureEmergence />
+        <VentureCapabilities />
+        <VentureStages />
+        <FutureVentures />
+        <VenturesCta />
+      </div>
 
-          <VenturesSceneSection scene="hero">
-            <VenturesHero />
-          </VenturesSceneSection>
-
-          {/* 02 — SELECTIVITY / FILTERING */}
-
-          <VenturesSceneSection scene="philosophy">
-            <VenturePhilosophy />
-          </VenturesSceneSection>
-
-          {/* 03 — PORTFOLIO SYSTEM */}
-
-          <VenturesSceneSection scene="portfolio">
-            <VenturePortfolio />
-          </VenturesSceneSection>
-
-          {/* 04 — FEATURED VENTURE */}
-
-          <VenturesSceneSection scene="featured">
-            <FeaturedVenture />
-          </VenturesSceneSection>
-
-          {/* 05 — VENTURE FORMATION */}
-
-          <VenturesSceneSection scene="emergence">
-            <VentureEmergence />
-          </VenturesSceneSection>
-
-          {/* 06 — EVOLVAER CAPABILITIES */}
-
-          <VenturesSceneSection scene="capabilities">
-            <VentureCapabilities />
-          </VenturesSceneSection>
-
-          {/* 07 — VENTURE LIFECYCLE */}
-
-          <VenturesSceneSection scene="stages">
-            <VentureStages />
-          </VenturesSceneSection>
-
-          {/* 08 — FUTURE PORTFOLIO */}
-
-          <VenturesSceneSection scene="future">
-            <FutureVentures />
-          </VenturesSceneSection>
-
-          {/* 09 — RESOLUTION */}
-
-          <VenturesSceneSection scene="cta">
-            <VenturesCta />
-          </VenturesSceneSection>
-        </main>
+      <div className="relative z-10">
         <Footer />
       </div>
-    </VenturesSceneExperienceProvider>
+    </main>
   );
 }

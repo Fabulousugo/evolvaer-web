@@ -12,60 +12,30 @@ import { Footer } from "@/src/components/layout/footer";
 import { Navbar } from "@/src/components/layout/navbar";
 
 import { WorkScene } from "@/src/components/three/work-scene";
-import { WorkSceneExperienceProvider } from "@/src/components/three/work-scene-experience";
-import { WorkSceneSection } from "@/src/components/three/work-scene-section";
 
 export default function WhatWeDoPage() {
   return (
     <main className="relative min-h-screen overflow-x-clip bg-background text-foreground">
       <Navbar />
 
-      <WorkSceneExperienceProvider>
-        <div
-          aria-hidden="true"
-          className="pointer-events-none fixed inset-0 z-0"
-        >
-          <WorkScene />
-        </div>
+      <div
+        aria-hidden="true"
+        className="pointer-events-none fixed inset-0 z-0"
+      >
+        <WorkScene />
+      </div>
 
-        <div className="relative z-10">
-          <WorkSceneSection scene="hero">
-            <WhatWeDoHero />
-          </WorkSceneSection>
-
-          <WorkSceneSection scene="explore">
-            <ExploreSection />
-          </WorkSceneSection>
-
-          <WorkSceneSection scene="research">
-            <ResearchStage />
-          </WorkSceneSection>
-
-          <WorkSceneSection scene="engineer">
-            <EngineerStage />
-          </WorkSceneSection>
-
-          <WorkSceneSection scene="build">
-            <BuildStage />
-          </WorkSceneSection>
-
-          <WorkSceneSection scene="scale">
-            <ScaleStage />
-          </WorkSceneSection>
-
-          <WorkSceneSection scene="impact">
-            <ImpactStage />
-          </WorkSceneSection>
-
-          <WorkSceneSection scene="integrated">
-            <IntegratedModel />
-          </WorkSceneSection>
-
-          <WorkSceneSection scene="cta">
-            <WhatWeDoCta />
-          </WorkSceneSection>
-        </div>
-      </WorkSceneExperienceProvider>
+      <div className="relative z-10">
+        <WhatWeDoHero />
+        <ExploreSection />
+        <ResearchStage />
+        <EngineerStage />
+        <BuildStage />
+        <ScaleStage />
+        <ImpactStage />
+        <IntegratedModel />
+        <WhatWeDoCta />
+      </div>
 
       <div className="relative z-10">
         <Footer />

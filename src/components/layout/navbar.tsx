@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -36,57 +37,57 @@ const navItems = [
     label: "Careers",
     href: "/careers",
   },
-] as const;
-
-function isPathActive(
-  pathname: string,
-  href: string,
-) {
-  return (
-    pathname === href ||
-    pathname.startsWith(
-      `${href}/`,
-    )
-  );
-}
+];
 
 export function Navbar() {
-  const pathname =
-    usePathname();
+  const pathname = usePathname();
 
   const {
+    theme,
     toggleTheme,
+    mounted,
   } = useTheme();
 
-  const [
-    mobileOpen,
-    setMobileOpen,
-  ] = useState(false);
+  const [mobileOpen, setMobileOpen] =
+    useState(false);
 
   /*
-   * Mobile-only side effects.
-   *
-   * One effect handles:
-   * - body scroll locking
-   * - Escape key
+   * Close the mobile navigation whenever
+   * the active route changes.
+   */
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
+
+  /*
+   * Prevent the page behind the mobile
+   * navigation from scrolling.
    */
   useEffect(() => {
     if (!mobileOpen) {
-      document.body.style.overflow =
-        "";
-
+      document.body.style.overflow = "";
       return;
     }
 
-    document.body.style.overflow =
-      "hidden";
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileOpen]);
+
+  /*
+   * Allow Escape to close the mobile menu.
+   */
+  useEffect(() => {
+    if (!mobileOpen) {
+      return;
+    }
 
     const handleKeyDown = (
       event: KeyboardEvent,
     ) => {
-      if (
-        event.key === "Escape"
-      ) {
+      if (event.key === "Escape") {
         setMobileOpen(false);
       }
     };
@@ -97,9 +98,6 @@ export function Navbar() {
     );
 
     return () => {
-      document.body.style.overflow =
-        "";
-
       window.removeEventListener(
         "keydown",
         handleKeyDown,
@@ -107,41 +105,51 @@ export function Navbar() {
     };
   }, [mobileOpen]);
 
-  const closeMobileMenu = () => {
-    setMobileOpen(false);
+  const isActive = (href: string) => {
+    if (href === "/") {
+      return pathname === "/";
+    }
+
+    return (
+      pathname === href ||
+      pathname.startsWith(`${href}/`)
+    );
   };
+
+  const isDark =
+    mounted && theme === "dark";
 
   return (
     <>
       {/* =====================================================
-          HEADER
-      ===================================================== */}
+          DESKTOP / TABLET HEADER
+          ===================================================== */}
 
       <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-4 sm:pt-4">
         <div className="evolvaer-container">
           <div
             className="
-              relative
-              flex min-h-[4.5rem]
-              items-center
-              justify-between
+              relative flex min-h-[4.5rem]
+              items-center justify-between
               rounded-[1.25rem]
-              border
-              border-navy/[0.08]
-              bg-white/[0.92]
+              border border-navy/[0.08]
+              bg-white/80
               px-4
-              shadow-[0_12px_40px_rgba(10,29,47,0.055)]
+              shadow-[0_14px_50px_rgba(10,29,47,0.06)]
+              backdrop-blur-2xl
+              transition-[background-color,border-color,box-shadow]
+              duration-500
 
               dark:border-white/[0.08]
-              dark:bg-[#0d1117]/[0.92]
-              dark:shadow-[0_14px_44px_rgba(0,0,0,0.22)]
+              dark:bg-[#0d1117]/78
+              dark:shadow-[0_18px_60px_rgba(0,0,0,0.25)]
 
               sm:px-5
             "
           >
             {/* =================================================
                 LOGO
-            ================================================= */}
+                ================================================= */}
 
             <Link
               href="/"
@@ -151,40 +159,55 @@ export function Navbar() {
                 flex items-center
               "
             >
-              <span
-                aria-hidden="true"
+              <div
                 className="
-                  block
-                  h-[38px]
-                  w-[150px]
-
-                  bg-[url('/brand/evolvaer-logo-light.png')]
-                  bg-[length:135%_auto]
-                  bg-left
-                  bg-no-repeat
-
-                  dark:bg-[url('/brand/evolvaer-logo-dark.png')]
-                  dark:bg-contain
-
-                  sm:h-[42px]
-                  sm:w-[166px]
-
-                  lg:h-[44px]
-                  lg:w-[176px]
+                  relative
+                  h-[38px] w-[150px]
+                  sm:h-[42px] sm:w-[166px]
+                  lg:h-[44px] lg:w-[176px]
                 "
-              />
+              >
+                {mounted ? (
+                  <Image
+                    src={
+                      isDark
+                        ? "/brand/evolvaer-logo-dark.png"
+                        : "/brand/evolvaer-logo-light.png"
+                    }
+                    alt="Evolvaer Technologies"
+                    fill
+                    priority
+                   sizes="(max-width: 640px) 150px, (max-width: 1024px) 166px, 176px"
+                    className={`
+                      object-contain
+                      object-left
+
+                      ${
+                        isDark
+                          ? "scale-100"
+                          : "origin-left scale-[1.35]"
+                      }
+                    `}
+                  />
+                ) : (
+                  <div
+                    aria-hidden="true"
+                    className="
+                      h-full w-full
+                    "
+                  />
+                )}
+              </div>
             </Link>
 
             {/* =================================================
                 DESKTOP NAVIGATION
-            ================================================= */}
+                ================================================= */}
 
             <nav
               aria-label="Primary navigation"
               className="
-                absolute
-                left-1/2
-                top-1/2
+                absolute left-1/2 top-1/2
                 hidden
                 -translate-x-1/2
                 -translate-y-1/2
@@ -194,11 +217,9 @@ export function Navbar() {
             >
               <div
                 className="
-                  flex
-                  items-center
+                  flex items-center
                   rounded-full
-                  border
-                  border-navy/[0.065]
+                  border border-navy/[0.065]
                   bg-navy/[0.025]
                   p-1
 
@@ -206,116 +227,110 @@ export function Navbar() {
                   dark:bg-white/[0.025]
                 "
               >
-                {navItems.map(
-                  (item) => {
-                    const active =
-                      isPathActive(
-                        pathname,
-                        item.href,
-                      );
+                {navItems.map((item) => {
+                  const active =
+                    isActive(item.href);
 
-                    return (
-                      <Link
-                        key={
-                          item.href
-                        }
-                        href={
-                          item.href
-                        }
-                        aria-current={
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      aria-current={
+                        active
+                          ? "page"
+                          : undefined
+                      }
+                      className={`
+                        relative
+                        rounded-full
+                        px-4 py-2.5
+                        text-[0.73rem]
+                        font-medium
+                        transition-all
+                        duration-300
+
+                        ${
                           active
-                            ? "page"
-                            : undefined
+                            ? `
+                              bg-white
+                              text-navy
+                              shadow-[0_4px_18px_rgba(10,29,47,0.08)]
+
+                              dark:bg-white/[0.08]
+                              dark:text-white
+                              dark:shadow-none
+                            `
+                            : `
+                              text-navy/55
+                              hover:text-blue
+
+                              dark:text-white/48
+                              dark:hover:text-blue
+                            `
                         }
-                        className={`
-                          relative
-                          rounded-full
-                          px-4
-                          py-2.5
-                          text-[0.73rem]
-                          font-medium
+                      `}
+                    >
+                      {item.label}
 
-                          transition-[color,background-color,box-shadow]
-                          duration-200
-
-                          ${
-                            active
-                              ? `
-                                  bg-white
-                                  text-navy
-                                  shadow-[0_4px_14px_rgba(10,29,47,0.07)]
-
-                                  dark:bg-white/[0.08]
-                                  dark:text-white
-                                  dark:shadow-none
-                                `
-                              : `
-                                  text-navy/55
-                                  hover:text-blue
-
-                                  dark:text-white/48
-                                  dark:hover:text-blue
-                                `
-                          }
-                        `}
-                      >
-                        {
-                          item.label
-                        }
-
-                        {active && (
-                          <span
-                            aria-hidden="true"
-                            className="
-                              absolute
-                              bottom-[0.28rem]
-                              left-1/2
-                              h-[2px]
-                              w-3
-                              -translate-x-1/2
-                              rounded-full
-                              bg-blue
-                            "
-                          />
-                        )}
-                      </Link>
-                    );
-                  },
-                )}
+                      {active && (
+                        <span
+                          aria-hidden="true"
+                          className="
+                            absolute
+                            bottom-[0.28rem]
+                            left-1/2
+                            h-[2px]
+                            w-3
+                            -translate-x-1/2
+                            rounded-full
+                            bg-blue
+                          "
+                        />
+                      )}
+                    </Link>
+                  );
+                })}
               </div>
             </nav>
 
             {/* =================================================
-                ACTIONS
-            ================================================= */}
+                RIGHT ACTIONS
+                ================================================= */}
 
             <div className="relative z-20 flex items-center gap-2">
-              {/* Theme */}
+              {/* Theme toggle */}
 
               <button
                 type="button"
-                onClick={
-                  toggleTheme
+                onClick={toggleTheme}
+                disabled={!mounted}
+                aria-label={
+                  isDark
+                    ? "Switch to light mode"
+                    : "Switch to dark mode"
                 }
-                aria-label="Toggle colour theme"
-                title="Toggle colour theme"
+                title={
+                  isDark
+                    ? "Light mode"
+                    : "Dark mode"
+                }
                 className="
                   flex h-10 w-10
-                  items-center
-                  justify-center
+                  items-center justify-center
                   rounded-full
 
-                  border
-                  border-navy/[0.08]
+                  border border-navy/[0.08]
                   bg-navy/[0.025]
                   text-navy/55
 
-                  transition-[color,background-color,border-color]
-                  duration-200
+                  transition-all
+                  duration-300
 
                   hover:border-blue/25
                   hover:bg-blue/[0.055]
                   hover:text-blue
+
+                  disabled:cursor-default
 
                   dark:border-white/[0.08]
                   dark:bg-white/[0.025]
@@ -326,22 +341,22 @@ export function Navbar() {
                   dark:hover:text-blue
                 "
               >
-                <Moon
-                  aria-hidden="true"
-                  className="
-                    h-4 w-4
-                    dark:hidden
-                  "
-                />
-
-                <Sun
-                  aria-hidden="true"
-                  className="
-                    hidden
-                    h-4 w-4
-                    dark:block
-                  "
-                />
+                {!mounted ? (
+                  <span
+                    aria-hidden="true"
+                    className="h-4 w-4"
+                  />
+                ) : isDark ? (
+                  <Sun
+                    aria-hidden="true"
+                    className="h-4 w-4"
+                  />
+                ) : (
+                  <Moon
+                    aria-hidden="true"
+                    className="h-4 w-4"
+                  />
+                )}
               </button>
 
               {/* CTA */}
@@ -349,49 +364,42 @@ export function Navbar() {
               <Link
                 href="/contact"
                 aria-current={
-                  isPathActive(
-                    pathname,
-                    "/contact",
-                  )
+                  isActive("/contact")
                     ? "page"
                     : undefined
                 }
                 className={`
-                  hidden
-                  min-h-10
+                  hidden min-h-10
                   items-center
                   rounded-full
                   px-5
                   text-[0.73rem]
                   font-semibold
-
-                  transition-[transform,background-color,box-shadow]
-                  duration-200
-
+                  transition-all
+                  duration-300
                   sm:inline-flex
 
                   ${
-                    isPathActive(
-                      pathname,
-                      "/contact",
-                    )
+                    isActive("/contact")
                       ? `
-                          bg-blue
-                          !text-white
-                          shadow-[0_7px_22px_rgba(37,99,235,0.18)]
-                        `
+                        bg-blue
+                        !text-white
+                        shadow-[0_8px_28px_rgba(37,99,235,0.22)]
+                      `
                       : `
-                          bg-navy
-                          !text-white
+                        bg-navy
+                        !text-white
 
-                          hover:-translate-y-0.5
-                          hover:bg-blue
-                          hover:shadow-[0_8px_24px_rgba(37,99,235,0.18)]
+                        hover:-translate-y-0.5
+                        hover:bg-blue
+                        hover:shadow-[0_10px_30px_rgba(37,99,235,0.2)]
 
-                          dark:bg-blue
-                          dark:!text-white
-                          dark:hover:bg-[#4b8df8]
-                        `
+                        dark:bg-blue
+                        dark:!text-white
+
+                        dark:hover:bg-[#4b8df8]
+                        dark:hover:shadow-[0_10px_35px_rgba(59,130,246,0.25)]
+                      `
                   }
                 `}
               >
@@ -402,34 +410,29 @@ export function Navbar() {
 
               <button
                 type="button"
-                onClick={() => {
+                onClick={() =>
                   setMobileOpen(
-                    (current) =>
-                      !current,
-                  );
-                }}
+                    (current) => !current,
+                  )
+                }
                 aria-label={
                   mobileOpen
                     ? "Close navigation menu"
                     : "Open navigation menu"
                 }
-                aria-expanded={
-                  mobileOpen
-                }
+                aria-expanded={mobileOpen}
                 aria-controls="mobile-navigation"
                 className="
                   flex h-10 w-10
-                  items-center
-                  justify-center
+                  items-center justify-center
                   rounded-full
 
-                  border
-                  border-navy/[0.08]
+                  border border-navy/[0.08]
                   bg-navy/[0.025]
                   text-navy
 
-                  transition-[color,border-color,background-color]
-                  duration-200
+                  transition-all
+                  duration-300
 
                   hover:border-blue/25
                   hover:text-blue
@@ -459,17 +462,15 @@ export function Navbar() {
             </div>
 
             {/* =================================================
-                BRAND LINE
-            ================================================= */}
+                SUBTLE BRAND LINE
+                ================================================= */}
 
             <div
               aria-hidden="true"
               className="
                 pointer-events-none
-                absolute
-                bottom-0
-                left-[8%]
-                right-[8%]
+                absolute bottom-0
+                left-[8%] right-[8%]
                 h-px
 
                 bg-gradient-to-r
@@ -485,74 +486,120 @@ export function Navbar() {
       </header>
 
       {/* =====================================================
-          MOBILE NAVIGATION
-      ===================================================== */}
+          MOBILE MENU
+          ===================================================== */}
 
       <div
         id="mobile-navigation"
-        aria-hidden={
-          !mobileOpen
-        }
+        aria-hidden={!mobileOpen}
         className={`
           fixed inset-0 z-40
+          transition-all duration-500
           lg:hidden
-
-          transition-[opacity,visibility]
-          duration-300
 
           ${
             mobileOpen
               ? `
-                  pointer-events-auto
-                  visible
-                  opacity-100
-                `
+                pointer-events-auto
+                visible
+                opacity-100
+              `
               : `
-                  pointer-events-none
-                  invisible
-                  opacity-0
-                `
+                pointer-events-none
+                invisible
+                opacity-0
+              `
           }
         `}
       >
-        {/* Lightweight background */}
+        {/* Background */}
 
         <div
           aria-hidden="true"
           className="
-            absolute
-            inset-0
-            bg-background
+            absolute inset-0
+            bg-white/[0.97]
+            backdrop-blur-3xl
+
+            dark:bg-[#0d1117]/[0.98]
           "
         />
 
+        {/* Ambient environment */}
+
         <div
           aria-hidden="true"
           className="
-            cinematic-background
             pointer-events-none
-            absolute
-            inset-0
-            opacity-70
+            absolute inset-0
+            overflow-hidden
           "
-        />
+        >
+          <div
+            className="
+              absolute
+              right-[-10rem]
+              top-[-8rem]
 
-        <div
-          aria-hidden="true"
-          className="
-            brand-grid
-            pointer-events-none
-            absolute
-            inset-0
-            opacity-30
+              h-[30rem]
+              w-[30rem]
 
-            dark:opacity-20
-          "
-        />
+              rounded-full
+              bg-blue/[0.09]
+              blur-[140px]
+
+              dark:bg-blue/[0.13]
+            "
+          />
+
+          <div
+            className="
+              absolute
+              bottom-[-11rem]
+              left-[-9rem]
+
+              h-[28rem]
+              w-[28rem]
+
+              rounded-full
+              bg-teal/[0.07]
+              blur-[140px]
+
+              dark:bg-teal/[0.08]
+            "
+          />
+
+          <div
+            className="
+              absolute
+              bottom-[12%]
+              right-[-8rem]
+
+              h-[22rem]
+              w-[22rem]
+
+              rounded-full
+              bg-violet/[0.05]
+              blur-[130px]
+
+              dark:bg-violet/[0.08]
+            "
+          />
+
+          <div
+            className="
+              brand-grid
+              absolute inset-0
+              opacity-40
+
+              dark:opacity-30
+            "
+          />
+        </div>
 
         {/* ===================================================
-            MOBILE CONTENT
-        =================================================== */}
+            MOBILE NAVIGATION CONTENT
+            =================================================== */}
 
         <nav
           aria-label="Mobile navigation"
@@ -561,8 +608,7 @@ export function Navbar() {
             relative z-10
             flex min-h-screen
             flex-col
-            pb-8
-            pt-32
+            pb-8 pt-32
             sm:pt-36
           "
         >
@@ -588,27 +634,14 @@ export function Navbar() {
             "
           >
             {navItems.map(
-              (
-                item,
-                index,
-              ) => {
+              (item, index) => {
                 const active =
-                  isPathActive(
-                    pathname,
-                    item.href,
-                  );
+                  isActive(item.href);
 
                 return (
                   <Link
-                    key={
-                      item.href
-                    }
-                    href={
-                      item.href
-                    }
-                    onClick={
-                      closeMobileMenu
-                    }
+                    key={item.href}
+                    href={item.href}
                     aria-current={
                       active
                         ? "page"
@@ -616,8 +649,7 @@ export function Navbar() {
                     }
                     className="
                       group
-                      flex
-                      items-center
+                      flex items-center
                       gap-5
 
                       border-b
@@ -627,6 +659,8 @@ export function Navbar() {
                       dark:border-white/[0.075]
                     "
                   >
+                    {/* Number */}
+
                     <span
                       className={`
                         w-8
@@ -637,19 +671,18 @@ export function Navbar() {
                           active
                             ? "text-blue"
                             : `
-                                text-navy/24
-                                dark:text-white/22
-                              `
+                              text-navy/24
+                              dark:text-white/22
+                            `
                         }
                       `}
                     >
                       {String(
                         index + 1,
-                      ).padStart(
-                        2,
-                        "0",
-                      )}
+                      ).padStart(2, "0")}
                     </span>
+
+                    {/* Label */}
 
                     <span
                       className={`
@@ -661,50 +694,47 @@ export function Navbar() {
                         tracking-[-0.045em]
 
                         transition-colors
-                        duration-200
 
                         ${
                           active
                             ? "text-blue"
                             : `
-                                text-navy
-                                group-hover:text-blue
+                              text-navy
+                              group-hover:text-blue
 
-                                dark:text-white
-                                dark:group-hover:text-blue
-                              `
+                              dark:text-white
+                              dark:group-hover:text-blue
+                            `
                         }
                       `}
                     >
-                      {
-                        item.label
-                      }
+                      {item.label}
                     </span>
+
+                    {/* Status dot */}
 
                     <span
                       aria-hidden="true"
                       className={`
-                        h-2
-                        w-2
+                        h-2 w-2
                         rounded-full
-
-                        transition-colors
-                        duration-200
+                        transition-all
+                        duration-300
 
                         ${
                           active
                             ? `
-                                bg-teal
-                                shadow-[0_0_12px_rgba(16,185,129,0.32)]
+                              bg-teal
+                              shadow-[0_0_18px_rgba(16,185,129,0.45)]
 
-                                dark:shadow-[0_0_12px_rgba(34,211,238,0.32)]
-                              `
+                              dark:shadow-[0_0_18px_rgba(34,211,238,0.45)]
+                            `
                             : `
-                                bg-navy/12
-                                group-hover:bg-blue
+                              bg-navy/12
+                              group-hover:bg-blue
 
-                                dark:bg-white/12
-                              `
+                              dark:bg-white/12
+                            `
                         }
                       `}
                     />
@@ -715,15 +745,12 @@ export function Navbar() {
           </div>
 
           {/* ===================================================
-              MOBILE CTA
-          =================================================== */}
+              MOBILE BOTTOM CTA
+              =================================================== */}
 
           <div className="mt-auto pt-10">
             <Link
               href="/contact"
-              onClick={
-                closeMobileMenu
-              }
               className="
                 flex min-h-14
                 w-full
@@ -738,27 +765,29 @@ export function Navbar() {
                 font-semibold
                 text-white
 
-                shadow-[0_8px_26px_rgba(10,29,47,0.1)]
+                shadow-[0_10px_35px_rgba(10,29,47,0.12)]
 
-                transition-[background-color,transform]
-                duration-200
+                transition-all
+                duration-300
 
-                hover:-translate-y-0.5
                 hover:bg-blue
 
                 dark:bg-blue
                 dark:text-white
+                dark:shadow-[0_12px_40px_rgba(59,130,246,0.2)]
+
                 dark:hover:bg-[#4b8df8]
               "
             >
               Start a conversation
             </Link>
 
+            {/* Brand disciplines */}
+
             <div
               className="
                 mt-6
-                flex
-                items-center
+                flex items-center
                 justify-between
 
                 border-t
@@ -776,21 +805,10 @@ export function Navbar() {
                 dark:text-white/26
               "
             >
-              <span>
-                Research
-              </span>
-
-              <span>
-                Engineer
-              </span>
-
-              <span>
-                Build
-              </span>
-
-              <span>
-                Scale
-              </span>
+              <span>Research</span>
+              <span>Engineer</span>
+              <span>Build</span>
+              <span>Scale</span>
             </div>
           </div>
         </nav>

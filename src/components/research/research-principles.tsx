@@ -1,5 +1,3 @@
-"use client";
-
 import {
   ArrowUpRight,
   CheckCircle2,
@@ -55,7 +53,34 @@ const principles = [
     accent: "#10B981",
     icon: Target,
   },
-];
+] as const;
+
+const principleNodes = [
+  {
+    className:
+      "left-1/2 top-[1%] -translate-x-1/2",
+    title: "Rigorous",
+    accent: "#2563EB",
+  },
+  {
+    className:
+      "right-[1%] top-1/2 -translate-y-1/2",
+    title: "Curious",
+    accent: "#A855F7",
+  },
+  {
+    className:
+      "bottom-[1%] left-1/2 -translate-x-1/2",
+    title: "Responsible",
+    accent: "#22D3EE",
+  },
+  {
+    className:
+      "left-[1%] top-1/2 -translate-y-1/2",
+    title: "Useful",
+    accent: "#10B981",
+  },
+] as const;
 
 export function ResearchPrinciples() {
   return (
@@ -71,16 +96,18 @@ export function ResearchPrinciples() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
       >
-        <div className="absolute inset-0 bg-[#F8FAFC]/[0.4] backdrop-blur-[1px] dark:bg-[#0D1117]/[0.43]" />
-
-        <div className="absolute -left-44 top-[4%] h-[34rem] w-[34rem] rounded-full bg-[#2563EB]/[0.035] blur-[170px] dark:bg-[#3B82F6]/[0.05]" />
-
-        <div className="absolute right-[-12rem] top-[28%] h-[32rem] w-[32rem] rounded-full bg-[#A855F7]/[0.03] blur-[170px] dark:bg-[#A855F7]/[0.045]" />
-
-        <div className="absolute bottom-[-12rem] left-[34%] h-[30rem] w-[30rem] rounded-full bg-[#10B981]/[0.025] blur-[170px] dark:bg-[#10B981]/[0.04]" />
+        <div className="absolute inset-0 bg-[#F8FAFC]/[0.42] dark:bg-[#0D1117]/[0.45]" />
 
         <div
-          className="absolute inset-0 opacity-[0.06] dark:opacity-[0.04]"
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(circle at 5% 8%, rgba(37,99,235,.045), transparent 30%), radial-gradient(circle at 96% 35%, rgba(168,85,247,.04), transparent 30%), radial-gradient(circle at 48% 96%, rgba(16,185,129,.03), transparent 28%)",
+          }}
+        />
+
+        <div
+          className="absolute inset-0 opacity-[0.055] dark:opacity-[0.035]"
           style={{
             backgroundImage:
               "radial-gradient(circle, rgba(37,99,235,.18) 1px, transparent 1px)",
@@ -141,103 +168,127 @@ export function ResearchPrinciples() {
         ===================================================== */}
 
         <div className="mt-16 grid gap-px overflow-hidden rounded-[2rem] border border-[#0A1D2F]/[0.08] bg-[#0A1D2F]/[0.055] dark:border-white/[0.08] dark:bg-white/[0.05] lg:mt-24 lg:grid-cols-2">
-          {principles.map((principle) => {
-            const Icon = principle.icon;
+          {principles.map(
+            (principle) => {
+              const Icon =
+                principle.icon;
 
-            return (
-              <article
-                key={principle.number}
-                className="group relative min-h-[30rem] overflow-hidden bg-white/[0.54] p-7 backdrop-blur-xl dark:bg-[#0D1117]/[0.64] sm:p-9 lg:p-10"
-              >
-                {/* hover glow */}
+              return (
+                <article
+                  key={principle.number}
+                  className="group relative min-h-[30rem] overflow-hidden bg-white/[0.64] p-7 transition-colors duration-300 hover:bg-white/[0.78] dark:bg-[#0D1117]/[0.7] dark:hover:bg-[#0D1117]/[0.8] sm:p-9 lg:p-10"
+                >
+                  {/* CHEAP HOVER ACCENTS */}
 
-                <div
-                  aria-hidden="true"
-                  className="absolute -right-24 -top-24 h-72 w-72 rounded-full opacity-0 blur-[110px] transition-opacity duration-700 group-hover:opacity-100"
-                  style={{
-                    backgroundColor: `${principle.accent}16`,
-                  }}
-                />
+                  <div
+                    aria-hidden="true"
+                    className="absolute inset-x-0 top-0 h-px opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                    style={{
+                      background: `linear-gradient(90deg, transparent, ${principle.accent}60, transparent)`,
+                    }}
+                  />
 
-                <div className="relative flex h-full flex-col">
-                  {/* TOP */}
+                  <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute right-0 top-0 h-44 w-44 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                    style={{
+                      background: `radial-gradient(circle at 100% 0%, ${principle.accent}10, transparent 70%)`,
+                    }}
+                  />
 
-                  <div className="flex items-start justify-between">
-                    <span
-                      className="font-mono text-[0.48rem]"
-                      style={{
-                        color: principle.accent,
-                      }}
-                    >
-                      {principle.number}
-                    </span>
+                  <div className="relative flex h-full flex-col">
+                    {/* TOP */}
 
-                    <div
-                      className="flex h-11 w-11 items-center justify-center rounded-full border"
-                      style={{
-                        borderColor: `${principle.accent}28`,
-                        backgroundColor: `${principle.accent}0A`,
-                      }}
-                    >
-                      <Icon
-                        className="h-[1.05rem] w-[1.05rem]"
+                    <div className="flex items-start justify-between">
+                      <span
+                        className="font-mono text-[0.48rem]"
                         style={{
-                          color: principle.accent,
+                          color:
+                            principle.accent,
                         }}
-                      />
+                      >
+                        {
+                          principle.number
+                        }
+                      </span>
+
+                      <div
+                        className="flex h-11 w-11 items-center justify-center rounded-full border"
+                        style={{
+                          borderColor: `${principle.accent}28`,
+                          backgroundColor: `${principle.accent}0A`,
+                        }}
+                      >
+                        <Icon
+                          className="h-[1.05rem] w-[1.05rem]"
+                          style={{
+                            color:
+                              principle.accent,
+                          }}
+                        />
+                      </div>
                     </div>
-                  </div>
 
-                  {/* MAIN */}
+                    {/* MAIN */}
 
-                  <div className="mt-14">
-                    <p
-                      className="text-[0.53rem] font-semibold uppercase tracking-[0.2em]"
-                      style={{
-                        color: principle.accent,
-                      }}
-                    >
-                      {principle.statement}
-                    </p>
-
-                    <h3 className="mt-4 text-[2.2rem] font-semibold leading-none tracking-[-0.045em] text-[#0A1D2F] dark:text-white sm:text-[2.5rem]">
-                      {principle.title}
-                    </h3>
-
-                    <p className="mt-6 max-w-[510px] text-sm leading-7 text-[#0A1D2F]/43 dark:text-white/38">
-                      {principle.description}
-                    </p>
-                  </div>
-
-                  {/* QUESTION */}
-
-                  <div className="mt-auto pt-10">
-                    <div
-                      className="border-l pl-5"
-                      style={{
-                        borderColor: `${principle.accent}45`,
-                      }}
-                    >
-                      <p className="text-[0.46rem] font-semibold uppercase tracking-[0.17em] text-[#0A1D2F]/24 dark:text-white/21">
-                        A question we should keep asking
+                    <div className="mt-14">
+                      <p
+                        className="text-[0.53rem] font-semibold uppercase tracking-[0.2em]"
+                        style={{
+                          color:
+                            principle.accent,
+                        }}
+                      >
+                        {
+                          principle.statement
+                        }
                       </p>
 
-                      <p className="mt-3 text-sm font-medium leading-7 text-[#0A1D2F]/61 dark:text-white/55">
-                        {principle.question}
+                      <h3 className="mt-4 text-[2.2rem] font-semibold leading-none tracking-[-0.045em] text-[#0A1D2F] dark:text-white sm:text-[2.5rem]">
+                        {
+                          principle.title
+                        }
+                      </h3>
+
+                      <p className="mt-6 max-w-[510px] text-sm leading-7 text-[#0A1D2F]/43 dark:text-white/38">
+                        {
+                          principle.description
+                        }
                       </p>
                     </div>
+
+                    {/* QUESTION */}
+
+                    <div className="mt-auto pt-10">
+                      <div
+                        className="border-l pl-5"
+                        style={{
+                          borderColor: `${principle.accent}45`,
+                        }}
+                      >
+                        <p className="text-[0.46rem] font-semibold uppercase tracking-[0.17em] text-[#0A1D2F]/24 dark:text-white/21">
+                          A question we should keep asking
+                        </p>
+
+                        <p className="mt-3 text-sm font-medium leading-7 text-[#0A1D2F]/61 dark:text-white/55">
+                          {
+                            principle.question
+                          }
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </article>
-            );
-          })}
+                </article>
+              );
+            },
+          )}
         </div>
 
         {/* =====================================================
             PRINCIPLE SYSTEM
         ===================================================== */}
 
-        <div className="mt-16 overflow-hidden rounded-[2rem] border border-[#0A1D2F]/[0.08] bg-white/[0.32] backdrop-blur-xl dark:border-white/[0.08] dark:bg-white/[0.018] lg:mt-24">
+        <div className="mt-16 overflow-hidden rounded-[2rem] border border-[#0A1D2F]/[0.08] bg-white/[0.44] dark:border-white/[0.08] dark:bg-white/[0.025] lg:mt-24">
           <div className="grid lg:grid-cols-[0.72fr_1.28fr]">
             {/* EXPLANATION */}
 
@@ -255,17 +306,26 @@ export function ResearchPrinciples() {
               </h3>
 
               <p className="mt-6 max-w-[520px] text-sm leading-7 text-[#0A1D2F]/43 dark:text-white/38">
-                Curiosity without rigour can chase noise. Rigour without
-                curiosity can narrow the field too early. Capability
-                without responsibility can create the wrong outcomes.
-                Research without usefulness can become disconnected from
-                the problems that motivated it.
+                Curiosity without rigour can chase noise. Rigour
+                without curiosity can narrow the field too early.
+                Capability without responsibility can create the wrong
+                outcomes. Research without usefulness can become
+                disconnected from the problems that motivated it.
               </p>
             </div>
 
             {/* PRINCIPLE MAP */}
 
             <div className="relative min-h-[35rem] overflow-hidden p-7 sm:p-9 lg:p-11">
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0"
+                style={{
+                  background:
+                    "radial-gradient(circle at 50% 50%, rgba(34,211,238,.028), transparent 43%)",
+                }}
+              />
+
               <PrincipleMap />
             </div>
           </div>
@@ -287,7 +347,8 @@ export function ResearchPrinciples() {
               We want to be excited by possibility without becoming
               attached to a conclusion.{" "}
               <span className="text-[#0A1D2F] dark:text-white">
-                Good research should be capable of changing our minds.
+                Good research should be capable of changing our
+                minds.
               </span>
             </p>
           </div>
@@ -310,7 +371,7 @@ export function ResearchPrinciples() {
 
           <a
             href="#open-questions"
-            className="group inline-flex items-center gap-3 text-[0.52rem] font-semibold uppercase tracking-[0.17em] text-[#2563EB] transition-colors hover:text-[#1D4ED8] dark:text-[#60A5FA] dark:hover:text-[#93C5FD]"
+            className="group inline-flex items-center gap-3 text-[0.52rem] font-semibold uppercase tracking-[0.17em] text-[#2563EB] transition-colors duration-300 hover:text-[#1D4ED8] dark:text-[#60A5FA] dark:hover:text-[#93C5FD]"
           >
             Open questions
 
@@ -343,9 +404,15 @@ function PrincipleMap() {
 
       {/* CONNECTIONS */}
 
-      <PrincipleConnection className="left-1/2 top-[18%] h-[33%] w-px" />
+      <PrincipleConnection
+        className="left-1/2 top-[18%] h-[33%] w-px"
+        vertical
+      />
 
-      <PrincipleConnection className="bottom-[17%] left-1/2 h-[34%] w-px" />
+      <PrincipleConnection
+        className="bottom-[17%] left-1/2 h-[34%] w-px"
+        vertical
+      />
 
       <PrincipleConnection className="left-[18%] top-1/2 h-px w-[33%]" />
 
@@ -353,7 +420,7 @@ function PrincipleMap() {
 
       {/* CORE */}
 
-      <div className="absolute left-1/2 top-1/2 z-20 flex h-[8rem] w-[8rem] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-[#22D3EE]/25 bg-white/[0.78] shadow-[0_0_55px_rgba(34,211,238,.1)] backdrop-blur-xl dark:bg-[#0D1117]/[0.84]">
+      <div className="absolute left-1/2 top-1/2 z-20 flex h-[8rem] w-[8rem] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-[#22D3EE]/25 bg-white/[0.86] shadow-[0_0_26px_rgba(34,211,238,.07)] dark:bg-[#0D1117]/[0.9]">
         <span className="absolute inset-[8px] rounded-full border border-[#22D3EE]/10" />
 
         <div className="text-center">
@@ -369,29 +436,14 @@ function PrincipleMap() {
         </div>
       </div>
 
-      <PrincipleNode
-        className="left-1/2 top-[1%] -translate-x-1/2"
-        title="Rigorous"
-        accent="#2563EB"
-      />
-
-      <PrincipleNode
-        className="right-[1%] top-1/2 -translate-y-1/2"
-        title="Curious"
-        accent="#A855F7"
-      />
-
-      <PrincipleNode
-        className="bottom-[1%] left-1/2 -translate-x-1/2"
-        title="Responsible"
-        accent="#22D3EE"
-      />
-
-      <PrincipleNode
-        className="left-[1%] top-1/2 -translate-y-1/2"
-        title="Useful"
-        accent="#10B981"
-      />
+      {principleNodes.map(
+        (node) => (
+          <PrincipleNode
+            key={node.title}
+            {...node}
+          />
+        ),
+      )}
 
       {/* FIELD POINTS */}
 
@@ -420,10 +472,9 @@ function PrincipleNode({
       className={`absolute z-10 flex flex-col items-center ${className}`}
     >
       <div
-        className="relative flex h-[5.3rem] w-[5.3rem] items-center justify-center rounded-full border bg-white/[0.72] backdrop-blur-xl dark:bg-[#0D1117]/[0.8]"
+        className="relative flex h-[5.3rem] w-[5.3rem] items-center justify-center rounded-full border bg-white/[0.8] dark:bg-[#0D1117]/[0.84]"
         style={{
           borderColor: `${accent}32`,
-          boxShadow: `0 0 30px ${accent}0C`,
         }}
       >
         <span
@@ -437,7 +488,7 @@ function PrincipleNode({
           className="h-2.5 w-2.5 rounded-full"
           style={{
             backgroundColor: accent,
-            boxShadow: `0 0 12px ${accent}70`,
+            boxShadow: `0 0 7px ${accent}50`,
           }}
         />
       </div>
@@ -451,13 +502,20 @@ function PrincipleNode({
 
 function PrincipleConnection({
   className,
+  vertical = false,
 }: {
   className: string;
+  vertical?: boolean;
 }) {
   return (
     <span
       aria-hidden="true"
-      className={`absolute z-0 bg-gradient-to-r from-[#2563EB]/10 via-[#22D3EE]/35 to-[#10B981]/10 ${className}`}
+      className={`absolute z-0 ${className}`}
+      style={{
+        background: vertical
+          ? "linear-gradient(180deg, rgba(37,99,235,.1), rgba(34,211,238,.35), rgba(16,185,129,.1))"
+          : "linear-gradient(90deg, rgba(37,99,235,.1), rgba(34,211,238,.35), rgba(16,185,129,.1))",
+      }}
     />
   );
 }

@@ -1,5 +1,3 @@
-"use client";
-
 import {
   CircleCheck,
   CircleX,
@@ -11,7 +9,8 @@ const filters = [
   {
     icon: Sparkles,
     label: "Possible",
-    title: "Can the technology support it?",
+    title:
+      "Can the technology support it?",
     description:
       "We look at whether the underlying technical capability is real enough to build on — not merely interesting in theory.",
     accent: "#2563EB",
@@ -19,7 +18,8 @@ const filters = [
   {
     icon: CircleCheck,
     label: "Useful",
-    title: "Does it solve something that matters?",
+    title:
+      "Does it solve something that matters?",
     description:
       "A venture needs a meaningful problem, user need or market tension that makes the product worth adopting.",
     accent: "#22D3EE",
@@ -27,12 +27,35 @@ const filters = [
   {
     icon: Filter,
     label: "Viable",
-    title: "Can it become a sustainable venture?",
+    title:
+      "Can it become a sustainable venture?",
     description:
       "We examine whether the opportunity can support a credible product, operating model and path to growth.",
     accent: "#10B981",
   },
-];
+] as const;
+
+const decisionStates = [
+  {
+    number: "01",
+    label: "Interesting",
+    state: "Observe",
+    accent: "#64748B",
+  },
+  {
+    number: "02",
+    label: "Promising",
+    state: "Investigate",
+    accent: "#7C3AED",
+  },
+  {
+    number: "03",
+    label: "Compelling",
+    state: "Build",
+    accent: "#10B981",
+    active: true,
+  },
+] as const;
 
 export function VenturePhilosophy() {
   return (
@@ -41,18 +64,22 @@ export function VenturePhilosophy() {
       className="relative overflow-hidden py-24 sm:py-28 lg:py-32"
     >
       {/* =====================================================
-          BACKDROP
+          ATMOSPHERE
       ===================================================== */}
 
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
       >
-        <div className="absolute inset-0 bg-[#F8FAFC]/[0.6] backdrop-blur-[2px] dark:bg-[#0D1117]/[0.58]" />
+        <div className="absolute inset-0 bg-[#F8FAFC]/[0.78] dark:bg-[#0D1117]/[0.74]" />
 
-        <div className="absolute -left-52 top-[10%] h-[34rem] w-[34rem] rounded-full bg-[#2563EB]/[0.04] blur-[170px] dark:bg-[#3B82F6]/[0.06]" />
-
-        <div className="absolute right-[-12rem] bottom-[-8rem] h-[32rem] w-[32rem] rounded-full bg-[#A855F7]/[0.035] blur-[160px] dark:bg-[#A855F7]/[0.05]" />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(circle at 7% 20%, rgba(37,99,235,.055), transparent 29%), radial-gradient(circle at 92% 86%, rgba(168,85,247,.045), transparent 31%)",
+          }}
+        />
       </div>
 
       <div className="evolvaer-container relative z-10">
@@ -78,10 +105,10 @@ export function VenturePhilosophy() {
 
           <div className="max-w-[610px] lg:justify-self-end">
             <p className="text-base leading-8 text-[#0A1D2F]/58 dark:text-white/54 sm:text-[1.05rem]">
-              We explore more ideas than we build. The purpose of that
-              exploration is not to create as many ventures as possible,
-              but to identify the few opportunities that are strong
-              enough to deserve deeper investment.
+              We explore more ideas than we build. The purpose of
+              that exploration is not to create as many ventures as
+              possible, but to identify the few opportunities that
+              are strong enough to deserve deeper investment.
             </p>
 
             <p className="mt-5 text-sm leading-7 text-[#0A1D2F]/40 dark:text-white/36">
@@ -98,18 +125,19 @@ export function VenturePhilosophy() {
 
         <div className="mt-16 grid gap-px overflow-hidden rounded-[1.8rem] border border-[#0A1D2F]/[0.08] bg-[#0A1D2F]/[0.065] dark:border-white/[0.08] dark:bg-white/[0.06] lg:mt-20 lg:grid-cols-3">
           {filters.map((item) => {
-            const Icon = item.icon;
+            const Icon =
+              item.icon;
 
             return (
               <article
                 key={item.label}
-                className="group relative min-h-[22rem] overflow-hidden bg-white/[0.68] p-7 backdrop-blur-xl dark:bg-[#0D1117]/[0.7] sm:p-9"
+                className="group relative min-h-[22rem] overflow-hidden bg-white/[0.78] p-7 transition-colors duration-300 hover:bg-white/[0.92] dark:bg-[#0D1117]/[0.8] dark:hover:bg-[#111820] sm:p-9"
               >
                 <div
                   aria-hidden="true"
-                  className="absolute -right-16 -top-16 h-44 w-44 rounded-full opacity-0 blur-[70px] transition-opacity duration-500 group-hover:opacity-100"
+                  className="absolute right-0 top-0 h-32 w-32 opacity-30 transition-opacity duration-300 group-hover:opacity-60"
                   style={{
-                    backgroundColor: `${item.accent}18`,
+                    background: `radial-gradient(circle at 100% 0%, ${item.accent}18, transparent 68%)`,
                   }}
                 />
 
@@ -117,7 +145,8 @@ export function VenturePhilosophy() {
                   <div
                     className="flex h-11 w-11 items-center justify-center rounded-xl border"
                     style={{
-                      color: item.accent,
+                      color:
+                        item.accent,
                       borderColor: `${item.accent}30`,
                       backgroundColor: `${item.accent}0D`,
                     }}
@@ -129,7 +158,8 @@ export function VenturePhilosophy() {
                     <p
                       className="text-[0.55rem] font-semibold uppercase tracking-[0.23em]"
                       style={{
-                        color: item.accent,
+                        color:
+                          item.accent,
                       }}
                     >
                       {item.label}
@@ -140,7 +170,9 @@ export function VenturePhilosophy() {
                     </h3>
 
                     <p className="mt-4 text-sm leading-7 text-[#0A1D2F]/45 dark:text-white/39">
-                      {item.description}
+                      {
+                        item.description
+                      }
                     </p>
                   </div>
                 </div>
@@ -150,7 +182,7 @@ export function VenturePhilosophy() {
         </div>
 
         {/* =====================================================
-            SELECTIVITY STATEMENT
+            SELECTIVITY
         ===================================================== */}
 
         <div className="mt-14 grid gap-9 lg:mt-20 lg:grid-cols-[0.7fr_1.3fr] lg:items-center">
@@ -168,36 +200,51 @@ export function VenturePhilosophy() {
             </h3>
           </div>
 
-          <div className="rounded-[1.7rem] border border-[#0A1D2F]/[0.08] bg-white/[0.3] p-6 backdrop-blur-xl dark:border-white/[0.08] dark:bg-white/[0.02] sm:p-8">
-            <div className="grid gap-6 sm:grid-cols-3">
-              <DecisionState
-                number="01"
-                label="Interesting"
-                state="Observe"
-                accent="#64748B"
-              />
+          <div className="relative overflow-hidden rounded-[1.7rem] border border-[#0A1D2F]/[0.08] bg-white/[0.46] p-6 dark:border-white/[0.08] dark:bg-white/[0.035] sm:p-8">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 opacity-70 dark:opacity-50"
+              style={{
+                background:
+                  "radial-gradient(circle at 85% 0%, rgba(16,185,129,.045), transparent 34%), radial-gradient(circle at 15% 100%, rgba(124,58,237,.035), transparent 34%)",
+              }}
+            />
 
-              <DecisionState
-                number="02"
-                label="Promising"
-                state="Investigate"
-                accent="#7C3AED"
-              />
-
-              <DecisionState
-                number="03"
-                label="Compelling"
-                state="Build"
-                accent="#10B981"
-                active
-              />
+            <div className="relative grid gap-6 sm:grid-cols-3">
+              {decisionStates.map(
+                (item) => (
+                  <DecisionState
+                    key={
+                      item.number
+                    }
+                    number={
+                      item.number
+                    }
+                    label={
+                      item.label
+                    }
+                    state={
+                      item.state
+                    }
+                    accent={
+                      item.accent
+                    }
+                    active={
+                      "active" in
+                      item
+                        ? item.active
+                        : false
+                    }
+                  />
+                ),
+              )}
             </div>
 
-            <div className="mt-7 border-t border-[#0A1D2F]/[0.07] pt-6 dark:border-white/[0.07]">
+            <div className="relative mt-7 border-t border-[#0A1D2F]/[0.07] pt-6 dark:border-white/[0.07]">
               <p className="max-w-[46rem] text-sm leading-7 text-[#0A1D2F]/45 dark:text-white/39">
                 The aim is not to force every exploration toward a
-                launch. Sometimes the best outcome is learning quickly
-                that an idea should not move forward.
+                launch. Sometimes the best outcome is learning
+                quickly that an idea should not move forward.
               </p>
             </div>
           </div>
@@ -218,8 +265,8 @@ export function VenturePhilosophy() {
               <span className="text-[#0A1D2F] dark:text-white">
                 technology with a reason to exist
               </span>{" "}
-              — not products created simply because a new capability
-              has become available.
+              — not products created simply because a new
+              capability has become available.
             </p>
           </div>
         </div>
@@ -253,8 +300,9 @@ function DecisionState({
         <span
           className="absolute right-4 top-4 h-1.5 w-1.5 rounded-full"
           style={{
-            backgroundColor: accent,
-            boxShadow: `0 0 12px ${accent}`,
+            backgroundColor:
+              accent,
+            boxShadow: `0 0 8px ${accent}90`,
           }}
         />
       )}

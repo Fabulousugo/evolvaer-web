@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import {
   ArrowUpRight,
@@ -38,7 +36,62 @@ const portfolioPrinciples = [
       "The goal is not simply to launch products. We want to build technology that can create durable usefulness and real-world value.",
     accent: "#10B981",
   },
-];
+] as const;
+
+const futureNodes = [
+  {
+    className: "right-[1%] top-[16%]",
+    label: "Adaptcues",
+    sublabel: "Building",
+    accent: "#22D3EE",
+    active: true,
+  },
+  {
+    className: "left-[4%] top-[11%]",
+    label: "Opportunity",
+    sublabel: "Undiscovered",
+    accent: "#7C3AED",
+  },
+  {
+    className: "bottom-[7%] right-[5%]",
+    label: "Opportunity",
+    sublabel: "Future",
+    accent: "#10B981",
+  },
+  {
+    className: "bottom-[4%] left-[9%]",
+    label: "Opportunity",
+    sublabel: "Exploration",
+    accent: "#2563EB",
+  },
+] as const;
+
+const connectionLines = [
+  {
+    className:
+      "left-[50%] top-[50%] w-[28%] -rotate-[34deg]",
+    accent: "#22D3EE",
+    subtle: false,
+  },
+  {
+    className:
+      "left-[28%] top-[50%] w-[22%] rotate-[28deg]",
+    accent: "#7C3AED",
+    subtle: true,
+  },
+  {
+    className:
+      "left-[50%] top-[50%] w-[27%] rotate-[39deg]",
+    accent: "#10B981",
+    subtle: true,
+  },
+  {
+    className:
+      "left-[24%] top-[32%] w-[29%] rotate-[5deg]",
+    accent: "#2563EB",
+    subtle: true,
+  },
+] as const;
 
 export function FutureVentures() {
   return (
@@ -54,13 +107,15 @@ export function FutureVentures() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
       >
-        <div className="absolute inset-0 bg-[#F8FAFC]/[0.46] backdrop-blur-[1px] dark:bg-[#0D1117]/[0.48]" />
+        <div className="absolute inset-0 bg-[#F8FAFC]/[0.7] dark:bg-[#0D1117]/[0.7]" />
 
-        <div className="absolute left-[35%] top-[10%] h-[38rem] w-[38rem] rounded-full bg-[#2563EB]/[0.035] blur-[180px] dark:bg-[#3B82F6]/[0.05]" />
-
-        <div className="absolute -right-48 top-[28%] h-[38rem] w-[38rem] rounded-full bg-[#22D3EE]/[0.04] blur-[180px] dark:bg-[#22D3EE]/[0.055]" />
-
-        <div className="absolute -left-52 bottom-[-10rem] h-[34rem] w-[34rem] rounded-full bg-[#A855F7]/[0.03] blur-[170px] dark:bg-[#A855F7]/[0.045]" />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(circle at 48% 14%, rgba(37,99,235,.045), transparent 29%), radial-gradient(circle at 94% 34%, rgba(34,211,238,.05), transparent 31%), radial-gradient(circle at 4% 92%, rgba(168,85,247,.035), transparent 29%)",
+          }}
+        />
       </div>
 
       <div className="evolvaer-container relative z-10">
@@ -102,8 +157,8 @@ export function FutureVentures() {
 
             <p className="mt-5 text-sm leading-7 text-[#0A1D2F]/40 dark:text-white/36">
               Future ventures will be determined by what we discover,
-              what the evidence supports and where our capabilities can
-              create meaningful value.
+              what the evidence supports and where our capabilities
+              can create meaningful value.
             </p>
           </div>
         </div>
@@ -112,8 +167,17 @@ export function FutureVentures() {
             EXPANDING PORTFOLIO FIELD
         ===================================================== */}
 
-        <div className="mt-16 overflow-hidden rounded-[2rem] border border-[#0A1D2F]/[0.08] bg-white/[0.28] backdrop-blur-xl dark:border-white/[0.08] dark:bg-white/[0.016] lg:mt-24">
-          <div className="grid lg:grid-cols-[0.68fr_1.32fr]">
+        <div className="relative mt-16 overflow-hidden rounded-[2rem] border border-[#0A1D2F]/[0.08] bg-white/[0.48] dark:border-white/[0.08] dark:bg-white/[0.025] lg:mt-24">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(circle at 80% 45%, rgba(34,211,238,.035), transparent 34%), radial-gradient(circle at 48% 52%, rgba(37,99,235,.025), transparent 28%)",
+            }}
+          />
+
+          <div className="relative grid lg:grid-cols-[0.68fr_1.32fr]">
             {/* LEFT */}
 
             <div className="border-b border-[#0A1D2F]/[0.07] p-7 dark:border-white/[0.07] sm:p-9 lg:border-b-0 lg:border-r">
@@ -137,7 +201,7 @@ export function FutureVentures() {
 
               <div className="mt-9 flex items-center gap-3 border-t border-[#0A1D2F]/[0.07] pt-6 dark:border-white/[0.07]">
                 <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#22D3EE] opacity-35 motion-reduce:animate-none" />
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#22D3EE] opacity-30 motion-reduce:animate-none" />
 
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-[#22D3EE]" />
                 </span>
@@ -148,7 +212,7 @@ export function FutureVentures() {
               </div>
             </div>
 
-            {/* RIGHT — PORTFOLIO VISUAL */}
+            {/* RIGHT */}
 
             <div className="relative min-h-[35rem] overflow-hidden p-6 sm:p-9">
               <div
@@ -216,13 +280,13 @@ export function FutureVentures() {
             {portfolioPrinciples.map((principle) => (
               <article
                 key={principle.number}
-                className="group relative min-h-[19rem] overflow-hidden bg-white/[0.58] p-7 backdrop-blur-xl dark:bg-[#0D1117]/[0.66]"
+                className="group relative min-h-[19rem] overflow-hidden bg-white/[0.72] p-7 transition-colors duration-300 hover:bg-white/[0.9] dark:bg-[#0D1117]/[0.76] dark:hover:bg-[#111820]"
               >
                 <div
                   aria-hidden="true"
-                  className="absolute -right-16 -top-16 h-44 w-44 rounded-full opacity-0 blur-[75px] transition-opacity duration-500 group-hover:opacity-100"
+                  className="pointer-events-none absolute right-0 top-0 h-32 w-32 opacity-25 transition-opacity duration-300 group-hover:opacity-65"
                   style={{
-                    backgroundColor: `${principle.accent}18`,
+                    background: `radial-gradient(circle at 100% 0%, ${principle.accent}18, transparent 68%)`,
                   }}
                 />
 
@@ -241,7 +305,6 @@ export function FutureVentures() {
                       className="mb-4 block h-1.5 w-1.5 rounded-full"
                       style={{
                         backgroundColor: principle.accent,
-                        boxShadow: `0 0 10px ${principle.accent}66`,
                       }}
                     />
 
@@ -260,37 +323,48 @@ export function FutureVentures() {
         </div>
 
         {/* =====================================================
-            WHAT WE ARE NOT CLAIMING
+            BUILT FOR POSSIBILITY
         ===================================================== */}
 
-        <div className="mt-16 grid gap-6 rounded-[1.8rem] border border-[#0A1D2F]/[0.08] bg-white/[0.3] p-7 backdrop-blur-xl dark:border-white/[0.08] dark:bg-white/[0.018] sm:p-9 lg:mt-20 lg:grid-cols-[0.62fr_1.38fr] lg:gap-12">
-          <div>
-            <div className="flex items-center gap-3">
-              <Sparkles className="h-4 w-4 text-[#7C3AED] dark:text-[#C084FC]" />
+        <div className="relative mt-16 overflow-hidden rounded-[1.8rem] border border-[#0A1D2F]/[0.08] bg-white/[0.46] p-7 dark:border-white/[0.08] dark:bg-white/[0.025] sm:p-9 lg:mt-20">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(circle at 0% 100%, rgba(124,58,237,.035), transparent 34%), radial-gradient(circle at 100% 0%, rgba(37,99,235,.025), transparent 32%)",
+            }}
+          />
 
-              <p className="text-[0.55rem] font-semibold uppercase tracking-[0.23em] text-[#0A1D2F]/34 dark:text-white/30">
-                Built for possibility
-              </p>
+          <div className="relative grid gap-6 lg:grid-cols-[0.62fr_1.38fr] lg:gap-12">
+            <div>
+              <div className="flex items-center gap-3">
+                <Sparkles className="h-4 w-4 text-[#7C3AED] dark:text-[#C084FC]" />
+
+                <p className="text-[0.55rem] font-semibold uppercase tracking-[0.23em] text-[#0A1D2F]/34 dark:text-white/30">
+                  Built for possibility
+                </p>
+              </div>
+
+              <h3 className="mt-5 max-w-[360px] text-2xl font-semibold leading-tight tracking-[-0.04em] text-[#0A1D2F] dark:text-white">
+                Future capacity is not the same as a future promise.
+              </h3>
             </div>
 
-            <h3 className="mt-5 max-w-[360px] text-2xl font-semibold leading-tight tracking-[-0.04em] text-[#0A1D2F] dark:text-white">
-              Future capacity is not the same as a future promise.
-            </h3>
-          </div>
+            <div>
+              <p className="text-base leading-8 text-[#0A1D2F]/53 dark:text-white/47">
+                We are not filling the roadmap with hypothetical
+                companies simply to make the portfolio appear larger.
+                Future ventures should emerge from genuine exploration
+                and evidence.
+              </p>
 
-          <div>
-            <p className="text-base leading-8 text-[#0A1D2F]/53 dark:text-white/47">
-              We are not filling the roadmap with hypothetical
-              companies simply to make the portfolio appear larger.
-              Future ventures should emerge from genuine exploration
-              and evidence.
-            </p>
-
-            <p className="mt-5 text-sm leading-7 text-[#0A1D2F]/39 dark:text-white/35">
-              That means the portfolio can remain intentionally
-              incomplete. The open space represents room to discover,
-              not products we are pretending already exist.
-            </p>
+              <p className="mt-5 text-sm leading-7 text-[#0A1D2F]/39 dark:text-white/35">
+                That means the portfolio can remain intentionally
+                incomplete. The open space represents room to discover,
+                not products we are pretending already exist.
+              </p>
+            </div>
           </div>
         </div>
 
@@ -334,7 +408,7 @@ export function FutureVentures() {
 
           <Link
             href="#ventures-cta"
-            className="group inline-flex items-center gap-3 text-sm font-semibold text-[#2563EB] transition-colors hover:text-[#1D4ED8] dark:text-[#60A5FA] dark:hover:text-[#93C5FD]"
+            className="group inline-flex items-center gap-3 text-sm font-semibold text-[#2563EB] transition-colors duration-300 hover:text-[#1D4ED8] dark:text-[#60A5FA] dark:hover:text-[#93C5FD]"
           >
             Continue
 
@@ -353,38 +427,18 @@ export function FutureVentures() {
 function FuturePortfolioMap() {
   return (
     <div className="relative h-[27rem] w-full max-w-[32rem]">
-      {/* =====================================================
-          CONNECTIONS
-      ===================================================== */}
+      {connectionLines.map((line) => (
+        <ConnectionLine
+          key={line.className}
+          className={line.className}
+          accent={line.accent}
+          subtle={line.subtle}
+        />
+      ))}
 
-      <ConnectionLine
-        className="left-[50%] top-[50%] w-[28%] -rotate-[34deg]"
-        accent="#22D3EE"
-      />
+      {/* Evolvaer core */}
 
-      <ConnectionLine
-        className="left-[28%] top-[50%] w-[22%] rotate-[28deg]"
-        accent="#7C3AED"
-        subtle
-      />
-
-      <ConnectionLine
-        className="left-[50%] top-[50%] w-[27%] rotate-[39deg]"
-        accent="#10B981"
-        subtle
-      />
-
-      <ConnectionLine
-        className="left-[24%] top-[32%] w-[29%] rotate-[5deg]"
-        accent="#2563EB"
-        subtle
-      />
-
-      {/* =====================================================
-          EVOLVAER CORE
-      ===================================================== */}
-
-      <div className="absolute left-1/2 top-1/2 z-20 flex h-28 w-28 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-[#2563EB]/30 bg-white/[0.8] shadow-[0_0_55px_rgba(37,99,235,.12)] backdrop-blur-xl dark:bg-[#0D1117]/[0.84]">
+      <div className="absolute left-1/2 top-1/2 z-20 flex h-28 w-28 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-[#2563EB]/30 bg-white/[0.9] shadow-[0_0_28px_rgba(37,99,235,.08)] dark:bg-[#0D1117]/[0.92]">
         <div className="absolute inset-[7px] rounded-full border border-[#2563EB]/10" />
 
         <div className="text-center">
@@ -400,42 +454,16 @@ function FuturePortfolioMap() {
         </div>
       </div>
 
-      {/* =====================================================
-          ADAPTCUES
-      ===================================================== */}
-
-      <FutureNode
-        className="right-[1%] top-[16%]"
-        label="Adaptcues"
-        sublabel="Building"
-        accent="#22D3EE"
-        active
-      />
-
-      {/* =====================================================
-          OPEN NODES
-      ===================================================== */}
-
-      <FutureNode
-        className="left-[4%] top-[11%]"
-        label="Opportunity"
-        sublabel="Undiscovered"
-        accent="#7C3AED"
-      />
-
-      <FutureNode
-        className="bottom-[7%] right-[5%]"
-        label="Opportunity"
-        sublabel="Future"
-        accent="#10B981"
-      />
-
-      <FutureNode
-        className="bottom-[4%] left-[9%]"
-        label="Opportunity"
-        sublabel="Exploration"
-        accent="#2563EB"
-      />
+      {futureNodes.map((node) => (
+        <FutureNode
+          key={`${node.label}-${node.sublabel}`}
+          className={node.className}
+          label={node.label}
+          sublabel={node.sublabel}
+          accent={node.accent}
+          active={"active" in node ? node.active : false}
+        />
+      ))}
 
       <div className="absolute right-[18%] top-[51%] h-3 w-3 rounded-full border border-dashed border-[#0A1D2F]/15 dark:border-white/15" />
 
@@ -462,13 +490,13 @@ function FutureNode({
       className={`absolute z-10 flex flex-col items-center text-center ${className}`}
     >
       <div
-        className={`relative flex h-[5.2rem] w-[5.2rem] items-center justify-center rounded-full border bg-white/[0.72] backdrop-blur-lg dark:bg-[#0D1117]/[0.76] ${
+        className={`relative flex h-[5.2rem] w-[5.2rem] items-center justify-center rounded-full border bg-white/[0.86] dark:bg-[#0D1117]/[0.88] ${
           active ? "" : "border-dashed"
         }`}
         style={{
           borderColor: `${accent}${active ? "55" : "2A"}`,
           boxShadow: active
-            ? `0 0 32px ${accent}18`
+            ? `0 0 18px ${accent}14`
             : undefined,
         }}
       >
@@ -477,9 +505,6 @@ function FutureNode({
           style={{
             backgroundColor: accent,
             opacity: active ? 1 : 0.38,
-            boxShadow: active
-              ? `0 0 12px ${accent}`
-              : undefined,
           }}
         />
 

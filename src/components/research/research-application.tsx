@@ -1,5 +1,3 @@
-"use client";
-
 import {
   ArrowRight,
   ArrowUpRight,
@@ -40,7 +38,67 @@ const applicationPaths = [
     accent: "#A855F7",
     icon: Orbit,
   },
-];
+] as const;
+
+const decisionRows = [
+  {
+    number: "A",
+    title: "Investigate again",
+    description: "Important uncertainty remains.",
+    accent: "#A855F7",
+  },
+  {
+    number: "B",
+    title: "Prototype",
+    description: "A technical assumption needs to be tested.",
+    accent: "#2563EB",
+  },
+  {
+    number: "C",
+    title: "Build",
+    description:
+      "Evidence supports moving toward a usable system.",
+    accent: "#22D3EE",
+  },
+  {
+    number: "D",
+    title: "Venture",
+    description:
+      "Problem, product and opportunity begin to align.",
+    accent: "#10B981",
+  },
+  {
+    number: "E",
+    title: "Stop",
+    description:
+      "The evidence does not justify further investment.",
+    accent: "#64748B",
+  },
+] as const;
+
+const applicationNodes = [
+  {
+    className:
+      "left-1/2 top-[1%] -translate-x-1/2",
+    label: "Engineering",
+    accent: "#2563EB",
+    icon: Blocks,
+  },
+  {
+    className:
+      "right-[1%] top-1/2 -translate-y-1/2",
+    label: "Product",
+    accent: "#10B981",
+    icon: Layers3,
+  },
+  {
+    className:
+      "left-[1%] top-1/2 -translate-y-1/2",
+    label: "Venture",
+    accent: "#A855F7",
+    icon: Orbit,
+  },
+] as const;
 
 export function ResearchApplication() {
   return (
@@ -56,14 +114,18 @@ export function ResearchApplication() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
       >
-        <div className="absolute inset-0 bg-white/[0.4] backdrop-blur-[1px] dark:bg-[#0D1117]/[0.43]" />
-
-        <div className="absolute left-[34%] top-[4%] h-[34rem] w-[34rem] rounded-full bg-[#22D3EE]/[0.035] blur-[170px] dark:bg-[#22D3EE]/[0.05]" />
-
-        <div className="absolute -right-40 bottom-[3%] h-[32rem] w-[32rem] rounded-full bg-[#A855F7]/[0.03] blur-[170px] dark:bg-[#A855F7]/[0.045]" />
+        <div className="absolute inset-0 bg-white/[0.42] dark:bg-[#0D1117]/[0.45]" />
 
         <div
-          className="absolute inset-0 opacity-[0.065] dark:opacity-[0.04]"
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(circle at 46% 7%, rgba(34,211,238,.045), transparent 31%), radial-gradient(circle at 96% 92%, rgba(168,85,247,.04), transparent 31%)",
+          }}
+        />
+
+        <div
+          className="absolute inset-0 opacity-[0.055] dark:opacity-[0.035]"
           style={{
             backgroundImage: `
               linear-gradient(rgba(37,99,235,.1) 1px, transparent 1px),
@@ -110,9 +172,9 @@ export function ResearchApplication() {
           <div className="max-w-[620px] lg:justify-self-end">
             <p className="text-base leading-8 text-[#0A1D2F]/58 dark:text-white/54 sm:text-[1.05rem]">
               Research at Evolvaer is connected to making. When an
-              investigation produces useful understanding, that knowledge
-              can influence engineering, product development and venture
-              decisions.
+              investigation produces useful understanding, that
+              knowledge can influence engineering, product
+              development and venture decisions.
             </p>
 
             <p className="mt-5 text-sm leading-7 text-[#0A1D2F]/41 dark:text-white/37">
@@ -127,7 +189,7 @@ export function ResearchApplication() {
             KNOWLEDGE CORE
         ===================================================== */}
 
-        <div className="mt-16 overflow-hidden rounded-[2rem] border border-[#0A1D2F]/[0.08] bg-white/[0.34] backdrop-blur-xl dark:border-white/[0.08] dark:bg-white/[0.018] lg:mt-24">
+        <div className="mt-16 overflow-hidden rounded-[2rem] border border-[#0A1D2F]/[0.08] bg-white/[0.46] dark:border-white/[0.08] dark:bg-white/[0.025] lg:mt-24">
           <div className="grid lg:grid-cols-[0.74fr_1.26fr]">
             {/* LEFT */}
 
@@ -162,6 +224,15 @@ export function ResearchApplication() {
             {/* RIGHT — APPLICATION MAP */}
 
             <div className="relative min-h-[34rem] overflow-hidden p-7 sm:p-9 lg:p-11">
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0"
+                style={{
+                  background:
+                    "radial-gradient(circle at 50% 50%, rgba(34,211,238,.03), transparent 43%)",
+                }}
+              />
+
               <ApplicationMap />
             </div>
           </div>
@@ -172,71 +243,87 @@ export function ResearchApplication() {
         ===================================================== */}
 
         <div className="mt-16 grid gap-px overflow-hidden rounded-[1.8rem] border border-[#0A1D2F]/[0.08] bg-[#0A1D2F]/[0.055] dark:border-white/[0.08] dark:bg-white/[0.05] lg:mt-24 lg:grid-cols-3">
-          {applicationPaths.map((path) => {
-            const Icon = path.icon;
+          {applicationPaths.map(
+            (path) => {
+              const Icon =
+                path.icon;
 
-            return (
-              <article
-                key={path.number}
-                className="group relative min-h-[26rem] overflow-hidden bg-white/[0.54] p-7 backdrop-blur-xl dark:bg-[#0D1117]/[0.64] sm:p-9"
-              >
-                <div
-                  aria-hidden="true"
-                  className="absolute -right-20 -top-20 h-64 w-64 rounded-full opacity-0 blur-[100px] transition-opacity duration-700 group-hover:opacity-100"
-                  style={{
-                    backgroundColor: `${path.accent}16`,
-                  }}
-                />
+              return (
+                <article
+                  key={path.number}
+                  className="group relative min-h-[26rem] overflow-hidden bg-white/[0.64] p-7 transition-colors duration-300 hover:bg-white/[0.78] dark:bg-[#0D1117]/[0.7] dark:hover:bg-[#0D1117]/[0.8] sm:p-9"
+                >
+                  <div
+                    aria-hidden="true"
+                    className="absolute inset-x-0 top-0 h-px opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                    style={{
+                      background: `linear-gradient(90deg, transparent, ${path.accent}60, transparent)`,
+                    }}
+                  />
 
-                <div className="relative flex h-full flex-col">
-                  <div className="flex items-center justify-between">
-                    <span
-                      className="font-mono text-[0.47rem]"
-                      style={{
-                        color: path.accent,
-                      }}
-                    >
-                      {path.number}
-                    </span>
+                  <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute right-0 top-0 h-40 w-40 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                    style={{
+                      background: `radial-gradient(circle at 100% 0%, ${path.accent}10, transparent 70%)`,
+                    }}
+                  />
 
-                    <div
-                      className="flex h-10 w-10 items-center justify-center rounded-full border"
-                      style={{
-                        borderColor: `${path.accent}25`,
-                        backgroundColor: `${path.accent}0A`,
-                      }}
-                    >
-                      <Icon
-                        className="h-4 w-4"
+                  <div className="relative flex h-full flex-col">
+                    <div className="flex items-center justify-between">
+                      <span
+                        className="font-mono text-[0.47rem]"
                         style={{
-                          color: path.accent,
+                          color:
+                            path.accent,
                         }}
-                      />
+                      >
+                        {path.number}
+                      </span>
+
+                      <div
+                        className="flex h-10 w-10 items-center justify-center rounded-full border"
+                        style={{
+                          borderColor: `${path.accent}25`,
+                          backgroundColor: `${path.accent}0A`,
+                        }}
+                      >
+                        <Icon
+                          className="h-4 w-4"
+                          style={{
+                            color:
+                              path.accent,
+                          }}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="mt-auto pt-14">
+                      <p
+                        className="text-[0.51rem] font-semibold uppercase tracking-[0.18em]"
+                        style={{
+                          color:
+                            path.accent,
+                        }}
+                      >
+                        {path.label}
+                      </p>
+
+                      <h3 className="mt-4 max-w-[390px] text-[1.75rem] font-semibold leading-[1.05] tracking-[-0.04em] text-[#0A1D2F] dark:text-white">
+                        {path.title}
+                      </h3>
+
+                      <p className="mt-5 text-sm leading-7 text-[#0A1D2F]/42 dark:text-white/37">
+                        {
+                          path.description
+                        }
+                      </p>
                     </div>
                   </div>
-
-                  <div className="mt-auto pt-14">
-                    <p
-                      className="text-[0.51rem] font-semibold uppercase tracking-[0.18em]"
-                      style={{
-                        color: path.accent,
-                      }}
-                    >
-                      {path.label}
-                    </p>
-
-                    <h3 className="mt-4 max-w-[390px] text-[1.75rem] font-semibold leading-[1.05] tracking-[-0.04em] text-[#0A1D2F] dark:text-white">
-                      {path.title}
-                    </h3>
-
-                    <p className="mt-5 text-sm leading-7 text-[#0A1D2F]/42 dark:text-white/37">
-                      {path.description}
-                    </p>
-                  </div>
-                </div>
-              </article>
-            );
-          })}
+                </article>
+              );
+            },
+          )}
         </div>
 
         {/* =====================================================
@@ -244,66 +331,52 @@ export function ResearchApplication() {
         ===================================================== */}
 
         <div className="mt-16 grid gap-5 lg:mt-24 lg:grid-cols-[0.82fr_1.18fr]">
-          <div className="relative overflow-hidden rounded-[1.8rem] border border-[#2563EB]/[0.12] bg-white/[0.38] p-7 backdrop-blur-xl dark:border-[#60A5FA]/[0.1] dark:bg-white/[0.018] sm:p-9">
-            <div className="flex items-center gap-3">
-              <Lightbulb className="h-4 w-4 text-[#2563EB] dark:text-[#60A5FA]" />
+          <div className="relative overflow-hidden rounded-[1.8rem] border border-[#2563EB]/[0.12] bg-white/[0.5] p-7 dark:border-[#60A5FA]/[0.1] dark:bg-white/[0.025] sm:p-9">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0"
+              style={{
+                background:
+                  "radial-gradient(circle at 0% 0%, rgba(37,99,235,.035), transparent 48%)",
+              }}
+            />
 
-              <p className="text-[0.55rem] font-semibold uppercase tracking-[0.23em] text-[#2563EB] dark:text-[#60A5FA]">
-                Decision gate
+            <div className="relative">
+              <div className="flex items-center gap-3">
+                <Lightbulb className="h-4 w-4 text-[#2563EB] dark:text-[#60A5FA]" />
+
+                <p className="text-[0.55rem] font-semibold uppercase tracking-[0.23em] text-[#2563EB] dark:text-[#60A5FA]">
+                  Decision gate
+                </p>
+              </div>
+
+              <h3 className="mt-7 max-w-[470px] text-[2rem] font-semibold leading-[1.04] tracking-[-0.045em] text-[#0A1D2F] dark:text-white">
+                Evidence changes what we are willing to build.
+              </h3>
+
+              <p className="mt-6 max-w-[520px] text-sm leading-7 text-[#0A1D2F]/43 dark:text-white/38">
+                An attractive idea is not enough. Moving toward
+                application should become easier to justify as
+                technical understanding, problem understanding and
+                evidence improve.
               </p>
             </div>
-
-            <h3 className="mt-7 max-w-[470px] text-[2rem] font-semibold leading-[1.04] tracking-[-0.045em] text-[#0A1D2F] dark:text-white">
-              Evidence changes what we are willing to build.
-            </h3>
-
-            <p className="mt-6 max-w-[520px] text-sm leading-7 text-[#0A1D2F]/43 dark:text-white/38">
-              An attractive idea is not enough. Moving toward application
-              should become easier to justify as technical understanding,
-              problem understanding and evidence improve.
-            </p>
           </div>
 
-          <div className="rounded-[1.8rem] border border-[#0A1D2F]/[0.08] bg-white/[0.34] p-7 backdrop-blur-xl dark:border-white/[0.08] dark:bg-white/[0.018] sm:p-9">
+          <div className="rounded-[1.8rem] border border-[#0A1D2F]/[0.08] bg-white/[0.46] p-7 dark:border-white/[0.08] dark:bg-white/[0.025] sm:p-9">
             <p className="text-[0.55rem] font-semibold uppercase tracking-[0.23em] text-[#0A1D2F]/32 dark:text-white/28">
               Possible directions
             </p>
 
             <div className="mt-7 divide-y divide-[#0A1D2F]/[0.07] border-y border-[#0A1D2F]/[0.07] dark:divide-white/[0.07] dark:border-white/[0.07]">
-              <DecisionRow
-                number="A"
-                title="Investigate again"
-                description="Important uncertainty remains."
-                accent="#A855F7"
-              />
-
-              <DecisionRow
-                number="B"
-                title="Prototype"
-                description="A technical assumption needs to be tested."
-                accent="#2563EB"
-              />
-
-              <DecisionRow
-                number="C"
-                title="Build"
-                description="Evidence supports moving toward a usable system."
-                accent="#22D3EE"
-              />
-
-              <DecisionRow
-                number="D"
-                title="Venture"
-                description="Problem, product and opportunity begin to align."
-                accent="#10B981"
-              />
-
-              <DecisionRow
-                number="E"
-                title="Stop"
-                description="The evidence does not justify further investment."
-                accent="#64748B"
-              />
+              {decisionRows.map(
+                (row) => (
+                  <DecisionRow
+                    key={row.number}
+                    {...row}
+                  />
+                ),
+              )}
             </div>
           </div>
         </div>
@@ -321,11 +394,12 @@ export function ResearchApplication() {
             </div>
 
             <p className="max-w-[62rem] text-lg font-medium leading-8 tracking-[-0.02em] text-[#0A1D2F]/60 dark:text-white/55">
-              Research, engineering and venture building are not isolated
-              functions. They create a feedback system in which{" "}
+              Research, engineering and venture building are not
+              isolated functions. They create a feedback system in
+              which{" "}
               <span className="text-[#0A1D2F] dark:text-white">
-                what we learn changes what we build — and what we build
-                creates new things to learn.
+                what we learn changes what we build — and what we
+                build creates new things to learn.
               </span>
             </p>
           </div>
@@ -348,7 +422,7 @@ export function ResearchApplication() {
 
           <a
             href="#research-principles"
-            className="group inline-flex items-center gap-3 text-[0.52rem] font-semibold uppercase tracking-[0.17em] text-[#2563EB] transition-colors hover:text-[#1D4ED8] dark:text-[#60A5FA] dark:hover:text-[#93C5FD]"
+            className="group inline-flex items-center gap-3 text-[0.52rem] font-semibold uppercase tracking-[0.17em] text-[#2563EB] transition-colors duration-300 hover:text-[#1D4ED8] dark:text-[#60A5FA] dark:hover:text-[#93C5FD]"
           >
             Research principles
 
@@ -385,6 +459,7 @@ function ApplicationMap() {
         className="left-[49%] top-[28%] h-[23%] w-px"
         from="#22D3EE"
         to="#2563EB"
+        vertical
       />
 
       <Connection
@@ -401,7 +476,7 @@ function ApplicationMap() {
 
       {/* CENTRAL KNOWLEDGE */}
 
-      <div className="absolute left-1/2 top-1/2 z-20 flex h-[7.5rem] w-[7.5rem] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-[#22D3EE]/25 bg-white/[0.78] shadow-[0_0_55px_rgba(34,211,238,.1)] backdrop-blur-xl dark:bg-[#0D1117]/[0.84]">
+      <div className="absolute left-1/2 top-1/2 z-20 flex h-[7.5rem] w-[7.5rem] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-[#22D3EE]/25 bg-white/[0.86] shadow-[0_0_26px_rgba(34,211,238,.07)] dark:bg-[#0D1117]/[0.9]">
         <div className="absolute inset-[8px] rounded-full border border-[#22D3EE]/10" />
 
         <div className="text-center">
@@ -417,28 +492,16 @@ function ApplicationMap() {
         </div>
       </div>
 
-      <ApplicationNode
-        className="left-1/2 top-[1%] -translate-x-1/2"
-        label="Engineering"
-        accent="#2563EB"
-        icon={Blocks}
-      />
+      {applicationNodes.map(
+        (node) => (
+          <ApplicationNode
+            key={node.label}
+            {...node}
+          />
+        ),
+      )}
 
-      <ApplicationNode
-        className="right-[1%] top-1/2 -translate-y-1/2"
-        label="Product"
-        accent="#10B981"
-        icon={Layers3}
-      />
-
-      <ApplicationNode
-        className="left-[1%] top-1/2 -translate-y-1/2"
-        label="Venture"
-        accent="#A855F7"
-        icon={Orbit}
-      />
-
-      {/* feedback */}
+      {/* FEEDBACK */}
 
       <div className="absolute bottom-[2%] left-1/2 -translate-x-1/2 text-center">
         <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-full border border-[#22D3EE]/15 bg-[#22D3EE]/[0.04]">
@@ -473,10 +536,9 @@ function ApplicationNode({
       className={`absolute z-10 flex flex-col items-center ${className}`}
     >
       <div
-        className="relative flex h-[5.3rem] w-[5.3rem] items-center justify-center rounded-full border bg-white/[0.7] backdrop-blur-xl dark:bg-[#0D1117]/[0.78]"
+        className="relative flex h-[5.3rem] w-[5.3rem] items-center justify-center rounded-full border bg-white/[0.8] dark:bg-[#0D1117]/[0.84]"
         style={{
           borderColor: `${accent}32`,
-          boxShadow: `0 0 30px ${accent}0C`,
         }}
       >
         <span
@@ -505,17 +567,21 @@ function Connection({
   className,
   from,
   to,
+  vertical = false,
 }: {
   className: string;
   from: string;
   to: string;
+  vertical?: boolean;
 }) {
   return (
     <span
       aria-hidden="true"
       className={`absolute z-0 ${className}`}
       style={{
-        background: `linear-gradient(90deg, ${from}20, ${to}50)`,
+        background: vertical
+          ? `linear-gradient(180deg, ${from}20, ${to}50)`
+          : `linear-gradient(90deg, ${from}20, ${to}50)`,
       }}
     />
   );

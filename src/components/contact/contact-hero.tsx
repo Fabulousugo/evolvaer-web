@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import {
   ArrowDown,
@@ -8,66 +6,55 @@ import {
   MessageSquareText,
   Radio,
 } from "lucide-react";
-import {
-  type CSSProperties,
-  type PointerEvent,
-  useRef,
-} from "react";
 
-type ContactHeroStyle = CSSProperties & {
-  "--contact-x": string;
-  "--contact-y": string;
-};
+const heroSignals = [
+  {
+    number: "01",
+    label: "Start with",
+    value: "The question",
+    accent: "#2563EB",
+  },
+  {
+    number: "02",
+    label: "Add",
+    value: "The context",
+    accent: "#22D3EE",
+  },
+  {
+    number: "03",
+    label: "Create",
+    value: "The connection",
+    accent: "#A855F7",
+  },
+] as const;
+
+const signalAnnotations = [
+  {
+    className: "right-[4%] top-[4%]",
+    number: "01",
+    label: "Signal",
+    value: "An idea",
+    accent: "#3B82F6",
+  },
+  {
+    className: "left-[10%] top-[46%]",
+    number: "02",
+    label: "Context",
+    value: "A problem",
+    accent: "#22D3EE",
+  },
+  {
+    className: "bottom-[4%] right-[8%]",
+    number: "03",
+    label: "Connection",
+    value: "A conversation",
+    accent: "#A855F7",
+  },
+] as const;
 
 export function ContactHero() {
-  const sectionRef =
-    useRef<HTMLElement | null>(null);
-
-  const handlePointerMove = (
-    event: PointerEvent<HTMLElement>,
-  ) => {
-    const element = sectionRef.current;
-
-    if (!element) {
-      return;
-    }
-
-    const rect =
-      element.getBoundingClientRect();
-
-    const x =
-      ((event.clientX - rect.left) /
-        rect.width) *
-      100;
-
-    const y =
-      ((event.clientY - rect.top) /
-        rect.height) *
-      100;
-
-    element.style.setProperty(
-      "--contact-x",
-      `${x}%`,
-    );
-
-    element.style.setProperty(
-      "--contact-y",
-      `${y}%`,
-    );
-  };
-
-  const style: ContactHeroStyle = {
-    "--contact-x": "72%",
-    "--contact-y": "42%",
-  };
-
   return (
-    <section
-      ref={sectionRef}
-      onPointerMove={handlePointerMove}
-      style={style}
-      className="relative overflow-x-clip pt-24 sm:pt-28 lg:pt-32"
-    >
+    <section className="relative overflow-x-clip pt-24 sm:pt-28 lg:pt-32">
       {/* =====================================================
           ATMOSPHERE
       ===================================================== */}
@@ -76,7 +63,17 @@ export function ContactHero() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
       >
-        {/* editorial grid */}
+        {/* STATIC SIGNAL ATMOSPHERE */}
+
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(circle at 72% 42%, rgba(34,211,238,.065), transparent 30%), radial-gradient(circle at 4% 28%, rgba(37,99,235,.04), transparent 27%), radial-gradient(circle at 94% 12%, rgba(168,85,247,.045), transparent 28%)",
+          }}
+        />
+
+        {/* EDITORIAL GRID */}
 
         <div
           className="absolute inset-0 opacity-[0.035] dark:opacity-[0.025]"
@@ -91,21 +88,7 @@ export function ContactHero() {
           }}
         />
 
-        {/* pointer-responsive signal glow */}
-
-        <div
-          className="absolute h-[34rem] w-[34rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#22D3EE]/[0.045] blur-[170px] transition-[left,top] duration-700 dark:bg-[#22D3EE]/[0.055]"
-          style={{
-            left: "var(--contact-x)",
-            top: "var(--contact-y)",
-          }}
-        />
-
-        <div className="absolute -left-40 top-[18%] h-[28rem] w-[28rem] rounded-full bg-[#2563EB]/[0.025] blur-[160px] dark:bg-[#3B82F6]/[0.04]" />
-
-        <div className="absolute right-[-12rem] top-[4%] h-[30rem] w-[30rem] rounded-full bg-[#A855F7]/[0.025] blur-[170px] dark:bg-[#A855F7]/[0.035]" />
-
-        {/* transmission guides */}
+        {/* TRANSMISSION GUIDES */}
 
         <span className="absolute right-[8%] top-[28%] hidden h-px w-[23%] bg-gradient-to-r from-transparent via-[#22D3EE]/12 to-transparent lg:block" />
 
@@ -141,6 +124,7 @@ export function ContactHero() {
               <h1 className="mt-7 max-w-[760px] text-[3.15rem] font-semibold leading-[0.98] tracking-[-0.05em] text-[#0A1D2F] dark:text-white sm:text-[4rem] md:text-[4.6rem] lg:text-[4.9rem] xl:text-[5.3rem]">
                 Start a
                 <br />
+
                 <span className="bg-gradient-to-r from-[#2563EB] via-[#22D3EE] to-[#A855F7] bg-clip-text text-transparent">
                   conversation.
                 </span>
@@ -164,7 +148,7 @@ export function ContactHero() {
               <div className="mt-9 flex flex-col gap-3 sm:flex-row">
                 <Link
                   href="#contact-form"
-                  className="group inline-flex min-h-12 items-center justify-center gap-3 rounded-full bg-[#2563EB] px-6 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#3B82F6] hover:shadow-[0_16px_44px_rgba(37,99,235,.2)]"
+                  className="group inline-flex min-h-12 items-center justify-center gap-3 rounded-full bg-[#2563EB] px-6 text-sm font-semibold text-white transition-[transform,background-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:bg-[#3B82F6] hover:shadow-[0_12px_32px_rgba(37,99,235,.18)]"
                 >
                   Start a conversation
 
@@ -173,7 +157,7 @@ export function ContactHero() {
 
                 <Link
                   href="#contact-intent"
-                  className="group inline-flex min-h-12 items-center justify-center gap-3 rounded-full border border-[#0A1D2F]/10 bg-white/[0.38] px-6 text-sm font-semibold text-[#0A1D2F]/62 backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:border-[#22D3EE]/30 hover:text-[#2563EB] dark:border-white/10 dark:bg-white/[0.025] dark:text-white/58 dark:hover:border-[#22D3EE]/30 dark:hover:text-white"
+                  className="group inline-flex min-h-12 items-center justify-center gap-3 rounded-full border border-[#0A1D2F]/10 bg-white/[0.5] px-6 text-sm font-semibold text-[#0A1D2F]/62 transition-[transform,border-color,background-color,color] duration-300 hover:-translate-y-0.5 hover:border-[#22D3EE]/30 hover:bg-white/70 hover:text-[#2563EB] dark:border-white/10 dark:bg-white/[0.04] dark:text-white/58 dark:hover:border-[#22D3EE]/30 dark:hover:bg-white/[0.065] dark:hover:text-white"
                 >
                   What to contact us about
 
@@ -183,35 +167,18 @@ export function ContactHero() {
             </div>
 
             {/* =================================================
-                RIGHT — LEAVE SPACE FOR THREE.JS
+                RIGHT — THREE.JS VISUAL SPACE
             ================================================= */}
 
             <div className="relative hidden min-h-[31rem] lg:block">
-              <SignalAnnotation
-                className="right-[4%] top-[4%]"
-                number="01"
-                label="Signal"
-                value="An idea"
-                accent="#3B82F6"
-              />
+              {signalAnnotations.map((annotation) => (
+                <SignalAnnotation
+                  key={annotation.number}
+                  {...annotation}
+                />
+              ))}
 
-              <SignalAnnotation
-                className="left-[10%] top-[46%]"
-                number="02"
-                label="Context"
-                value="A problem"
-                accent="#22D3EE"
-              />
-
-              <SignalAnnotation
-                className="bottom-[4%] right-[8%]"
-                number="03"
-                label="Connection"
-                value="A conversation"
-                accent="#A855F7"
-              />
-
-              {/* central transmission indicator */}
+              {/* CENTRAL TRANSMISSION INDICATOR */}
 
               <div className="absolute left-[52%] top-1/2 -translate-x-1/2 -translate-y-1/2">
                 <div className="relative flex h-40 w-40 items-center justify-center">
@@ -233,26 +200,12 @@ export function ContactHero() {
         ===================================================== */}
 
         <div className="grid gap-px overflow-hidden border-y border-[#0A1D2F]/[0.075] bg-[#0A1D2F]/[0.05] dark:border-white/[0.075] dark:bg-white/[0.05] sm:grid-cols-3">
-          <HeroSignal
-            number="01"
-            label="Start with"
-            value="The question"
-            accent="#2563EB"
-          />
-
-          <HeroSignal
-            number="02"
-            label="Add"
-            value="The context"
-            accent="#22D3EE"
-          />
-
-          <HeroSignal
-            number="03"
-            label="Create"
-            value="The connection"
-            accent="#A855F7"
-          />
+          {heroSignals.map((signal) => (
+            <HeroSignal
+              key={signal.number}
+              {...signal}
+            />
+          ))}
         </div>
 
         {/* =====================================================
@@ -261,7 +214,7 @@ export function ContactHero() {
 
         <div className="flex items-center justify-between py-6">
           <div className="flex items-center gap-3">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#22D3EE] shadow-[0_0_8px_rgba(34,211,238,.5)]" />
+            <span className="h-1.5 w-1.5 rounded-full bg-[#22D3EE] shadow-[0_0_6px_rgba(34,211,238,.42)]" />
 
             <span className="font-mono text-[0.43rem] uppercase tracking-[0.14em] text-[#0A1D2F]/24 dark:text-white/21">
               Signal detected
@@ -311,7 +264,7 @@ function SignalAnnotation({
           className="h-1.5 w-1.5 rounded-full"
           style={{
             backgroundColor: accent,
-            boxShadow: `0 0 8px ${accent}60`,
+            boxShadow: `0 0 6px ${accent}50`,
           }}
         />
 
@@ -359,7 +312,7 @@ function HeroSignal({
   accent: string;
 }) {
   return (
-    <div className="bg-white/[0.46] px-6 py-6 backdrop-blur-xl dark:bg-[#0D1117]/[0.46] sm:px-7">
+    <div className="bg-white/[0.58] px-6 py-6 dark:bg-[#0D1117]/[0.58] sm:px-7">
       <div className="flex items-center gap-3">
         <span
           className="font-mono text-[0.43rem]"

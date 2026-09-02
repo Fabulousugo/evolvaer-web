@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import {
   ArrowRight,
@@ -7,6 +5,47 @@ import {
   CircleDot,
   FlaskConical,
 } from "lucide-react";
+
+const researchStates = [
+  {
+    label: "Question",
+    value: "Open",
+    accent: "#A855F7",
+  },
+  {
+    label: "Understanding",
+    value: "Evolving",
+    accent: "#22D3EE",
+  },
+  {
+    label: "Next step",
+    value: "Explore",
+    accent: "#10B981",
+  },
+] as const;
+
+const loopStages = [
+  {
+    label: "Question",
+    accent: "#A855F7",
+  },
+  {
+    label: "Investigate",
+    accent: "#2563EB",
+  },
+  {
+    label: "Understand",
+    accent: "#22D3EE",
+  },
+  {
+    label: "Apply",
+    accent: "#10B981",
+  },
+  {
+    label: "Question again",
+    accent: "#A855F7",
+  },
+] as const;
 
 export function ResearchCta() {
   return (
@@ -22,16 +61,18 @@ export function ResearchCta() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
       >
-        <div className="absolute inset-0 bg-[#0A1D2F]/[0.93] dark:bg-[#080C12]/[0.9]" />
-
-        <div className="absolute left-1/2 top-[42%] h-[42rem] w-[42rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#2563EB]/[0.09] blur-[190px]" />
-
-        <div className="absolute right-[5%] top-[10%] h-[30rem] w-[30rem] rounded-full bg-[#22D3EE]/[0.055] blur-[170px]" />
-
-        <div className="absolute bottom-[-14rem] left-[8%] h-[32rem] w-[32rem] rounded-full bg-[#A855F7]/[0.055] blur-[170px]" />
+        <div className="absolute inset-0 bg-[#0A1D2F]/[0.95] dark:bg-[#080C12]/[0.93]" />
 
         <div
-          className="absolute inset-0 opacity-[0.08]"
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(circle at 50% 42%, rgba(37,99,235,.12), transparent 35%), radial-gradient(circle at 92% 12%, rgba(34,211,238,.065), transparent 28%), radial-gradient(circle at 12% 95%, rgba(168,85,247,.06), transparent 30%)",
+          }}
+        />
+
+        <div
+          className="absolute inset-0 opacity-[0.07]"
           style={{
             backgroundImage: `
               linear-gradient(rgba(96,165,250,.12) 1px, transparent 1px),
@@ -51,8 +92,8 @@ export function ResearchCta() {
             MAIN CTA
         ===================================================== */}
 
-        <div className="relative overflow-hidden rounded-[2.2rem] border border-white/[0.09] bg-[#0D1117]/[0.42] px-6 py-16 backdrop-blur-md sm:px-10 sm:py-20 lg:px-14 lg:py-24">
-          {/* decorative coordinate marks */}
+        <div className="relative overflow-hidden rounded-[2.2rem] border border-white/[0.09] bg-[#0D1117]/[0.64] px-6 py-16 sm:px-10 sm:py-20 lg:px-14 lg:py-24">
+          {/* DECORATIVE COORDINATE MARKS */}
 
           <div
             aria-hidden="true"
@@ -67,6 +108,15 @@ export function ResearchCta() {
           <div
             aria-hidden="true"
             className="absolute left-1/2 top-0 h-24 w-px -translate-x-1/2 bg-gradient-to-b from-[#22D3EE]/30 to-transparent"
+          />
+
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(circle at 50% 8%, rgba(34,211,238,.035), transparent 36%)",
+            }}
           />
 
           <div className="relative mx-auto max-w-[920px] text-center">
@@ -91,6 +141,7 @@ export function ResearchCta() {
             <h2 className="mx-auto mt-8 max-w-[900px] text-[clamp(3rem,6vw,6.3rem)] font-semibold leading-[0.94] tracking-[-0.055em] text-white">
               Keep asking
               <br />
+
               <span className="bg-gradient-to-r from-[#60A5FA] via-[#67E8F9] to-[#C084FC] bg-clip-text text-transparent">
                 better questions.
               </span>
@@ -108,7 +159,7 @@ export function ResearchCta() {
             <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Link
                 href="/what-we-do"
-                className="group inline-flex min-h-12 items-center justify-center gap-3 rounded-full bg-[#2563EB] px-6 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#3B82F6] hover:shadow-[0_14px_40px_rgba(37,99,235,.24)]"
+                className="group inline-flex min-h-12 items-center justify-center gap-3 rounded-full bg-[#2563EB] px-6 text-sm font-semibold text-white transition-[transform,background-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:bg-[#3B82F6] hover:shadow-[0_12px_30px_rgba(37,99,235,.2)]"
               >
                 See how we build
 
@@ -117,7 +168,7 @@ export function ResearchCta() {
 
               <Link
                 href="/ventures"
-                className="group inline-flex min-h-12 items-center justify-center gap-3 rounded-full border border-white/10 bg-white/[0.035] px-6 text-sm font-semibold text-white/70 backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:border-[#22D3EE]/25 hover:bg-white/[0.06] hover:text-white"
+                className="group inline-flex min-h-12 items-center justify-center gap-3 rounded-full border border-white/10 bg-white/[0.045] px-6 text-sm font-semibold text-white/70 transition-[transform,border-color,background-color,color] duration-300 hover:-translate-y-0.5 hover:border-[#22D3EE]/25 hover:bg-white/[0.07] hover:text-white"
               >
                 Explore ventures
 
@@ -129,23 +180,12 @@ export function ResearchCta() {
 
             <div className="mx-auto mt-14 max-w-[620px] border-t border-white/[0.08] pt-8">
               <div className="grid grid-cols-3 gap-3">
-                <ResearchState
-                  label="Question"
-                  value="Open"
-                  accent="#A855F7"
-                />
-
-                <ResearchState
-                  label="Understanding"
-                  value="Evolving"
-                  accent="#22D3EE"
-                />
-
-                <ResearchState
-                  label="Next step"
-                  value="Explore"
-                  accent="#10B981"
-                />
+                {researchStates.map((state) => (
+                  <ResearchState
+                    key={state.label}
+                    {...state}
+                  />
+                ))}
               </div>
             </div>
           </div>
@@ -166,38 +206,21 @@ export function ResearchCta() {
 
           <div className="overflow-x-auto">
             <div className="flex min-w-[37rem] items-center">
-              <LoopStage
-                label="Question"
-                accent="#A855F7"
-              />
+              {loopStages.map((stage, index) => (
+                <div
+                  key={stage.label}
+                  className="contents"
+                >
+                  <LoopStage
+                    label={stage.label}
+                    accent={stage.accent}
+                  />
 
-              <LoopLine />
-
-              <LoopStage
-                label="Investigate"
-                accent="#2563EB"
-              />
-
-              <LoopLine />
-
-              <LoopStage
-                label="Understand"
-                accent="#22D3EE"
-              />
-
-              <LoopLine />
-
-              <LoopStage
-                label="Apply"
-                accent="#10B981"
-              />
-
-              <LoopLine />
-
-              <LoopStage
-                label="Question again"
-                accent="#A855F7"
-              />
+                  {index < loopStages.length - 1 && (
+                    <LoopLine />
+                  )}
+                </div>
+              ))}
 
               <span className="ml-4 text-[#C084FC]/55">
                 ↺
@@ -245,7 +268,7 @@ function ResearchState({
           className="h-1.5 w-1.5 shrink-0 rounded-full"
           style={{
             backgroundColor: accent,
-            boxShadow: `0 0 9px ${accent}70`,
+            boxShadow: `0 0 6px ${accent}55`,
           }}
         />
 
@@ -283,7 +306,7 @@ function LoopStage({
         className="h-2 w-2 rounded-full"
         style={{
           backgroundColor: accent,
-          boxShadow: `0 0 9px ${accent}60`,
+          boxShadow: `0 0 6px ${accent}50`,
         }}
       />
 

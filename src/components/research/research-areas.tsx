@@ -1,5 +1,3 @@
-"use client";
-
 import {
   ArrowUpRight,
   BrainCircuit,
@@ -70,7 +68,34 @@ const researchAreas = [
       "Real-world outcomes",
     ],
   },
-];
+] as const;
+
+const mapAreas = [
+  {
+    className: "left-[4%] top-[12%]",
+    title: "Intelligent",
+    subtitle: "Systems",
+    accent: "#2563EB",
+  },
+  {
+    className: "right-[2%] top-[14%]",
+    title: "Human +",
+    subtitle: "Technology",
+    accent: "#22D3EE",
+  },
+  {
+    className: "bottom-[6%] left-[5%]",
+    title: "Emerging",
+    subtitle: "Possibilities",
+    accent: "#A855F7",
+  },
+  {
+    className: "bottom-[7%] right-[2%]",
+    title: "Systems +",
+    subtitle: "Impact",
+    accent: "#10B981",
+  },
+] as const;
 
 export function ResearchAreas() {
   return (
@@ -86,11 +111,15 @@ export function ResearchAreas() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
       >
-        <div className="absolute inset-0 bg-[#F8FAFC]/[0.4] backdrop-blur-[1px] dark:bg-[#0D1117]/[0.42]" />
+        <div className="absolute inset-0 bg-[#F8FAFC]/[0.42] dark:bg-[#0D1117]/[0.44]" />
 
-        <div className="absolute -right-40 top-[5%] h-[34rem] w-[34rem] rounded-full bg-[#A855F7]/[0.035] blur-[170px] dark:bg-[#A855F7]/[0.05]" />
-
-        <div className="absolute -left-44 bottom-[8%] h-[32rem] w-[32rem] rounded-full bg-[#22D3EE]/[0.035] blur-[170px] dark:bg-[#22D3EE]/[0.05]" />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(circle at 94% 12%, rgba(168,85,247,.045), transparent 31%), radial-gradient(circle at 5% 90%, rgba(34,211,238,.045), transparent 31%)",
+          }}
+        />
       </div>
 
       <div className="evolvaer-container relative z-10">
@@ -124,9 +153,10 @@ export function ResearchAreas() {
 
           <div className="max-w-[620px] lg:justify-self-end">
             <p className="text-base leading-8 text-[#0A1D2F]/58 dark:text-white/54 sm:text-[1.05rem]">
-              Our research is organised around areas where technological
-              change could unlock new capability, solve meaningful
-              problems or reshape how existing systems work.
+              Our research is organised around areas where
+              technological change could unlock new capability, solve
+              meaningful problems or reshape how existing systems
+              work.
             </p>
 
             <p className="mt-5 text-sm leading-7 text-[#0A1D2F]/41 dark:text-white/37">
@@ -149,20 +179,28 @@ export function ResearchAreas() {
               return (
                 <article
                   key={area.number}
-                  className="group relative min-h-[31rem] overflow-hidden bg-white/[0.54] p-7 backdrop-blur-xl dark:bg-[#0D1117]/[0.64] sm:p-9 lg:p-10"
+                  className="group relative min-h-[31rem] overflow-hidden bg-white/[0.64] p-7 transition-colors duration-300 hover:bg-white/[0.78] dark:bg-[#0D1117]/[0.7] dark:hover:bg-[#0D1117]/[0.8] sm:p-9 lg:p-10"
                 >
-                  {/* hover atmosphere */}
+                  {/* Cheap hover accent */}
 
                   <div
                     aria-hidden="true"
-                    className="absolute -right-24 -top-24 h-72 w-72 rounded-full opacity-0 blur-[110px] transition-opacity duration-700 group-hover:opacity-100"
+                    className="absolute inset-x-0 top-0 h-px opacity-0 transition-opacity duration-300 group-hover:opacity-100"
                     style={{
-                      backgroundColor: `${area.accent}16`,
+                      background: `linear-gradient(90deg, transparent, ${area.accent}65, transparent)`,
+                    }}
+                  />
+
+                  <div
+                    aria-hidden="true"
+                    className="absolute right-0 top-0 h-40 w-40 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                    style={{
+                      background: `radial-gradient(circle at 100% 0%, ${area.accent}10, transparent 70%)`,
                     }}
                   />
 
                   <div className="relative flex h-full flex-col">
-                    {/* top */}
+                    {/* TOP */}
 
                     <div className="flex items-start justify-between">
                       <span
@@ -190,7 +228,7 @@ export function ResearchAreas() {
                       </div>
                     </div>
 
-                    {/* title */}
+                    {/* TITLE */}
 
                     <div className="mt-14">
                       <h3 className="max-w-[430px] text-[2rem] font-semibold leading-[1.03] tracking-[-0.045em] text-[#0A1D2F] dark:text-white sm:text-[2.2rem]">
@@ -202,9 +240,14 @@ export function ResearchAreas() {
                       </p>
                     </div>
 
-                    {/* question */}
+                    {/* QUESTION */}
 
-                    <div className="mt-8 border-l pl-5" style={{ borderColor: `${area.accent}45` }}>
+                    <div
+                      className="mt-8 border-l pl-5"
+                      style={{
+                        borderColor: `${area.accent}45`,
+                      }}
+                    >
                       <p className="text-[0.48rem] font-semibold uppercase tracking-[0.18em] text-[#0A1D2F]/25 dark:text-white/22">
                         Research question
                       </p>
@@ -214,23 +257,26 @@ export function ResearchAreas() {
                       </p>
                     </div>
 
-                    {/* signals */}
+                    {/* SIGNALS */}
 
                     <div className="mt-auto pt-10">
                       <div className="flex flex-wrap gap-2">
-                        {area.signals.map((signal) => (
-                          <span
-                            key={signal}
-                            className="rounded-full border px-3 py-1.5 text-[0.48rem] font-semibold uppercase tracking-[0.11em]"
-                            style={{
-                              borderColor: `${area.accent}20`,
-                              backgroundColor: `${area.accent}08`,
-                              color: area.accent,
-                            }}
-                          >
-                            {signal}
-                          </span>
-                        ))}
+                        {area.signals.map(
+                          (signal) => (
+                            <span
+                              key={signal}
+                              className="rounded-full border px-3 py-1.5 text-[0.48rem] font-semibold uppercase tracking-[0.11em]"
+                              style={{
+                                borderColor: `${area.accent}20`,
+                                backgroundColor: `${area.accent}08`,
+                                color:
+                                  area.accent,
+                              }}
+                            >
+                              {signal}
+                            </span>
+                          ),
+                        )}
                       </div>
                     </div>
                   </div>
@@ -244,9 +290,9 @@ export function ResearchAreas() {
             CLUSTER MAP
         ===================================================== */}
 
-        <div className="mt-16 overflow-hidden rounded-[2rem] border border-[#0A1D2F]/[0.08] bg-white/[0.3] backdrop-blur-xl dark:border-white/[0.08] dark:bg-white/[0.018] lg:mt-24">
+        <div className="mt-16 overflow-hidden rounded-[2rem] border border-[#0A1D2F]/[0.08] bg-white/[0.42] dark:border-white/[0.08] dark:bg-white/[0.025] lg:mt-24">
           <div className="grid lg:grid-cols-[0.65fr_1.35fr]">
-            {/* explanation */}
+            {/* EXPLANATION */}
 
             <div className="border-b border-[#0A1D2F]/[0.07] p-7 dark:border-white/[0.07] sm:p-9 lg:border-b-0 lg:border-r">
               <div className="flex items-center gap-3">
@@ -270,9 +316,18 @@ export function ResearchAreas() {
               </p>
             </div>
 
-            {/* map */}
+            {/* MAP */}
 
             <div className="relative min-h-[34rem] overflow-hidden p-7 sm:p-9">
+              <div
+                aria-hidden="true"
+                className="absolute inset-0"
+                style={{
+                  background:
+                    "radial-gradient(circle at 50% 50%, rgba(34,211,238,.025), transparent 42%)",
+                }}
+              />
+
               <div
                 aria-hidden="true"
                 className="absolute left-1/2 top-1/2 h-[27rem] w-[27rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#2563EB]/[0.06]"
@@ -328,7 +383,7 @@ export function ResearchAreas() {
 
           <a
             href="#research-method"
-            className="group inline-flex items-center gap-3 text-[0.52rem] font-semibold uppercase tracking-[0.17em] text-[#2563EB] transition-colors hover:text-[#1D4ED8] dark:text-[#60A5FA] dark:hover:text-[#93C5FD]"
+            className="group inline-flex items-center gap-3 text-[0.52rem] font-semibold uppercase tracking-[0.17em] text-[#2563EB] transition-colors duration-300 hover:text-[#1D4ED8] dark:text-[#60A5FA] dark:hover:text-[#93C5FD]"
           >
             Our research method
 
@@ -347,7 +402,7 @@ export function ResearchAreas() {
 function ResearchAreaMap() {
   return (
     <div className="relative mx-auto h-[30rem] w-full max-w-[36rem]">
-      {/* connections */}
+      {/* CONNECTIONS */}
 
       <MapConnection
         className="left-[27%] top-[31%] w-[47%] rotate-[3deg]"
@@ -369,9 +424,9 @@ function ResearchAreaMap() {
         accent="#22D3EE"
       />
 
-      {/* central question */}
+      {/* CENTRAL QUESTION */}
 
-      <div className="absolute left-1/2 top-1/2 z-20 flex h-28 w-28 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-[#22D3EE]/25 bg-white/[0.76] shadow-[0_0_45px_rgba(34,211,238,.1)] backdrop-blur-xl dark:bg-[#0D1117]/[0.82]">
+      <div className="absolute left-1/2 top-1/2 z-20 flex h-28 w-28 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-[#22D3EE]/25 bg-white/[0.84] shadow-[0_0_24px_rgba(34,211,238,.07)] dark:bg-[#0D1117]/[0.9]">
         <div className="absolute inset-[7px] rounded-full border border-[#22D3EE]/10" />
 
         <div className="text-center">
@@ -385,33 +440,14 @@ function ResearchAreaMap() {
         </div>
       </div>
 
-      <AreaNode
-        className="left-[4%] top-[12%]"
-        title="Intelligent"
-        subtitle="Systems"
-        accent="#2563EB"
-      />
+      {mapAreas.map((area) => (
+        <AreaNode
+          key={`${area.title}-${area.subtitle}`}
+          {...area}
+        />
+      ))}
 
-      <AreaNode
-        className="right-[2%] top-[14%]"
-        title="Human +"
-        subtitle="Technology"
-        accent="#22D3EE"
-      />
-
-      <AreaNode
-        className="bottom-[6%] left-[5%]"
-        title="Emerging"
-        subtitle="Possibilities"
-        accent="#A855F7"
-      />
-
-      <AreaNode
-        className="bottom-[7%] right-[2%]"
-        title="Systems +"
-        subtitle="Impact"
-        accent="#10B981"
-      />
+      {/* FIELD MARKERS */}
 
       <span className="absolute left-[15%] top-[51%] h-2 w-2 rounded-full bg-[#2563EB]/25" />
 
@@ -438,17 +474,17 @@ function AreaNode({
       className={`absolute z-10 flex flex-col items-center text-center ${className}`}
     >
       <div
-        className="relative flex h-[5.6rem] w-[5.6rem] items-center justify-center rounded-full border bg-white/[0.68] backdrop-blur-xl dark:bg-[#0D1117]/[0.74]"
+        className="relative flex h-[5.6rem] w-[5.6rem] items-center justify-center rounded-full border bg-white/[0.78] dark:bg-[#0D1117]/[0.82]"
         style={{
           borderColor: `${accent}32`,
-          boxShadow: `0 0 30px ${accent}0C`,
         }}
       >
         <span
           className="h-2 w-2 rounded-full"
           style={{
-            backgroundColor: accent,
-            boxShadow: `0 0 10px ${accent}77`,
+            backgroundColor:
+              accent,
+            boxShadow: `0 0 7px ${accent}55`,
           }}
         />
 

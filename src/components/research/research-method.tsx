@@ -1,5 +1,3 @@
-"use client";
-
 import {
   ArrowRight,
   Beaker,
@@ -61,7 +59,54 @@ const methodStages = [
     accent: "#10B981",
     icon: BrainCircuit,
   },
-];
+] as const;
+
+const researchLoopStages = [
+  {
+    label: "Observe",
+    accent: "#2563EB",
+  },
+  {
+    label: "Question",
+    accent: "#A855F7",
+  },
+  {
+    label: "Investigate",
+    accent: "#22D3EE",
+  },
+  {
+    label: "Test",
+    accent: "#3B82F6",
+  },
+  {
+    label: "Learn",
+    accent: "#10B981",
+  },
+] as const;
+
+const methodOutcomes = [
+  {
+    number: "01",
+    title: "Investigate further",
+    description:
+      "The evidence raises important questions that deserve another research cycle.",
+    accent: "#2563EB",
+  },
+  {
+    number: "02",
+    title: "Move toward application",
+    description:
+      "Understanding is strong enough to inform engineering, product or venture work.",
+    accent: "#10B981",
+  },
+  {
+    number: "03",
+    title: "Stop",
+    description:
+      "The evidence does not justify further investment, allowing resources to move elsewhere.",
+    accent: "#64748B",
+  },
+] as const;
 
 export function ResearchMethod() {
   return (
@@ -77,14 +122,18 @@ export function ResearchMethod() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
       >
-        <div className="absolute inset-0 bg-white/[0.4] backdrop-blur-[1px] dark:bg-[#0D1117]/[0.43]" />
-
-        <div className="absolute left-[28%] top-[4%] h-[34rem] w-[34rem] rounded-full bg-[#2563EB]/[0.035] blur-[170px] dark:bg-[#3B82F6]/[0.05]" />
-
-        <div className="absolute -right-40 bottom-[5%] h-[30rem] w-[30rem] rounded-full bg-[#22D3EE]/[0.035] blur-[160px] dark:bg-[#22D3EE]/[0.05]" />
+        <div className="absolute inset-0 bg-white/[0.42] dark:bg-[#0D1117]/[0.45]" />
 
         <div
-          className="absolute inset-0 opacity-[0.08] dark:opacity-[0.05]"
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(circle at 43% 8%, rgba(37,99,235,.045), transparent 31%), radial-gradient(circle at 96% 88%, rgba(34,211,238,.045), transparent 30%)",
+          }}
+        />
+
+        <div
+          className="absolute inset-0 opacity-[0.07] dark:opacity-[0.045]"
           style={{
             backgroundImage:
               "linear-gradient(90deg, rgba(37,99,235,.1) 1px, transparent 1px)",
@@ -159,10 +208,14 @@ export function ResearchMethod() {
         ===================================================== */}
 
         <div className="mt-16 grid gap-5 lg:mt-24 lg:grid-cols-[1.05fr_0.95fr]">
-          <div className="relative overflow-hidden rounded-[1.8rem] border border-[#0A1D2F]/[0.08] bg-white/[0.38] p-7 backdrop-blur-xl dark:border-white/[0.08] dark:bg-white/[0.018] sm:p-9 lg:p-10">
+          <div className="relative overflow-hidden rounded-[1.8rem] border border-[#0A1D2F]/[0.08] bg-white/[0.5] p-7 dark:border-white/[0.08] dark:bg-white/[0.025] sm:p-9 lg:p-10">
             <div
               aria-hidden="true"
-              className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-[#22D3EE]/[0.055] blur-[110px]"
+              className="absolute inset-0"
+              style={{
+                background:
+                  "radial-gradient(circle at 100% 0%, rgba(34,211,238,.055), transparent 42%)",
+              }}
             />
 
             <div className="relative">
@@ -195,7 +248,7 @@ export function ResearchMethod() {
 
           {/* OUTCOMES */}
 
-          <div className="rounded-[1.8rem] border border-[#0A1D2F]/[0.08] bg-white/[0.34] p-7 backdrop-blur-xl dark:border-white/[0.08] dark:bg-white/[0.018] sm:p-9 lg:p-10">
+          <div className="rounded-[1.8rem] border border-[#0A1D2F]/[0.08] bg-white/[0.46] p-7 dark:border-white/[0.08] dark:bg-white/[0.025] sm:p-9 lg:p-10">
             <p className="text-[0.55rem] font-semibold uppercase tracking-[0.23em] text-[#7C3AED] dark:text-[#C084FC]">
               Possible outcomes
             </p>
@@ -205,26 +258,16 @@ export function ResearchMethod() {
             </h3>
 
             <div className="mt-9 divide-y divide-[#0A1D2F]/[0.07] border-y border-[#0A1D2F]/[0.07] dark:divide-white/[0.07] dark:border-white/[0.07]">
-              <MethodOutcome
-                number="01"
-                title="Investigate further"
-                description="The evidence raises important questions that deserve another research cycle."
-                accent="#2563EB"
-              />
-
-              <MethodOutcome
-                number="02"
-                title="Move toward application"
-                description="Understanding is strong enough to inform engineering, product or venture work."
-                accent="#10B981"
-              />
-
-              <MethodOutcome
-                number="03"
-                title="Stop"
-                description="The evidence does not justify further investment, allowing resources to move elsewhere."
-                accent="#64748B"
-              />
+              {methodOutcomes.map(
+                (outcome) => (
+                  <MethodOutcome
+                    key={
+                      outcome.number
+                    }
+                    {...outcome}
+                  />
+                ),
+              )}
             </div>
           </div>
         </div>
@@ -268,7 +311,7 @@ export function ResearchMethod() {
 
           <a
             href="#current-research"
-            className="group inline-flex items-center gap-3 text-[0.52rem] font-semibold uppercase tracking-[0.17em] text-[#2563EB] transition-colors hover:text-[#1D4ED8] dark:text-[#60A5FA] dark:hover:text-[#93C5FD]"
+            className="group inline-flex items-center gap-3 text-[0.52rem] font-semibold uppercase tracking-[0.17em] text-[#2563EB] transition-colors duration-300 hover:text-[#1D4ED8] dark:text-[#60A5FA] dark:hover:text-[#93C5FD]"
           >
             Current research
 
@@ -287,86 +330,97 @@ export function ResearchMethod() {
 function DesktopMethod() {
   return (
     <div className="relative">
-      {/* connecting line */}
-
       <div
         aria-hidden="true"
         className="absolute left-[8%] right-[8%] top-[4.4rem] h-px bg-gradient-to-r from-[#2563EB]/10 via-[#22D3EE]/35 to-[#10B981]/15"
       />
 
       <div className="grid grid-cols-5 gap-3">
-        {methodStages.map((stage, index) => {
-          const Icon = stage.icon;
+        {methodStages.map(
+          (stage) => {
+            const Icon =
+              stage.icon;
 
-          return (
-            <article
-              key={stage.number}
-              className="group relative"
-            >
-              {/* node */}
+            return (
+              <article
+                key={
+                  stage.number
+                }
+                className="group relative"
+              >
+                {/* NODE */}
 
-              <div className="relative z-10 flex h-[8.8rem] items-start justify-center">
-                <div
-                  className="relative flex h-[4.8rem] w-[4.8rem] items-center justify-center rounded-full border bg-white/[0.72] backdrop-blur-xl transition-transform duration-500 group-hover:-translate-y-1 dark:bg-[#0D1117]/[0.78]"
-                  style={{
-                    borderColor: `${stage.accent}35`,
-                    boxShadow: `0 0 35px ${stage.accent}0C`,
-                  }}
-                >
-                  <span
-                    className="absolute inset-[6px] rounded-full border"
+                <div className="relative z-10 flex h-[8.8rem] items-start justify-center">
+                  <div
+                    className="relative flex h-[4.8rem] w-[4.8rem] items-center justify-center rounded-full border bg-white/[0.82] transition-transform duration-300 group-hover:-translate-y-1 dark:bg-[#0D1117]/[0.86]"
                     style={{
-                      borderColor: `${stage.accent}12`,
-                    }}
-                  />
-
-                  <Icon
-                    className="h-[1.05rem] w-[1.05rem]"
-                    style={{
-                      color: stage.accent,
-                    }}
-                  />
-                </div>
-              </div>
-
-              {/* card */}
-
-              <div className="min-h-[23rem] rounded-[1.5rem] border border-[#0A1D2F]/[0.075] bg-white/[0.42] p-6 backdrop-blur-xl transition-colors duration-300 group-hover:bg-white/[0.58] dark:border-white/[0.075] dark:bg-white/[0.016] dark:group-hover:bg-white/[0.028]">
-                <div className="flex items-center justify-between">
-                  <span
-                    className="font-mono text-[0.46rem]"
-                    style={{
-                      color: stage.accent,
+                      borderColor: `${stage.accent}35`,
                     }}
                   >
-                    {stage.number}
-                  </span>
+                    <span
+                      className="absolute inset-[6px] rounded-full border"
+                      style={{
+                        borderColor: `${stage.accent}12`,
+                      }}
+                    />
 
-                  <span className="font-mono text-[0.42rem] uppercase tracking-[0.13em] text-[#0A1D2F]/20 dark:text-white/18">
-                    {stage.output}
-                  </span>
+                    <Icon
+                      className="h-[1.05rem] w-[1.05rem]"
+                      style={{
+                        color:
+                          stage.accent,
+                      }}
+                    />
+                  </div>
                 </div>
 
-                <p
-                  className="mt-8 text-[0.52rem] font-semibold uppercase tracking-[0.18em]"
-                  style={{
-                    color: stage.accent,
-                  }}
-                >
-                  {stage.short}
-                </p>
+                {/* CARD */}
 
-                <h3 className="mt-4 text-lg font-semibold leading-snug tracking-[-0.03em] text-[#0A1D2F] dark:text-white">
-                  {stage.title}
-                </h3>
+                <div className="min-h-[23rem] rounded-[1.5rem] border border-[#0A1D2F]/[0.075] bg-white/[0.54] p-6 transition-colors duration-300 group-hover:bg-white/[0.68] dark:border-white/[0.075] dark:bg-white/[0.025] dark:group-hover:bg-white/[0.04]">
+                  <div className="flex items-center justify-between">
+                    <span
+                      className="font-mono text-[0.46rem]"
+                      style={{
+                        color:
+                          stage.accent,
+                      }}
+                    >
+                      {
+                        stage.number
+                      }
+                    </span>
 
-                <p className="mt-5 text-sm leading-7 text-[#0A1D2F]/41 dark:text-white/36">
-                  {stage.description}
-                </p>
-              </div>
-            </article>
-          );
-        })}
+                    <span className="font-mono text-[0.42rem] uppercase tracking-[0.13em] text-[#0A1D2F]/20 dark:text-white/18">
+                      {
+                        stage.output
+                      }
+                    </span>
+                  </div>
+
+                  <p
+                    className="mt-8 text-[0.52rem] font-semibold uppercase tracking-[0.18em]"
+                    style={{
+                      color:
+                        stage.accent,
+                    }}
+                  >
+                    {stage.short}
+                  </p>
+
+                  <h3 className="mt-4 text-lg font-semibold leading-snug tracking-[-0.03em] text-[#0A1D2F] dark:text-white">
+                    {stage.title}
+                  </h3>
+
+                  <p className="mt-5 text-sm leading-7 text-[#0A1D2F]/41 dark:text-white/36">
+                    {
+                      stage.description
+                    }
+                  </p>
+                </div>
+              </article>
+            );
+          },
+        )}
       </div>
     </div>
   );
@@ -385,66 +439,80 @@ function MobileMethod() {
       />
 
       <div className="space-y-4">
-        {methodStages.map((stage) => {
-          const Icon = stage.icon;
+        {methodStages.map(
+          (stage) => {
+            const Icon =
+              stage.icon;
 
-          return (
-            <article
-              key={stage.number}
-              className="relative grid grid-cols-[3rem_1fr] gap-4"
-            >
-              <div className="relative z-10 pt-5">
-                <div
-                  className="flex h-12 w-12 items-center justify-center rounded-full border bg-[#F8FAFC] dark:bg-[#0D1117]"
-                  style={{
-                    borderColor: `${stage.accent}38`,
-                  }}
-                >
-                  <Icon
-                    className="h-4 w-4"
+            return (
+              <article
+                key={
+                  stage.number
+                }
+                className="relative grid grid-cols-[3rem_1fr] gap-4"
+              >
+                <div className="relative z-10 pt-5">
+                  <div
+                    className="flex h-12 w-12 items-center justify-center rounded-full border bg-[#F8FAFC] dark:bg-[#0D1117]"
                     style={{
-                      color: stage.accent,
-                    }}
-                  />
-                </div>
-              </div>
-
-              <div className="rounded-[1.4rem] border border-[#0A1D2F]/[0.075] bg-white/[0.42] p-6 backdrop-blur-xl dark:border-white/[0.075] dark:bg-white/[0.018]">
-                <div className="flex items-center justify-between">
-                  <span
-                    className="font-mono text-[0.45rem]"
-                    style={{
-                      color: stage.accent,
+                      borderColor: `${stage.accent}38`,
                     }}
                   >
-                    {stage.number}
-                  </span>
-
-                  <span className="font-mono text-[0.41rem] uppercase tracking-[0.12em] text-[#0A1D2F]/20 dark:text-white/18">
-                    {stage.output}
-                  </span>
+                    <Icon
+                      className="h-4 w-4"
+                      style={{
+                        color:
+                          stage.accent,
+                      }}
+                    />
+                  </div>
                 </div>
 
-                <p
-                  className="mt-6 text-[0.51rem] font-semibold uppercase tracking-[0.17em]"
-                  style={{
-                    color: stage.accent,
-                  }}
-                >
-                  {stage.short}
-                </p>
+                <div className="rounded-[1.4rem] border border-[#0A1D2F]/[0.075] bg-white/[0.54] p-6 dark:border-white/[0.075] dark:bg-white/[0.025]">
+                  <div className="flex items-center justify-between">
+                    <span
+                      className="font-mono text-[0.45rem]"
+                      style={{
+                        color:
+                          stage.accent,
+                      }}
+                    >
+                      {
+                        stage.number
+                      }
+                    </span>
 
-                <h3 className="mt-3 text-lg font-semibold tracking-[-0.03em] text-[#0A1D2F] dark:text-white">
-                  {stage.title}
-                </h3>
+                    <span className="font-mono text-[0.41rem] uppercase tracking-[0.12em] text-[#0A1D2F]/20 dark:text-white/18">
+                      {
+                        stage.output
+                      }
+                    </span>
+                  </div>
 
-                <p className="mt-4 text-sm leading-7 text-[#0A1D2F]/41 dark:text-white/36">
-                  {stage.description}
-                </p>
-              </div>
-            </article>
-          );
-        })}
+                  <p
+                    className="mt-6 text-[0.51rem] font-semibold uppercase tracking-[0.17em]"
+                    style={{
+                      color:
+                        stage.accent,
+                    }}
+                  >
+                    {stage.short}
+                  </p>
+
+                  <h3 className="mt-3 text-lg font-semibold tracking-[-0.03em] text-[#0A1D2F] dark:text-white">
+                    {stage.title}
+                  </h3>
+
+                  <p className="mt-4 text-sm leading-7 text-[#0A1D2F]/41 dark:text-white/36">
+                    {
+                      stage.description
+                    }
+                  </p>
+                </div>
+              </article>
+            );
+          },
+        )}
       </div>
     </div>
   );
@@ -455,57 +523,41 @@ function MobileMethod() {
 ============================================================ */
 
 function ResearchLoop() {
-  const stages = [
-    {
-      label: "Observe",
-      accent: "#2563EB",
-    },
-    {
-      label: "Question",
-      accent: "#A855F7",
-    },
-    {
-      label: "Investigate",
-      accent: "#22D3EE",
-    },
-    {
-      label: "Test",
-      accent: "#3B82F6",
-    },
-    {
-      label: "Learn",
-      accent: "#10B981",
-    },
-  ];
-
   return (
     <div className="mt-10 overflow-x-auto pb-2">
       <div className="flex min-w-[34rem] items-center">
-        {stages.map((stage, index) => (
-          <div
-            key={stage.label}
-            className="contents"
-          >
-            <div className="flex flex-col items-center">
-              <span
-                className="h-2.5 w-2.5 rounded-full"
-                style={{
-                  backgroundColor: stage.accent,
-                  boxShadow: `0 0 10px ${stage.accent}55`,
-                }}
-              />
+        {researchLoopStages.map(
+          (
+            stage,
+            index,
+          ) => (
+            <div
+              key={stage.label}
+              className="contents"
+            >
+              <div className="flex flex-col items-center">
+                <span
+                  className="h-2.5 w-2.5 rounded-full"
+                  style={{
+                    backgroundColor:
+                      stage.accent,
+                    boxShadow: `0 0 7px ${stage.accent}44`,
+                  }}
+                />
 
-              <span className="mt-3 text-[0.47rem] font-semibold uppercase tracking-[0.12em] text-[#0A1D2F]/34 dark:text-white/30">
-                {stage.label}
-              </span>
+                <span className="mt-3 text-[0.47rem] font-semibold uppercase tracking-[0.12em] text-[#0A1D2F]/34 dark:text-white/30">
+                  {stage.label}
+                </span>
+              </div>
+
+              {index <
+                researchLoopStages.length -
+                  1 && (
+                <div className="mx-3 mb-5 h-px flex-1 bg-[#0A1D2F]/10 dark:bg-white/10" />
+              )}
             </div>
-
-            {index <
-              stages.length - 1 && (
-              <div className="mb-5 mx-3 h-px flex-1 bg-[#0A1D2F]/10 dark:bg-white/10" />
-            )}
-          </div>
-        ))}
+          ),
+        )}
 
         <div className="mb-5 ml-4 flex items-center text-[#22D3EE]/60">
           ↺

@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import {
   ArrowUpRight,
@@ -38,7 +36,44 @@ const ventureThesis = [
       "Adaptcues explores how intelligent software can support clearer interpretation and more accessible communication in real-world settings.",
     accent: "#22D3EE",
   },
-];
+] as const;
+
+const ventureTags = [
+  "Communication",
+  "Accessibility",
+  "AI",
+  "Human-centred technology",
+] as const;
+
+const ventureState = [
+  {
+    label: "Origin",
+    value: "Evolvaer",
+  },
+  {
+    label: "Status",
+    value: "Development",
+  },
+  {
+    label: "Type",
+    value: "Software venture",
+  },
+] as const;
+
+const ventureFacts = [
+  {
+    label: "Current focus",
+    value: "Research & product development",
+  },
+  {
+    label: "Approach",
+    value: "Human-centred software",
+  },
+  {
+    label: "Venture relationship",
+    value: "Developed by Evolvaer",
+  },
+] as const;
 
 export function FeaturedVenture() {
   return (
@@ -54,13 +89,15 @@ export function FeaturedVenture() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
       >
-        <div className="absolute inset-0 bg-[#F8FAFC]/[0.54] backdrop-blur-[2px] dark:bg-[#0D1117]/[0.56]" />
+        <div className="absolute inset-0 bg-[#F8FAFC]/[0.7] dark:bg-[#0D1117]/[0.7]" />
 
-        <div className="absolute right-[-12rem] top-[10%] h-[40rem] w-[40rem] rounded-full bg-[#22D3EE]/[0.06] blur-[180px] dark:bg-[#22D3EE]/[0.08]" />
-
-        <div className="absolute left-[-16rem] bottom-[-10rem] h-[36rem] w-[36rem] rounded-full bg-[#2563EB]/[0.045] blur-[170px] dark:bg-[#3B82F6]/[0.065]" />
-
-        <div className="absolute left-[48%] top-[30%] h-[25rem] w-[25rem] rounded-full bg-[#A855F7]/[0.035] blur-[150px] dark:bg-[#A855F7]/[0.055]" />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(circle at 91% 18%, rgba(34,211,238,.07), transparent 30%), radial-gradient(circle at 4% 92%, rgba(37,99,235,.05), transparent 31%), radial-gradient(circle at 54% 39%, rgba(168,85,247,.035), transparent 24%)",
+          }}
+        />
       </div>
 
       <div className="evolvaer-container relative z-10">
@@ -104,18 +141,20 @@ export function FeaturedVenture() {
             </p>
 
             <div className="mt-9 flex flex-wrap gap-2">
-              <VentureTag>Communication</VentureTag>
-              <VentureTag>Accessibility</VentureTag>
-              <VentureTag>AI</VentureTag>
-              <VentureTag>Human-centred technology</VentureTag>
+              {ventureTags.map(
+                (tag) => (
+                  <VentureTag
+                    key={tag}
+                  >
+                    {tag}
+                  </VentureTag>
+                ),
+              )}
             </div>
           </div>
 
           {/* =================================================
-              RIGHT
-
-              Leave this side relatively open because FeaturedWorld
-              places the Adaptcues 3D object here.
+              RIGHT — RESERVED FOR 3D ADAPTCUES WORLD
           ================================================= */}
 
           <div
@@ -132,30 +171,38 @@ export function FeaturedVenture() {
               </div>
             </div>
 
-            <div className="absolute bottom-[7%] right-[2%] w-[225px] rounded-[1.15rem] border border-[#0A1D2F]/[0.07] bg-white/[0.2] p-5 backdrop-blur-lg dark:border-white/[0.07] dark:bg-white/[0.015]">
-              <div className="flex items-center justify-between">
+            <div className="absolute bottom-[7%] right-[2%] w-[225px] overflow-hidden rounded-[1.15rem] border border-[#0A1D2F]/[0.07] bg-white/[0.38] p-5 dark:border-white/[0.07] dark:bg-white/[0.025]">
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0"
+                style={{
+                  background:
+                    "radial-gradient(circle at 100% 0%, rgba(34,211,238,.045), transparent 52%)",
+                }}
+              />
+
+              <div className="relative flex items-center justify-between">
                 <span className="text-[0.48rem] font-semibold uppercase tracking-[0.18em] text-[#0A1D2F]/25 dark:text-white/22">
                   Venture state
                 </span>
 
-                <span className="h-1.5 w-1.5 rounded-full bg-[#10B981] shadow-[0_0_12px_rgba(16,185,129,.55)]" />
+                <span className="h-1.5 w-1.5 rounded-full bg-[#10B981] shadow-[0_0_8px_rgba(16,185,129,.45)]" />
               </div>
 
-              <div className="mt-5 space-y-3">
-                <StateRow
-                  label="Origin"
-                  value="Evolvaer"
-                />
-
-                <StateRow
-                  label="Status"
-                  value="Development"
-                />
-
-                <StateRow
-                  label="Type"
-                  value="Software venture"
-                />
+              <div className="relative mt-5 space-y-3">
+                {ventureState.map(
+                  (item) => (
+                    <StateRow
+                      key={item.label}
+                      label={
+                        item.label
+                      }
+                      value={
+                        item.value
+                      }
+                    />
+                  ),
+                )}
               </div>
             </div>
           </div>
@@ -182,67 +229,82 @@ export function FeaturedVenture() {
             </div>
 
             <div className="grid gap-px overflow-hidden rounded-[1.6rem] border border-[#0A1D2F]/[0.08] bg-[#0A1D2F]/[0.06] dark:border-white/[0.08] dark:bg-white/[0.055] md:grid-cols-3">
-              {ventureThesis.map((item) => {
-                const Icon = item.icon;
+              {ventureThesis.map(
+                (item) => {
+                  const Icon =
+                    item.icon;
 
-                return (
-                  <article
-                    key={item.label}
-                    className="group relative min-h-[23rem] overflow-hidden bg-white/[0.58] p-7 backdrop-blur-xl dark:bg-[#0D1117]/[0.68]"
-                  >
-                    <div
-                      aria-hidden="true"
-                      className="absolute -right-14 -top-14 h-40 w-40 rounded-full opacity-0 blur-[70px] transition-opacity duration-500 group-hover:opacity-100"
-                      style={{
-                        backgroundColor: `${item.accent}18`,
-                      }}
-                    />
+                  return (
+                    <article
+                      key={
+                        item.label
+                      }
+                      className="group relative min-h-[23rem] overflow-hidden bg-white/[0.72] p-7 transition-colors duration-300 hover:bg-white/[0.9] dark:bg-[#0D1117]/[0.76] dark:hover:bg-[#111820]"
+                    >
+                      <div
+                        aria-hidden="true"
+                        className="pointer-events-none absolute right-0 top-0 h-32 w-32 opacity-25 transition-opacity duration-300 group-hover:opacity-60"
+                        style={{
+                          background: `radial-gradient(circle at 100% 0%, ${item.accent}18, transparent 68%)`,
+                        }}
+                      />
 
-                    <div className="relative flex h-full flex-col">
-                      <div className="flex items-start justify-between">
-                        <div
-                          className="flex h-10 w-10 items-center justify-center rounded-xl border"
-                          style={{
-                            color: item.accent,
-                            borderColor: `${item.accent}30`,
-                            backgroundColor: `${item.accent}0D`,
-                          }}
-                        >
-                          <Icon className="h-[17px] w-[17px]" />
+                      <div className="relative flex h-full flex-col">
+                        <div className="flex items-start justify-between">
+                          <div
+                            className="flex h-10 w-10 items-center justify-center rounded-xl border"
+                            style={{
+                              color:
+                                item.accent,
+                              borderColor: `${item.accent}30`,
+                              backgroundColor: `${item.accent}0D`,
+                            }}
+                          >
+                            <Icon className="h-[17px] w-[17px]" />
+                          </div>
+
+                          <span
+                            className="font-mono text-[0.47rem]"
+                            style={{
+                              color: `${item.accent}AA`,
+                            }}
+                          >
+                            {
+                              item.number
+                            }
+                          </span>
                         </div>
 
-                        <span
-                          className="font-mono text-[0.47rem]"
-                          style={{
-                            color: `${item.accent}AA`,
-                          }}
-                        >
-                          {item.number}
-                        </span>
+                        <div className="mt-auto pt-14">
+                          <p
+                            className="text-[0.53rem] font-semibold uppercase tracking-[0.21em]"
+                            style={{
+                              color:
+                                item.accent,
+                            }}
+                          >
+                            {
+                              item.label
+                            }
+                          </p>
+
+                          <h4 className="mt-3 text-lg font-semibold leading-7 tracking-[-0.025em] text-[#0A1D2F] dark:text-white">
+                            {
+                              item.title
+                            }
+                          </h4>
+
+                          <p className="mt-4 text-sm leading-7 text-[#0A1D2F]/43 dark:text-white/38">
+                            {
+                              item.description
+                            }
+                          </p>
+                        </div>
                       </div>
-
-                      <div className="mt-auto pt-14">
-                        <p
-                          className="text-[0.53rem] font-semibold uppercase tracking-[0.21em]"
-                          style={{
-                            color: item.accent,
-                          }}
-                        >
-                          {item.label}
-                        </p>
-
-                        <h4 className="mt-3 text-lg font-semibold leading-7 tracking-[-0.025em] text-[#0A1D2F] dark:text-white">
-                          {item.title}
-                        </h4>
-
-                        <p className="mt-4 text-sm leading-7 text-[#0A1D2F]/43 dark:text-white/38">
-                          {item.description}
-                        </p>
-                      </div>
-                    </div>
-                  </article>
-                );
-              })}
+                    </article>
+                  );
+                },
+              )}
             </div>
           </div>
         </div>
@@ -251,54 +313,64 @@ export function FeaturedVenture() {
             WHY EVOLVAER IS BUILDING IT
         ===================================================== */}
 
-        <div className="mt-16 grid gap-6 rounded-[1.8rem] border border-[#0A1D2F]/[0.08] bg-white/[0.3] p-7 backdrop-blur-xl dark:border-white/[0.08] dark:bg-white/[0.018] sm:p-9 lg:mt-20 lg:grid-cols-[0.65fr_1.35fr] lg:gap-12">
-          <div>
-            <p className="text-[0.57rem] font-semibold uppercase tracking-[0.25em] text-[#10B981] dark:text-[#34D399]">
-              Why this venture
-            </p>
+        <div className="relative mt-16 overflow-hidden rounded-[1.8rem] border border-[#0A1D2F]/[0.08] bg-white/[0.48] p-7 dark:border-white/[0.08] dark:bg-white/[0.028] sm:p-9 lg:mt-20">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(circle at 0% 100%, rgba(16,185,129,.04), transparent 35%), radial-gradient(circle at 100% 0%, rgba(34,211,238,.025), transparent 32%)",
+            }}
+          />
 
-            <h3 className="mt-4 max-w-[330px] text-2xl font-semibold leading-tight tracking-[-0.04em] text-[#0A1D2F] dark:text-white">
-              A problem where better understanding could matter.
-            </h3>
-          </div>
+          <div className="relative grid gap-6 lg:grid-cols-[0.65fr_1.35fr] lg:gap-12">
+            <div>
+              <p className="text-[0.57rem] font-semibold uppercase tracking-[0.25em] text-[#10B981] dark:text-[#34D399]">
+                Why this venture
+              </p>
 
-          <div>
-            <p className="text-base leading-8 text-[#0A1D2F]/54 dark:text-white/48">
-              Communication is fundamental to independence,
-              participation and human connection. When communication
-              is difficult to interpret, technology may be able to
-              provide another layer of support — helping people make
-              sense of cues that might otherwise be missed or
-              misunderstood.
-            </p>
+              <h3 className="mt-4 max-w-[330px] text-2xl font-semibold leading-tight tracking-[-0.04em] text-[#0A1D2F] dark:text-white">
+                A problem where better understanding could matter.
+              </h3>
+            </div>
 
-            <p className="mt-5 text-sm leading-7 text-[#0A1D2F]/40 dark:text-white/36">
-              That combination of a meaningful human problem and an
-              emerging technical capability is exactly the kind of
-              intersection Evolvaer is designed to investigate.
-            </p>
+            <div>
+              <p className="text-base leading-8 text-[#0A1D2F]/54 dark:text-white/48">
+                Communication is fundamental to independence,
+                participation and human connection. When
+                communication is difficult to interpret, technology
+                may be able to provide another layer of support —
+                helping people make sense of cues that might
+                otherwise be missed or misunderstood.
+              </p>
+
+              <p className="mt-5 text-sm leading-7 text-[#0A1D2F]/40 dark:text-white/36">
+                That combination of a meaningful human problem and
+                an emerging technical capability is exactly the kind
+                of intersection Evolvaer is designed to investigate.
+              </p>
+            </div>
           </div>
         </div>
 
         {/* =====================================================
-            BOUNDARY / CURRENT STATE
+            CURRENT STATE
         ===================================================== */}
 
         <div className="mt-8 grid gap-px overflow-hidden rounded-[1.5rem] border border-[#0A1D2F]/[0.07] bg-[#0A1D2F]/[0.055] dark:border-white/[0.07] dark:bg-white/[0.055] md:grid-cols-3">
-          <VentureFact
-            label="Current focus"
-            value="Research & product development"
-          />
-
-          <VentureFact
-            label="Approach"
-            value="Human-centred software"
-          />
-
-          <VentureFact
-            label="Venture relationship"
-            value="Developed by Evolvaer"
-          />
+          {ventureFacts.map(
+            (fact) => (
+              <VentureFact
+                key={fact.label}
+                label={
+                  fact.label
+                }
+                value={
+                  fact.value
+                }
+              />
+            ),
+          )}
         </div>
 
         {/* =====================================================
@@ -319,7 +391,7 @@ export function FeaturedVenture() {
 
           <Link
             href="#how-ventures-emerge"
-            className="group inline-flex items-center gap-3 text-sm font-semibold text-[#2563EB] transition-colors hover:text-[#1D4ED8] dark:text-[#60A5FA] dark:hover:text-[#93C5FD]"
+            className="group inline-flex items-center gap-3 text-sm font-semibold text-[#2563EB] transition-colors duration-300 hover:text-[#1D4ED8] dark:text-[#60A5FA] dark:hover:text-[#93C5FD]"
           >
             See how ventures emerge
 
@@ -337,7 +409,7 @@ function VentureTag({
   children: string;
 }) {
   return (
-    <span className="rounded-full border border-[#0A1D2F]/[0.08] bg-white/[0.34] px-3.5 py-2 text-[0.58rem] font-semibold text-[#0A1D2F]/46 backdrop-blur-md dark:border-white/[0.08] dark:bg-white/[0.025] dark:text-white/40">
+    <span className="rounded-full border border-[#0A1D2F]/[0.08] bg-white/[0.48] px-3.5 py-2 text-[0.58rem] font-semibold text-[#0A1D2F]/46 dark:border-white/[0.08] dark:bg-white/[0.035] dark:text-white/40">
       {children}
     </span>
   );
@@ -371,7 +443,7 @@ function VentureFact({
   value: string;
 }) {
   return (
-    <div className="bg-white/[0.44] px-6 py-5 backdrop-blur-md dark:bg-[#0D1117]/[0.42]">
+    <div className="bg-white/[0.56] px-6 py-5 dark:bg-[#0D1117]/[0.5]">
       <p className="text-[0.47rem] font-semibold uppercase tracking-[0.18em] text-[#0A1D2F]/25 dark:text-white/22">
         {label}
       </p>

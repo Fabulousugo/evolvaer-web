@@ -12,49 +12,21 @@ const plusJakarta = Plus_Jakarta_Sans({
   display: "swap",
 });
 
-const themeScript = `
-(function () {
-  try {
-    var storageKey = "evolvaer-theme";
-    var storedTheme = localStorage.getItem(storageKey);
-
-    var theme =
-      storedTheme === "light" || storedTheme === "dark"
-        ? storedTheme
-        : window.matchMedia("(prefers-color-scheme: dark)").matches
-          ? "dark"
-          : "light";
-
-    var root = document.documentElement;
-
-    root.classList.toggle("dark", theme === "dark");
-    root.style.colorScheme = theme;
-  } catch (_) {}
-})();
-`;
-
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    "https://evolvaer.com",
-  ),
+  metadataBase: new URL("https://evolvaer.com"),
 
   title: {
-    default:
-      "Evolvaer Technologies",
-    template:
-      "%s | Evolvaer Technologies",
+    default: "Evolvaer Technologies",
+    template: "%s | Evolvaer Technologies",
   },
 
   description:
     "Evolvaer Technologies explores emerging technologies, engineers intelligent solutions, and builds products that matter.",
 
   openGraph: {
-    title:
-      "Evolvaer Technologies",
-    description:
-      "Exploring what's next. Building what matters.",
-    siteName:
-      "Evolvaer Technologies",
+    title: "Evolvaer Technologies",
+    description: "Exploring what's next. Building what matters.",
+    siteName: "Evolvaer Technologies",
     type: "website",
     locale: "en_GB",
     url: "/",
@@ -62,10 +34,8 @@ export const metadata: Metadata = {
 
   twitter: {
     card: "summary_large_image",
-    title:
-      "Evolvaer Technologies",
-    description:
-      "Exploring what's next. Building what matters.",
+    title: "Evolvaer Technologies",
+    description: "Exploring what's next. Building what matters.",
   },
 
   robots: {
@@ -82,19 +52,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={
-        plusJakarta.variable
-      }
+      className={plusJakarta.variable}
       suppressHydrationWarning
     >
-      <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: themeScript,
-          }}
-        />
-      </head>
-
       <body
         className="
           min-h-screen

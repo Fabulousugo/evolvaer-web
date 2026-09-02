@@ -1,5 +1,3 @@
-"use client";
-
 import {
   CircleDot,
   Filter,
@@ -32,7 +30,13 @@ const researchReasons = [
     accent: "#22D3EE",
     icon: Filter,
   },
-];
+] as const;
+
+const noiseSignals = [
+  "Trend",
+  "Claim",
+  "Novelty",
+] as const;
 
 export function WhyResearch() {
   return (
@@ -48,18 +52,23 @@ export function WhyResearch() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
       >
-        <div className="absolute inset-0 bg-white/[0.42] backdrop-blur-[1px] dark:bg-[#0D1117]/[0.44]" />
+        <div className="absolute inset-0 bg-white/[0.44] dark:bg-[#0D1117]/[0.46]" />
 
-        <div className="absolute -left-48 top-[18%] h-[32rem] w-[32rem] rounded-full bg-[#2563EB]/[0.035] blur-[170px] dark:bg-[#3B82F6]/[0.05]" />
-
-        <div className="absolute right-[-10rem] top-[25%] h-[30rem] w-[30rem] rounded-full bg-[#22D3EE]/[0.035] blur-[160px] dark:bg-[#22D3EE]/[0.05]" />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(circle at 7% 30%, rgba(37,99,235,.045), transparent 31%), radial-gradient(circle at 94% 38%, rgba(34,211,238,.045), transparent 31%)",
+          }}
+        />
 
         <div
           className="absolute inset-0 opacity-[0.07] dark:opacity-[0.05]"
           style={{
             backgroundImage:
               "radial-gradient(circle, rgba(37,99,235,.22) 1px, transparent 1px)",
-            backgroundSize: "34px 34px",
+            backgroundSize:
+              "34px 34px",
             maskImage:
               "linear-gradient(to bottom, transparent, black 18%, black 82%, transparent)",
             WebkitMaskImage:
@@ -105,9 +114,9 @@ export function WhyResearch() {
             </p>
 
             <p className="mt-5 text-sm leading-7 text-[#0A1D2F]/41 dark:text-white/37">
-              Research gives us room to observe, question and investigate
-              before committing engineering effort, product decisions or
-              venture resources.
+              Research gives us room to observe, question and
+              investigate before committing engineering effort,
+              product decisions or venture resources.
             </p>
           </div>
         </div>
@@ -119,20 +128,25 @@ export function WhyResearch() {
         <div className="mt-16 grid gap-5 lg:mt-24 lg:grid-cols-[0.94fr_1.06fr]">
           {/* NOISE */}
 
-          <div className="relative overflow-hidden rounded-[1.8rem] border border-[#0A1D2F]/[0.08] bg-white/[0.38] p-7 backdrop-blur-xl dark:border-white/[0.08] dark:bg-white/[0.018] sm:p-9">
+          <div className="relative overflow-hidden rounded-[1.8rem] border border-[#0A1D2F]/[0.08] bg-white/[0.5] p-7 dark:border-white/[0.08] dark:bg-white/[0.025] sm:p-9">
             <div
               aria-hidden="true"
-              className="absolute inset-0 opacity-[0.22] dark:opacity-[0.14]"
+              className="absolute inset-0 opacity-[0.18] dark:opacity-[0.11]"
               style={{
                 backgroundImage:
                   "radial-gradient(circle, rgba(100,116,139,.3) 1px, transparent 1px)",
-                backgroundSize: "25px 25px",
+                backgroundSize:
+                  "25px 25px",
               }}
             />
 
             <div
               aria-hidden="true"
-              className="absolute -right-24 -top-24 h-64 w-64 rounded-full bg-[#64748B]/[0.07] blur-[100px]"
+              className="pointer-events-none absolute inset-0"
+              style={{
+                background:
+                  "radial-gradient(circle at 100% 0%, rgba(100,116,139,.045), transparent 42%)",
+              }}
             />
 
             <div className="relative">
@@ -156,24 +170,37 @@ export function WhyResearch() {
                 </h3>
 
                 <p className="mt-5 max-w-[470px] text-sm leading-7 text-[#0A1D2F]/42 dark:text-white/37">
-                  Trends, technologies, claims and market excitement can
-                  create a field of possibilities without telling us
-                  which ones are durable, useful or technically credible.
+                  Trends, technologies, claims and market excitement
+                  can create a field of possibilities without telling
+                  us which ones are durable, useful or technically
+                  credible.
                 </p>
               </div>
 
               <div className="mt-10 grid grid-cols-3 gap-2">
-                <NoiseSignal label="Trend" />
-                <NoiseSignal label="Claim" />
-                <NoiseSignal label="Novelty" />
+                {noiseSignals.map(
+                  (label) => (
+                    <NoiseSignal
+                      key={label}
+                      label={label}
+                    />
+                  ),
+                )}
               </div>
             </div>
           </div>
 
           {/* SIGNAL */}
 
-          <div className="relative overflow-hidden rounded-[1.8rem] border border-[#22D3EE]/[0.15] bg-white/[0.46] p-7 backdrop-blur-xl dark:border-[#22D3EE]/[0.12] dark:bg-white/[0.022] sm:p-9">
-            <div className="absolute right-[-6rem] top-[-6rem] h-72 w-72 rounded-full bg-[#22D3EE]/[0.075] blur-[110px]" />
+          <div className="relative overflow-hidden rounded-[1.8rem] border border-[#22D3EE]/[0.15] bg-white/[0.55] p-7 dark:border-[#22D3EE]/[0.12] dark:bg-white/[0.03] sm:p-9">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0"
+              style={{
+                background:
+                  "radial-gradient(circle at 100% 0%, rgba(34,211,238,.07), transparent 43%)",
+              }}
+            />
 
             <div
               aria-hidden="true"
@@ -185,7 +212,6 @@ export function WhyResearch() {
                 <div className="flex items-center gap-3">
                   <span className="relative flex h-2 w-2">
                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#22D3EE] opacity-30 motion-reduce:animate-none" />
-
                     <span className="relative inline-flex h-2 w-2 rounded-full bg-[#22D3EE]" />
                   </span>
 
@@ -215,7 +241,10 @@ export function WhyResearch() {
               <div className="mt-10 flex items-center gap-3">
                 <SignalPoint label="Observe" />
                 <SignalLine />
-                <SignalPoint label="Investigate" active />
+                <SignalPoint
+                  label="Investigate"
+                  active
+                />
                 <SignalLine />
                 <SignalPoint label="Understand" />
               </div>
@@ -229,62 +258,75 @@ export function WhyResearch() {
 
         <div className="mt-16 lg:mt-24">
           <div className="grid gap-px overflow-hidden rounded-[1.8rem] border border-[#0A1D2F]/[0.08] bg-[#0A1D2F]/[0.06] dark:border-white/[0.08] dark:bg-white/[0.055] md:grid-cols-3">
-            {researchReasons.map((reason) => {
-              const Icon = reason.icon;
+            {researchReasons.map(
+              (reason) => {
+                const Icon =
+                  reason.icon;
 
-              return (
-                <article
-                  key={reason.number}
-                  className="group relative min-h-[21rem] overflow-hidden bg-white/[0.58] p-7 backdrop-blur-xl dark:bg-[#0D1117]/[0.65] sm:p-8"
-                >
-                  <div
-                    aria-hidden="true"
-                    className="absolute -right-16 -top-16 h-48 w-48 rounded-full opacity-0 blur-[80px] transition-opacity duration-500 group-hover:opacity-100"
-                    style={{
-                      backgroundColor: `${reason.accent}18`,
-                    }}
-                  />
+                return (
+                  <article
+                    key={
+                      reason.number
+                    }
+                    className="group relative min-h-[21rem] overflow-hidden bg-white/[0.66] p-7 transition-colors duration-300 hover:bg-white/[0.82] dark:bg-[#0D1117]/[0.72] dark:hover:bg-[#0D1117]/[0.82] sm:p-8"
+                  >
+                    <div
+                      aria-hidden="true"
+                      className="absolute inset-x-0 top-0 h-px opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                      style={{
+                        background: `linear-gradient(90deg, transparent, ${reason.accent}55, transparent)`,
+                      }}
+                    />
 
-                  <div className="relative flex h-full flex-col">
-                    <div className="flex items-center justify-between">
-                      <span
-                        className="font-mono text-[0.47rem]"
-                        style={{
-                          color: reason.accent,
-                        }}
-                      >
-                        {reason.number}
-                      </span>
-
-                      <span
-                        className="flex h-9 w-9 items-center justify-center rounded-full border"
-                        style={{
-                          borderColor: `${reason.accent}24`,
-                          backgroundColor: `${reason.accent}0A`,
-                        }}
-                      >
-                        <Icon
-                          className="h-4 w-4"
+                    <div className="relative flex h-full flex-col">
+                      <div className="flex items-center justify-between">
+                        <span
+                          className="font-mono text-[0.47rem]"
                           style={{
-                            color: reason.accent,
+                            color:
+                              reason.accent,
                           }}
-                        />
-                      </span>
-                    </div>
+                        >
+                          {
+                            reason.number
+                          }
+                        </span>
 
-                    <div className="mt-auto pt-16">
-                      <h3 className="text-xl font-semibold tracking-[-0.035em] text-[#0A1D2F] dark:text-white">
-                        {reason.title}
-                      </h3>
+                        <span
+                          className="flex h-9 w-9 items-center justify-center rounded-full border"
+                          style={{
+                            borderColor: `${reason.accent}24`,
+                            backgroundColor: `${reason.accent}0A`,
+                          }}
+                        >
+                          <Icon
+                            className="h-4 w-4"
+                            style={{
+                              color:
+                                reason.accent,
+                            }}
+                          />
+                        </span>
+                      </div>
 
-                      <p className="mt-4 text-sm leading-7 text-[#0A1D2F]/42 dark:text-white/37">
-                        {reason.description}
-                      </p>
+                      <div className="mt-auto pt-16">
+                        <h3 className="text-xl font-semibold tracking-[-0.035em] text-[#0A1D2F] dark:text-white">
+                          {
+                            reason.title
+                          }
+                        </h3>
+
+                        <p className="mt-4 text-sm leading-7 text-[#0A1D2F]/42 dark:text-white/37">
+                          {
+                            reason.description
+                          }
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                </article>
-              );
-            })}
+                  </article>
+                );
+              },
+            )}
           </div>
         </div>
 
@@ -327,7 +369,7 @@ export function WhyResearch() {
 
           <a
             href="#research-areas"
-            className="group flex items-center gap-3 text-[0.52rem] font-semibold uppercase tracking-[0.17em] text-[#2563EB] transition-colors hover:text-[#1D4ED8] dark:text-[#60A5FA] dark:hover:text-[#93C5FD]"
+            className="group flex items-center gap-3 text-[0.52rem] font-semibold uppercase tracking-[0.17em] text-[#2563EB] transition-colors duration-300 hover:text-[#1D4ED8] dark:text-[#60A5FA] dark:hover:text-[#93C5FD]"
           >
             Research areas
 
@@ -347,7 +389,7 @@ function NoiseSignal({
   label: string;
 }) {
   return (
-    <div className="rounded-xl border border-[#0A1D2F]/[0.06] bg-white/[0.25] px-3 py-3 text-center backdrop-blur-lg dark:border-white/[0.06] dark:bg-white/[0.015]">
+    <div className="rounded-xl border border-[#0A1D2F]/[0.06] bg-white/[0.36] px-3 py-3 text-center dark:border-white/[0.06] dark:bg-white/[0.025]">
       <span className="font-mono text-[0.46rem] uppercase tracking-[0.13em] text-[#0A1D2F]/27 dark:text-white/24">
         {label}
       </span>
@@ -367,7 +409,7 @@ function SignalPoint({
       <span
         className={`h-2 w-2 rounded-full ${
           active
-            ? "bg-[#22D3EE] shadow-[0_0_12px_rgba(34,211,238,.7)]"
+            ? "bg-[#22D3EE] shadow-[0_0_7px_rgba(34,211,238,.5)]"
             : "bg-[#2563EB]/45 dark:bg-[#60A5FA]/45"
         }`}
       />

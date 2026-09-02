@@ -1,29 +1,39 @@
+"use client";
+
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
+
+import { useTheme } from "@/src/components/theme-provider";
 
 const companyLinks = [
   { label: "About", href: "/about" },
   { label: "What We Do", href: "/what-we-do" },
   { label: "Ventures", href: "/ventures" },
-] as const;
+];
 
 const exploreLinks = [
   { label: "Research", href: "/research" },
   { label: "Careers", href: "/careers" },
   { label: "Contact", href: "/contact" },
-] as const;
+];
 
 export function Footer() {
-  const year = new Date().getFullYear();
+  const {
+    theme,
+    mounted,
+  } = useTheme();
+
+  const isDark =
+    mounted && theme === "dark";
 
   return (
     <footer
       className="
-        border-t
-        border-navy/[0.06]
-
+        border-t border-navy/[0.06]
         bg-[#f8fafc]
         text-navy
+        transition-colors duration-500
 
         dark:border-white/[0.06]
         dark:bg-[#050e17]
@@ -31,20 +41,10 @@ export function Footer() {
       "
     >
       <div className="evolvaer-container">
-        <div
-          className="
-            grid
-            gap-14
-
-            py-14
-
-            lg:grid-cols-[1.35fr_0.65fr_0.65fr]
-            lg:py-18
-          "
-        >
-          {/* =================================================
+        <div className="grid gap-14 py-14 lg:grid-cols-[1.35fr_0.65fr_0.65fr] lg:py-18">
+          {/* =====================================================
               BRAND
-          ================================================= */}
+              ===================================================== */}
 
           <div>
             <Link
@@ -52,29 +52,44 @@ export function Footer() {
               aria-label="Evolvaer Technologies home"
               className="inline-flex"
             >
-              <span
-                aria-hidden="true"
+              <div
                 className="
-                  block
-
-                  h-[52px]
-                  w-[205px]
-
-                  origin-left
-                  scale-[1.18]
-
-                  bg-[url('/brand/evolvaer-logo-light.png')]
-                  bg-contain
-                  bg-left
-                  bg-no-repeat
-
-                  sm:h-[58px]
-                  sm:w-[230px]
-
-                  dark:scale-100
-                  dark:bg-[url('/brand/evolvaer-logo-dark.png')]
+                  relative
+                  h-[52px] w-[205px]
+                  sm:h-[58px] sm:w-[230px]
                 "
-              />
+              >
+                {mounted ? (
+                  <Image
+                    src={
+                      isDark
+                        ? "/brand/evolvaer-logo-dark.png"
+                        : "/brand/evolvaer-logo-light.png"
+                    }
+                    alt="Evolvaer Technologies"
+                    fill
+                    sizes="
+                      (max-width: 640px) 205px,
+                      230px
+                    "
+                    className={`
+                      object-contain
+                      object-left
+
+                      ${
+                        isDark
+                          ? "scale-100"
+                          : "origin-left scale-[1.18]"
+                      }
+                    `}
+                  />
+                ) : (
+                  <div
+                    aria-hidden="true"
+                    className="h-full w-full"
+                  />
+                )}
+              </div>
             </Link>
 
             {/* Tagline */}
@@ -83,12 +98,10 @@ export function Footer() {
               className="
                 mt-7
                 max-w-md
-
                 font-display
                 text-[1.65rem]
                 leading-[1.2]
                 tracking-[-0.02em]
-
                 text-navy/75
 
                 dark:text-white/78
@@ -109,12 +122,9 @@ export function Footer() {
                 inline-flex
                 items-center
                 gap-2
-
                 text-sm
                 text-navy/45
-
                 transition-colors
-                duration-200
 
                 hover:text-blue
 
@@ -127,11 +137,9 @@ export function Footer() {
               <ArrowUpRight
                 aria-hidden="true"
                 className="
-                  h-3.5
-                  w-3.5
-
+                  h-3.5 w-3.5
                   transition-transform
-                  duration-200
+                  duration-300
 
                   group-hover:translate-x-0.5
                   group-hover:-translate-y-0.5
@@ -140,9 +148,9 @@ export function Footer() {
             </Link>
           </div>
 
-          {/* =================================================
+          {/* =====================================================
               COMPANY
-          ================================================= */}
+              ===================================================== */}
 
           <div>
             <p
@@ -151,7 +159,6 @@ export function Footer() {
                 font-semibold
                 uppercase
                 tracking-[0.26em]
-
                 text-navy/30
 
                 dark:text-white/28
@@ -162,41 +169,33 @@ export function Footer() {
 
             <nav
               aria-label="Company"
-              className="
-                mt-6
-                flex
-                flex-col
-                gap-4
-              "
+              className="mt-6 flex flex-col gap-4"
             >
-              {companyLinks.map(
-                (link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className="
-                      text-sm
-                      text-navy/50
+              {companyLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="
+                    text-sm
+                    text-navy/50
+                    transition-colors
+                    duration-300
 
-                      transition-colors
-                      duration-200
+                    hover:text-blue
 
-                      hover:text-blue
-
-                      dark:text-white/48
-                      dark:hover:text-teal
-                    "
-                  >
-                    {link.label}
-                  </Link>
-                ),
-              )}
+                    dark:text-white/48
+                    dark:hover:text-teal
+                  "
+                >
+                  {link.label}
+                </Link>
+              ))}
             </nav>
           </div>
 
-          {/* =================================================
+          {/* =====================================================
               EXPLORE
-          ================================================= */}
+              ===================================================== */}
 
           <div>
             <p
@@ -205,7 +204,6 @@ export function Footer() {
                 font-semibold
                 uppercase
                 tracking-[0.26em]
-
                 text-navy/30
 
                 dark:text-white/28
@@ -216,48 +214,39 @@ export function Footer() {
 
             <nav
               aria-label="Explore"
-              className="
-                mt-6
-                flex
-                flex-col
-                gap-4
-              "
+              className="mt-6 flex flex-col gap-4"
             >
-              {exploreLinks.map(
-                (link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className="
-                      text-sm
-                      text-navy/50
+              {exploreLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="
+                    text-sm
+                    text-navy/50
+                    transition-colors
+                    duration-300
 
-                      transition-colors
-                      duration-200
+                    hover:text-blue
 
-                      hover:text-blue
-
-                      dark:text-white/48
-                      dark:hover:text-teal
-                    "
-                  >
-                    {link.label}
-                  </Link>
-                ),
-              )}
+                    dark:text-white/48
+                    dark:hover:text-teal
+                  "
+                >
+                  {link.label}
+                </Link>
+              ))}
             </nav>
           </div>
         </div>
 
-        {/* ===================================================
+        {/* =====================================================
             BOTTOM
-        =================================================== */}
+            ===================================================== */}
 
         <div
           className="
             border-t
             border-navy/[0.08]
-
             py-7
 
             dark:border-white/[0.08]
@@ -268,7 +257,6 @@ export function Footer() {
               flex
               flex-col
               gap-4
-
               text-[0.68rem]
               text-navy/35
 
@@ -280,8 +268,8 @@ export function Footer() {
             "
           >
             <p>
-              © {year} Evolvaer Technologies.
-              All rights reserved.
+              © {new Date().getFullYear()} Evolvaer
+              Technologies. All rights reserved.
             </p>
 
             <p className="tracking-[0.14em]">

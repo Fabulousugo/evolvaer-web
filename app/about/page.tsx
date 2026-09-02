@@ -9,12 +9,10 @@ import { AboutPrinciples } from "@/src/components/about/about-principles";
 import { AboutAmbition } from "@/src/components/about/about-ambition";
 import { AboutCta } from "@/src/components/about/about-cta";
 
+import { AboutScene } from "@/src/components/three/about-scene";
+
 import { Navbar } from "@/src/components/layout/navbar";
 import { Footer } from "@/src/components/layout/footer";
-
-import { AboutScene } from "@/src/components/three/about-scene";
-import { AboutSceneSection } from "@/src/components/three/about-scene-section";
-import { AboutSceneExperienceProvider } from "@/src/components/three/about-scene-experience";
 
 export const metadata: Metadata = {
   title: "About | Evolvaer Technologies",
@@ -27,48 +25,23 @@ export default function AboutPage() {
     <main className="relative min-h-screen overflow-x-clip bg-background text-foreground">
       <Navbar />
 
-      <AboutSceneExperienceProvider>
-        <div
-          aria-hidden="true"
-          className="pointer-events-none fixed inset-0 z-0"
-        >
-          <AboutScene />
-        </div>
+      <div
+        aria-hidden="true"
+        className="pointer-events-none fixed inset-0 z-0"
+      >
+        <AboutScene />
+      </div>
 
-        <div className="relative z-10">
-          <AboutSceneSection scene="hero">
-            <AboutHero />
-          </AboutSceneSection>
-
-          <AboutSceneSection scene="story">
-            <AboutStory />
-          </AboutSceneSection>
-
-          <AboutSceneSection scene="capabilities">
-            <AboutCapabilities />
-          </AboutSceneSection>
-
-          <AboutSceneSection scene="operating">
-            <AboutOperatingModel />
-          </AboutSceneSection>
-
-          <AboutSceneSection scene="evolution">
-            <AboutEvolution />
-          </AboutSceneSection>
-
-          <AboutSceneSection scene="principles">
-            <AboutPrinciples />
-          </AboutSceneSection>
-
-          <AboutSceneSection scene="ambition">
-            <AboutAmbition />
-          </AboutSceneSection>
-
-          <AboutSceneSection scene="cta">
-            <AboutCta />
-          </AboutSceneSection>
-        </div>
-      </AboutSceneExperienceProvider>
+      <div className="relative z-10">
+        <AboutHero />
+        <AboutStory />
+        <AboutCapabilities />
+        <AboutOperatingModel />
+        <AboutEvolution />
+        <AboutPrinciples />
+        <AboutAmbition />
+        <AboutCta />
+      </div>
 
       <div className="relative z-10">
         <Footer />

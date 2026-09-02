@@ -9,53 +9,37 @@ import { PhilosophySection } from "@/src/components/sections/philosophy-section"
 import { ResearchSection } from "@/src/components/sections/research-section";
 import { VenturesSection } from "@/src/components/sections/ventures-section";
 
-import { SceneExperienceProvider } from "@/src/components/three/scene-experience";
-import { SceneSection } from "@/src/components/three/scene-section";
-import { SiteScene } from "@/src/components/three/site-scene";
+import { ContactScene } from "@/src/components/three/contact-scene";
 
 export default function Home() {
   return (
     <main className="relative min-h-screen overflow-x-clip bg-background text-foreground">
       <Navbar />
 
-      <SceneExperienceProvider>
-        <div
-          aria-hidden="true"
-          className="pointer-events-none fixed inset-0 z-0"
-        >
-          <SiteScene />
-        </div>
+      {/* =====================================================
+          STATIC 3D HOMEPAGE ENVIRONMENT
+      ===================================================== */}
 
-        <div className="relative z-10">
-          <SceneSection scene="hero">
-            <Hero />
-          </SceneSection>
+      <div
+        aria-hidden="true"
+        className="pointer-events-none fixed inset-0 z-0"
+      >
+        <ContactScene />
+      </div>
 
-          <SceneSection scene="approach">
-            <ApproachSection />
-          </SceneSection>
+      {/* =====================================================
+          HOMEPAGE CONTENT
+      ===================================================== */}
 
-          <SceneSection scene="exploration">
-            <ExplorationSection />
-          </SceneSection>
-
-          <SceneSection scene="ventures">
-            <VenturesSection />
-          </SceneSection>
-
-          <SceneSection scene="research">
-            <ResearchSection />
-          </SceneSection>
-
-          <SceneSection scene="philosophy">
-            <PhilosophySection />
-          </SceneSection>
-
-          <SceneSection scene="final">
-            <FinalCta />
-          </SceneSection>
-        </div>
-      </SceneExperienceProvider>
+      <div className="relative z-10">
+        <Hero />
+        <ApproachSection />
+        <ExplorationSection />
+        <VenturesSection />
+        <ResearchSection />
+        <PhilosophySection />
+        <FinalCta />
+      </div>
 
       <div className="relative z-10">
         <Footer />

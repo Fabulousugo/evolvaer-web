@@ -10,11 +10,34 @@ import {
 
 import { ContactForm } from "@/src/components/contact/contact-form";
 
+const contextItems = [
+  {
+    number: "01",
+    label: "The problem or opportunity",
+    accent: "#3B82F6",
+  },
+  {
+    number: "02",
+    label: "Who or what it affects",
+    accent: "#22D3EE",
+  },
+  {
+    number: "03",
+    label: "What you already know",
+    accent: "#A855F7",
+  },
+  {
+    number: "04",
+    label: "What could become possible",
+    accent: "#10B981",
+  },
+] as const;
+
 export function ContactConversation() {
   return (
     <section
       id="contact-form"
-      className="relative overflow-x-clip border-t border-[#0A1D2F]/[0.06] bg-[#F8FAFC]/[0.58] py-24 backdrop-blur-[3px] dark:border-white/[0.06] dark:bg-[#0D1117]/[0.56] sm:py-28 lg:py-32"
+      className="relative overflow-x-clip border-t border-[#0A1D2F]/[0.06] bg-[#F8FAFC]/[0.7] py-24 dark:border-white/[0.06] dark:bg-[#0D1117]/[0.68] sm:py-28 lg:py-32"
     >
       {/* =====================================================
           ATMOSPHERE
@@ -24,6 +47,14 @@ export function ContactConversation() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
       >
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(circle at 2% 30%, rgba(37,99,235,.04), transparent 28%), radial-gradient(circle at 96% 24%, rgba(34,211,238,.055), transparent 32%), radial-gradient(circle at 70% 96%, rgba(168,85,247,.03), transparent 25%)",
+          }}
+        />
+
         <div
           className="absolute inset-0 opacity-[0.025] dark:opacity-[0.02]"
           style={{
@@ -36,12 +67,6 @@ export function ContactConversation() {
               "linear-gradient(to bottom, transparent, black 12%, black 88%, transparent)",
           }}
         />
-
-        <div className="absolute -left-48 top-[22%] h-[34rem] w-[34rem] rounded-full bg-[#2563EB]/[0.025] blur-[180px] dark:bg-[#3B82F6]/[0.035]" />
-
-        <div className="absolute right-[-14rem] top-[15%] h-[38rem] w-[38rem] rounded-full bg-[#22D3EE]/[0.035] blur-[190px] dark:bg-[#22D3EE]/[0.045]" />
-
-        <div className="absolute bottom-[-12rem] right-[20%] h-[28rem] w-[28rem] rounded-full bg-[#A855F7]/[0.02] blur-[170px] dark:bg-[#A855F7]/[0.03]" />
       </div>
 
       <div className="evolvaer-container relative z-10">
@@ -96,19 +121,25 @@ export function ContactConversation() {
             MAIN EXPERIENCE
         ===================================================== */}
 
-        <div className="mt-14 grid gap-px overflow-hidden rounded-[2rem] border border-[#0A1D2F]/[0.075] bg-[#0A1D2F]/[0.05] shadow-[0_28px_90px_rgba(10,29,47,.055)] dark:border-white/[0.075] dark:bg-white/[0.05] dark:shadow-none lg:mt-16 lg:grid-cols-[0.72fr_1.28fr]">
+        <div className="mt-14 grid gap-px overflow-hidden rounded-[2rem] border border-[#0A1D2F]/[0.075] bg-[#0A1D2F]/[0.05] shadow-[0_22px_64px_rgba(10,29,47,.045)] dark:border-white/[0.075] dark:bg-white/[0.05] dark:shadow-none lg:mt-16 lg:grid-cols-[0.72fr_1.28fr]">
           {/* =================================================
               LEFT — CHANNEL CONTEXT
           ================================================= */}
 
-          <aside className="relative min-h-[36rem] overflow-hidden bg-[#0A1D2F]/[0.94] p-7 text-white sm:p-9 lg:p-10">
+          <aside className="relative min-h-[36rem] overflow-hidden bg-[#0A1D2F] p-7 text-white sm:p-9 lg:p-10">
+            {/* CHEAP STATIC ATMOSPHERE */}
+
             <div
               aria-hidden="true"
               className="pointer-events-none absolute inset-0"
             >
-              <div className="absolute -left-32 top-[-6rem] h-[26rem] w-[26rem] rounded-full bg-[#2563EB]/12 blur-[130px]" />
-
-              <div className="absolute bottom-[-8rem] right-[-8rem] h-[24rem] w-[24rem] rounded-full bg-[#22D3EE]/10 blur-[130px]" />
+              <div
+                className="absolute inset-0"
+                style={{
+                  background:
+                    "radial-gradient(circle at 5% 4%, rgba(37,99,235,.2), transparent 36%), radial-gradient(circle at 96% 96%, rgba(34,211,238,.14), transparent 34%)",
+                }}
+              />
 
               <div
                 className="absolute inset-0 opacity-[0.035]"
@@ -150,7 +181,7 @@ export function ContactConversation() {
                 </p>
               </div>
 
-              {/* signal guide */}
+              {/* SIGNAL GUIDE */}
 
               <div className="my-10">
                 <ConversationPath />
@@ -162,29 +193,12 @@ export function ContactConversation() {
                 </p>
 
                 <div className="space-y-4">
-                  <ContextItem
-                    number="01"
-                    label="The problem or opportunity"
-                    accent="#3B82F6"
-                  />
-
-                  <ContextItem
-                    number="02"
-                    label="Who or what it affects"
-                    accent="#22D3EE"
-                  />
-
-                  <ContextItem
-                    number="03"
-                    label="What you already know"
-                    accent="#A855F7"
-                  />
-
-                  <ContextItem
-                    number="04"
-                    label="What could become possible"
-                    accent="#10B981"
-                  />
+                  {contextItems.map((item) => (
+                    <ContextItem
+                      key={item.number}
+                      {...item}
+                    />
+                  ))}
                 </div>
 
                 <div className="mt-9 border-t border-white/[0.08] pt-7">
@@ -217,13 +231,15 @@ export function ContactConversation() {
               RIGHT — WORKING FORM
           ================================================= */}
 
-          <div className="relative bg-white/[0.84] p-6 backdrop-blur-2xl dark:bg-[#101820]/[0.91] sm:p-8 lg:p-10 xl:p-12">
+          <div className="relative bg-white/[0.94] p-6 dark:bg-[#101820]/[0.96] sm:p-8 lg:p-10 xl:p-12">
             <div
               aria-hidden="true"
               className="pointer-events-none absolute inset-0"
-            >
-              <div className="absolute right-[-8rem] top-[-8rem] h-[22rem] w-[22rem] rounded-full bg-[#22D3EE]/[0.025] blur-[120px] dark:bg-[#22D3EE]/[0.035]" />
-            </div>
+              style={{
+                background:
+                  "radial-gradient(circle at 100% 0%, rgba(34,211,238,.035), transparent 32%)",
+              }}
+            />
 
             <div className="relative z-10">
               <ContactForm />
@@ -287,13 +303,13 @@ function ConversationPath() {
     <div className="relative h-[7rem]">
       <div className="absolute left-0 right-0 top-1/2 h-px -translate-y-1/2 bg-gradient-to-r from-[#3B82F6]/20 via-[#22D3EE]/70 to-[#10B981]/20" />
 
-      <span className="absolute left-0 top-1/2 h-3 w-3 -translate-y-1/2 rounded-full border border-[#3B82F6]/40 bg-[#0A1D2F] shadow-[0_0_14px_rgba(59,130,246,.35)]" />
+      <span className="absolute left-0 top-1/2 h-3 w-3 -translate-y-1/2 rounded-full border border-[#3B82F6]/40 bg-[#0A1D2F] shadow-[0_0_8px_rgba(59,130,246,.3)]" />
 
-      <span className="absolute left-1/2 top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#22D3EE]/50 bg-[#22D3EE]/15 shadow-[0_0_18px_rgba(34,211,238,.35)]">
+      <span className="absolute left-1/2 top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#22D3EE]/50 bg-[#22D3EE]/15 shadow-[0_0_10px_rgba(34,211,238,.3)]">
         <span className="absolute left-1/2 top-1/2 h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#22D3EE]" />
       </span>
 
-      <span className="absolute right-0 top-1/2 h-3 w-3 -translate-y-1/2 rounded-full border border-[#10B981]/40 bg-[#0A1D2F] shadow-[0_0_14px_rgba(16,185,129,.3)]" />
+      <span className="absolute right-0 top-1/2 h-3 w-3 -translate-y-1/2 rounded-full border border-[#10B981]/40 bg-[#0A1D2F] shadow-[0_0_8px_rgba(16,185,129,.26)]" />
 
       <span className="absolute left-0 top-[72%] text-[0.4rem] font-semibold uppercase tracking-[0.12em] text-white/25">
         Signal
@@ -335,7 +351,7 @@ function ContextItem({
       </span>
 
       <span
-        className="h-px w-6 transition-all duration-300 group-hover:w-9"
+        className="h-px w-6 transition-[width] duration-300 group-hover:w-9"
         style={{
           backgroundColor: `${accent}50`,
         }}

@@ -1,11 +1,29 @@
-"use client";
-
 import Link from "next/link";
 import {
   ArrowRight,
   CircleDot,
   Sparkles,
 } from "lucide-react";
+
+const ctaStates = [
+  {
+    label: "Explore",
+    value: "Possibility",
+  },
+  {
+    label: "Validate",
+    value: "Evidence",
+  },
+  {
+    label: "Build",
+    value: "Product",
+  },
+  {
+    label: "Result",
+    value: "Venture",
+    active: true,
+  },
+] as const;
 
 export function VenturesCta() {
   return (
@@ -21,13 +39,15 @@ export function VenturesCta() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
       >
-        <div className="absolute inset-0 bg-[#0A1D2F]/[0.92] backdrop-blur-[3px] dark:bg-[#0D1117]/[0.9]" />
+        <div className="absolute inset-0 bg-[#0A1D2F]/[0.97] dark:bg-[#0D1117]/[0.96]" />
 
-        <div className="absolute left-[12%] top-[5%] h-[26rem] w-[26rem] rounded-full bg-[#2563EB]/[0.12] blur-[150px]" />
-
-        <div className="absolute right-[10%] top-[22%] h-[28rem] w-[28rem] rounded-full bg-[#22D3EE]/[0.09] blur-[160px]" />
-
-        <div className="absolute bottom-[-10rem] left-[40%] h-[26rem] w-[26rem] rounded-full bg-[#A855F7]/[0.08] blur-[150px]" />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(circle at 15% 12%, rgba(37,99,235,.14), transparent 31%), radial-gradient(circle at 88% 30%, rgba(34,211,238,.1), transparent 32%), radial-gradient(circle at 52% 100%, rgba(168,85,247,.08), transparent 31%)",
+          }}
+        />
 
         <div
           className="absolute inset-0 opacity-[0.045]"
@@ -81,7 +101,7 @@ export function VenturesCta() {
             <div className="mt-10 flex flex-col gap-3 sm:flex-row">
               <Link
                 href="/research"
-                className="group inline-flex min-h-12 items-center justify-center gap-3 rounded-full bg-[#2563EB] px-6 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#1D4ED8] hover:shadow-[0_12px_35px_rgba(37,99,235,.28)]"
+                className="group inline-flex min-h-12 items-center justify-center gap-3 rounded-full bg-[#2563EB] px-6 text-sm font-semibold text-white transition-[transform,background-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:bg-[#1D4ED8] hover:shadow-[0_10px_28px_rgba(37,99,235,.22)]"
               >
                 Explore our research
 
@@ -90,7 +110,7 @@ export function VenturesCta() {
 
               <Link
                 href="/contact"
-                className="group inline-flex min-h-12 items-center justify-center gap-3 rounded-full border border-white/12 bg-white/[0.035] px-6 text-sm font-semibold text-white/78 backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/[0.065] hover:text-white"
+                className="group inline-flex min-h-12 items-center justify-center gap-3 rounded-full border border-white/12 bg-white/[0.045] px-6 text-sm font-semibold text-white/78 transition-[transform,border-color,background-color,color] duration-300 hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/[0.075] hover:text-white"
               >
                 Start a conversation
 
@@ -117,8 +137,17 @@ export function VenturesCta() {
               </div>
             </div>
 
-            <div className="absolute bottom-[8%] right-[4%] w-[240px] rounded-[1.25rem] border border-white/[0.08] bg-white/[0.025] p-5 backdrop-blur-xl">
-              <div className="flex items-center justify-between">
+            <div className="absolute bottom-[8%] right-[4%] w-[240px] overflow-hidden rounded-[1.25rem] border border-white/[0.08] bg-white/[0.035] p-5">
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0"
+                style={{
+                  background:
+                    "radial-gradient(circle at 100% 0%, rgba(34,211,238,.05), transparent 52%)",
+                }}
+              />
+
+              <div className="relative flex items-center justify-between">
                 <span className="font-mono text-[0.45rem] uppercase tracking-[0.16em] text-white/24">
                   Final state
                 </span>
@@ -126,27 +155,19 @@ export function VenturesCta() {
                 <Sparkles className="h-3.5 w-3.5 text-[#67E8F9]" />
               </div>
 
-              <div className="mt-5 space-y-3">
-                <CtaState
-                  label="Explore"
-                  value="Possibility"
-                />
-
-                <CtaState
-                  label="Validate"
-                  value="Evidence"
-                />
-
-                <CtaState
-                  label="Build"
-                  value="Product"
-                />
-
-                <CtaState
-                  label="Result"
-                  value="Venture"
-                  active
-                />
+              <div className="relative mt-5 space-y-3">
+                {ctaStates.map((state) => (
+                  <CtaState
+                    key={state.label}
+                    label={state.label}
+                    value={state.value}
+                    active={
+                      "active" in state
+                        ? state.active
+                        : false
+                    }
+                  />
+                ))}
               </div>
             </div>
           </div>
@@ -185,7 +206,7 @@ export function VenturesCta() {
 
           <div className="flex items-center gap-2">
             <span className="relative flex h-1.5 w-1.5">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#22D3EE] opacity-40 motion-reduce:animate-none" />
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#22D3EE] opacity-35 motion-reduce:animate-none" />
 
               <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#22D3EE]" />
             </span>
@@ -217,7 +238,7 @@ function CtaState({
 
       <div className="flex items-center gap-2">
         {active && (
-          <span className="h-1.5 w-1.5 rounded-full bg-[#22D3EE] shadow-[0_0_10px_rgba(34,211,238,.7)]" />
+          <span className="h-1.5 w-1.5 rounded-full bg-[#22D3EE] shadow-[0_0_7px_rgba(34,211,238,.52)]" />
         )}
 
         <span

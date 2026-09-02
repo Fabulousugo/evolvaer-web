@@ -1,5 +1,3 @@
-"use client";
-
 import {
   ArrowRight,
   CircleDot,
@@ -46,7 +44,76 @@ const questions = [
     area: "Systems + impact",
     accent: "#10B981",
   },
-];
+] as const;
+
+const questionNodes = [
+  {
+    className: "left-[4%] top-[9%]",
+    accent: "#A855F7",
+  },
+  {
+    className: "right-[3%] top-[18%]",
+    accent: "#2563EB",
+  },
+  {
+    className: "bottom-[5%] right-[13%]",
+    accent: "#22D3EE",
+  },
+  {
+    className: "bottom-[9%] left-[7%]",
+    accent: "#A855F7",
+  },
+  {
+    className: "right-[1%] top-[58%]",
+    accent: "#10B981",
+  },
+] as const;
+
+const fieldPoints = [
+  {
+    className: "left-[17%] top-[42%]",
+    accent: "#A855F7",
+  },
+  {
+    className: "right-[19%] top-[43%]",
+    accent: "#2563EB",
+  },
+  {
+    className: "bottom-[24%] left-[34%]",
+    accent: "#22D3EE",
+  },
+  {
+    className: "right-[32%] top-[11%]",
+    accent: "#A855F7",
+  },
+  {
+    className: "bottom-[17%] right-[39%]",
+    accent: "#10B981",
+  },
+] as const;
+
+const researchCycleStages = [
+  {
+    label: "Question",
+    accent: "#A855F7",
+  },
+  {
+    label: "Research",
+    accent: "#2563EB",
+  },
+  {
+    label: "Knowledge",
+    accent: "#22D3EE",
+  },
+  {
+    label: "Application",
+    accent: "#10B981",
+  },
+  {
+    label: "Observation",
+    accent: "#3B82F6",
+  },
+] as const;
 
 export function OpenQuestions() {
   return (
@@ -62,16 +129,18 @@ export function OpenQuestions() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
       >
-        <div className="absolute inset-0 bg-white/[0.34] backdrop-blur-[1px] dark:bg-[#0D1117]/[0.38]" />
-
-        <div className="absolute left-[22%] top-[5%] h-[36rem] w-[36rem] rounded-full bg-[#2563EB]/[0.03] blur-[180px] dark:bg-[#3B82F6]/[0.045]" />
-
-        <div className="absolute right-[-12rem] top-[22%] h-[34rem] w-[34rem] rounded-full bg-[#A855F7]/[0.035] blur-[175px] dark:bg-[#A855F7]/[0.05]" />
-
-        <div className="absolute -left-40 bottom-[-8rem] h-[30rem] w-[30rem] rounded-full bg-[#22D3EE]/[0.025] blur-[170px] dark:bg-[#22D3EE]/[0.04]" />
+        <div className="absolute inset-0 bg-white/[0.38] dark:bg-[#0D1117]/[0.41]" />
 
         <div
-          className="absolute inset-0 opacity-[0.07] dark:opacity-[0.045]"
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(circle at 36% 8%, rgba(37,99,235,.04), transparent 31%), radial-gradient(circle at 96% 33%, rgba(168,85,247,.045), transparent 31%), radial-gradient(circle at 4% 94%, rgba(34,211,238,.03), transparent 28%)",
+          }}
+        />
+
+        <div
+          className="absolute inset-0 opacity-[0.06] dark:opacity-[0.04]"
           style={{
             backgroundImage:
               "radial-gradient(circle, rgba(124,58,237,.22) 1px, transparent 1px)",
@@ -106,6 +175,7 @@ export function OpenQuestions() {
             <h2 className="mt-6 max-w-[800px] text-[clamp(2.8rem,4.8vw,5.2rem)] font-semibold leading-[0.96] tracking-[-0.052em] text-[#0A1D2F] dark:text-white">
               What we don&apos;t know
               <br />
+
               <span className="bg-gradient-to-r from-[#A855F7] via-[#2563EB] to-[#22D3EE] bg-clip-text text-transparent dark:from-[#C084FC] dark:via-[#60A5FA] dark:to-[#67E8F9]">
                 matters too.
               </span>
@@ -115,8 +185,8 @@ export function OpenQuestions() {
           <div className="max-w-[620px] lg:justify-self-end">
             <p className="text-base leading-8 text-[#0A1D2F]/58 dark:text-white/54 sm:text-[1.05rem]">
               Understanding does not eliminate uncertainty. It changes
-              its shape — replacing vague assumptions with more precise
-              questions.
+              its shape — replacing vague assumptions with more
+              precise questions.
             </p>
 
             <p className="mt-5 text-sm leading-7 text-[#0A1D2F]/41 dark:text-white/37">
@@ -131,7 +201,7 @@ export function OpenQuestions() {
             KNOWLEDGE / UNKNOWN FIELD
         ===================================================== */}
 
-        <div className="mt-16 overflow-hidden rounded-[2rem] border border-[#A855F7]/[0.11] bg-white/[0.28] backdrop-blur-xl dark:border-[#A855F7]/[0.1] dark:bg-white/[0.015] lg:mt-24">
+        <div className="mt-16 overflow-hidden rounded-[2rem] border border-[#A855F7]/[0.11] bg-white/[0.4] dark:border-[#A855F7]/[0.1] dark:bg-white/[0.022] lg:mt-24">
           <div className="grid lg:grid-cols-[0.68fr_1.32fr]">
             {/* EXPLANATION */}
 
@@ -157,8 +227,8 @@ export function OpenQuestions() {
 
               <div className="mt-9 border-l border-[#A855F7]/30 pl-5">
                 <p className="text-sm leading-7 text-[#0A1D2F]/42 dark:text-white/37">
-                  The objective is not to remove every unknown. It is to
-                  know which unknowns matter enough to investigate.
+                  The objective is not to remove every unknown. It is
+                  to know which unknowns matter enough to investigate.
                 </p>
               </div>
             </div>
@@ -166,6 +236,15 @@ export function OpenQuestions() {
             {/* VISUAL FIELD */}
 
             <div className="relative min-h-[37rem] overflow-hidden p-7 sm:p-9 lg:p-11">
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0"
+                style={{
+                  background:
+                    "radial-gradient(circle at 50% 50%, rgba(168,85,247,.025), transparent 47%)",
+                }}
+              />
+
               <UnknownField />
             </div>
           </div>
@@ -241,7 +320,7 @@ export function OpenQuestions() {
                       className="h-1.5 w-1.5 rounded-full"
                       style={{
                         backgroundColor: item.accent,
-                        boxShadow: `0 0 8px ${item.accent}66`,
+                        boxShadow: `0 0 6px ${item.accent}55`,
                       }}
                     />
 
@@ -265,7 +344,7 @@ export function OpenQuestions() {
         ===================================================== */}
 
         <div className="mt-16 grid gap-5 lg:mt-24 lg:grid-cols-[1.08fr_0.92fr]">
-          <div className="relative overflow-hidden rounded-[1.8rem] border border-[#0A1D2F]/[0.08] bg-white/[0.34] p-7 backdrop-blur-xl dark:border-white/[0.08] dark:bg-white/[0.018] sm:p-9 lg:p-10">
+          <div className="relative overflow-hidden rounded-[1.8rem] border border-[#0A1D2F]/[0.08] bg-white/[0.46] p-7 dark:border-white/[0.08] dark:bg-white/[0.025] sm:p-9 lg:p-10">
             <div className="flex items-center gap-3">
               <Orbit className="h-4 w-4 text-[#22D3EE]" />
 
@@ -279,9 +358,9 @@ export function OpenQuestions() {
             </h3>
 
             <p className="mt-6 max-w-[620px] text-sm leading-7 text-[#0A1D2F]/43 dark:text-white/38">
-              What we learn can inform application. Application produces
-              new observations. Those observations expose new questions,
-              beginning another cycle of investigation.
+              What we learn can inform application. Application
+              produces new observations. Those observations expose new
+              questions, beginning another cycle of investigation.
             </p>
 
             <div className="mt-10">
@@ -289,10 +368,14 @@ export function OpenQuestions() {
             </div>
           </div>
 
-          <div className="relative overflow-hidden rounded-[1.8rem] border border-[#A855F7]/[0.12] bg-white/[0.34] p-7 backdrop-blur-xl dark:border-[#A855F7]/[0.1] dark:bg-white/[0.018] sm:p-9 lg:p-10">
+          <div className="relative overflow-hidden rounded-[1.8rem] border border-[#A855F7]/[0.12] bg-white/[0.46] p-7 dark:border-[#A855F7]/[0.1] dark:bg-white/[0.025] sm:p-9 lg:p-10">
             <div
               aria-hidden="true"
-              className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-[#A855F7]/[0.055] blur-[100px]"
+              className="pointer-events-none absolute inset-0"
+              style={{
+                background:
+                  "radial-gradient(circle at 100% 0%, rgba(168,85,247,.055), transparent 46%)",
+              }}
             />
 
             <div className="relative">
@@ -307,8 +390,8 @@ export function OpenQuestions() {
               </blockquote>
 
               <p className="mt-7 max-w-[490px] text-sm leading-7 text-[#0A1D2F]/42 dark:text-white/37">
-                Knowing precisely what we do not understand gives future
-                investigation somewhere meaningful to begin.
+                Knowing precisely what we do not understand gives
+                future investigation somewhere meaningful to begin.
               </p>
             </div>
           </div>
@@ -354,7 +437,7 @@ export function OpenQuestions() {
 
           <a
             href="#research-cta"
-            className="group inline-flex items-center gap-3 text-[0.52rem] font-semibold uppercase tracking-[0.17em] text-[#A855F7] transition-colors hover:text-[#7C3AED] dark:text-[#C084FC] dark:hover:text-[#D8B4FE]"
+            className="group inline-flex items-center gap-3 text-[0.52rem] font-semibold uppercase tracking-[0.17em] text-[#A855F7] transition-colors duration-300 hover:text-[#7C3AED] dark:text-[#C084FC] dark:hover:text-[#D8B4FE]"
           >
             Keep questioning
 
@@ -383,7 +466,7 @@ function UnknownField() {
 
       {/* CORE */}
 
-      <div className="absolute left-1/2 top-1/2 z-20 flex h-[7rem] w-[7rem] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-[#22D3EE]/25 bg-white/[0.78] shadow-[0_0_55px_rgba(34,211,238,.1)] backdrop-blur-xl dark:bg-[#0D1117]/[0.84]">
+      <div className="absolute left-1/2 top-1/2 z-20 flex h-[7rem] w-[7rem] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-[#22D3EE]/25 bg-white/[0.86] shadow-[0_0_26px_rgba(34,211,238,.07)] dark:bg-[#0D1117]/[0.9]">
         <span className="absolute inset-[7px] rounded-full border border-[#22D3EE]/10" />
 
         <div className="text-center">
@@ -401,43 +484,21 @@ function UnknownField() {
 
       {/* QUESTIONS ON THE EDGE */}
 
-      <QuestionNode
-        className="left-[4%] top-[9%]"
-        number="?"
-        accent="#A855F7"
-      />
-
-      <QuestionNode
-        className="right-[3%] top-[18%]"
-        number="?"
-        accent="#2563EB"
-      />
-
-      <QuestionNode
-        className="bottom-[5%] right-[13%]"
-        number="?"
-        accent="#22D3EE"
-      />
-
-      <QuestionNode
-        className="bottom-[9%] left-[7%]"
-        number="?"
-        accent="#A855F7"
-      />
-
-      <QuestionNode
-        className="right-[1%] top-[58%]"
-        number="?"
-        accent="#10B981"
-      />
+      {questionNodes.map((node, index) => (
+        <QuestionNode
+          key={`${node.accent}-${index}`}
+          {...node}
+        />
+      ))}
 
       {/* SMALLER UNKNOWNS */}
 
-      <FieldPoint className="left-[17%] top-[42%]" accent="#A855F7" />
-      <FieldPoint className="right-[19%] top-[43%]" accent="#2563EB" />
-      <FieldPoint className="bottom-[24%] left-[34%]" accent="#22D3EE" />
-      <FieldPoint className="right-[32%] top-[11%]" accent="#A855F7" />
-      <FieldPoint className="bottom-[17%] right-[39%]" accent="#10B981" />
+      {fieldPoints.map((point, index) => (
+        <FieldPoint
+          key={`${point.accent}-${index}`}
+          {...point}
+        />
+      ))}
 
       {/* LABELS */}
 
@@ -454,19 +515,16 @@ function UnknownField() {
 
 function QuestionNode({
   className,
-  number,
   accent,
 }: {
   className: string;
-  number: string;
   accent: string;
 }) {
   return (
     <div
-      className={`absolute flex h-14 w-14 items-center justify-center rounded-full border bg-white/[0.55] backdrop-blur-xl dark:bg-[#0D1117]/[0.68] ${className}`}
+      className={`absolute flex h-14 w-14 items-center justify-center rounded-full border bg-white/[0.75] dark:bg-[#0D1117]/[0.78] ${className}`}
       style={{
         borderColor: `${accent}28`,
-        boxShadow: `0 0 24px ${accent}0D`,
       }}
     >
       <span
@@ -475,7 +533,7 @@ function QuestionNode({
           color: accent,
         }}
       >
-        {number}
+        ?
       </span>
     </div>
   );
@@ -493,7 +551,7 @@ function FieldPoint({
       className={`absolute h-2 w-2 rounded-full ${className}`}
       style={{
         backgroundColor: `${accent}55`,
-        boxShadow: `0 0 9px ${accent}33`,
+        boxShadow: `0 0 6px ${accent}2E`,
       }}
     />
   );
@@ -504,56 +562,36 @@ function FieldPoint({
 ============================================================ */
 
 function ResearchCycle() {
-  const stages = [
-    {
-      label: "Question",
-      accent: "#A855F7",
-    },
-    {
-      label: "Research",
-      accent: "#2563EB",
-    },
-    {
-      label: "Knowledge",
-      accent: "#22D3EE",
-    },
-    {
-      label: "Application",
-      accent: "#10B981",
-    },
-    {
-      label: "Observation",
-      accent: "#3B82F6",
-    },
-  ];
-
   return (
     <div className="overflow-x-auto pb-2">
       <div className="flex min-w-[36rem] items-center">
-        {stages.map((stage, index) => (
-          <div
-            key={stage.label}
-            className="contents"
-          >
-            <div className="flex shrink-0 flex-col items-center">
-              <span
-                className="h-2.5 w-2.5 rounded-full"
-                style={{
-                  backgroundColor: stage.accent,
-                  boxShadow: `0 0 10px ${stage.accent}55`,
-                }}
-              />
+        {researchCycleStages.map(
+          (stage, index) => (
+            <div
+              key={stage.label}
+              className="contents"
+            >
+              <div className="flex shrink-0 flex-col items-center">
+                <span
+                  className="h-2.5 w-2.5 rounded-full"
+                  style={{
+                    backgroundColor: stage.accent,
+                    boxShadow: `0 0 7px ${stage.accent}44`,
+                  }}
+                />
 
-              <span className="mt-3 text-[0.45rem] font-semibold uppercase tracking-[0.12em] text-[#0A1D2F]/34 dark:text-white/30">
-                {stage.label}
-              </span>
+                <span className="mt-3 text-[0.45rem] font-semibold uppercase tracking-[0.12em] text-[#0A1D2F]/34 dark:text-white/30">
+                  {stage.label}
+                </span>
+              </div>
+
+              {index <
+                researchCycleStages.length - 1 && (
+                <span className="mx-3 mb-5 h-px flex-1 bg-gradient-to-r from-[#2563EB]/15 via-[#22D3EE]/30 to-[#A855F7]/15" />
+              )}
             </div>
-
-            {index < stages.length - 1 && (
-              <span className="mx-3 mb-5 h-px flex-1 bg-gradient-to-r from-[#2563EB]/15 via-[#22D3EE]/30 to-[#A855F7]/15" />
-            )}
-          </div>
-        ))}
+          ),
+        )}
 
         <div className="mb-5 ml-4 text-lg text-[#A855F7]/55">
           ↺

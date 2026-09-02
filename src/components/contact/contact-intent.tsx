@@ -1,5 +1,3 @@
-"use client";
-
 import {
   ArrowDown,
   BriefcaseBusiness,
@@ -51,18 +49,105 @@ const enquiryTypes = [
     icon: Sparkles,
     accent: "#3B82F6",
   },
-];
+] as const;
+
+const intentSignals = [
+  {
+    label: "The problem",
+    accent: "#2563EB",
+  },
+  {
+    label: "Who it affects",
+    accent: "#22D3EE",
+  },
+  {
+    label: "What you have tried",
+    accent: "#A855F7",
+  },
+  {
+    label: "What could be possible",
+    accent: "#10B981",
+  },
+] as const;
+
+const mapPoints = [
+  {
+    className: "left-[6%] top-[10%]",
+    label: "Technology",
+    accent: "#2563EB",
+  },
+  {
+    className: "left-[1%] top-[44%]",
+    label: "Product",
+    accent: "#22D3EE",
+  },
+  {
+    className: "bottom-[7%] left-[8%]",
+    label: "Research",
+    accent: "#A855F7",
+  },
+  {
+    className: "right-[3%] top-[13%]",
+    label: "Partnership",
+    accent: "#10B981",
+  },
+  {
+    className: "bottom-[12%] right-[1%]",
+    label: "Careers",
+    accent: "#3B82F6",
+  },
+] as const;
+
+const mapRoutes = [
+  {
+    className:
+      "left-[9%] top-[14%] w-[39%] rotate-[24deg]",
+    accent: "#2563EB",
+  },
+  {
+    className:
+      "left-[4%] top-[48%] w-[44%] rotate-[2deg]",
+    accent: "#22D3EE",
+  },
+  {
+    className:
+      "bottom-[14%] left-[10%] w-[39%] -rotate-[22deg]",
+    accent: "#A855F7",
+  },
+  {
+    className:
+      "right-[7%] top-[18%] w-[42%] origin-right -rotate-[22deg]",
+    accent: "#10B981",
+  },
+  {
+    className:
+      "bottom-[20%] right-[4%] w-[44%] origin-right rotate-[18deg]",
+    accent: "#3B82F6",
+  },
+] as const;
 
 export function ContactIntent() {
   return (
     <section
       id="contact-intent"
-      className="relative overflow-x-clip border-t border-[#0A1D2F]/[0.06] bg-white/[0.5] py-24 backdrop-blur-[2px] dark:border-white/[0.06] dark:bg-[#0D1117]/[0.5] sm:py-28 lg:py-32"
+      className="relative overflow-x-clip border-t border-[#0A1D2F]/[0.06] bg-white/[0.62] py-24 dark:border-white/[0.06] dark:bg-[#0D1117]/[0.62] sm:py-28 lg:py-32"
     >
+      {/* =====================================================
+          ATMOSPHERE
+      ===================================================== */}
+
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
       >
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(circle at 3% 30%, rgba(37,99,235,.045), transparent 28%), radial-gradient(circle at 94% 82%, rgba(168,85,247,.045), transparent 28%)",
+          }}
+        />
+
         <div
           className="absolute inset-0 opacity-[0.035] dark:opacity-[0.024]"
           style={{
@@ -75,13 +160,13 @@ export function ContactIntent() {
               "linear-gradient(to bottom, transparent, black 14%, black 86%, transparent)",
           }}
         />
-
-        <div className="absolute -left-44 top-[20%] h-[30rem] w-[30rem] rounded-full bg-[#2563EB]/[0.025] blur-[160px] dark:bg-[#3B82F6]/[0.04]" />
-
-        <div className="absolute right-[-11rem] bottom-[8%] h-[29rem] w-[29rem] rounded-full bg-[#A855F7]/[0.025] blur-[165px] dark:bg-[#A855F7]/[0.04]" />
       </div>
 
       <div className="evolvaer-container relative z-10">
+        {/* =====================================================
+            INTRODUCTION
+        ===================================================== */}
+
         <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
           <div>
             <div className="flex items-center gap-4">
@@ -103,6 +188,7 @@ export function ContactIntent() {
             <h2 className="mt-6 max-w-[660px] text-[2.55rem] font-semibold leading-[1.02] tracking-[-0.045em] text-[#0A1D2F] dark:text-white sm:text-[3.2rem] lg:text-[3.8rem]">
               Different signals.
               <br />
+
               <span className="text-[#22D3EE]">
                 One place to begin.
               </span>
@@ -124,14 +210,18 @@ export function ContactIntent() {
           </div>
         </div>
 
+        {/* =====================================================
+            ENQUIRY TYPES
+        ===================================================== */}
+
         <div className="mt-16 border-y border-[#0A1D2F]/[0.08] dark:border-white/[0.08]">
-          {enquiryTypes.map((item, index) => {
+          {enquiryTypes.map((item) => {
             const Icon = item.icon;
 
             return (
               <article
                 key={item.title}
-                className="group relative grid gap-6 border-b border-[#0A1D2F]/[0.07] bg-white/[0.34] px-5 py-8 backdrop-blur-xl transition-colors duration-300 last:border-b-0 hover:bg-white/[0.62] dark:border-white/[0.07] dark:bg-[#0D1117]/[0.4] dark:hover:bg-white/[0.035] sm:px-7 lg:grid-cols-[0.1fr_0.18fr_0.72fr_1.3fr] lg:items-center lg:px-8 lg:py-9"
+                className="group relative grid gap-6 border-b border-[#0A1D2F]/[0.07] bg-white/[0.46] px-5 py-8 transition-colors duration-300 last:border-b-0 hover:bg-white/[0.72] dark:border-white/[0.07] dark:bg-[#0D1117]/[0.52] dark:hover:bg-white/[0.045] sm:px-7 lg:grid-cols-[0.1fr_0.18fr_0.72fr_1.3fr] lg:items-center lg:px-8 lg:py-9"
               >
                 <span
                   className="font-mono text-[0.46rem]"
@@ -187,28 +277,43 @@ export function ContactIntent() {
           })}
         </div>
 
-        <div className="mt-16 grid gap-px overflow-hidden border-y border-[#0A1D2F]/[0.075] bg-[#0A1D2F]/[0.05] dark:border-white/[0.075] dark:bg-white/[0.05] lg:grid-cols-[1.08fr_0.92fr]">
-          <div className="relative min-h-[28rem] overflow-hidden bg-white/[0.42] p-7 backdrop-blur-xl dark:bg-[#0D1117]/[0.45] sm:p-9">
-            <div className="flex items-center justify-between gap-5">
-              <div className="flex items-center gap-3">
-                <Sparkles className="h-4 w-4 text-[#22D3EE]" />
+        {/* =====================================================
+            ROUTING / BEFORE THE BRIEF
+        ===================================================== */}
 
-                <p className="text-[0.52rem] font-semibold uppercase tracking-[0.2em] text-[#0A1D2F]/36 dark:text-white/31">
-                  Signal routing
-                </p>
+        <div className="mt-16 grid gap-px overflow-hidden border-y border-[#0A1D2F]/[0.075] bg-[#0A1D2F]/[0.05] dark:border-white/[0.075] dark:bg-white/[0.05] lg:grid-cols-[1.08fr_0.92fr]">
+          <div className="relative min-h-[28rem] overflow-hidden bg-white/[0.54] p-7 dark:bg-[#0D1117]/[0.56] sm:p-9">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0"
+              style={{
+                background:
+                  "radial-gradient(circle at 50% 50%, rgba(34,211,238,.035), transparent 38%)",
+              }}
+            />
+
+            <div className="relative z-10">
+              <div className="flex items-center justify-between gap-5">
+                <div className="flex items-center gap-3">
+                  <Sparkles className="h-4 w-4 text-[#22D3EE]" />
+
+                  <p className="text-[0.52rem] font-semibold uppercase tracking-[0.2em] text-[#0A1D2F]/36 dark:text-white/31">
+                    Signal routing
+                  </p>
+                </div>
+
+                <span className="font-mono text-[0.42rem] uppercase tracking-[0.13em] text-[#22D3EE]">
+                  Multiple entry points
+                </span>
               </div>
 
-              <span className="font-mono text-[0.42rem] uppercase tracking-[0.13em] text-[#22D3EE]">
-                Multiple entry points
-              </span>
-            </div>
-
-            <div className="mt-8">
-              <IntentMap />
+              <div className="mt-8">
+                <IntentMap />
+              </div>
             </div>
           </div>
 
-          <div className="flex flex-col justify-between bg-white/[0.6] p-7 backdrop-blur-xl dark:bg-[#0D1117]/[0.6] sm:p-9">
+          <div className="flex flex-col justify-between bg-white/[0.68] p-7 dark:bg-[#0D1117]/[0.68] sm:p-9">
             <div>
               <p className="text-[0.5rem] font-semibold uppercase tracking-[0.2em] text-[#A855F7]">
                 Before the brief
@@ -223,35 +328,26 @@ export function ContactIntent() {
 
               <p className="mt-5 max-w-[470px] text-sm leading-7 text-[#0A1D2F]/40 dark:text-white/36">
                 A useful first message does not need to be a
-                finished brief. The problem, the context
-                and what you think may be possible are
-                enough to begin.
+                finished brief. The problem, the context and
+                what you think may be possible are enough to
+                begin.
               </p>
             </div>
 
             <div className="mt-10 space-y-4 border-t border-[#0A1D2F]/[0.07] pt-6 dark:border-white/[0.07]">
-              <IntentSignal
-                label="The problem"
-                accent="#2563EB"
-              />
-
-              <IntentSignal
-                label="Who it affects"
-                accent="#22D3EE"
-              />
-
-              <IntentSignal
-                label="What you have tried"
-                accent="#A855F7"
-              />
-
-              <IntentSignal
-                label="What could be possible"
-                accent="#10B981"
-              />
+              {intentSignals.map((signal) => (
+                <IntentSignal
+                  key={signal.label}
+                  {...signal}
+                />
+              ))}
             </div>
           </div>
         </div>
+
+        {/* =====================================================
+            HANDOFF
+        ===================================================== */}
 
         <div className="mt-16 flex items-center justify-between border-t border-[#0A1D2F]/[0.08] pt-6 dark:border-white/[0.08]">
           <span className="font-mono text-[0.43rem] uppercase tracking-[0.15em] text-[#0A1D2F]/22 dark:text-white/19">
@@ -274,69 +370,34 @@ export function ContactIntent() {
   );
 }
 
+/* ============================================================
+   INTENT MAP
+============================================================ */
+
 function IntentMap() {
   return (
     <div className="relative mx-auto h-[19rem] max-w-[42rem]">
-      <SignalRoute
-        className="left-[9%] top-[14%] w-[39%] rotate-[24deg]"
-        accent="#2563EB"
-      />
+      {mapRoutes.map((route) => (
+        <SignalRoute
+          key={route.accent}
+          {...route}
+        />
+      ))}
 
-      <SignalRoute
-        className="left-[4%] top-[48%] w-[44%] rotate-[2deg]"
-        accent="#22D3EE"
-      />
-
-      <SignalRoute
-        className="left-[10%] bottom-[14%] w-[39%] -rotate-[22deg]"
-        accent="#A855F7"
-      />
-
-      <SignalRoute
-        className="right-[7%] top-[18%] w-[42%] origin-right -rotate-[22deg]"
-        accent="#10B981"
-      />
-
-      <SignalRoute
-        className="right-[4%] bottom-[20%] w-[44%] origin-right rotate-[18deg]"
-        accent="#3B82F6"
-      />
-
-      <SignalPoint
-        className="left-[6%] top-[10%]"
-        label="Technology"
-        accent="#2563EB"
-      />
-
-      <SignalPoint
-        className="left-[1%] top-[44%]"
-        label="Product"
-        accent="#22D3EE"
-      />
-
-      <SignalPoint
-        className="bottom-[7%] left-[8%]"
-        label="Research"
-        accent="#A855F7"
-      />
-
-      <SignalPoint
-        className="right-[3%] top-[13%]"
-        label="Partnership"
-        accent="#10B981"
-      />
-
-      <SignalPoint
-        className="bottom-[12%] right-[1%]"
-        label="Careers"
-        accent="#3B82F6"
-      />
+      {mapPoints.map((point) => (
+        <SignalPoint
+          key={point.label}
+          {...point}
+        />
+      ))}
 
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
         <div className="relative flex h-20 w-20 items-center justify-center">
           <span className="absolute h-20 w-20 rounded-full border border-[#22D3EE]/[0.06]" />
+
           <span className="absolute h-12 w-12 rounded-full border border-[#22D3EE]/10" />
-          <span className="h-3.5 w-3.5 rounded-full bg-[#22D3EE] shadow-[0_0_20px_rgba(34,211,238,.5)]" />
+
+          <span className="h-3.5 w-3.5 rounded-full bg-[#22D3EE] shadow-[0_0_10px_rgba(34,211,238,.4)]" />
         </div>
 
         <p className="mt-4 -translate-x-[20%] whitespace-nowrap text-[0.44rem] font-semibold uppercase tracking-[0.13em] text-[#0A1D2F]/32 dark:text-white/28">
@@ -346,6 +407,10 @@ function IntentMap() {
     </div>
   );
 }
+
+/* ============================================================
+   SIGNAL ROUTE
+============================================================ */
 
 function SignalRoute({
   className,
@@ -365,6 +430,10 @@ function SignalRoute({
   );
 }
 
+/* ============================================================
+   SIGNAL POINT
+============================================================ */
+
 function SignalPoint({
   className,
   label,
@@ -375,13 +444,15 @@ function SignalPoint({
   accent: string;
 }) {
   return (
-    <div className={`absolute ${className}`}>
+    <div
+      className={`absolute ${className}`}
+    >
       <div className="flex items-center gap-3">
         <span
           className="h-2.5 w-2.5 rounded-full"
           style={{
             backgroundColor: accent,
-            boxShadow: `0 0 13px ${accent}65`,
+            boxShadow: `0 0 8px ${accent}50`,
           }}
         />
 
@@ -392,6 +463,10 @@ function SignalPoint({
     </div>
   );
 }
+
+/* ============================================================
+   INTENT SIGNAL
+============================================================ */
 
 function IntentSignal({
   label,
@@ -406,7 +481,7 @@ function IntentSignal({
         className="h-2 w-2 rounded-full"
         style={{
           backgroundColor: accent,
-          boxShadow: `0 0 8px ${accent}55`,
+          boxShadow: `0 0 6px ${accent}48`,
         }}
       />
 
