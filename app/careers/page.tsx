@@ -7,7 +7,7 @@ import { HowWeWork } from "@/src/components/careers/how-we-work";
 import { OpenRoles } from "@/src/components/careers/open-roles";
 import { WhyJoin } from "@/src/components/careers/why-join";
 
-import { CareersScene } from "@/src/components/three/careers-scene";
+import { CareersSceneLoader} from "@/src/components/three/careers-scene-loader";
 import { Footer } from "@/src/components/layout/footer";
 import { Navbar } from "@/src/components/layout/navbar";
 
@@ -25,7 +25,7 @@ export default function CareersPage() {
           aria-hidden="true"
           className="pointer-events-none fixed inset-0 z-0"
         >
-          <CareersScene />
+          <CareersSceneLoader />
         </div>
 
         {/* =====================================================

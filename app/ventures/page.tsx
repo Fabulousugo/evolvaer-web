@@ -11,7 +11,7 @@ import { VenturesHero } from "@/src/components/ventures/ventures-hero";
 import { Footer } from "@/src/components/layout/footer";
 import { Navbar } from "@/src/components/layout/navbar";
 
-import { VenturesScene } from "@/src/components/three/ventures-scene";
+import { VenturesSceneLoader } from "@/src/components/three/ventures-scene-loader";
 
 export default function VenturesPage() {
   return (
@@ -26,7 +26,7 @@ export default function VenturesPage() {
         aria-hidden="true"
         className="pointer-events-none fixed inset-0 z-0"
       >
-        <VenturesScene />
+        <VenturesSceneLoader />
       </div>
 
       {/* =====================================================

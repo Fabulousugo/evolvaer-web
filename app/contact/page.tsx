@@ -9,7 +9,7 @@ import { ContactRoutes } from "@/src/components/contact/contact-routes";
 import { Footer } from "@/src/components/layout/footer";
 import { Navbar } from "@/src/components/layout/navbar";
 
-import { ContactScene } from "@/src/components/three/contact-scene";
+import { ContactSceneLoader } from "@/src/components/three/contact-scene-loader";
 
 export const metadata: Metadata = {
   title: "Contact | Evolvaer",
@@ -36,7 +36,7 @@ export default function ContactPage() {
         aria-hidden="true"
         className="pointer-events-none fixed inset-0 z-0"
       >
-        <ContactScene />
+        <ContactSceneLoader />
       </div>
 
       {/* ===================================================

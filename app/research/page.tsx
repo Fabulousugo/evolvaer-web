@@ -11,7 +11,7 @@ import { WhyResearch } from "@/src/components/research/why-research";
 import { Footer } from "@/src/components/layout/footer";
 import { Navbar } from "@/src/components/layout/navbar";
 
-import { ResearchPageScene } from "@/src/components/three/research-page-scene";
+import { ResearchSceneLoader } from "@/src/components/three/research-scene-loader";
 
 export default function ResearchPage() {
   return (
@@ -26,7 +26,7 @@ export default function ResearchPage() {
         aria-hidden="true"
         className="pointer-events-none fixed inset-0 z-0"
       >
-        <ResearchPageScene />
+        <ResearchSceneLoader />
       </div>
 
       {/* =====================================================

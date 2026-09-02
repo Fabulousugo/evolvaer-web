@@ -11,7 +11,7 @@ import { WhatWeDoHero } from "@/src/components/what-we-do/what-we-do-hero";
 import { Footer } from "@/src/components/layout/footer";
 import { Navbar } from "@/src/components/layout/navbar";
 
-import { WorkScene } from "@/src/components/three/work-scene";
+import { WorkSceneLoader } from "@/src/components/three/work-scene-loader";
 
 export default function WhatWeDoPage() {
   return (
@@ -22,7 +22,7 @@ export default function WhatWeDoPage() {
         aria-hidden="true"
         className="pointer-events-none fixed inset-0 z-0"
       >
-        <WorkScene />
+        <WorkSceneLoader />
       </div>
 
       <div className="relative z-10">

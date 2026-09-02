@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import {
   ArrowDown,
@@ -8,55 +6,10 @@ import {
   Network,
   Sparkles,
 } from "lucide-react";
-import {
-  type CSSProperties,
-  type PointerEvent,
-  useRef,
-} from "react";
 
 export function CareersHero() {
-  const sectionRef = useRef<HTMLElement | null>(null);
-
-  const handlePointerMove = (
-    event: PointerEvent<HTMLElement>,
-  ) => {
-    const section = sectionRef.current;
-
-    if (!section) {
-      return;
-    }
-
-    const rect = section.getBoundingClientRect();
-
-    const x =
-      ((event.clientX - rect.left) / rect.width) * 100;
-
-    const y =
-      ((event.clientY - rect.top) / rect.height) * 100;
-
-    section.style.setProperty(
-      "--careers-x",
-      `${x}%`,
-    );
-
-    section.style.setProperty(
-      "--careers-y",
-      `${y}%`,
-    );
-  };
-
   return (
-    <section
-      ref={sectionRef}
-      onPointerMove={handlePointerMove}
-      className="relative overflow-x-clip pt-24 sm:pt-28 lg:pt-32"
-      style={
-        {
-          "--careers-x": "72%",
-          "--careers-y": "38%",
-        } as CSSProperties
-      }
-    >
+    <section className="relative overflow-x-clip pt-24 sm:pt-28 lg:pt-32">
       {/* =====================================================
           ATMOSPHERE
       ===================================================== */}
@@ -68,10 +21,10 @@ export function CareersHero() {
         <div className="absolute inset-0 bg-white/[0.3] dark:bg-[#0D1117]/[0.3]" />
 
         <div
-          className="absolute inset-0 opacity-[0.55] transition-opacity duration-500 dark:opacity-[0.42]"
+          className="absolute inset-0 opacity-[0.55] dark:opacity-[0.42]"
           style={{
             background:
-              "radial-gradient(circle at var(--careers-x) var(--careers-y), rgba(34,211,238,.08), transparent 26%)",
+              "radial-gradient(circle at 72% 38%, rgba(34,211,238,.08), transparent 26%)",
           }}
         />
 
@@ -102,8 +55,6 @@ export function CareersHero() {
           {/* LEFT — CONTENT */}
 
           <div className="relative z-20 max-w-[760px]">
-            {/* eyebrow */}
-
             <div className="flex items-center gap-4">
               <span className="font-mono text-[0.5rem] text-[#2563EB] dark:text-[#60A5FA]">
                 01
@@ -120,8 +71,6 @@ export function CareersHero() {
               </div>
             </div>
 
-            {/* headline */}
-
             <h1 className="mt-7 max-w-[760px] text-[3rem] font-semibold leading-[0.98] tracking-[-0.05em] text-[#0A1D2F] dark:text-white sm:text-[3.8rem] md:text-[4.4rem] lg:text-[4.7rem] xl:text-[5.25rem]">
               Build what
               <br />
@@ -129,8 +78,6 @@ export function CareersHero() {
                 comes next.
               </span>
             </h1>
-
-            {/* intro */}
 
             <p className="mt-7 max-w-[640px] text-base leading-8 text-[#0A1D2F]/58 dark:text-white/54 sm:text-[1.05rem]">
               Evolvaer brings together people who want
@@ -147,8 +94,6 @@ export function CareersHero() {
               challenge assumptions and help shape what
               Evolvaer becomes.
             </p>
-
-            {/* actions */}
 
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <Link
@@ -176,8 +121,6 @@ export function CareersHero() {
           =================================================== */}
 
           <div className="relative hidden min-h-[34rem] lg:block">
-            {/* top annotation */}
-
             <div className="absolute right-[3%] top-[7%]">
               <HeroAnnotation
                 index="01"
@@ -186,8 +129,6 @@ export function CareersHero() {
                 accent="#2563EB"
               />
             </div>
-
-            {/* middle annotation */}
 
             <div className="absolute left-[8%] top-[48%]">
               <HeroAnnotation
@@ -198,8 +139,6 @@ export function CareersHero() {
               />
             </div>
 
-            {/* bottom annotation */}
-
             <div className="absolute bottom-[5%] right-[7%]">
               <HeroAnnotation
                 index="03"
@@ -208,8 +147,6 @@ export function CareersHero() {
                 accent="#A855F7"
               />
             </div>
-
-            {/* coordinate markers */}
 
             <span className="absolute right-[33%] top-[31%] h-1.5 w-1.5 rounded-full bg-[#22D3EE]/60 shadow-[0_0_10px_rgba(34,211,238,.5)]" />
 

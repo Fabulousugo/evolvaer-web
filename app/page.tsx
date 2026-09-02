@@ -9,7 +9,7 @@ import { PhilosophySection } from "@/src/components/sections/philosophy-section"
 import { ResearchSection } from "@/src/components/sections/research-section";
 import { VenturesSection } from "@/src/components/sections/ventures-section";
 
-import { ContactScene } from "@/src/components/three/contact-scene";
+import { ContactSceneLoader } from "@/src/components/three/contact-scene-loader";
 
 export default function Home() {
   return (
@@ -24,7 +24,7 @@ export default function Home() {
         aria-hidden="true"
         className="pointer-events-none fixed inset-0 z-0"
       >
-        <ContactScene />
+        <ContactSceneLoader />
       </div>
 
       {/* =====================================================

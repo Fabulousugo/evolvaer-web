@@ -1,6 +1,9 @@
 "use client";
 
-import { Canvas } from "@react-three/fiber";
+import {
+  Canvas,
+  useThree,
+} from "@react-three/fiber";
 import {
   ACESFilmicToneMapping,
   AdditiveBlending,
@@ -26,15 +29,20 @@ type Point3 = [
   number,
 ];
 
+declare global {
+  interface Window {
+    exportContactScene?: () => void;
+  }
+}
+
 function useCompactScene() {
   const [compact, setCompact] =
     useState(false);
 
   useEffect(() => {
-    const media =
-      window.matchMedia(
-        "(max-width: 767px)",
-      );
+    const media = window.matchMedia(
+      "(max-width: 767px)",
+    );
 
     const update = () => {
       setCompact(media.matches);
@@ -81,9 +89,7 @@ function SignalNode({
             color={color}
             transparent
             opacity={0.06}
-            blending={
-              AdditiveBlending
-            }
+            blending={AdditiveBlending}
             depthWrite={false}
           />
         </mesh>
@@ -115,26 +121,23 @@ function SignalPath({
   opacity?: number;
   radius?: number;
 }) {
-  const geometry =
-    useMemo(() => {
-      const curve =
-        new CatmullRomCurve3(
-          points.map(
-            (point) =>
-              new Vector3(
-                ...point,
-              ),
-          ),
-        );
-
-      return new TubeGeometry(
-        curve,
-        18,
-        radius,
-        5,
-        false,
+  const geometry = useMemo(() => {
+    const curve =
+      new CatmullRomCurve3(
+        points.map(
+          (point) =>
+            new Vector3(...point),
+        ),
       );
-    }, [points, radius]);
+
+    return new TubeGeometry(
+      curve,
+      18,
+      radius,
+      5,
+      false,
+    );
+  }, [points, radius]);
 
   useEffect(() => {
     return () => {
@@ -148,9 +151,7 @@ function SignalPath({
         color={color}
         transparent
         opacity={opacity}
-        blending={
-          AdditiveBlending
-        }
+        blending={AdditiveBlending}
         depthWrite={false}
       />
     </mesh>
@@ -187,9 +188,7 @@ function ChannelRing({
         color={color}
         transparent
         opacity={opacity}
-        blending={
-          AdditiveBlending
-        }
+        blending={AdditiveBlending}
         depthWrite={false}
       />
     </mesh>
@@ -243,92 +242,90 @@ function StaticContactWorld({
 }: {
   compact: boolean;
 }) {
-  const incoming =
-    useMemo<
-      Array<{
-        path: Point3[];
-        color: string;
-      }>
-    >(
-      () => [
-        {
-          color: BLUE,
-          path: [
-            [-3.5, 1.65, -0.4],
-            [-2.35, 1.05, 0],
-            [-1.05, 0.4, 0.15],
-            [0, 0, 0],
-          ],
-        },
-        {
-          color: CYAN,
-          path: [
-            [-3.55, -1.45, -0.3],
-            [-2.25, -0.95, 0],
-            [-1, -0.35, 0.15],
-            [0, 0, 0],
-          ],
-        },
-        {
-          color: PURPLE,
-          path: [
-            [-0.9, 2.65, -0.55],
-            [-0.65, 1.75, -0.1],
-            [-0.3, 0.8, 0.12],
-            [0, 0, 0],
-          ],
-        },
-      ],
-      [],
-    );
+  const incoming = useMemo<
+    Array<{
+      path: Point3[];
+      color: string;
+    }>
+  >(
+    () => [
+      {
+        color: BLUE,
+        path: [
+          [-3.5, 1.65, -0.4],
+          [-2.35, 1.05, 0],
+          [-1.05, 0.4, 0.15],
+          [0, 0, 0],
+        ],
+      },
+      {
+        color: CYAN,
+        path: [
+          [-3.55, -1.45, -0.3],
+          [-2.25, -0.95, 0],
+          [-1, -0.35, 0.15],
+          [0, 0, 0],
+        ],
+      },
+      {
+        color: PURPLE,
+        path: [
+          [-0.9, 2.65, -0.55],
+          [-0.65, 1.75, -0.1],
+          [-0.3, 0.8, 0.12],
+          [0, 0, 0],
+        ],
+      },
+    ],
+    [],
+  );
 
-  const outgoing =
-    useMemo<
-      Array<{
-        path: Point3[];
-        color: string;
-      }>
-    >(
-      () => [
-        {
-          color: BLUE,
-          path: [
-            [0, 0, 0],
-            [1.15, 0.45, 0.15],
-            [2.15, 1.2, 0],
-            [3.35, 1.65, -0.3],
-          ],
-        },
-        {
-          color: CYAN,
-          path: [
-            [0, 0, 0],
-            [1.25, 0.15, 0.15],
-            [2.25, 0.4, 0],
-            [3.5, 0.45, -0.2],
-          ],
-        },
-        {
-          color: PURPLE,
-          path: [
-            [0, 0, 0],
-            [1.2, -0.2, 0.15],
-            [2.25, -0.55, 0],
-            [3.45, -0.65, -0.2],
-          ],
-        },
-        {
-          color: TEAL,
-          path: [
-            [0, 0, 0],
-            [1.05, -0.5, 0.15],
-            [2.05, -1.25, 0],
-            [3.25, -1.75, -0.3],
-          ],
-        },
-      ],
-      [],
-    );
+  const outgoing = useMemo<
+    Array<{
+      path: Point3[];
+      color: string;
+    }>
+  >(
+    () => [
+      {
+        color: BLUE,
+        path: [
+          [0, 0, 0],
+          [1.15, 0.45, 0.15],
+          [2.15, 1.2, 0],
+          [3.35, 1.65, -0.3],
+        ],
+      },
+      {
+        color: CYAN,
+        path: [
+          [0, 0, 0],
+          [1.25, 0.15, 0.15],
+          [2.25, 0.4, 0],
+          [3.5, 0.45, -0.2],
+        ],
+      },
+      {
+        color: PURPLE,
+        path: [
+          [0, 0, 0],
+          [1.2, -0.2, 0.15],
+          [2.25, -0.55, 0],
+          [3.45, -0.65, -0.2],
+        ],
+      },
+      {
+        color: TEAL,
+        path: [
+          [0, 0, 0],
+          [1.05, -0.5, 0.15],
+          [2.05, -1.25, 0],
+          [3.25, -1.75, -0.3],
+        ],
+      },
+    ],
+    [],
+  );
 
   return (
     <group
@@ -337,23 +334,22 @@ function StaticContactWorld({
           ? [0, 0, -0.9]
           : [1.45, 0, -1]
       }
-      scale={
-        compact ? 0.7 : 1
-      }
+      scale={compact ? 0.7 : 1}
       rotation={[
         0.04,
         -0.08,
         0,
       ]}
     >
-      {/* Incoming conversations */}
       {incoming.map(
         (signal, index) => {
           const start =
             signal.path[0];
 
           return (
-            <group key={`in-${index}`}>
+            <group
+              key={`in-${index}`}
+            >
               <SignalPath
                 points={signal.path}
                 color={signal.color}
@@ -364,25 +360,20 @@ function StaticContactWorld({
                 position={start}
                 color={signal.color}
                 size={0.055}
-                halo={
-                  index === 0
-                }
+                halo={index === 0}
               />
             </group>
           );
         },
       )}
 
-      {/* Central communication point */}
       <CommunicationCore />
 
-      {/* Routed conversations */}
       {outgoing.map(
         (signal, index) => {
           const end =
             signal.path[
-              signal.path.length -
-                1
+              signal.path.length - 1
             ];
 
           return (
@@ -410,7 +401,6 @@ function StaticContactWorld({
         },
       )}
 
-      {/* Small secondary signals */}
       {!compact && (
         <>
           <SignalNode
@@ -445,7 +435,6 @@ function StaticContactWorld({
         </>
       )}
 
-      {/* Outer communication field */}
       <ChannelRing
         radius={2.75}
         color={CYAN}
@@ -499,6 +488,90 @@ function SceneLighting() {
   );
 }
 
+/*
+ * TEMPORARY:
+ * Allows us to export the rendered
+ * WebGL scene as a transparent PNG.
+ *
+ * Remove this once the static image
+ * has been captured.
+ */
+function SceneExporter() {
+  const {
+    gl,
+    scene,
+    camera,
+    invalidate,
+  } = useThree();
+
+  useEffect(() => {
+    window.exportContactScene =
+      () => {
+        /*
+         * Request a fresh R3F frame first.
+         */
+        invalidate();
+
+        /*
+         * Wait for the browser to reach
+         * the next paint frame, then
+         * explicitly render immediately
+         * before reading the buffer.
+         */
+        requestAnimationFrame(() => {
+          gl.render(
+            scene,
+            camera,
+          );
+
+          const canvas =
+            gl.domElement;
+
+          const dataUrl =
+            canvas.toDataURL(
+              "image/png",
+            );
+
+          const link =
+            document.createElement(
+              "a",
+            );
+
+          link.href = dataUrl;
+          link.download =
+            "contact-scene.png";
+
+          document.body.appendChild(
+            link,
+          );
+
+          link.click();
+          link.remove();
+
+          console.log(
+            `Exported ${canvas.width} × ${canvas.height}`,
+          );
+        });
+      };
+
+    console.log(
+      "Contact scene exporter ready",
+    );
+
+    return () => {
+      delete window
+        .exportContactScene;
+    };
+  }, [
+    gl,
+    scene,
+    camera,
+    invalidate,
+  ]);
+
+  return null;
+}
+
 export function ContactScene() {
   const compact =
     useCompactScene();
@@ -511,13 +584,30 @@ export function ContactScene() {
         position: compact
           ? [0, 0, 9]
           : [0, 0, 8.5],
-        fov: compact ? 53 : 46,
+        fov: compact
+          ? 53
+          : 46,
         near: 0.1,
         far: 50,
       }}
       gl={{
         alpha: true,
-        antialias: false,
+
+        /*
+         * TEMPORARY:
+         * true while creating
+         * our source image.
+         */
+        antialias: true,
+
+        /*
+         * TEMPORARY:
+         * required so the rendered
+         * framebuffer can be exported.
+         */
+        preserveDrawingBuffer:
+          true,
+
         powerPreference:
           "high-performance",
       }}
@@ -540,6 +630,8 @@ export function ContactScene() {
           "transparent",
       }}
     >
+      <SceneExporter />
+
       <SceneLighting />
 
       <StaticContactWorld

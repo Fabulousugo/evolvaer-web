@@ -9,7 +9,7 @@ import { AboutPrinciples } from "@/src/components/about/about-principles";
 import { AboutAmbition } from "@/src/components/about/about-ambition";
 import { AboutCta } from "@/src/components/about/about-cta";
 
-import { AboutScene } from "@/src/components/three/about-scene";
+import { AboutSceneLoader } from "@/src/components/three/about-scene-loader";
 
 import { Navbar } from "@/src/components/layout/navbar";
 import { Footer } from "@/src/components/layout/footer";
@@ -29,7 +29,7 @@ export default function AboutPage() {
         aria-hidden="true"
         className="pointer-events-none fixed inset-0 z-0"
       >
-        <AboutScene />
+        <AboutSceneLoader />
       </div>
 
       <div className="relative z-10">

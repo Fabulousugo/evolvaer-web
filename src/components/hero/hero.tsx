@@ -67,7 +67,7 @@ export function Hero() {
           "
         />
 
-        {/* Protect text against scene */}
+        {/* Protect content from scene artwork */}
 
         <div
           className="
@@ -101,7 +101,9 @@ export function Hero() {
         "
       >
         <div className="max-w-[62rem]">
-          {/* Eyebrow */}
+          {/* =================================================
+              EYEBROW
+          ================================================= */}
 
           <div
             className="
@@ -171,7 +173,6 @@ export function Hero() {
 
             <span className="block">
               what&apos;s{" "}
-
               <span className="brand-gradient-text">
                 next.
               </span>
@@ -232,7 +233,9 @@ export function Hero() {
                 problems.
               </p>
 
-              {/* CTAs */}
+              {/* =================================================
+                  CTAS
+              ================================================= */}
 
               <div
                 className="
@@ -245,6 +248,7 @@ export function Hero() {
               >
                 <Link
                   href="/what-we-do"
+                  prefetch={false}
                   className="
                     group
 
@@ -293,6 +297,7 @@ export function Hero() {
 
                 <Link
                   href="/about"
+                  prefetch={false}
                   className="
                     inline-flex
                     min-h-14
