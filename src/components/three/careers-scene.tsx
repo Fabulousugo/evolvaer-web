@@ -41,16 +41,16 @@ const GREEN = "#10B981";
 const PURPLE = "#A855F7";
 const NAVY = "#0A1D2F";
 
-const SCENE_INDEX: Record<CareersSceneName, number> = {
-  hero: 0,
-  why: 1,
-  work: 2,
-  growth: 3,
-  values: 4,
-  roles: 5,
-  process: 6,
-  cta: 7,
-};
+const SCENE_ORDER: CareersSceneName[] = [
+  "hero",
+  "why",
+  "work",
+  "growth",
+  "values",
+  "roles",
+  "process",
+  "cta",
+];
 
 /* ============================================================
    GLOBAL POINTER
@@ -328,9 +328,12 @@ function CapabilityCore({
    Independent capability entering the same field.
 ============================================================ */
 
-function HeroWorld() {
+function HeroWorld({
+  reducedMotion,
+}: {
+  reducedMotion: boolean;
+}) {
   const group = useRef<Group>(null);
-  const reducedMotion = useReducedMotion();
 
   const people = useMemo(
     () => [
@@ -1154,23 +1157,22 @@ function CtaWorld() {
 
 function CareersTransitionGroup({
   scene,
+  activeScene,
+  progress,
   children,
 }: {
   scene: CareersSceneName;
+  activeScene: CareersSceneName;
+  progress: number;
   children: ReactNode;
 }) {
   const group = useRef<Group>(null);
 
-  const {
-    activeScene,
-    sceneProgress,
-  } = useCareersSceneExperience();
-
   const activeIndex =
-    SCENE_INDEX[activeScene];
+    SCENE_ORDER.indexOf(activeScene);
 
   const sceneIndex =
-    SCENE_INDEX[scene];
+    SCENE_ORDER.indexOf(scene);
 
   const distance =
     sceneIndex - activeIndex;
@@ -1182,9 +1184,6 @@ function CareersTransitionGroup({
     if (!group.current) {
       return;
     }
-
-    const progress =
-      sceneProgress.current[scene];
 
     const active =
       activeScene === scene;
@@ -1276,40 +1275,68 @@ function CareersTransitionGroup({
    DIRECTOR
 ============================================================ */
 
-function SceneDirector() {
+function CareersWorld({
+  scene,
+  reducedMotion,
+}: {
+  scene: CareersSceneName;
+  reducedMotion: boolean;
+}) {
+  switch (scene) {
+    case "hero":
+      return <HeroWorld reducedMotion={reducedMotion} />;
+    case "why":
+      return <WhyWorld />;
+    case "work":
+      return <WorkWorld />;
+    case "growth":
+      return <GrowthWorld />;
+    case "values":
+      return <ValuesWorld />;
+    case "roles":
+      return <RolesWorld />;
+    case "process":
+      return <ProcessWorld />;
+    case "cta":
+      return <CtaWorld />;
+  }
+}
+
+function SceneDirector({
+  reducedMotion,
+}: {
+  reducedMotion: boolean;
+}) {
+  const {
+    activeScene,
+    sceneProgress,
+  } = useCareersSceneExperience();
+
+  const activeIndex =
+    SCENE_ORDER.indexOf(activeScene);
+
+  const mountedScenes = reducedMotion
+    ? [activeScene]
+    : SCENE_ORDER.filter(
+        (_, index) =>
+          Math.abs(index - activeIndex) <= 1,
+      );
+
   return (
     <group>
-      <CareersTransitionGroup scene="hero">
-        <HeroWorld />
-      </CareersTransitionGroup>
-
-      <CareersTransitionGroup scene="why">
-        <WhyWorld />
-      </CareersTransitionGroup>
-
-      <CareersTransitionGroup scene="work">
-        <WorkWorld />
-      </CareersTransitionGroup>
-
-      <CareersTransitionGroup scene="growth">
-        <GrowthWorld />
-      </CareersTransitionGroup>
-
-      <CareersTransitionGroup scene="values">
-        <ValuesWorld />
-      </CareersTransitionGroup>
-
-      <CareersTransitionGroup scene="roles">
-        <RolesWorld />
-      </CareersTransitionGroup>
-
-      <CareersTransitionGroup scene="process">
-        <ProcessWorld />
-      </CareersTransitionGroup>
-
-      <CareersTransitionGroup scene="cta">
-        <CtaWorld />
-      </CareersTransitionGroup>
+      {mountedScenes.map((scene) => (
+        <CareersTransitionGroup
+          key={scene}
+          scene={scene}
+          activeScene={activeScene}
+          progress={sceneProgress.current[scene]}
+        >
+          <CareersWorld
+            scene={scene}
+            reducedMotion={reducedMotion}
+          />
+        </CareersTransitionGroup>
+      ))}
     </group>
   );
 }
@@ -1332,14 +1359,16 @@ const CAMERA_POSITIONS: Record<
   cta: [0, 0, 8.9],
 };
 
-function CameraRig() {
+function CameraRig({
+  activeScene,
+  pointer,
+  reducedMotion,
+}: {
+  activeScene: CareersSceneName;
+  pointer: ReturnType<typeof useGlobalPointer>;
+  reducedMotion: boolean;
+}) {
   const { camera } = useThree();
-
-  const { activeScene } =
-    useCareersSceneExperience();
-
-  const pointer = useGlobalPointer();
-  const reducedMotion = useReducedMotion();
 
   useFrame(() => {
     const perspective =
@@ -1387,15 +1416,19 @@ function CameraRig() {
    BACKGROUND FIELD
 ============================================================ */
 
-function BackgroundField() {
-  const compact = useCompactScene();
-
+function BackgroundField({
+  compact,
+  reducedMotion,
+}: {
+  compact: boolean;
+  reducedMotion: boolean;
+}) {
   return (
     <Sparkles
       count={compact ? 24 : 48}
       scale={compact ? 9 : 13}
       size={compact ? 1 : 1.35}
-      speed={0.12}
+      speed={reducedMotion ? 0 : 0.12}
       opacity={0.16}
       color={LIGHT_BLUE}
       noise={1.2}
@@ -1448,6 +1481,11 @@ function SceneLighting() {
 
 export function CareersScene() {
   const compact = useCompactScene();
+  const reducedMotion = useReducedMotion();
+  const pointer = useGlobalPointer();
+
+  const { activeScene } =
+    useCareersSceneExperience();
 
   return (
     <Canvas
@@ -1463,15 +1501,19 @@ export function CareersScene() {
       }}
       dpr={
         compact
-          ? [1, 1.25]
-          : [1, 1.75]
+          ? 1
+          : [1, 1.35]
       }
       gl={{
         alpha: true,
         antialias: !compact,
         powerPreference: "high-performance",
       }}
-      frameloop="always"
+      frameloop={
+        reducedMotion
+          ? "demand"
+          : "always"
+      }
       style={{
         width: "100%",
         height: "100%",
@@ -1480,11 +1522,20 @@ export function CareersScene() {
     >
       <SceneLighting />
 
-      <BackgroundField />
+      <BackgroundField
+        compact={compact}
+        reducedMotion={reducedMotion}
+      />
 
-      <SceneDirector />
+      <SceneDirector
+        reducedMotion={reducedMotion}
+      />
 
-      <CameraRig />
+      <CameraRig
+        activeScene={activeScene}
+        pointer={pointer}
+        reducedMotion={reducedMotion}
+      />
     </Canvas>
   );
 }

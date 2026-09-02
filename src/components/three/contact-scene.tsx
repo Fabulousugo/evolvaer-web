@@ -39,13 +39,13 @@ const TEAL = "#10B981";
 const PURPLE = "#A855F7";
 const STEEL = "#94A3B8";
 
-const SCENE_INDEX: Record<ContactSceneName, number> = {
-  hero: 0,
-  intent: 1,
-  form: 2,
-  routes: 3,
-  cta: 4,
-};
+const SCENE_ORDER: ContactSceneName[] = [
+  "hero",
+  "intent",
+  "form",
+  "routes",
+  "cta",
+];
 
 /* ============================================================
    ENVIRONMENT HOOKS
@@ -580,7 +580,7 @@ function IntentWorld({
             <MovingSignal
               points={path}
               color={color}
-              speed={0.12}
+              speed={reducedMotion ? 0 : 0.12}
               offset={index * 0.13}
               reducedMotion={reducedMotion}
             />
@@ -1073,17 +1073,16 @@ function CtaWorld({
 
 function ContactTransitionGroup({
   scene,
+  activeScene,
+  progress,
   children,
 }: {
   scene: ContactSceneName;
+  activeScene: ContactSceneName;
+  progress: number;
   children: ReactNode;
 }) {
   const ref = useRef<Group>(null);
-
-  const {
-    activeScene,
-    sceneProgress,
-  } = useContactSceneExperience();
 
   useFrame((_, delta) => {
     if (!ref.current) {
@@ -1091,19 +1090,14 @@ function ContactTransitionGroup({
     }
 
     const activeIndex =
-      SCENE_INDEX[activeScene];
-
-    const sceneIndex =
-      SCENE_INDEX[scene];
+      SCENE_ORDER.indexOf(activeScene);
 
     const difference =
-      sceneIndex - activeIndex;
+      SCENE_ORDER.indexOf(scene) -
+      activeIndex;
 
     const isActive =
       activeScene === scene;
-
-    const progress =
-      sceneProgress.current[scene];
 
     const progressWeight =
       getSceneWeight(progress);
@@ -1207,42 +1201,62 @@ function ContactTransitionGroup({
    SCENE DIRECTOR
 ============================================================ */
 
+function ContactWorld({
+  scene,
+  reducedMotion,
+}: {
+  scene: ContactSceneName;
+  reducedMotion: boolean;
+}) {
+  switch (scene) {
+    case "hero":
+      return <HeroWorld reducedMotion={reducedMotion} />;
+    case "intent":
+      return <IntentWorld reducedMotion={reducedMotion} />;
+    case "form":
+      return <FormWorld reducedMotion={reducedMotion} />;
+    case "routes":
+      return <RoutesWorld reducedMotion={reducedMotion} />;
+    case "cta":
+      return <CtaWorld reducedMotion={reducedMotion} />;
+  }
+}
+
 function SceneDirector({
   reducedMotion,
 }: {
   reducedMotion: boolean;
 }) {
+  const {
+    activeScene,
+    sceneProgress,
+  } = useContactSceneExperience();
+
+  const activeIndex =
+    SCENE_ORDER.indexOf(activeScene);
+
+  const mountedScenes = reducedMotion
+    ? [activeScene]
+    : SCENE_ORDER.filter(
+        (_, index) =>
+          Math.abs(index - activeIndex) <= 1,
+      );
+
   return (
     <>
-      <ContactTransitionGroup scene="hero">
-        <HeroWorld
-          reducedMotion={reducedMotion}
-        />
-      </ContactTransitionGroup>
-
-      <ContactTransitionGroup scene="intent">
-        <IntentWorld
-          reducedMotion={reducedMotion}
-        />
-      </ContactTransitionGroup>
-
-      <ContactTransitionGroup scene="form">
-        <FormWorld
-          reducedMotion={reducedMotion}
-        />
-      </ContactTransitionGroup>
-
-      <ContactTransitionGroup scene="routes">
-        <RoutesWorld
-          reducedMotion={reducedMotion}
-        />
-      </ContactTransitionGroup>
-
-      <ContactTransitionGroup scene="cta">
-        <CtaWorld
-          reducedMotion={reducedMotion}
-        />
-      </ContactTransitionGroup>
+      {mountedScenes.map((scene) => (
+        <ContactTransitionGroup
+          key={scene}
+          scene={scene}
+          activeScene={activeScene}
+          progress={sceneProgress.current[scene]}
+        >
+          <ContactWorld
+            scene={scene}
+            reducedMotion={reducedMotion}
+          />
+        </ContactTransitionGroup>
+      ))}
     </>
   );
 }
@@ -1263,18 +1277,15 @@ const CAMERA_POSITIONS: Record<
 };
 
 function CameraRig({
+  activeScene,
+  pointer,
   reducedMotion,
 }: {
+  activeScene: ContactSceneName;
+  pointer: ReturnType<typeof useGlobalPointer>;
   reducedMotion: boolean;
 }) {
   const { camera } = useThree();
-
-  const {
-    activeScene,
-  } = useContactSceneExperience();
-
-  const pointer =
-    useGlobalPointer();
 
   useFrame((_, delta) => {
     const perspectiveCamera =
@@ -1331,8 +1342,10 @@ function CameraRig({
 
 function BackgroundField({
   compact,
+  reducedMotion,
 }: {
   compact: boolean;
+  reducedMotion: boolean;
 }) {
   return (
     <group>
@@ -1357,7 +1370,7 @@ function BackgroundField({
             : [9, 5, 3]
         }
         size={compact ? 1 : 1.25}
-        speed={0.08}
+        speed={reducedMotion ? 0 : 0.08}
         opacity={0.08}
         color={CYAN}
       />
@@ -1406,12 +1419,19 @@ export function ContactScene() {
   const compact =
     useCompactScene();
 
+  const pointer =
+    useGlobalPointer();
+
+  const {
+    activeScene,
+  } = useContactSceneExperience();
+
   return (
     <Canvas
       dpr={
         compact
-          ? [1, 1.25]
-          : [1, 1.7]
+          ? 1
+          : [1, 1.35]
       }
       gl={{
         alpha: true,
@@ -1425,7 +1445,11 @@ export function ContactScene() {
         near: 0.1,
         far: 100,
       }}
-      frameloop="always"
+      frameloop={
+        reducedMotion
+          ? "demand"
+          : "always"
+      }
       style={{
         background: "transparent",
       }}
@@ -1434,6 +1458,7 @@ export function ContactScene() {
 
       <BackgroundField
         compact={compact}
+        reducedMotion={reducedMotion}
       />
 
       <SceneDirector
@@ -1441,6 +1466,8 @@ export function ContactScene() {
       />
 
       <CameraRig
+        activeScene={activeScene}
+        pointer={pointer}
         reducedMotion={reducedMotion}
       />
     </Canvas>

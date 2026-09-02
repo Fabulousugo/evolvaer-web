@@ -7,11 +7,6 @@ import {
 } from "@react-three/fiber";
 
 import {
-  Float,
-  Sparkles,
-} from "@react-three/drei";
-
-import {
   ACESFilmicToneMapping,
   AdditiveBlending,
   BufferGeometry,
@@ -29,44 +24,13 @@ import {
   useRef,
   useState,
   type MutableRefObject,
-  type ReactNode,
 } from "react";
 
 import {
   type WorkSceneName,
-  useWorkSceneExperience,
+  useWorkActiveScene,
+  useWorkSceneRuntime,
 } from "./work-scene-experience";
-
-/* =========================================================
-   CONSTANTS
-========================================================= */
-
-const SCENE_ORDER: WorkSceneName[] = [
-  "hero",
-  "explore",
-  "research",
-  "engineer",
-  "build",
-  "scale",
-  "impact",
-  "integrated",
-  "cta",
-];
-
-const SCENE_INDEX: Record<
-  WorkSceneName,
-  number
-> = {
-  hero: 0,
-  explore: 1,
-  research: 2,
-  engineer: 3,
-  build: 4,
-  scale: 5,
-  impact: 6,
-  integrated: 7,
-  cta: 8,
-};
 
 const BLUE = "#3B82F6";
 const TEAL = "#22D3EE";
@@ -74,57 +38,16 @@ const VIOLET = "#A855F7";
 const ORANGE = "#F97316";
 const WHITE = "#EAF2FF";
 
-/* =========================================================
-   GLOBAL POINTER
-========================================================= */
+type PointerRef = MutableRefObject<{
+  x: number;
+  y: number;
+}>;
 
-function useGlobalPointer() {
-  const pointer = useRef({
-    x: 0,
-    y: 0,
-  });
-
-  useEffect(() => {
-    const update = (
-      event: PointerEvent,
-    ) => {
-      pointer.current.x =
-        (event.clientX /
-          window.innerWidth) *
-          2 -
-        1;
-
-      pointer.current.y =
-        -(
-          (event.clientY /
-            window.innerHeight) *
-            2 -
-          1
-        );
-    };
-
-    window.addEventListener(
-      "pointermove",
-      update,
-      {
-        passive: true,
-      },
-    );
-
-    return () => {
-      window.removeEventListener(
-        "pointermove",
-        update,
-      );
-    };
-  }, []);
-
-  return pointer;
-}
-
-/* =========================================================
-   REDUCED MOTION
-========================================================= */
+type Position = [
+  number,
+  number,
+  number,
+];
 
 function useReducedMotion() {
   const [reduced, setReduced] =
@@ -158,31 +81,30 @@ function useReducedMotion() {
   return reduced;
 }
 
-/* =========================================================
-   COMPACT / MOBILE SCENE
-========================================================= */
-
 function useCompactScene() {
   const [compact, setCompact] =
     useState(false);
 
   useEffect(() => {
-    const update = () => {
-      setCompact(
-        window.innerWidth < 768,
+    const query =
+      window.matchMedia(
+        "(max-width: 767px)",
       );
+
+    const update = () => {
+      setCompact(query.matches);
     };
 
     update();
 
-    window.addEventListener(
-      "resize",
+    query.addEventListener(
+      "change",
       update,
     );
 
     return () => {
-      window.removeEventListener(
-        "resize",
+      query.removeEventListener(
+        "change",
         update,
       );
     };
@@ -191,34 +113,62 @@ function useCompactScene() {
   return compact;
 }
 
-/* =========================================================
-   HELPERS
-========================================================= */
+function useGlobalPointer(
+  enabled: boolean,
+) {
+  const pointer = useRef({
+    x: 0,
+    y: 0,
+  });
 
-function clamp01(value: number) {
-  return Math.min(
-    1,
-    Math.max(0, value),
-  );
+  useEffect(() => {
+    if (!enabled) {
+      pointer.current.x = 0;
+      pointer.current.y = 0;
+
+      return;
+    }
+
+    const update = (
+      event: PointerEvent,
+    ) => {
+      pointer.current.x =
+        (event.clientX /
+          window.innerWidth) *
+          2 -
+        1;
+
+      pointer.current.y =
+        -(
+          (event.clientY /
+            window.innerHeight) *
+            2 -
+          1
+        );
+    };
+
+    window.addEventListener(
+      "pointermove",
+      update,
+      {
+        passive: true,
+      },
+    );
+
+    return () => {
+      window.removeEventListener(
+        "pointermove",
+        update,
+      );
+    };
+  }, [enabled]);
+
+  return pointer;
 }
-
-function smoothstep(value: number) {
-  const t = clamp01(value);
-
-  return (
-    t *
-    t *
-    (3 - 2 * t)
-  );
-}
-
-/* =========================================================
-   SIGNAL POINT CLOUD
-========================================================= */
 
 function createSignalPositions(
   count: number,
-  radius = 4,
+  radius: number,
 ) {
   const positions =
     new Float32Array(
@@ -240,8 +190,7 @@ function createSignalPositions(
     const distance =
       radius *
       (0.25 +
-        Math.random() *
-          0.75);
+        Math.random() * 0.75);
 
     positions[i] =
       Math.cos(angle) *
@@ -250,7 +199,7 @@ function createSignalPositions(
     positions[i + 1] =
       (Math.random() - 0.5) *
       radius *
-      1.25;
+      1.2;
 
     positions[i + 2] =
       Math.sin(angle) *
@@ -261,133 +210,120 @@ function createSignalPositions(
   return positions;
 }
 
+function Connection({
+  start,
+  end,
+  color = TEAL,
+  opacity = 0.35,
+}: {
+  start: Position;
+  end: Position;
+  color?: string;
+  opacity?: number;
+}) {
+  const geometry =
+    useMemo(() => {
+      const result =
+        new BufferGeometry();
+
+      result.setAttribute(
+        "position",
+        new Float32BufferAttribute(
+          [
+            ...start,
+            ...end,
+          ],
+          3,
+        ),
+      );
+
+      return result;
+    }, [start, end]);
+
+  useEffect(() => {
+    return () => {
+      geometry.dispose();
+    };
+  }, [geometry]);
+
+  return (
+    <lineSegments
+      geometry={geometry}
+    >
+      <lineBasicMaterial
+        color={color}
+        transparent
+        opacity={opacity}
+      />
+    </lineSegments>
+  );
+}
+
 /* =========================================================
-   HERO WORLD
-   Raw possibility / unresolved signals
+   HERO
 ========================================================= */
 
 function HeroWorld({
-  progressRef,
-  pointer,
   compact,
-  reducedMotion,
 }: {
-  progressRef: MutableRefObject<
-    Record<WorkSceneName, number>
-  >;
-  pointer: MutableRefObject<{
-    x: number;
-    y: number;
-  }>;
   compact: boolean;
-  reducedMotion: boolean;
 }) {
-  const group =
-    useRef<Group>(null);
-
-  const pointCount =
-    compact ? 70 : 130;
-
   const positions =
     useMemo(
       () =>
         createSignalPositions(
-          pointCount,
-          4.1,
+          compact ? 45 : 80,
+          4,
         ),
-      [pointCount],
+      [compact],
     );
 
   const curveGeometry =
     useMemo(() => {
-      const points = [
-        new Vector3(
-          -4.1,
-          -1.2,
-          0,
-        ),
-        new Vector3(
-          -2.1,
-          1.5,
-          0.4,
-        ),
-        new Vector3(
-          0,
-          -0.2,
-          0.8,
-        ),
-        new Vector3(
-          2,
-          1.1,
-          -0.25,
-        ),
-        new Vector3(
-          4.3,
-          -0.6,
-          0.2,
-        ),
-      ];
-
       const curve =
-        new CatmullRomCurve3(
-          points,
-        );
+        new CatmullRomCurve3([
+          new Vector3(
+            -4,
+            -1.2,
+            0,
+          ),
+          new Vector3(
+            -2,
+            1.4,
+            0.4,
+          ),
+          new Vector3(
+            0,
+            -0.2,
+            0.8,
+          ),
+          new Vector3(
+            2,
+            1,
+            -0.25,
+          ),
+          new Vector3(
+            4.2,
+            -0.6,
+            0.2,
+          ),
+        ]);
 
       return new BufferGeometry().setFromPoints(
         curve.getPoints(
-          compact ? 60 : 110,
+          compact ? 28 : 48,
         ),
       );
     }, [compact]);
 
-  useFrame(
-    (_, delta) => {
-      if (!group.current) return;
-
-      const progress =
-        progressRef.current.hero;
-
-      const px =
-        pointer.current.x;
-
-      const py =
-        pointer.current.y;
-
-      if (!reducedMotion) {
-        group.current.rotation.y +=
-          delta * 0.07;
-
-        group.current.rotation.x =
-          MathUtils.lerp(
-            group.current.rotation.x,
-            py * 0.08,
-            0.03,
-          );
-      }
-
-      group.current.rotation.z =
-        MathUtils.lerp(
-          group.current.rotation.z,
-          px * 0.05,
-          0.03,
-        );
-
-      const scale =
-        0.92 +
-        progress *
-          0.09;
-
-      group.current.scale.setScalar(
-        scale,
-      );
-    },
-  );
+  useEffect(() => {
+    return () => {
+      curveGeometry.dispose();
+    };
+  }, [curveGeometry]);
 
   return (
-    <group
-      ref={group}
-      position={[1.65, 0, 0]}
-    >
+    <group position={[1.65, 0, 0]}>
       <points>
         <bufferGeometry>
           <bufferAttribute
@@ -407,7 +343,7 @@ function HeroWorld({
               : 0.065
           }
           transparent
-          opacity={0.82}
+          opacity={0.72}
           depthWrite={false}
           blending={
             AdditiveBlending
@@ -416,92 +352,51 @@ function HeroWorld({
         />
       </points>
 
-      <lineSegments geometry={curveGeometry}>
+      <lineSegments
+        geometry={curveGeometry}
+      >
         <lineBasicMaterial
           color={TEAL}
           transparent
-          opacity={0.5}
+          opacity={0.45}
         />
       </lineSegments>
 
-      <Float
-        speed={
-          reducedMotion ? 0 : 1
-        }
-        rotationIntensity={
-          reducedMotion
-            ? 0
-            : 0.2
-        }
-        floatIntensity={
-          reducedMotion
-            ? 0
-            : 0.4
-        }
-      >
-        <mesh>
-          <icosahedronGeometry
-            args={[0.56, 1]}
-          />
+      <mesh>
+        <icosahedronGeometry
+          args={[0.58, 1]}
+        />
 
-          <meshStandardMaterial
-            color={BLUE}
-            emissive={BLUE}
-            emissiveIntensity={0.35}
-            wireframe
-            transparent
-            opacity={0.7}
-          />
-        </mesh>
-      </Float>
-
-      <Sparkles
-        count={
-          compact ? 18 : 35
-        }
-        scale={[7, 5, 5]}
-        size={1.8}
-        speed={
-          reducedMotion
-            ? 0
-            : 0.25
-        }
-        color={TEAL}
-      />
+        <meshStandardMaterial
+          color={BLUE}
+          emissive={BLUE}
+          emissiveIntensity={0.3}
+          wireframe
+          transparent
+          opacity={0.72}
+        />
+      </mesh>
     </group>
   );
 }
 
 /* =========================================================
-   EXPLORE WORLD
-   Signals are discovered and trajectories appear
+   EXPLORE
 ========================================================= */
 
 function ExploreWorld({
-  progressRef,
   compact,
-  reducedMotion,
 }: {
-  progressRef: MutableRefObject<
-    Record<WorkSceneName, number>
-  >;
   compact: boolean;
-  reducedMotion: boolean;
 }) {
-  const group =
-    useRef<Group>(null);
-
-  const count =
-    compact ? 55 : 100;
-
   const positions =
     useMemo(
       () =>
         createSignalPositions(
-          count,
+          compact ? 38 : 65,
           3.4,
         ),
-      [count],
+      [compact],
     );
 
   const trajectories =
@@ -510,7 +405,7 @@ function ExploreWorld({
         [];
 
       const amount =
-        compact ? 3 : 6;
+        compact ? 3 : 5;
 
       for (
         let i = 0;
@@ -554,9 +449,7 @@ function ExploreWorld({
         result.push(
           new BufferGeometry().setFromPoints(
             curve.getPoints(
-              compact
-                ? 40
-                : 80,
+              compact ? 24 : 40,
             ),
           ),
         );
@@ -565,36 +458,18 @@ function ExploreWorld({
       return result;
     }, [compact]);
 
-  useFrame(
-    (_, delta) => {
-      if (!group.current) return;
-
-      const progress =
-        smoothstep(
-          progressRef.current
-            .explore,
-        );
-
-      if (!reducedMotion) {
-        group.current.rotation.y +=
-          delta *
-          (0.04 +
-            progress * 0.04);
-      }
-
-      group.current.rotation.z =
-        Math.sin(
-          progress *
-            Math.PI,
-        ) * 0.04;
-    },
-  );
+  useEffect(() => {
+    return () => {
+      trajectories.forEach(
+        (geometry) => {
+          geometry.dispose();
+        },
+      );
+    };
+  }, [trajectories]);
 
   return (
-    <group
-      ref={group}
-      position={[1.6, 0, 0]}
-    >
+    <group position={[1.6, 0, 0]}>
       <points>
         <bufferGeometry>
           <bufferAttribute
@@ -610,7 +485,7 @@ function ExploreWorld({
           color={BLUE}
           size={0.065}
           transparent
-          opacity={0.82}
+          opacity={0.75}
           depthWrite={false}
           blending={
             AdditiveBlending
@@ -619,10 +494,7 @@ function ExploreWorld({
       </points>
 
       {trajectories.map(
-        (
-          geometry,
-          index,
-        ) => (
+        (geometry, index) => (
           <lineSegments
             key={index}
             geometry={geometry}
@@ -634,200 +506,95 @@ function ExploreWorld({
                   : VIOLET
               }
               transparent
-              opacity={0.43}
+              opacity={0.4}
             />
           </lineSegments>
         ),
       )}
-
-      <Sparkles
-        count={
-          compact ? 15 : 30
-        }
-        scale={[7, 5, 4]}
-        size={1.6}
-        speed={
-          reducedMotion
-            ? 0
-            : 0.3
-        }
-        color={WHITE}
-      />
     </group>
   );
 }
 
 /* =========================================================
-   RESEARCH WORLD
-   Signals organise into a network
+   RESEARCH
 ========================================================= */
 
-function ResearchWorld({
-  progressRef,
-  reducedMotion,
-}: {
-  progressRef: MutableRefObject<
-    Record<WorkSceneName, number>
-  >;
-  reducedMotion: boolean;
-}) {
-  const group =
-    useRef<Group>(null);
+const RESEARCH_NODES: Position[] =
+  [
+    [-2.4, 1.35, 0],
+    [-1.1, -1.35, 0.5],
+    [0, 0.4, 0],
+    [1.2, -1, -0.35],
+    [2.5, 1.2, 0.25],
+    [0.7, 1.8, -0.5],
+    [-2.3, -0.2, -0.5],
+  ];
 
-  const nodes = useMemo(
-    () => [
-      [-2.4, 1.35, 0],
-      [-1.1, -1.35, 0.5],
-      [0, 0.4, 0],
-      [1.2, -1, -0.35],
-      [2.5, 1.2, 0.25],
-      [0.7, 1.8, -0.5],
-      [-2.3, -0.2, -0.5],
-    ],
-    [],
-  );
+const RESEARCH_CONNECTIONS = [
+  [0, 2],
+  [0, 6],
+  [1, 2],
+  [1, 6],
+  [2, 3],
+  [2, 5],
+  [3, 4],
+  [4, 5],
+  [3, 5],
+] as const;
 
-  const connections =
-    useMemo(
-      () => [
-        [0, 2],
-        [0, 6],
-        [1, 2],
-        [1, 6],
-        [2, 3],
-        [2, 5],
-        [3, 4],
-        [4, 5],
-        [3, 5],
-      ],
-      [],
-    );
-
-  const lineGeometry =
-    useMemo(() => {
-      const vertices: number[] =
-        [];
-
-      for (const [
-        a,
-        b,
-      ] of connections) {
-        vertices.push(
-          ...nodes[a],
-          ...nodes[b],
-        );
-      }
-
-      const geometry =
-        new BufferGeometry();
-
-      geometry.setAttribute(
-        "position",
-        new Float32BufferAttribute(
-          vertices,
-          3,
-        ),
-      );
-
-      return geometry;
-    }, [
-      connections,
-      nodes,
-    ]);
-
-  useFrame(
-    (_, delta) => {
-      if (!group.current) return;
-
-      const progress =
-        smoothstep(
-          progressRef.current
-            .research,
-        );
-
-      if (!reducedMotion) {
-        group.current.rotation.y +=
-          delta * 0.055;
-      }
-
-      group.current.scale.setScalar(
-        0.82 +
-          progress * 0.18,
-      );
-    },
-  );
-
+function ResearchWorld() {
   return (
-    <group
-      ref={group}
-      position={[1.55, 0, 0]}
-    >
-      <lineSegments
-        geometry={lineGeometry}
-      >
-        <lineBasicMaterial
-          color={TEAL}
-          transparent
-          opacity={0.55}
-        />
-      </lineSegments>
+    <group position={[1.55, 0, 0]}>
+      {RESEARCH_CONNECTIONS.map(
+        ([a, b]) => (
+          <Connection
+            key={`${a}-${b}`}
+            start={
+              RESEARCH_NODES[a]
+            }
+            end={
+              RESEARCH_NODES[b]
+            }
+            color={TEAL}
+            opacity={0.48}
+          />
+        ),
+      )}
 
-      {nodes.map(
-        (
-          position,
-          index,
-        ) => (
-          <Float
+      {RESEARCH_NODES.map(
+        (position, index) => (
+          <mesh
             key={index}
-            speed={
-              reducedMotion
-                ? 0
-                : 0.7
-            }
-            floatIntensity={
-              reducedMotion
-                ? 0
-                : 0.2
-            }
+            position={position}
           >
-            <mesh
-              position={
-                position as [
-                  number,
-                  number,
-                  number,
-                ]
-              }
-            >
-              <sphereGeometry
-                args={[
-                  index === 2
-                    ? 0.19
-                    : 0.11,
-                  16,
-                  16,
-                ]}
-              />
+            <sphereGeometry
+              args={[
+                index === 2
+                  ? 0.2
+                  : 0.11,
+                10,
+                10,
+              ]}
+            />
 
-              <meshStandardMaterial
-                color={
-                  index === 2
-                    ? TEAL
-                    : BLUE
-                }
-                emissive={
-                  index === 2
-                    ? TEAL
-                    : BLUE
-                }
-                emissiveIntensity={
-                  index === 2
-                    ? 1.1
-                    : 0.45
-                }
-              />
-            </mesh>
-          </Float>
+            <meshStandardMaterial
+              color={
+                index === 2
+                  ? TEAL
+                  : BLUE
+              }
+              emissive={
+                index === 2
+                  ? TEAL
+                  : BLUE
+              }
+              emissiveIntensity={
+                index === 2
+                  ? 0.8
+                  : 0.25
+              }
+            />
+          </mesh>
         ),
       )}
 
@@ -840,7 +607,7 @@ function ResearchWorld({
           color={VIOLET}
           wireframe
           transparent
-          opacity={0.08}
+          opacity={0.07}
         />
       </mesh>
     </group>
@@ -848,23 +615,11 @@ function ResearchWorld({
 }
 
 /* =========================================================
-   ENGINEER WORLD
-   Network becomes structured modules
+   ENGINEER
 ========================================================= */
 
-function EngineerWorld({
-  progressRef,
-  reducedMotion,
-}: {
-  progressRef: MutableRefObject<
-    Record<WorkSceneName, number>
-  >;
-  reducedMotion: boolean;
-}) {
-  const group =
-    useRef<Group>(null);
-
-  const modules = [
+const ENGINEER_MODULES: Position[] =
+  [
     [-1.7, 1.1, 0],
     [0, 1.1, 0],
     [1.7, 1.1, 0],
@@ -873,50 +628,14 @@ function EngineerWorld({
     [1.7, -1.1, 0],
   ];
 
-  useFrame(
-    (_, delta) => {
-      if (!group.current) return;
-
-      const progress =
-        smoothstep(
-          progressRef.current
-            .engineer,
-        );
-
-      if (!reducedMotion) {
-        group.current.rotation.y +=
-          delta * 0.05;
-      }
-
-      group.current.rotation.x =
-        MathUtils.lerp(
-          group.current.rotation.x,
-          -0.1 +
-            progress * 0.2,
-          0.04,
-        );
-    },
-  );
-
+function EngineerWorld() {
   return (
-    <group
-      ref={group}
-      position={[1.6, 0, 0]}
-    >
-      {modules.map(
-        (
-          position,
-          index,
-        ) => (
+    <group position={[1.6, 0, 0]}>
+      {ENGINEER_MODULES.map(
+        (position, index) => (
           <group
             key={index}
-            position={
-              position as [
-                number,
-                number,
-                number,
-              ]
-            }
+            position={position}
           >
             <mesh>
               <boxGeometry
@@ -938,13 +657,11 @@ function EngineerWorld({
                 }
                 wireframe
                 transparent
-                opacity={0.72}
+                opacity={0.68}
               />
             </mesh>
 
-            <mesh
-              scale={0.2}
-            >
+            <mesh scale={0.2}>
               <octahedronGeometry
                 args={[1, 0]}
               />
@@ -957,7 +674,7 @@ function EngineerWorld({
                     : TEAL
                 }
                 emissiveIntensity={
-                  0.8
+                  0.55
                 }
               />
             </mesh>
@@ -976,7 +693,7 @@ function EngineerWorld({
           color={BLUE}
           wireframe
           transparent
-          opacity={0.09}
+          opacity={0.08}
         />
       </mesh>
     </group>
@@ -984,353 +701,196 @@ function EngineerWorld({
 }
 
 /* =========================================================
-   BUILD WORLD
-   Modules assemble into one coherent product/system
+   BUILD
 ========================================================= */
 
-function BuildWorld({
-  progressRef,
-  reducedMotion,
-}: {
-  progressRef: MutableRefObject<
-    Record<WorkSceneName, number>
-  >;
-  reducedMotion: boolean;
-}) {
-  const group =
-    useRef<Group>(null);
-
-  useFrame(
-    (_, delta) => {
-      if (!group.current) return;
-
-      const progress =
-        smoothstep(
-          progressRef.current.build,
-        );
-
-      if (!reducedMotion) {
-        group.current.rotation.y +=
-          delta * 0.075;
-      }
-
-      group.current.rotation.x =
-        -0.14 +
-        progress * 0.18;
-
-      group.current.scale.setScalar(
-        0.9 +
-          progress * 0.1,
-      );
-    },
-  );
-
+function BuildWorld() {
   return (
-    <group
-      ref={group}
-      position={[1.55, 0, 0]}
-    >
-      <Float
-        speed={
-          reducedMotion
-            ? 0
-            : 0.65
-        }
-        floatIntensity={
-          reducedMotion
-            ? 0
-            : 0.18
-        }
-      >
-        <mesh>
-          <icosahedronGeometry
-            args={[2.35, 2]}
-          />
+    <group position={[1.55, 0, 0]}>
+      <mesh>
+        <icosahedronGeometry
+          args={[2.35, 1]}
+        />
 
-          <meshStandardMaterial
-            color={BLUE}
-            emissive={BLUE}
-            emissiveIntensity={0.18}
-            wireframe
-            transparent
-            opacity={0.72}
-          />
-        </mesh>
+        <meshStandardMaterial
+          color={BLUE}
+          emissive={BLUE}
+          emissiveIntensity={0.16}
+          wireframe
+          transparent
+          opacity={0.72}
+        />
+      </mesh>
 
-        <mesh
-          scale={0.68}
-        >
-          <dodecahedronGeometry
-            args={[2.35, 1]}
-          />
+      <mesh scale={0.68}>
+        <dodecahedronGeometry
+          args={[2.35, 0]}
+        />
 
-          <meshStandardMaterial
-            color={TEAL}
-            emissive={TEAL}
-            emissiveIntensity={0.28}
-            wireframe
-            transparent
-            opacity={0.55}
-          />
-        </mesh>
+        <meshStandardMaterial
+          color={TEAL}
+          emissive={TEAL}
+          emissiveIntensity={0.2}
+          wireframe
+          transparent
+          opacity={0.5}
+        />
+      </mesh>
 
-        <mesh
-          scale={0.36}
-        >
-          <octahedronGeometry
-            args={[2.2, 0]}
-          />
+      <mesh scale={0.36}>
+        <octahedronGeometry
+          args={[2.2, 0]}
+        />
 
-          <meshStandardMaterial
-            color={WHITE}
-            emissive={VIOLET}
-            emissiveIntensity={0.9}
-          />
-        </mesh>
-      </Float>
-
-      <Sparkles
-        count={28}
-        scale={[5, 5, 5]}
-        size={1.7}
-        speed={
-          reducedMotion
-            ? 0
-            : 0.2
-        }
-        color={TEAL}
-      />
+        <meshStandardMaterial
+          color={WHITE}
+          emissive={VIOLET}
+          emissiveIntensity={0.65}
+        />
+      </mesh>
     </group>
   );
 }
 
 /* =========================================================
-   SCALE WORLD
-   The coherent system replicates
+   SCALE
 ========================================================= */
 
-function ScaleWorld({
-  progressRef,
-  reducedMotion,
-}: {
-  progressRef: MutableRefObject<
-    Record<WorkSceneName, number>
-  >;
-  reducedMotion: boolean;
-}) {
-  const group =
-    useRef<Group>(null);
+const SCALE_COPIES: Array<
+  [number, number, number, number]
+> = [
+  [0, 0, 0, 1],
+  [-2.4, 1.35, -0.7, 0.47],
+  [2.5, 1.45, -0.8, 0.52],
+  [-2.7, -1.55, -1, 0.42],
+  [2.8, -1.4, -1.1, 0.45],
+  [0, 2.6, -1.4, 0.34],
+  [0, -2.65, -1.5, 0.33],
+];
 
-  const copies = [
-    [0, 0, 0, 1],
-    [-2.4, 1.35, -0.7, 0.47],
-    [2.5, 1.45, -0.8, 0.52],
-    [-2.7, -1.55, -1, 0.42],
-    [2.8, -1.4, -1.1, 0.45],
-    [0, 2.6, -1.4, 0.34],
-    [0, -2.65, -1.5, 0.33],
-  ];
-
-  useFrame(
-    (_, delta) => {
-      if (!group.current) return;
-
-      const progress =
-        smoothstep(
-          progressRef.current.scale,
-        );
-
-      if (!reducedMotion) {
-        group.current.rotation.y +=
-          delta * 0.045;
-      }
-
-      group.current.scale.setScalar(
-        0.86 +
-          progress * 0.14,
-      );
-    },
-  );
-
+function ScaleWorld() {
   return (
-    <group
-      ref={group}
-      position={[1.5, 0, 0]}
-    >
-      {copies.map(
+    <group position={[1.5, 0, 0]}>
+      {SCALE_COPIES.map(
         (
-          item,
+          [x, y, z, scale],
           index,
-        ) => {
-          const [
-            x,
-            y,
-            z,
-            scale,
-          ] = item;
+        ) => (
+          <group
+            key={index}
+            position={[x, y, z]}
+            scale={scale}
+          >
+            <mesh>
+              <icosahedronGeometry
+                args={[1.5, 1]}
+              />
 
-          return (
-            <group
-              key={index}
-              position={[
-                x,
-                y,
-                z,
-              ]}
-              scale={scale}
-            >
-              <mesh>
-                <icosahedronGeometry
-                  args={[1.5, 1]}
+              <meshStandardMaterial
+                color={
+                  index === 0
+                    ? BLUE
+                    : index % 2 ===
+                        0
+                      ? TEAL
+                      : VIOLET
+                }
+                emissive={
+                  index === 0
+                    ? BLUE
+                    : TEAL
+                }
+                emissiveIntensity={
+                  index === 0
+                    ? 0.32
+                    : 0.1
+                }
+                wireframe
+                transparent
+                opacity={
+                  index === 0
+                    ? 0.8
+                    : 0.48
+                }
+              />
+            </mesh>
+
+            {index === 0 && (
+              <mesh scale={0.32}>
+                <sphereGeometry
+                  args={[
+                    1,
+                    12,
+                    12,
+                  ]}
                 />
 
                 <meshStandardMaterial
-                  color={
-                    index === 0
-                      ? BLUE
-                      : index % 2 ===
-                          0
-                        ? TEAL
-                        : VIOLET
-                  }
-                  emissive={
-                    index === 0
-                      ? BLUE
-                      : TEAL
-                  }
+                  color={WHITE}
+                  emissive={TEAL}
                   emissiveIntensity={
-                    index === 0
-                      ? 0.45
-                      : 0.15
-                  }
-                  wireframe
-                  transparent
-                  opacity={
-                    index === 0
-                      ? 0.82
-                      : 0.52
+                    0.8
                   }
                 />
               </mesh>
-
-              {index === 0 && (
-                <mesh
-                  scale={0.32}
-                >
-                  <sphereGeometry
-                    args={[
-                      1,
-                      20,
-                      20,
-                    ]}
-                  />
-
-                  <meshStandardMaterial
-                    color={WHITE}
-                    emissive={TEAL}
-                    emissiveIntensity={
-                      1.2
-                    }
-                  />
-                </mesh>
-              )}
-            </group>
-          );
-        },
+            )}
+          </group>
+        ),
       )}
-
-      <Sparkles
-        count={35}
-        scale={[7, 7, 4]}
-        size={1.5}
-        speed={
-          reducedMotion
-            ? 0
-            : 0.18
-        }
-        color={BLUE}
-      />
     </group>
   );
 }
 
 /* =========================================================
-   IMPACT WORLD
-   Expansion becomes measurable outward influence
+   IMPACT
 ========================================================= */
 
-function ImpactWorld({
-  progressRef,
-  reducedMotion,
-}: {
-  progressRef: MutableRefObject<
-    Record<WorkSceneName, number>
-  >;
-  reducedMotion: boolean;
-}) {
-  const group =
-    useRef<Group>(null);
-
-  useFrame(
-    ({ clock }) => {
-      if (!group.current) return;
-
-      const progress =
-        smoothstep(
-          progressRef.current.impact,
-        );
-
-      if (!reducedMotion) {
-        group.current.rotation.y =
-          clock.elapsedTime *
-          0.075;
-      }
-
-      group.current.scale.setScalar(
-        0.88 +
-          progress * 0.14,
-      );
+function ImpactWorld() {
+  const rings = [
+    {
+      radius: 1.05,
+      color: WHITE,
+      opacity: 0.42,
     },
-  );
+    {
+      radius: 1.7,
+      color: TEAL,
+      opacity: 0.34,
+    },
+    {
+      radius: 2.4,
+      color: BLUE,
+      opacity: 0.27,
+    },
+    {
+      radius: 3.15,
+      color: VIOLET,
+      opacity: 0.2,
+    },
+  ];
 
   return (
-    <group
-      ref={group}
-      position={[1.55, 0, 0]}
-    >
-      {[1.05, 1.7, 2.4, 3.15].map(
-        (
+    <group position={[1.55, 0, 0]}>
+      {rings.map(
+        ({
           radius,
-          index,
-        ) => (
-          <mesh
-            key={radius}
-          >
+          color,
+          opacity,
+        }) => (
+          <mesh key={radius}>
             <sphereGeometry
               args={[
                 radius,
-                32,
-                20,
+                18,
+                12,
               ]}
             />
 
             <meshBasicMaterial
-              color={
-                index === 0
-                  ? WHITE
-                  : index === 1
-                    ? TEAL
-                    : index === 2
-                      ? BLUE
-                      : VIOLET
-              }
+              color={color}
               wireframe
               transparent
-              opacity={
-                0.42 -
-                index *
-                  0.075
-              }
+              opacity={opacity}
             />
           </mesh>
         ),
@@ -1338,208 +898,117 @@ function ImpactWorld({
 
       <mesh>
         <sphereGeometry
-          args={[0.34, 24, 24]}
+          args={[
+            0.34,
+            14,
+            14,
+          ]}
         />
 
         <meshStandardMaterial
           color={WHITE}
           emissive={TEAL}
-          emissiveIntensity={1.7}
+          emissiveIntensity={1}
         />
       </mesh>
-
-      <Sparkles
-        count={40}
-        scale={[7, 7, 7]}
-        size={1.6}
-        speed={
-          reducedMotion
-            ? 0
-            : 0.22
-        }
-        color={TEAL}
-      />
     </group>
   );
 }
 
 /* =========================================================
-   INTEGRATED WORLD
-   All six capabilities are one connected system
+   INTEGRATED
 ========================================================= */
 
-function IntegratedWorld({
-  reducedMotion,
-}: {
-  reducedMotion: boolean;
-}) {
-  const group =
-    useRef<Group>(null);
+const INTEGRATED_STAGES: Array<{
+  position: Position;
+  color: string;
+}> = [
+  {
+    position: [-2.3, 1.3, 0],
+    color: BLUE,
+  },
+  {
+    position: [0, 2, 0],
+    color: VIOLET,
+  },
+  {
+    position: [2.3, 1.3, 0],
+    color: TEAL,
+  },
+  {
+    position: [2.3, -1.3, 0],
+    color: VIOLET,
+  },
+  {
+    position: [0, -2, 0],
+    color: ORANGE,
+  },
+  {
+    position: [-2.3, -1.3, 0],
+    color: TEAL,
+  },
+];
 
-  const stages = [
-    {
-      position: [
-        -2.3,
-        1.3,
-        0,
-      ],
-      color: BLUE,
-    },
-    {
-      position: [
-        0,
-        2,
-        0,
-      ],
-      color: VIOLET,
-    },
-    {
-      position: [
-        2.3,
-        1.3,
-        0,
-      ],
-      color: TEAL,
-    },
-    {
-      position: [
-        2.3,
-        -1.3,
-        0,
-      ],
-      color: VIOLET,
-    },
-    {
-      position: [
-        0,
-        -2,
-        0,
-      ],
-      color: ORANGE,
-    },
-    {
-      position: [
-        -2.3,
-        -1.3,
-        0,
-      ],
-      color: TEAL,
-    },
-  ];
-
-  const lineGeometry =
-    useMemo(() => {
-      const vertices: number[] =
-        [];
-
-      for (
-        let index = 0;
-        index <
-        stages.length;
-        index++
-      ) {
-        const current =
-          stages[index];
-
-        const next =
-          stages[
-            (index + 1) %
-              stages.length
-          ];
-
-        vertices.push(
-          ...current.position,
-          ...next.position,
-        );
-
-        vertices.push(
-          ...current.position,
-          0,
-          0,
-          0,
-        );
-      }
-
-      const geometry =
-        new BufferGeometry();
-
-      geometry.setAttribute(
-        "position",
-        new Float32BufferAttribute(
-          vertices,
-          3,
-        ),
-      );
-
-      return geometry;
-    }, []);
-
-  useFrame(
-    (_, delta) => {
-      if (
-        !group.current ||
-        reducedMotion
-      ) {
-        return;
-      }
-
-      group.current.rotation.y +=
-        delta * 0.055;
-    },
-  );
-
+function IntegratedWorld() {
   return (
-    <group
-      ref={group}
-      position={[1.55, 0, 0]}
-    >
-      <lineSegments
-        geometry={lineGeometry}
-      >
-        <lineBasicMaterial
-          color={BLUE}
-          transparent
-          opacity={0.35}
-        />
-      </lineSegments>
+    <group position={[1.55, 0, 0]}>
+      {INTEGRATED_STAGES.map(
+        (stage, index) => {
+          const next =
+            INTEGRATED_STAGES[
+              (index + 1) %
+                INTEGRATED_STAGES.length
+            ];
 
-      {stages.map(
-        (
-          stage,
-          index,
-        ) => (
-          <group
-            key={index}
-            position={
-              stage.position as [
-                number,
-                number,
-                number,
-              ]
-            }
-          >
-            <mesh>
-              <octahedronGeometry
-                args={[
-                  0.34,
-                  0,
-                ]}
+          return (
+            <group key={index}>
+              <Connection
+                start={
+                  stage.position
+                }
+                end={
+                  next.position
+                }
+                color={BLUE}
+                opacity={0.3}
               />
 
-              <meshStandardMaterial
-                color={
-                  stage.color
+              <Connection
+                start={
+                  stage.position
                 }
-                emissive={
-                  stage.color
-                }
-                emissiveIntensity={
-                  0.75
-                }
+                end={[0, 0, 0]}
+                color={TEAL}
+                opacity={0.22}
               />
-            </mesh>
-          </group>
-        ),
+
+              <mesh
+                position={
+                  stage.position
+                }
+              >
+                <octahedronGeometry
+                  args={[
+                    0.34,
+                    0,
+                  ]}
+                />
+
+                <meshStandardMaterial
+                  color={
+                    stage.color
+                  }
+                  emissive={
+                    stage.color
+                  }
+                  emissiveIntensity={
+                    0.5
+                  }
+                />
+              </mesh>
+            </group>
+          );
+        },
       )}
 
       <mesh>
@@ -1550,20 +1019,24 @@ function IntegratedWorld({
         <meshStandardMaterial
           color={WHITE}
           emissive={BLUE}
-          emissiveIntensity={0.6}
+          emissiveIntensity={0.4}
           wireframe
         />
       </mesh>
 
       <mesh scale={0.32}>
         <sphereGeometry
-          args={[1, 24, 24]}
+          args={[
+            1,
+            12,
+            12,
+          ]}
         />
 
         <meshStandardMaterial
           color={WHITE}
           emissive={TEAL}
-          emissiveIntensity={1.6}
+          emissiveIntensity={1}
         />
       </mesh>
     </group>
@@ -1571,48 +1044,21 @@ function IntegratedWorld({
 }
 
 /* =========================================================
-   CTA WORLD
+   CTA
 ========================================================= */
 
-function CtaWorld({
-  reducedMotion,
-}: {
-  reducedMotion: boolean;
-}) {
-  const group =
-    useRef<Group>(null);
-
-  useFrame(
-    (_, delta) => {
-      if (
-        !group.current ||
-        reducedMotion
-      ) {
-        return;
-      }
-
-      group.current.rotation.y +=
-        delta * 0.07;
-
-      group.current.rotation.x +=
-        delta * 0.025;
-    },
-  );
-
+function CtaWorld() {
   return (
-    <group
-      ref={group}
-      position={[1.5, 0, 0]}
-    >
+    <group position={[1.5, 0, 0]}>
       <mesh>
         <icosahedronGeometry
-          args={[2.2, 2]}
+          args={[2.2, 1]}
         />
 
         <meshStandardMaterial
           color={BLUE}
           emissive={BLUE}
-          emissiveIntensity={0.28}
+          emissiveIntensity={0.2}
           wireframe
           transparent
           opacity={0.72}
@@ -1621,132 +1067,175 @@ function CtaWorld({
 
       <mesh scale={0.58}>
         <dodecahedronGeometry
-          args={[2.2, 1]}
+          args={[2.2, 0]}
         />
 
         <meshStandardMaterial
           color={TEAL}
           emissive={TEAL}
-          emissiveIntensity={0.45}
+          emissiveIntensity={0.3}
           wireframe
         />
       </mesh>
 
       <mesh scale={0.2}>
         <sphereGeometry
-          args={[2, 24, 24]}
+          args={[
+            2,
+            12,
+            12,
+          ]}
         />
 
         <meshStandardMaterial
           color={WHITE}
           emissive={VIOLET}
-          emissiveIntensity={1.8}
+          emissiveIntensity={1}
         />
       </mesh>
-
-      <Sparkles
-        count={35}
-        scale={[6, 6, 6]}
-        size={1.8}
-        speed={
-          reducedMotion
-            ? 0
-            : 0.2
-        }
-        color={TEAL}
-      />
     </group>
   );
 }
 
 /* =========================================================
-   SPATIAL TRANSITION GROUP
-
-   We deliberately do NOT crossfade worlds.
-   They move through space instead.
+   ACTIVE WORLD
 ========================================================= */
 
-function WorkTransitionGroup({
+function World({
   scene,
-  activeScene,
-  children,
+  compact,
 }: {
   scene: WorkSceneName;
+  compact: boolean;
+}) {
+  switch (scene) {
+    case "hero":
+      return (
+        <HeroWorld
+          compact={compact}
+        />
+      );
+
+    case "explore":
+      return (
+        <ExploreWorld
+          compact={compact}
+        />
+      );
+
+    case "research":
+      return <ResearchWorld />;
+
+    case "engineer":
+      return <EngineerWorld />;
+
+    case "build":
+      return <BuildWorld />;
+
+    case "scale":
+      return <ScaleWorld />;
+
+    case "impact":
+      return <ImpactWorld />;
+
+    case "integrated":
+      return <IntegratedWorld />;
+
+    case "cta":
+      return <CtaWorld />;
+  }
+}
+
+function ActiveWorld({
+  activeScene,
+  sceneProgress,
+  compact,
+  pointer,
+  reducedMotion,
+}: {
   activeScene: WorkSceneName;
-  children: ReactNode;
+  sceneProgress: MutableRefObject<
+    Record<
+      WorkSceneName,
+      number
+    >
+  >;
+  compact: boolean;
+  pointer: PointerRef;
+  reducedMotion: boolean;
 }) {
   const group =
     useRef<Group>(null);
 
-  useFrame(() => {
-    if (!group.current) return;
+  useFrame(
+    (_, delta) => {
+      if (!group.current) {
+        return;
+      }
 
-    const ownIndex =
-      SCENE_INDEX[scene];
+      const progress =
+        sceneProgress.current[
+          activeScene
+        ];
 
-    const activeIndex =
-      SCENE_INDEX[
-        activeScene
-      ];
+      const px =
+        reducedMotion ||
+        compact
+          ? 0
+          : pointer.current.x;
 
-    const difference =
-      ownIndex -
-      activeIndex;
+      const py =
+        reducedMotion ||
+        compact
+          ? 0
+          : pointer.current.y;
 
-    const active =
-      difference === 0;
+      if (!reducedMotion) {
+        group.current.rotation.y +=
+          delta *
+          (0.035 +
+            progress *
+              0.025);
+      }
 
-    const targetZ = active
-      ? 0
-      : difference < 0
-        ? -10
-        : 10;
+      group.current.rotation.x =
+        MathUtils.lerp(
+          group.current.rotation.x,
+          py * 0.045,
+          0.035,
+        );
 
-    const targetY = active
-      ? 0
-      : difference < 0
-        ? 2.2
-        : -2.2;
+      group.current.rotation.z =
+        MathUtils.lerp(
+          group.current.rotation.z,
+          px * 0.025,
+          0.035,
+        );
 
-    const targetScale =
-      active ? 1 : 0.7;
+      const targetScale =
+        0.96 +
+        progress * 0.04;
 
-    group.current.position.z =
-      MathUtils.lerp(
-        group.current.position.z,
-        targetZ,
-        0.055,
+      const nextScale =
+        MathUtils.lerp(
+          group.current.scale.x,
+          targetScale,
+          0.04,
+        );
+
+      group.current.scale.setScalar(
+        nextScale,
       );
-
-    group.current.position.y =
-      MathUtils.lerp(
-        group.current.position.y,
-        targetY,
-        0.055,
-      );
-
-    const nextScale =
-      MathUtils.lerp(
-        group.current.scale.x,
-        targetScale,
-        0.055,
-      );
-
-    group.current.scale.setScalar(
-      nextScale,
-    );
-
-    group.current.rotation.z =
-      MathUtils.lerp(
-        group.current.rotation.z,
-        difference * 0.08,
-        0.045,
-      );
-  });
+    },
+  );
 
   return (
     <group ref={group}>
-      {children}
+      <World
+        key={activeScene}
+        scene={activeScene}
+        compact={compact}
+      />
     </group>
   );
 }
@@ -1758,11 +1247,7 @@ function WorkTransitionGroup({
 const CAMERA_TARGETS: Record<
   WorkSceneName,
   {
-    position: [
-      number,
-      number,
-      number,
-    ];
+    position: Position;
     fov: number;
   }
 > = {
@@ -1847,13 +1332,12 @@ const CAMERA_TARGETS: Record<
 function CameraRig({
   activeScene,
   pointer,
+  compact,
   reducedMotion,
 }: {
   activeScene: WorkSceneName;
-  pointer: MutableRefObject<{
-    x: number;
-    y: number;
-  }>;
+  pointer: PointerRef;
+  compact: boolean;
   reducedMotion: boolean;
 }) {
   const { camera } =
@@ -1865,24 +1349,28 @@ function CameraRig({
         activeScene
       ];
 
+    const pointerEnabled =
+      !reducedMotion &&
+      !compact;
+
     const pointerX =
-      reducedMotion
-        ? 0
-        : pointer.current.x *
-          0.28;
+      pointerEnabled
+        ? pointer.current.x *
+          0.2
+        : 0;
 
     const pointerY =
-      reducedMotion
-        ? 0
-        : pointer.current.y *
-          0.18;
+      pointerEnabled
+        ? pointer.current.y *
+          0.12
+        : 0;
 
     camera.position.x =
       MathUtils.lerp(
         camera.position.x,
         target.position[0] +
           pointerX,
-        0.035,
+        0.04,
       );
 
     camera.position.y =
@@ -1890,34 +1378,29 @@ function CameraRig({
         camera.position.y,
         target.position[1] +
           pointerY,
-        0.035,
+        0.04,
       );
 
     camera.position.z =
       MathUtils.lerp(
         camera.position.z,
         target.position[2],
-        0.035,
+        0.04,
       );
 
-    const perspective =
-      camera as typeof camera & {
-        fov?: number;
-        updateProjectionMatrix: () => void;
-      };
-
     if (
-      typeof perspective.fov ===
-      "number"
+      "fov" in camera &&
+      typeof camera.fov ===
+        "number"
     ) {
-      perspective.fov =
+      camera.fov =
         MathUtils.lerp(
-          perspective.fov,
+          camera.fov,
           target.fov,
-          0.035,
+          0.04,
         );
 
-      perspective.updateProjectionMatrix();
+      camera.updateProjectionMatrix();
     }
 
     camera.lookAt(
@@ -1931,231 +1414,62 @@ function CameraRig({
 }
 
 /* =========================================================
-   LIGHTING
+   DIRECTOR
 ========================================================= */
 
-function Lighting() {
+function WorkSceneDirector({
+  pointer,
+  compact,
+  reducedMotion,
+}: {
+  pointer: PointerRef;
+  compact: boolean;
+  reducedMotion: boolean;
+}) {
+  const {
+    activeScene,
+  } = useWorkActiveScene();
+
+  const {
+    sceneProgress,
+  } = useWorkSceneRuntime();
+
   return (
     <>
       <ambientLight
-        intensity={0.7}
+        intensity={0.72}
       />
 
       <directionalLight
         position={[5, 6, 6]}
-        intensity={1.3}
+        intensity={1.25}
         color={WHITE}
       />
 
-      <pointLight
-        position={[
-          4,
-          2,
-          3,
-        ]}
-        intensity={7}
-        distance={12}
-        color={BLUE}
-      />
-
-      <pointLight
-        position={[
-          -3,
-          -2,
-          2,
-        ]}
-        intensity={5}
-        distance={12}
-        color={TEAL}
-      />
-
-      <pointLight
-        position={[
-          2,
-          -4,
-          -2,
-        ]}
-        intensity={4}
-        distance={12}
-        color={VIOLET}
-      />
-    </>
-  );
-}
-
-/* =========================================================
-   DIRECTOR
-========================================================= */
-
-function WorkSceneDirector() {
-  const {
-    activeScene,
-    sceneProgress,
-  } = useWorkSceneExperience();
-
-  const pointer =
-    useGlobalPointer();
-
-  const reducedMotion =
-    useReducedMotion();
-
-  const compact =
-    useCompactScene();
-
-  return (
-    <>
       <CameraRig
         activeScene={
           activeScene
         }
         pointer={pointer}
+        compact={compact}
         reducedMotion={
           reducedMotion
         }
       />
 
-      <Lighting />
-
-      <WorkTransitionGroup
-        scene="hero"
+      <ActiveWorld
         activeScene={
           activeScene
         }
-      >
-        <HeroWorld
-          progressRef={
-            sceneProgress
-          }
-          pointer={pointer}
-          compact={compact}
-          reducedMotion={
-            reducedMotion
-          }
-        />
-      </WorkTransitionGroup>
-
-      <WorkTransitionGroup
-        scene="explore"
-        activeScene={
-          activeScene
+        sceneProgress={
+          sceneProgress
         }
-      >
-        <ExploreWorld
-          progressRef={
-            sceneProgress
-          }
-          compact={compact}
-          reducedMotion={
-            reducedMotion
-          }
-        />
-      </WorkTransitionGroup>
-
-      <WorkTransitionGroup
-        scene="research"
-        activeScene={
-          activeScene
+        compact={compact}
+        pointer={pointer}
+        reducedMotion={
+          reducedMotion
         }
-      >
-        <ResearchWorld
-          progressRef={
-            sceneProgress
-          }
-          reducedMotion={
-            reducedMotion
-          }
-        />
-      </WorkTransitionGroup>
-
-      <WorkTransitionGroup
-        scene="engineer"
-        activeScene={
-          activeScene
-        }
-      >
-        <EngineerWorld
-          progressRef={
-            sceneProgress
-          }
-          reducedMotion={
-            reducedMotion
-          }
-        />
-      </WorkTransitionGroup>
-
-      <WorkTransitionGroup
-        scene="build"
-        activeScene={
-          activeScene
-        }
-      >
-        <BuildWorld
-          progressRef={
-            sceneProgress
-          }
-          reducedMotion={
-            reducedMotion
-          }
-        />
-      </WorkTransitionGroup>
-
-      <WorkTransitionGroup
-        scene="scale"
-        activeScene={
-          activeScene
-        }
-      >
-        <ScaleWorld
-          progressRef={
-            sceneProgress
-          }
-          reducedMotion={
-            reducedMotion
-          }
-        />
-      </WorkTransitionGroup>
-
-      <WorkTransitionGroup
-        scene="impact"
-        activeScene={
-          activeScene
-        }
-      >
-        <ImpactWorld
-          progressRef={
-            sceneProgress
-          }
-          reducedMotion={
-            reducedMotion
-          }
-        />
-      </WorkTransitionGroup>
-
-      <WorkTransitionGroup
-        scene="integrated"
-        activeScene={
-          activeScene
-        }
-      >
-        <IntegratedWorld
-          reducedMotion={
-            reducedMotion
-          }
-        />
-      </WorkTransitionGroup>
-
-      <WorkTransitionGroup
-        scene="cta"
-        activeScene={
-          activeScene
-        }
-      >
-        <CtaWorld
-          reducedMotion={
-            reducedMotion
-          }
-        />
-      </WorkTransitionGroup>
+      />
     </>
   );
 }
@@ -2168,14 +1482,23 @@ export function WorkScene() {
   const compact =
     useCompactScene();
 
+  const reducedMotion =
+    useReducedMotion();
+
+  const pointer =
+    useGlobalPointer(
+      !compact &&
+        !reducedMotion,
+    );
+
   return (
     <Canvas
-      frameloop="always"
-      dpr={
-        compact
-          ? [1, 1.25]
-          : [1, 1.75]
+      frameloop={
+        reducedMotion
+          ? "demand"
+          : "always"
       }
+      dpr={1}
       camera={{
         position: [
           0,
@@ -2184,18 +1507,15 @@ export function WorkScene() {
         ],
         fov: 42,
         near: 0.1,
-        far: 100,
+        far: 50,
       }}
       gl={{
-        antialias:
-          !compact,
+        antialias: false,
         alpha: true,
         powerPreference:
           "high-performance",
       }}
-      onCreated={({
-        gl,
-      }) => {
+      onCreated={({ gl }) => {
         gl.toneMapping =
           ACESFilmicToneMapping;
 
@@ -2203,14 +1523,18 @@ export function WorkScene() {
           1.05;
 
         gl.setClearColor(
-          new Color(
-            "#000000",
-          ),
+          new Color("#000000"),
           0,
         );
       }}
     >
-      <WorkSceneDirector />
+      <WorkSceneDirector
+        pointer={pointer}
+        compact={compact}
+        reducedMotion={
+          reducedMotion
+        }
+      />
     </Canvas>
   );
 }

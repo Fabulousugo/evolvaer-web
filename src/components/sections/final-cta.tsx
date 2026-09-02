@@ -1,82 +1,21 @@
-"use client";
-
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import {
-  useEffect,
-  useRef,
-  type CSSProperties,
-} from "react";
 
 export function FinalCta() {
-  const sectionRef =
-    useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const section =
-      sectionRef.current;
-
-    if (!section) return;
-
-    const handlePointerMove = (
-      event: PointerEvent,
-    ) => {
-      const rect =
-        section.getBoundingClientRect();
-
-      const x =
-        (event.clientX - rect.left) /
-        rect.width;
-
-      const y =
-        (event.clientY - rect.top) /
-        rect.height;
-
-      section.style.setProperty(
-        "--cta-x",
-        `${x * 100}%`,
-      );
-
-      section.style.setProperty(
-        "--cta-y",
-        `${y * 100}%`,
-      );
-    };
-
-    section.addEventListener(
-      "pointermove",
-      handlePointerMove,
-      {
-        passive: true,
-      },
-    );
-
-    return () => {
-      section.removeEventListener(
-        "pointermove",
-        handlePointerMove,
-      );
-    };
-  }, []);
-
   return (
     <section
-      ref={sectionRef}
-      style={
-        {
-          "--cta-x": "70%",
-          "--cta-y": "45%",
-        } as CSSProperties
-      }
       className="
         relative
         min-h-[90vh]
         overflow-hidden
-        bg-[#07111d]/[0.88]
+
+        bg-[#07111d]/[0.97]
+
         py-24
         text-white
-        backdrop-blur-[2px]
+
         sm:py-28
+
         lg:flex
         lg:min-h-screen
         lg:items-center
@@ -91,53 +30,40 @@ export function FinalCta() {
         aria-hidden="true"
         className="
           pointer-events-none
-          absolute inset-0
+          absolute
+          inset-0
         "
       >
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(circle at var(--cta-x) var(--cta-y), rgba(59,130,246,0.12), transparent 28%)",
-          }}
-        />
+        {/* Main blue field */}
 
         <div
           className="
             absolute
-            right-[-14rem]
-            top-[-16rem]
-            h-[46rem]
-            w-[46rem]
-            rounded-full
-            bg-blue/[0.12]
-            blur-[190px]
+            inset-0
+
+            bg-[radial-gradient(circle_at_78%_38%,rgba(59,130,246,0.16),transparent_34%)]
           "
         />
 
-        <div
-          className="
-            absolute
-            bottom-[-16rem]
-            left-[-10rem]
-            h-[38rem]
-            w-[38rem]
-            rounded-full
-            bg-teal/[0.07]
-            blur-[180px]
-          "
-        />
+        {/* Teal lower field */}
 
         <div
           className="
             absolute
-            left-[35%]
-            top-[25%]
-            h-[30rem]
-            w-[30rem]
-            rounded-full
-            bg-violet/[0.055]
-            blur-[180px]
+            inset-0
+
+            bg-[radial-gradient(circle_at_8%_92%,rgba(34,211,238,0.09),transparent_34%)]
+          "
+        />
+
+        {/* Violet balance */}
+
+        <div
+          className="
+            absolute
+            inset-0
+
+            bg-[radial-gradient(circle_at_45%_24%,rgba(168,85,247,0.07),transparent_30%)]
           "
         />
 
@@ -145,32 +71,37 @@ export function FinalCta() {
 
         <div
           className="
-            absolute inset-0
-            opacity-[0.035]
+            brand-grid
+            absolute
+            inset-0
+
+            opacity-[0.055]
           "
-          style={{
-            backgroundImage: `
-              linear-gradient(
-                rgba(255,255,255,.12) 1px,
-                transparent 1px
-              ),
-              linear-gradient(
-                90deg,
-                rgba(255,255,255,.12) 1px,
-                transparent 1px
-              )
-            `,
-            backgroundSize:
-              "96px 96px",
-          }}
         />
 
         {/* Edge vignette */}
 
         <div
           className="
-            absolute inset-0
-            bg-[radial-gradient(circle_at_center,transparent_20%,rgba(7,17,29,0.38)_100%)]
+            absolute
+            inset-0
+
+            bg-[radial-gradient(circle_at_center,transparent_18%,rgba(7,17,29,0.42)_100%)]
+          "
+        />
+
+        {/* Top transition */}
+
+        <div
+          className="
+            absolute
+            inset-x-0
+            top-0
+            h-36
+
+            bg-gradient-to-b
+            from-[#07111d]/60
+            to-transparent
           "
         />
       </div>
@@ -182,7 +113,8 @@ export function FinalCta() {
       <div
         className="
           evolvaer-container
-          relative z-10
+          relative
+          z-10
           w-full
         "
       >
@@ -190,7 +122,9 @@ export function FinalCta() {
           className="
             border-y
             border-white/[0.09]
+
             py-16
+
             sm:py-20
             lg:py-24
           "
@@ -199,6 +133,7 @@ export function FinalCta() {
             className="
               grid
               gap-16
+
               lg:grid-cols-[1.15fr_0.85fr]
               lg:items-end
             "
@@ -215,9 +150,11 @@ export function FinalCta() {
                 "
               >
                 <span
+                  aria-hidden="true"
                   className="
                     h-px
                     w-12
+
                     bg-gradient-to-r
                     from-teal
                     via-blue
@@ -241,6 +178,7 @@ export function FinalCta() {
               <h2
                 className="
                   max-w-5xl
+
                   text-[clamp(4.2rem,7.5vw,8.5rem)]
                   font-bold
                   leading-[0.84]
@@ -250,6 +188,7 @@ export function FinalCta() {
                 Let&apos;s build
                 <br />
                 what{" "}
+
                 <span className="brand-gradient-text">
                   matters.
                 </span>
@@ -261,6 +200,7 @@ export function FinalCta() {
             <div
               className="
                 max-w-lg
+
                 lg:justify-self-end
               "
             >
@@ -269,6 +209,7 @@ export function FinalCta() {
                   text-base
                   leading-8
                   text-white/55
+
                   sm:text-lg
                 "
               >
@@ -285,6 +226,7 @@ export function FinalCta() {
                 href="/contact"
                 className="
                   group
+
                   mt-9
                   inline-flex
                   min-h-14
@@ -295,7 +237,7 @@ export function FinalCta() {
                   border
                   border-blue/35
 
-                  bg-blue/[0.08]
+                  bg-blue/[0.1]
 
                   px-7
 
@@ -303,15 +245,15 @@ export function FinalCta() {
                   font-semibold
                   text-white
 
-                  backdrop-blur-xl
+                  shadow-[0_10px_32px_rgba(59,130,246,0.08)]
 
-                  transition-all
-                  duration-300
+                  transition-[transform,border-color,background-color,box-shadow]
+                  duration-200
 
-                  hover:-translate-y-1
-                  hover:border-blue/60
-                  hover:bg-blue/[0.16]
-                  hover:shadow-[0_15px_60px_rgba(59,130,246,0.18)]
+                  hover:-translate-y-0.5
+                  hover:border-blue/55
+                  hover:bg-blue/[0.17]
+                  hover:shadow-[0_14px_38px_rgba(59,130,246,0.14)]
                 "
               >
                 Start a conversation
@@ -325,21 +267,24 @@ export function FinalCta() {
                     justify-center
 
                     rounded-full
+
                     bg-white/[0.07]
 
-                    transition-all
-                    duration-300
+                    transition-[transform,background-color]
+                    duration-200
 
+                    group-hover:translate-x-0.5
                     group-hover:bg-blue
                   "
                 >
                   <ArrowUpRight
+                    aria-hidden="true"
                     className="
                       h-4
                       w-4
 
                       transition-transform
-                      duration-300
+                      duration-200
 
                       group-hover:translate-x-0.5
                       group-hover:-translate-y-0.5
@@ -351,11 +296,14 @@ export function FinalCta() {
           </div>
         </div>
 
-        {/* Bottom metadata */}
+        {/* ==========================================
+            BOTTOM METADATA
+        ========================================== */}
 
         <div
           className="
             mt-8
+
             flex
             flex-col
             gap-4

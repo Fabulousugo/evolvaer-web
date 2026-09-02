@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import {
   ArrowUpRight,
@@ -47,7 +45,40 @@ const impactDimensions = [
       "What we learn from real-world impact becomes a new signal — informing the next iteration, research question or technological opportunity.",
     accent: "#7C3AED",
   },
-];
+] as const;
+
+const processStages = [
+  {
+    number: "01",
+    label: "Explore",
+    accent: "#2563EB",
+  },
+  {
+    number: "02",
+    label: "Research",
+    accent: "#7C3AED",
+  },
+  {
+    number: "03",
+    label: "Engineer",
+    accent: "#22D3EE",
+  },
+  {
+    number: "04",
+    label: "Build",
+    accent: "#A855F7",
+  },
+  {
+    number: "05",
+    label: "Scale",
+    accent: "#F97316",
+  },
+  {
+    number: "06",
+    label: "Impact",
+    accent: "#10B981",
+  },
+] as const;
 
 export function ImpactStage() {
   return (
@@ -63,17 +94,35 @@ export function ImpactStage() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
       >
-        <div className="absolute inset-0 bg-[#F8FAFC]/[0.58] backdrop-blur-[2px] dark:bg-[#0D1117]/[0.58]" />
+        <div className="absolute inset-0 bg-[#F8FAFC]/[0.58] dark:bg-[#0D1117]/[0.58]" />
 
-        <div className="absolute -right-48 top-[5%] h-[38rem] w-[38rem] rounded-full bg-[#10B981]/[0.045] blur-[175px] dark:bg-[#22D3EE]/[0.055]" />
-
-        <div className="absolute -left-52 bottom-[-13rem] h-[36rem] w-[36rem] rounded-full bg-[#2563EB]/[0.04] blur-[170px] dark:bg-[#3B82F6]/[0.055]" />
+        <div
+          className="absolute inset-0"
+          style={{
+            background: `
+              radial-gradient(
+                circle at 94% 12%,
+                rgba(16,185,129,0.065),
+                transparent 31%
+              ),
+              radial-gradient(
+                circle at 5% 90%,
+                rgba(37,99,235,0.055),
+                transparent 30%
+              )
+            `,
+          }}
+        />
 
         <div
           className="absolute inset-0 opacity-[0.017] dark:opacity-[0.03]"
           style={{
             backgroundImage: `
-              radial-gradient(circle at center, rgba(16,185,129,.28) 1px, transparent 1px)
+              radial-gradient(
+                circle at center,
+                rgba(16,185,129,.28) 1px,
+                transparent 1px
+              )
             `,
             backgroundSize: "38px 38px",
           }}
@@ -134,28 +183,36 @@ export function ImpactStage() {
               return (
                 <article
                   key={dimension.title}
-                  className="group relative min-h-[22rem] overflow-hidden bg-white/[0.67] p-7 backdrop-blur-xl dark:bg-[#0D1117]/[0.69] sm:p-9"
+                  className="group relative min-h-[22rem] overflow-hidden bg-white/[0.74] p-7 dark:bg-[#0D1117]/[0.75] sm:p-9"
                 >
                   <div
                     aria-hidden="true"
-                    className="absolute -right-20 -top-20 h-48 w-48 rounded-full opacity-0 blur-[70px] transition-opacity duration-500 group-hover:opacity-100"
+                    className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
                     style={{
-                      backgroundColor: `${dimension.accent}18`,
+                      background: `radial-gradient(
+                        circle at 94% 8%,
+                        ${dimension.accent}16,
+                        transparent 30%
+                      )`,
                     }}
                   />
 
                   <div
                     aria-hidden="true"
-                    className="absolute left-0 top-0 h-[2px] w-0 transition-all duration-700 group-hover:w-full"
+                    className="absolute inset-x-0 top-0 h-[2px] origin-left scale-x-0 transition-transform duration-500 group-hover:scale-x-100"
                     style={{
-                      background: `linear-gradient(90deg, ${dimension.accent}, transparent)`,
+                      background: `linear-gradient(
+                        90deg,
+                        ${dimension.accent},
+                        transparent
+                      )`,
                     }}
                   />
 
                   <div className="relative flex h-full flex-col">
                     <div className="flex items-start justify-between">
                       <div
-                        className="flex h-11 w-11 items-center justify-center rounded-xl border"
+                        className="flex h-11 w-11 items-center justify-center rounded-xl border transition-transform duration-300 group-hover:-translate-y-0.5"
                         style={{
                           color: dimension.accent,
                           borderColor: `${dimension.accent}30`,
@@ -219,8 +276,27 @@ export function ImpactStage() {
             </p>
           </div>
 
-          <div className="relative overflow-hidden rounded-[1.7rem] border border-[#0A1D2F]/[0.08] bg-white/[0.28] p-6 backdrop-blur-xl dark:border-white/[0.08] dark:bg-white/[0.02] sm:p-8">
-            <div className="grid gap-4 md:grid-cols-[1fr_auto_1fr_auto_1fr] md:items-center">
+          <div className="relative overflow-hidden rounded-[1.7rem] border border-[#0A1D2F]/[0.08] bg-white/[0.35] p-6 dark:border-white/[0.08] dark:bg-white/[0.03] sm:p-8">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0"
+              style={{
+                background: `
+                  radial-gradient(
+                    circle at 50% 0%,
+                    rgba(34,211,238,0.05),
+                    transparent 30%
+                  ),
+                  radial-gradient(
+                    circle at 100% 100%,
+                    rgba(16,185,129,0.045),
+                    transparent 28%
+                  )
+                `,
+              }}
+            />
+
+            <div className="relative grid gap-4 md:grid-cols-[1fr_auto_1fr_auto_1fr] md:items-center">
               <ImpactNode
                 number="01"
                 eyebrow="Output"
@@ -258,10 +334,24 @@ export function ImpactStage() {
         ===================================================== */}
 
         <div className="mt-14 lg:mt-20">
-          <div className="relative overflow-hidden rounded-[1.8rem] border border-[#10B981]/15 bg-[#10B981]/[0.025] p-7 backdrop-blur-xl dark:border-[#22D3EE]/15 dark:bg-[#22D3EE]/[0.018] sm:p-9 lg:p-11">
+          <div className="relative overflow-hidden rounded-[1.8rem] border border-[#10B981]/15 bg-[#10B981]/[0.035] p-7 dark:border-[#22D3EE]/15 dark:bg-[#22D3EE]/[0.025] sm:p-9 lg:p-11">
             <div
               aria-hidden="true"
-              className="absolute left-[55%] top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#22D3EE]/[0.07] blur-[100px]"
+              className="pointer-events-none absolute inset-0"
+              style={{
+                background: `
+                  radial-gradient(
+                    circle at 55% 50%,
+                    rgba(34,211,238,0.065),
+                    transparent 31%
+                  ),
+                  radial-gradient(
+                    circle at 5% 0%,
+                    rgba(16,185,129,0.045),
+                    transparent 26%
+                  )
+                `,
+              }}
             />
 
             <div className="relative grid gap-10 lg:grid-cols-[0.75fr_1.25fr] lg:items-center">
@@ -290,9 +380,7 @@ export function ImpactStage() {
               </div>
             </div>
 
-            {/* LOOP DIAGRAM */}
-
-            <div className="relative mt-10 overflow-hidden rounded-[1.3rem] border border-[#0A1D2F]/[0.07] bg-white/[0.3] px-5 py-6 dark:border-white/[0.07] dark:bg-white/[0.018]">
+            <div className="relative mt-10 overflow-hidden rounded-[1.3rem] border border-[#0A1D2F]/[0.07] bg-white/[0.38] px-5 py-6 dark:border-white/[0.07] dark:bg-white/[0.025]">
               <div className="grid gap-4 sm:grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr] sm:items-center">
                 <LoopNode
                   number="01"
@@ -371,42 +459,11 @@ export function ImpactStage() {
           </div>
 
           <div className="mt-8 grid overflow-hidden rounded-[1.4rem] border border-[#0A1D2F]/[0.08] dark:border-white/[0.08] sm:grid-cols-3 lg:grid-cols-6">
-            {[
-              {
-                number: "01",
-                label: "Explore",
-                accent: "#2563EB",
-              },
-              {
-                number: "02",
-                label: "Research",
-                accent: "#7C3AED",
-              },
-              {
-                number: "03",
-                label: "Engineer",
-                accent: "#22D3EE",
-              },
-              {
-                number: "04",
-                label: "Build",
-                accent: "#A855F7",
-              },
-              {
-                number: "05",
-                label: "Scale",
-                accent: "#F97316",
-              },
-              {
-                number: "06",
-                label: "Impact",
-                accent: "#10B981",
-              },
-            ].map((item, index) => (
+            {processStages.map((item, index) => (
               <div
                 key={item.label}
                 className={[
-                  "relative bg-white/[0.38] px-5 py-6 backdrop-blur-xl dark:bg-white/[0.018]",
+                  "group relative bg-white/[0.48] px-5 py-6 dark:bg-white/[0.025]",
                   index > 0
                     ? "border-t border-[#0A1D2F]/[0.07] dark:border-white/[0.07] sm:border-l sm:border-t-0"
                     : "",
@@ -418,8 +475,8 @@ export function ImpactStage() {
                     style={{
                       backgroundColor: item.accent,
                       boxShadow:
-                        index === 5
-                          ? `0 0 14px ${item.accent}`
+                        index === processStages.length - 1
+                          ? `0 0 10px ${item.accent}90`
                           : undefined,
                     }}
                   />
@@ -434,11 +491,14 @@ export function ImpactStage() {
                 </p>
 
                 <div
-                  className="absolute bottom-0 left-0 h-[2px]"
+                  aria-hidden="true"
+                  className="absolute bottom-0 left-0 h-[2px] w-full origin-left transition-transform duration-300 group-hover:scale-x-[0.92]"
                   style={{
-                    width: "100%",
                     backgroundColor: item.accent,
-                    opacity: index === 5 ? 0.9 : 0.28,
+                    opacity:
+                      index === processStages.length - 1
+                        ? 0.9
+                        : 0.28,
                   }}
                 />
               </div>
@@ -465,11 +525,11 @@ export function ImpactStage() {
 
           <Link
             href="#integrated-model"
-            className="group inline-flex items-center gap-3 text-sm font-semibold text-[#0A1D2F]/55 transition-colors hover:text-[#10B981] dark:text-white/45 dark:hover:text-[#34D399]"
+            className="group inline-flex items-center gap-3 text-sm font-semibold text-[#0A1D2F]/55 transition-colors duration-300 hover:text-[#10B981] dark:text-white/45 dark:hover:text-[#34D399]"
           >
             See how it connects
 
-            <span className="flex h-8 w-8 items-center justify-center rounded-full border border-[#10B981]/20 transition-all duration-300 group-hover:border-[#10B981] group-hover:bg-[#10B981] group-hover:text-white">
+            <span className="flex h-8 w-8 items-center justify-center rounded-full border border-[#10B981]/20 transition-[transform,border-color,background-color,color] duration-300 group-hover:-translate-y-0.5 group-hover:border-[#10B981] group-hover:bg-[#10B981] group-hover:text-white">
               <ArrowUpRight className="h-3.5 w-3.5" />
             </span>
           </Link>
@@ -507,7 +567,7 @@ function ImpactNode({
           className="absolute right-4 top-4 h-1.5 w-1.5 rounded-full"
           style={{
             backgroundColor: accent,
-            boxShadow: `0 0 14px ${accent}`,
+            boxShadow: `0 0 10px ${accent}90`,
           }}
         />
       )}

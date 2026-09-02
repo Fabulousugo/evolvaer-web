@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import {
   ArrowDownRight,
@@ -31,7 +29,7 @@ const signals = [
     description:
       "We examine where technological possibility, real need and viable opportunity begin to intersect.",
   },
-];
+] as const;
 
 export function ExploreSection() {
   return (
@@ -47,20 +45,42 @@ export function ExploreSection() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
       >
-        <div className="absolute inset-0 bg-white/[0.62] backdrop-blur-[2px] dark:bg-[#0D1117]/[0.58]" />
+        <div className="absolute inset-0 bg-white/[0.62] dark:bg-[#0D1117]/[0.58]" />
 
-        <div className="absolute -left-48 top-[10%] h-[34rem] w-[34rem] rounded-full bg-[#2563EB]/[0.045] blur-[160px] dark:bg-[#3B82F6]/[0.07]" />
-
-        <div className="absolute bottom-[-12rem] right-[-10rem] h-[32rem] w-[32rem] rounded-full bg-[#22D3EE]/[0.045] blur-[155px] dark:bg-[#22D3EE]/[0.06]" />
+        <div
+          className="absolute inset-0"
+          style={{
+            background: `
+              radial-gradient(
+                circle at 4% 18%,
+                rgba(37,99,235,0.075),
+                transparent 29%
+              ),
+              radial-gradient(
+                circle at 94% 88%,
+                rgba(34,211,238,0.065),
+                transparent 28%
+              )
+            `,
+          }}
+        />
 
         <div
           className="absolute inset-0 opacity-[0.018] dark:opacity-[0.035]"
           style={{
             backgroundImage: `
-              linear-gradient(rgba(37,99,235,.28) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(37,99,235,.28) 1px, transparent 1px)
+              linear-gradient(
+                rgba(37,99,235,.28) 1px,
+                transparent 1px
+              ),
+              linear-gradient(
+                90deg,
+                rgba(37,99,235,.28) 1px,
+                transparent 1px
+              )
             `,
-            backgroundSize: "92px 92px",
+            backgroundSize:
+              "92px 92px",
           }}
         />
       </div>
@@ -85,6 +105,7 @@ export function ExploreSection() {
             <h2 className="mt-7 max-w-[650px] text-[clamp(2.8rem,4.8vw,5.4rem)] font-semibold leading-[0.96] tracking-[-0.05em] text-[#0A1D2F] dark:text-white">
               We start with
               <br />
+
               <span className="bg-gradient-to-r from-[#2563EB] to-[#22D3EE] bg-clip-text text-transparent dark:from-[#3B82F6] dark:to-[#22D3EE]">
                 the signal.
               </span>
@@ -113,49 +134,61 @@ export function ExploreSection() {
 
         <div className="mt-16 lg:mt-20">
           <div className="grid border-y border-[#0A1D2F]/[0.08] dark:border-white/[0.08] lg:grid-cols-3">
-            {signals.map((signal, index) => {
-              const Icon = signal.icon;
+            {signals.map(
+              (
+                signal,
+                index,
+              ) => {
+                const Icon =
+                  signal.icon;
 
-              return (
-                <article
-                  key={signal.title}
-                  className={[
-                    "group relative min-h-[20rem] px-1 py-8 sm:py-10 lg:px-8 lg:py-12",
-                    index !== 0
-                      ? "border-t border-[#0A1D2F]/[0.08] dark:border-white/[0.08] lg:border-l lg:border-t-0"
-                      : "",
-                  ].join(" ")}
-                >
-                  {/* scanner line */}
+                return (
+                  <article
+                    key={
+                      signal.title
+                    }
+                    className={[
+                      "group relative min-h-[20rem] px-1 py-8 sm:py-10 lg:px-8 lg:py-12",
+                      index !== 0
+                        ? "border-t border-[#0A1D2F]/[0.08] dark:border-white/[0.08] lg:border-l lg:border-t-0"
+                        : "",
+                    ].join(" ")}
+                  >
+                    <div className="pointer-events-none absolute inset-x-0 top-0 h-px origin-left scale-x-0 bg-gradient-to-r from-[#2563EB] via-[#22D3EE] to-transparent transition-transform duration-500 group-hover:scale-x-100" />
 
-                  <div className="pointer-events-none absolute inset-x-0 top-0 h-px origin-left scale-x-0 bg-gradient-to-r from-[#2563EB] via-[#22D3EE] to-transparent transition-transform duration-700 group-hover:scale-x-100" />
+                    <div className="flex items-start justify-between">
+                      <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-[#0A1D2F]/[0.08] bg-white/45 text-[#2563EB] transition-[border-color,background-color,transform] duration-300 group-hover:-translate-y-0.5 group-hover:border-[#2563EB]/25 group-hover:bg-[#2563EB]/[0.06] dark:border-white/[0.08] dark:bg-white/[0.035] dark:text-[#60A5FA] dark:group-hover:border-[#3B82F6]/30">
+                        <Icon className="h-4.5 w-4.5" />
+                      </div>
 
-                  <div className="flex items-start justify-between">
-                    <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-[#0A1D2F]/[0.08] bg-white/35 text-[#2563EB] backdrop-blur-xl transition-all duration-300 group-hover:border-[#2563EB]/25 group-hover:bg-[#2563EB]/[0.06] dark:border-white/[0.08] dark:bg-white/[0.025] dark:text-[#60A5FA] dark:group-hover:border-[#3B82F6]/30">
-                      <Icon className="h-4.5 w-4.5" />
+                      <span className="text-[0.55rem] font-semibold tracking-[0.18em] text-[#0A1D2F]/20 dark:text-white/18">
+                        {
+                          signal.number
+                        }
+                      </span>
                     </div>
 
-                    <span className="text-[0.55rem] font-semibold tracking-[0.18em] text-[#0A1D2F]/20 dark:text-white/18">
-                      {signal.number}
-                    </span>
-                  </div>
+                    <div className="mt-20 sm:mt-24">
+                      <h3 className="text-xl font-semibold tracking-[-0.025em] text-[#0A1D2F] dark:text-white">
+                        {
+                          signal.title
+                        }
+                      </h3>
 
-                  <div className="mt-20 sm:mt-24">
-                    <h3 className="text-xl font-semibold tracking-[-0.025em] text-[#0A1D2F] dark:text-white">
-                      {signal.title}
-                    </h3>
+                      <p className="mt-4 max-w-[22rem] text-sm leading-7 text-[#0A1D2F]/48 dark:text-white/42">
+                        {
+                          signal.description
+                        }
+                      </p>
+                    </div>
 
-                    <p className="mt-4 max-w-[22rem] text-sm leading-7 text-[#0A1D2F]/48 dark:text-white/42">
-                      {signal.description}
-                    </p>
-                  </div>
-
-                  <div className="absolute bottom-7 right-1 flex h-7 w-7 items-center justify-center rounded-full border border-[#0A1D2F]/[0.08] text-[#0A1D2F]/22 transition-all duration-300 group-hover:border-[#2563EB]/25 group-hover:text-[#2563EB] dark:border-white/[0.08] dark:text-white/20 dark:group-hover:text-[#60A5FA] lg:right-7">
-                    <ArrowDownRight className="h-3.5 w-3.5" />
-                  </div>
-                </article>
-              );
-            })}
+                    <div className="absolute bottom-7 right-1 flex h-7 w-7 items-center justify-center rounded-full border border-[#0A1D2F]/[0.08] text-[#0A1D2F]/22 transition-[border-color,color,transform] duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:border-[#2563EB]/25 group-hover:text-[#2563EB] dark:border-white/[0.08] dark:text-white/20 dark:group-hover:text-[#60A5FA] lg:right-7">
+                      <ArrowDownRight className="h-3.5 w-3.5" />
+                    </div>
+                  </article>
+                );
+              },
+            )}
           </div>
         </div>
 
@@ -175,8 +208,15 @@ export function ExploreSection() {
             </p>
           </div>
 
-          <div className="relative overflow-hidden rounded-[1.6rem] border border-[#0A1D2F]/[0.08] bg-white/[0.25] p-6 backdrop-blur-xl dark:border-white/[0.08] dark:bg-white/[0.02] sm:p-8">
-            <div className="pointer-events-none absolute left-[42%] top-1/2 h-32 w-32 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#22D3EE]/10 blur-[45px]" />
+          <div className="relative overflow-hidden rounded-[1.6rem] border border-[#0A1D2F]/[0.08] bg-white/[0.32] p-6 dark:border-white/[0.08] dark:bg-white/[0.03] sm:p-8">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0"
+              style={{
+                background:
+                  "radial-gradient(circle at 42% 50%, rgba(34,211,238,0.09), transparent 25%)",
+              }}
+            />
 
             <div className="relative grid gap-5 sm:grid-cols-[1fr_auto_1fr_auto_1fr] sm:items-center">
               <SignalLabel
@@ -232,11 +272,11 @@ export function ExploreSection() {
 
           <Link
             href="#research"
-            className="group inline-flex items-center gap-3 text-sm font-semibold text-[#0A1D2F]/55 transition-colors hover:text-[#2563EB] dark:text-white/45 dark:hover:text-[#60A5FA]"
+            className="group inline-flex items-center gap-3 text-sm font-semibold text-[#0A1D2F]/55 transition-colors duration-300 hover:text-[#2563EB] dark:text-white/45 dark:hover:text-[#60A5FA]"
           >
             Continue to research
 
-            <span className="flex h-8 w-8 items-center justify-center rounded-full border border-[#2563EB]/20 transition-all duration-300 group-hover:bg-[#2563EB] group-hover:text-white dark:border-[#3B82F6]/25">
+            <span className="flex h-8 w-8 items-center justify-center rounded-full border border-[#2563EB]/20 transition-[transform,background-color,color,border-color] duration-300 group-hover:-translate-y-0.5 group-hover:bg-[#2563EB] group-hover:text-white dark:border-[#3B82F6]/25">
               <ArrowUpRight className="h-3.5 w-3.5" />
             </span>
           </Link>

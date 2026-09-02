@@ -1,6 +1,5 @@
-"use client";
-
 import Link from "next/link";
+
 import {
   ArrowUpRight,
   BrainCircuit,
@@ -9,12 +8,6 @@ import {
   HeartHandshake,
   Orbit,
 } from "lucide-react";
-import {
-  useEffect,
-  useRef,
-  type CSSProperties,
-  type PointerEvent as ReactPointerEvent,
-} from "react";
 
 const areas = [
   {
@@ -25,7 +18,6 @@ const areas = [
     label: "Artificial Intelligence",
     icon: BrainCircuit,
     accent: "blue",
-    feature: true,
   },
   {
     number: "02",
@@ -68,192 +60,123 @@ const areas = [
 const accents = {
   blue: {
     text: "text-blue",
-    border: "hover:border-blue/30",
-    glow: "bg-blue/20 dark:bg-blue/25",
+    border:
+      "group-hover:border-blue/30 dark:group-hover:border-blue/35",
+    icon:
+      "bg-blue/[0.07] text-blue dark:bg-blue/[0.09]",
+    dot: "bg-blue",
+    atmosphere:
+      "bg-[radial-gradient(circle_at_86%_10%,rgba(37,99,235,0.09),transparent_36%)] dark:bg-[radial-gradient(circle_at_86%_10%,rgba(59,130,246,0.12),transparent_37%)]",
   },
+
   teal: {
     text: "text-teal",
-    border: "hover:border-teal/30",
-    glow: "bg-teal/20 dark:bg-teal/25",
+    border:
+      "group-hover:border-teal/30 dark:group-hover:border-teal/35",
+    icon:
+      "bg-teal/[0.07] text-teal dark:bg-teal/[0.09]",
+    dot: "bg-teal",
+    atmosphere:
+      "bg-[radial-gradient(circle_at_86%_10%,rgba(16,185,129,0.085),transparent_36%)] dark:bg-[radial-gradient(circle_at_86%_10%,rgba(34,211,238,0.11),transparent_37%)]",
   },
+
   violet: {
     text: "text-violet",
-    border: "hover:border-violet/30",
-    glow: "bg-violet/20 dark:bg-violet/25",
+    border:
+      "group-hover:border-violet/30 dark:group-hover:border-violet/35",
+    icon:
+      "bg-violet/[0.065] text-violet dark:bg-violet/[0.085]",
+    dot: "bg-violet",
+    atmosphere:
+      "bg-[radial-gradient(circle_at_86%_10%,rgba(124,58,237,0.075),transparent_36%)] dark:bg-[radial-gradient(circle_at_86%_10%,rgba(168,85,247,0.105),transparent_37%)]",
   },
-};
+} as const;
 
 function ExplorationCard({
   area,
 }: {
   area: (typeof areas)[number];
 }) {
-  const ref = useRef<HTMLElement>(null);
-
   const Icon = area.icon;
-  const accent = accents[area.accent];
-
-  const handlePointerMove = (
-    event: ReactPointerEvent<HTMLElement>,
-  ) => {
-    const card = ref.current;
-    if (!card) return;
-
-    const rect =
-      card.getBoundingClientRect();
-
-    const x =
-      (event.clientX - rect.left) /
-      rect.width;
-
-    const y =
-      (event.clientY - rect.top) /
-      rect.height;
-
-    card.style.setProperty(
-      "--rx",
-      `${(0.5 - y) * 8}deg`,
-    );
-
-    card.style.setProperty(
-      "--ry",
-      `${(x - 0.5) * 8}deg`,
-    );
-
-    card.style.setProperty(
-      "--mx",
-      `${x * 100}%`,
-    );
-
-    card.style.setProperty(
-      "--my",
-      `${y * 100}%`,
-    );
-  };
-
-  const reset = () => {
-    const card = ref.current;
-    if (!card) return;
-
-    card.style.setProperty(
-      "--rx",
-      "0deg",
-    );
-
-    card.style.setProperty(
-      "--ry",
-      "0deg",
-    );
-
-    card.style.setProperty(
-      "--mx",
-      "50%",
-    );
-
-    card.style.setProperty(
-      "--my",
-      "50%",
-    );
-  };
+  const accent =
+    accents[area.accent];
 
   return (
     <article
-      ref={ref}
-      onPointerMove={handlePointerMove}
-      onPointerLeave={reset}
-      style={
-        {
-          "--rx": "0deg",
-          "--ry": "0deg",
-          "--mx": "50%",
-          "--my": "50%",
-        } as CSSProperties
-      }
       className={`
         group
         relative
+        min-h-[19rem]
         overflow-hidden
         rounded-[1.75rem]
 
         border
         border-navy/[0.08]
-        bg-white/[0.42]
+        bg-white/[0.72]
 
         p-6
 
-        backdrop-blur-2xl
+        shadow-[0_12px_36px_rgba(10,29,47,0.04)]
 
         transition-[transform,border-color,background-color,box-shadow]
-        duration-300
+        duration-200
         ease-out
 
-        [transform-style:preserve-3d]
-        [transform:perspective(900px)_rotateX(var(--rx))_rotateY(var(--ry))]
-
-        hover:bg-white/[0.56]
-        hover:shadow-[0_25px_70px_rgba(37,99,235,0.09)]
+        hover:-translate-y-1
+        hover:bg-white/[0.88]
+        hover:shadow-[0_18px_46px_rgba(10,29,47,0.075)]
 
         dark:border-white/[0.08]
-        dark:bg-white/[0.025]
-        dark:hover:bg-white/[0.045]
+        dark:bg-[#111821]/[0.76]
+        dark:shadow-[0_14px_38px_rgba(0,0,0,0.15)]
+
+        dark:hover:bg-[#141d28]/[0.9]
+        dark:hover:shadow-[0_18px_48px_rgba(0,0,0,0.2)]
 
         ${accent.border}
       `}
     >
       <div
         aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute inset-0
-
-          opacity-0
-          transition-opacity
-          duration-300
-
-          group-hover:opacity-100
-        "
-        style={{
-          background:
-            "radial-gradient(circle at var(--mx) var(--my), rgba(255,255,255,0.22), transparent 30%)",
-        }}
-      />
-
-      <div
-        aria-hidden="true"
         className={`
           pointer-events-none
           absolute
-          -right-16
-          -top-16
+          inset-0
 
-          h-40
-          w-40
+          opacity-65
 
-          rounded-full
-          blur-[60px]
-
-          opacity-0
           transition-opacity
-          duration-500
+          duration-200
 
           group-hover:opacity-100
 
-          ${accent.glow}
+          ${accent.atmosphere}
         `}
       />
 
       <div
         className="
-          relative z-10
-          [transform:translateZ(26px)]
+          relative
+          z-10
+          flex
+          min-h-[16rem]
+          flex-col
         "
       >
-        <div className="flex items-start justify-between">
+        <div
+          className="
+            flex
+            items-start
+            justify-between
+            gap-5
+          "
+        >
           <span
             className={`
               text-sm
               font-semibold
               tracking-[0.12em]
+
               ${accent.text}
             `}
           >
@@ -261,7 +184,7 @@ function ExplorationCard({
           </span>
 
           <div
-            className="
+            className={`
               flex
               h-11
               w-11
@@ -270,39 +193,61 @@ function ExplorationCard({
 
               rounded-2xl
               border
-              border-navy/[0.08]
-              bg-white/45
+              border-navy/[0.07]
+
+              transition-transform
+              duration-200
+
+              group-hover:-translate-y-0.5
 
               dark:border-white/[0.08]
-              dark:bg-white/[0.035]
-            "
+
+              ${accent.icon}
+            `}
           >
             <Icon
-              className={`
-                h-4
-                w-4
-                ${accent.text}
-              `}
+              aria-hidden="true"
+              strokeWidth={1.7}
+              className="h-4 w-4"
             />
           </div>
         </div>
 
-        <div className="mt-10">
-          <p
+        <div className="mt-auto pt-12">
+          <div
             className="
-              text-[0.58rem]
-              font-semibold
-              uppercase
-              tracking-[0.25em]
-              text-muted
+              mb-4
+              flex
+              items-center
+              gap-3
             "
           >
-            {area.label}
-          </p>
+            <span
+              aria-hidden="true"
+              className={`
+                h-1.5
+                w-1.5
+                rounded-full
+
+                ${accent.dot}
+              `}
+            />
+
+            <p
+              className="
+                text-[0.58rem]
+                font-semibold
+                uppercase
+                tracking-[0.25em]
+                text-muted
+              "
+            >
+              {area.label}
+            </p>
+          </div>
 
           <h3
             className="
-              mt-3
               text-[1.7rem]
               font-semibold
               leading-[1]
@@ -315,6 +260,7 @@ function ExplorationCard({
           <p
             className="
               mt-4
+
               text-[0.82rem]
               leading-6
               text-muted
@@ -329,69 +275,12 @@ function ExplorationCard({
 }
 
 export function ExplorationSection() {
-  const sectionRef =
-    useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const section =
-      sectionRef.current;
-
-    if (!section) return;
-
-    const move = (
-      event: PointerEvent,
-    ) => {
-      const rect =
-        section.getBoundingClientRect();
-
-      const x =
-        (event.clientX -
-          rect.left) /
-        rect.width;
-
-      const y =
-        (event.clientY -
-          rect.top) /
-        rect.height;
-
-      section.style.setProperty(
-        "--explore-x",
-        `${x * 100}%`,
-      );
-
-      section.style.setProperty(
-        "--explore-y",
-        `${y * 100}%`,
-      );
-    };
-
-    section.addEventListener(
-      "pointermove",
-      move,
-      {
-        passive: true,
-      },
-    );
-
-    return () => {
-      section.removeEventListener(
-        "pointermove",
-        move,
-      );
-    };
-  }, []);
-
   const feature = areas[0];
+  const FeatureIcon =
+    feature.icon;
 
   return (
     <section
-      ref={sectionRef}
-      style={
-        {
-          "--explore-x": "62%",
-          "--explore-y": "40%",
-        } as CSSProperties
-      }
       className="
         relative
         overflow-hidden
@@ -403,98 +292,96 @@ export function ExplorationSection() {
       "
     >
       {/* =====================================================
-          SPATIAL BACKGROUND
+          ATMOSPHERE
       ===================================================== */}
 
       <div
         aria-hidden="true"
         className="
           pointer-events-none
-          absolute inset-0
+          absolute
+          inset-0
         "
       >
-        <div
-          className="
-            absolute inset-0
-
-            bg-white/[0.55]
-            backdrop-blur-[2px]
-
-            dark:bg-[#0d1117]/[0.58]
-          "
-        />
-
-        <div
-          className="
-            absolute inset-0
-          "
-          style={{
-            background:
-              "radial-gradient(circle at var(--explore-x) var(--explore-y), rgba(34,211,238,0.08), transparent 30%)",
-          }}
-        />
+        {/* Persistent Three.js remains visible */}
 
         <div
           className="
             absolute
-            -right-56
-            top-[4%]
+            inset-0
 
-            h-[40rem]
-            w-[40rem]
+            bg-white/[0.58]
 
-            rounded-full
-            bg-blue/[0.07]
-            blur-[180px]
+            dark:bg-[#0d1117]/[0.62]
+          "
+        />
 
-            dark:bg-blue/[0.11]
+        {/* Blue field */}
+
+        <div
+          className="
+            absolute
+            inset-0
+
+            bg-[radial-gradient(circle_at_91%_20%,rgba(37,99,235,0.085),transparent_34%)]
+
+            dark:bg-[radial-gradient(circle_at_91%_20%,rgba(59,130,246,0.12),transparent_35%)]
+          "
+        />
+
+        {/* Teal field */}
+
+        <div
+          className="
+            absolute
+            inset-0
+
+            bg-[radial-gradient(circle_at_7%_88%,rgba(16,185,129,0.075),transparent_35%)]
+
+            dark:bg-[radial-gradient(circle_at_7%_88%,rgba(34,211,238,0.105),transparent_36%)]
+          "
+        />
+
+        {/* Violet field */}
+
+        <div
+          className="
+            absolute
+            inset-0
+
+            bg-[radial-gradient(circle_at_58%_43%,rgba(124,58,237,0.04),transparent_28%)]
+
+            dark:bg-[radial-gradient(circle_at_58%_43%,rgba(168,85,247,0.065),transparent_29%)]
           "
         />
 
         <div
           className="
+            brand-grid
             absolute
-            -bottom-64
-            left-[-12rem]
+            inset-0
 
-            h-[42rem]
-            w-[42rem]
+            opacity-[0.11]
 
-            rounded-full
-            bg-teal/[0.065]
-            blur-[180px]
-
-            dark:bg-teal/[0.10]
-          "
-        />
-
-        <div
-          className="
-            absolute
-            left-[42%]
-            top-[32%]
-
-            h-[28rem]
-            w-[28rem]
-
-            rounded-full
-            bg-violet/[0.04]
-            blur-[160px]
-
-            dark:bg-violet/[0.07]
+            dark:opacity-[0.08]
           "
         />
       </div>
 
+      {/* =====================================================
+          CONTENT
+      ===================================================== */}
+
       <div
         className="
           evolvaer-container
-          relative z-10
+          relative
+          z-10
         "
       >
-        {/* =====================================================
+        {/* ===================================================
             HEADING
-        ===================================================== */}
+        =================================================== */}
 
         <div
           className="
@@ -515,6 +402,7 @@ export function ExplorationSection() {
               "
             >
               <span
+                aria-hidden="true"
                 className="
                   h-px
                   w-10
@@ -552,6 +440,7 @@ export function ExplorationSection() {
               Where technology
               <br />
               meets{" "}
+
               <span className="brand-gradient-text">
                 possibility.
               </span>
@@ -561,6 +450,7 @@ export function ExplorationSection() {
           <div
             className="
               max-w-xl
+
               lg:justify-self-end
             "
           >
@@ -609,22 +499,27 @@ export function ExplorationSection() {
 
                   text-blue
 
-                  transition-all
-                  duration-300
+                  transition-[transform,background-color,color,border-color]
+                  duration-200
 
+                  group-hover:translate-x-0.5
+                  group-hover:border-blue
                   group-hover:bg-blue
                   group-hover:text-white
                 "
               >
-                <ArrowUpRight className="h-4 w-4" />
+                <ArrowUpRight
+                  aria-hidden="true"
+                  className="h-4 w-4"
+                />
               </span>
             </Link>
           </div>
         </div>
 
-        {/* =====================================================
+        {/* ===================================================
             FEATURED AI
-        ===================================================== */}
+        =================================================== */}
 
         <div
           className="
@@ -645,19 +540,35 @@ export function ExplorationSection() {
 
               border
               border-navy/[0.08]
-              bg-white/[0.34]
+              bg-white/[0.7]
 
               p-7
 
-              backdrop-blur-2xl
+              shadow-[0_16px_48px_rgba(10,29,47,0.045)]
 
               dark:border-white/[0.08]
-              dark:bg-white/[0.02]
+              dark:bg-[#101720]/[0.72]
+              dark:shadow-[0_18px_52px_rgba(0,0,0,0.15)]
 
               sm:p-10
               lg:p-12
             "
           >
+            {/* Static feature atmosphere */}
+
+            <div
+              aria-hidden="true"
+              className="
+                pointer-events-none
+                absolute
+                inset-0
+
+                bg-[radial-gradient(circle_at_83%_35%,rgba(37,99,235,0.11),transparent_30%)]
+
+                dark:bg-[radial-gradient(circle_at_83%_35%,rgba(59,130,246,0.15),transparent_31%)]
+              "
+            />
+
             <div
               aria-hidden="true"
               className="
@@ -704,23 +615,24 @@ export function ExplorationSection() {
                 pointer-events-none
 
                 absolute
-                right-[13%]
-                top-[24%]
+                right-[17.5%]
+                top-[29%]
 
-                h-40
-                w-40
+                h-20
+                w-20
 
                 rounded-full
-                bg-blue/[0.08]
-                blur-[70px]
+                border
+                border-violet/[0.14]
 
-                dark:bg-blue/[0.14]
+                dark:border-violet/[0.2]
               "
             />
 
             <div
               className="
-                relative z-10
+                relative
+                z-10
                 flex
                 min-h-[30rem]
                 flex-col
@@ -755,12 +667,18 @@ export function ExplorationSection() {
                     rounded-2xl
                     border
                     border-blue/20
-                    bg-blue/[0.06]
+                    bg-blue/[0.07]
 
                     text-blue
+
+                    dark:bg-blue/[0.09]
                   "
                 >
-                  <BrainCircuit className="h-5 w-5" />
+                  <FeatureIcon
+                    aria-hidden="true"
+                    strokeWidth={1.7}
+                    className="h-5 w-5"
+                  />
                 </div>
               </div>
 
@@ -780,7 +698,7 @@ export function ExplorationSection() {
                     text-blue
                   "
                 >
-                  Artificial Intelligence
+                  {feature.label}
                 </p>
 
                 <h3
@@ -814,6 +732,7 @@ export function ExplorationSection() {
                 <Link
                   href="/what-we-do"
                   className="
+                    group
                     mt-8
                     inline-flex
                     items-center
@@ -828,16 +747,29 @@ export function ExplorationSection() {
                   "
                 >
                   Explore
-                  <ArrowUpRight className="h-3.5 w-3.5" />
+
+                  <ArrowUpRight
+                    aria-hidden="true"
+                    className="
+                      h-3.5
+                      w-3.5
+
+                      transition-transform
+                      duration-200
+
+                      group-hover:translate-x-0.5
+                      group-hover:-translate-y-0.5
+                    "
+                  />
                 </Link>
               </div>
             </div>
           </article>
         </div>
 
-        {/* =====================================================
+        {/* ===================================================
             EXPLORATION GRID
-        ===================================================== */}
+        =================================================== */}
 
         <div
           className="
@@ -859,9 +791,9 @@ export function ExplorationSection() {
             ))}
         </div>
 
-        {/* =====================================================
+        {/* ===================================================
             FUTURE FRONTIERS
-        ===================================================== */}
+        =================================================== */}
 
         <article
           className="
@@ -873,19 +805,22 @@ export function ExplorationSection() {
             rounded-[2rem]
             border
             border-violet/15
-            bg-[#0a1d2f]/[0.88]
+
+            bg-[#0a1d2f]/[0.94]
 
             p-7
             text-white
 
-            backdrop-blur-2xl
+            shadow-[0_16px_44px_rgba(10,29,47,0.12)]
 
-            transition-all
-            duration-500
+            transition-[transform,border-color,box-shadow]
+            duration-200
 
+            hover:-translate-y-0.5
             hover:border-violet/30
+            hover:shadow-[0_20px_50px_rgba(10,29,47,0.16)]
 
-            dark:bg-[#101523]/[0.84]
+            dark:bg-[#101523]/[0.94]
 
             sm:p-9
           "
@@ -894,23 +829,37 @@ export function ExplorationSection() {
             aria-hidden="true"
             className="
               pointer-events-none
+              absolute
+              inset-0
+
+              bg-[radial-gradient(circle_at_96%_15%,rgba(168,85,247,0.20),transparent_32%)]
+            "
+          />
+
+          <div
+            aria-hidden="true"
+            className="
+              pointer-events-none
 
               absolute
-              right-[-8rem]
-              top-[-10rem]
+              right-[7%]
+              top-1/2
 
-              h-[26rem]
-              w-[26rem]
+              h-36
+              w-36
 
+              -translate-y-1/2
               rounded-full
-              bg-violet/15
-              blur-[110px]
+
+              border
+              border-violet/15
             "
           />
 
           <div
             className="
-              relative z-10
+              relative
+              z-10
               grid
               gap-8
 
@@ -929,7 +878,13 @@ export function ExplorationSection() {
               05
             </span>
 
-            <div className="flex items-center gap-4">
+            <div
+              className="
+                flex
+                items-center
+                gap-4
+              "
+            >
               <div
                 className="
                   flex
@@ -946,7 +901,11 @@ export function ExplorationSection() {
                   text-violet
                 "
               >
-                <Orbit className="h-5 w-5" />
+                <Orbit
+                  aria-hidden="true"
+                  strokeWidth={1.7}
+                  className="h-5 w-5"
+                />
               </div>
 
               <p
@@ -984,14 +943,23 @@ export function ExplorationSection() {
                   text-white/55
                 "
               >
-                Keeping space for technologies
-                and opportunities that have not
-                yet become obvious — but may
-                shape what comes next.
+                Keeping space for
+                technologies and
+                opportunities that have
+                not yet become obvious —
+                but may shape what comes
+                next.
               </p>
             </div>
 
-            <div className="flex justify-start lg:justify-end">
+            <div
+              className="
+                flex
+                justify-start
+
+                lg:justify-end
+              "
+            >
               <span
                 className="
                   flex
@@ -1006,23 +974,27 @@ export function ExplorationSection() {
 
                   text-violet
 
-                  transition-all
-                  duration-300
+                  transition-[transform,border-color,background-color,color]
+                  duration-200
 
+                  group-hover:translate-x-0.5
                   group-hover:border-violet/40
                   group-hover:bg-violet
                   group-hover:text-white
                 "
               >
-                <ArrowUpRight className="h-4 w-4" />
+                <ArrowUpRight
+                  aria-hidden="true"
+                  className="h-4 w-4"
+                />
               </span>
             </div>
           </div>
         </article>
 
-        {/* =====================================================
+        {/* ===================================================
             CLOSING
-        ===================================================== */}
+        =================================================== */}
 
         <div
           className="
@@ -1066,10 +1038,12 @@ export function ExplorationSection() {
                 tracking-[-0.04em]
               "
             >
-              We are not defined by a single
-              technology. We follow meaningful
-              problems and explore the
+              We are not defined by a
+              single technology. We
+              follow meaningful problems
+              and explore the
               technologies capable of{" "}
+
               <span className="text-teal">
                 solving them.
               </span>

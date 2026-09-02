@@ -37,17 +37,17 @@ const GREEN = "#10B981";
 const PURPLE = "#A855F7";
 const NAVY = "#0A1D2F";
 
-const SCENE_INDEX: Record<ResearchSceneName, number> = {
-  hero: 0,
-  why: 1,
-  areas: 2,
-  method: 3,
-  current: 4,
-  application: 5,
-  principles: 6,
-  questions: 7,
-  cta: 8,
-};
+const SCENE_ORDER: ResearchSceneName[] = [
+  "hero",
+  "why",
+  "areas",
+  "method",
+  "current",
+  "application",
+  "principles",
+  "questions",
+  "cta",
+];
 
 /* ============================================================
    SHARED HOOKS
@@ -334,10 +334,13 @@ function ResearchCore({
    UNRESOLVED INFORMATION
 ============================================================ */
 
-function HeroWorld() {
-  const compact = useCompactScene();
-  const reducedMotion = useReducedMotion();
-
+function HeroWorld({
+  compact,
+  reducedMotion,
+}: {
+  compact: boolean;
+  reducedMotion: boolean;
+}) {
   const group = useRef<Group>(null);
 
   const points = useMemo(() => {
@@ -1087,8 +1090,11 @@ function PrinciplesWorld() {
    KNOWLEDGE CREATES NEW UNKNOWN TERRITORY
 ============================================================ */
 
-function QuestionsWorld() {
-  const compact = useCompactScene();
+function QuestionsWorld({
+  compact,
+}: {
+  compact: boolean;
+}) {
   const group = useRef<Group>(null);
 
   const questions = useMemo(() => {
@@ -1205,9 +1211,13 @@ function QuestionsWorld() {
    ONE PRECISE SIGNAL
 ============================================================ */
 
-function CtaWorld() {
-  const compact = useCompactScene();
-  const reducedMotion = useReducedMotion();
+function CtaWorld({
+  compact,
+  reducedMotion,
+}: {
+  compact: boolean;
+  reducedMotion: boolean;
+}) {
   const group = useRef<Group>(null);
 
   useFrame(
@@ -1336,10 +1346,10 @@ function ResearchTransitionGroup({
   const group = useRef<Group>(null);
 
   const sceneIndex =
-    SCENE_INDEX[scene];
+    SCENE_ORDER.indexOf(scene);
 
   const activeIndex =
-    SCENE_INDEX[activeScene];
+    SCENE_ORDER.indexOf(activeScene);
 
   const difference =
     sceneIndex - activeIndex;
@@ -1441,103 +1451,85 @@ function ResearchTransitionGroup({
    SCENE DIRECTOR
 ============================================================ */
 
-function ResearchSceneDirector() {
+function ResearchWorld({
+  scene,
+  compact,
+  reducedMotion,
+}: {
+  scene: ResearchSceneName;
+  compact: boolean;
+  reducedMotion: boolean;
+}) {
+  switch (scene) {
+    case "hero":
+      return (
+        <HeroWorld
+          compact={compact}
+          reducedMotion={reducedMotion}
+        />
+      );
+    case "why":
+      return <WhyWorld />;
+    case "areas":
+      return <AreasWorld />;
+    case "method":
+      return <MethodWorld />;
+    case "current":
+      return <CurrentWorld />;
+    case "application":
+      return <ApplicationWorld />;
+    case "principles":
+      return <PrinciplesWorld />;
+    case "questions":
+      return <QuestionsWorld compact={compact} />;
+    case "cta":
+      return (
+        <CtaWorld
+          compact={compact}
+          reducedMotion={reducedMotion}
+        />
+      );
+  }
+}
+
+function ResearchSceneDirector({
+  compact,
+  reducedMotion,
+}: {
+  compact: boolean;
+  reducedMotion: boolean;
+}) {
   const {
     activeScene,
     sceneProgress,
   } = useResearchSceneExperience();
 
+  const activeIndex =
+    SCENE_ORDER.indexOf(activeScene);
+
+  const mountedScenes = reducedMotion
+    ? [activeScene]
+    : SCENE_ORDER.filter(
+        (_, index) =>
+          Math.abs(index - activeIndex) <= 1,
+      );
+
   return (
     <>
-      <ResearchTransitionGroup
-        scene="hero"
-        activeScene={activeScene}
-        progress={
-          sceneProgress.current.hero
-        }
-      >
-        <HeroWorld />
-      </ResearchTransitionGroup>
-
-      <ResearchTransitionGroup
-        scene="why"
-        activeScene={activeScene}
-        progress={
-          sceneProgress.current.why
-        }
-      >
-        <WhyWorld />
-      </ResearchTransitionGroup>
-
-      <ResearchTransitionGroup
-        scene="areas"
-        activeScene={activeScene}
-        progress={
-          sceneProgress.current.areas
-        }
-      >
-        <AreasWorld />
-      </ResearchTransitionGroup>
-
-      <ResearchTransitionGroup
-        scene="method"
-        activeScene={activeScene}
-        progress={
-          sceneProgress.current.method
-        }
-      >
-        <MethodWorld />
-      </ResearchTransitionGroup>
-
-      <ResearchTransitionGroup
-        scene="current"
-        activeScene={activeScene}
-        progress={
-          sceneProgress.current.current
-        }
-      >
-        <CurrentWorld />
-      </ResearchTransitionGroup>
-
-      <ResearchTransitionGroup
-        scene="application"
-        activeScene={activeScene}
-        progress={
-          sceneProgress.current.application
-        }
-      >
-        <ApplicationWorld />
-      </ResearchTransitionGroup>
-
-      <ResearchTransitionGroup
-        scene="principles"
-        activeScene={activeScene}
-        progress={
-          sceneProgress.current.principles
-        }
-      >
-        <PrinciplesWorld />
-      </ResearchTransitionGroup>
-
-      <ResearchTransitionGroup
-        scene="questions"
-        activeScene={activeScene}
-        progress={
-          sceneProgress.current.questions
-        }
-      >
-        <QuestionsWorld />
-      </ResearchTransitionGroup>
-
-      <ResearchTransitionGroup
-        scene="cta"
-        activeScene={activeScene}
-        progress={
-          sceneProgress.current.cta
-        }
-      >
-        <CtaWorld />
-      </ResearchTransitionGroup>
+      {mountedScenes.map((scene) => (
+        <ResearchTransitionGroup
+          key={scene}
+          scene={scene}
+          activeScene={activeScene}
+          progress={sceneProgress.current[scene]}
+        >
+          <ResearchWorld
+            scene={scene}
+            compact={compact}
+            reducedMotion={reducedMotion}
+          />
+        </ResearchTransitionGroup>
+      ))}
     </>
   );
 }
@@ -1551,18 +1543,16 @@ function ResearchSceneDirector() {
    travelling through a venture ecosystem.
 ============================================================ */
 
-function ResearchCameraRig() {
-  const {
-    activeScene,
-  } = useResearchSceneExperience();
-
+function ResearchCameraRig({
+  activeScene,
+  pointer,
+  reducedMotion,
+}: {
+  activeScene: ResearchSceneName;
+  pointer: ReturnType<typeof useGlobalPointer>;
+  reducedMotion: boolean;
+}) {
   const { camera } = useThree();
-
-  const pointer =
-    useGlobalPointer();
-
-  const reducedMotion =
-    useReducedMotion();
 
   const targets: Record<
     ResearchSceneName,
@@ -1634,13 +1624,13 @@ function ResearchCameraRig() {
    BACKGROUND FIELD
 ============================================================ */
 
-function ResearchBackgroundField() {
-  const compact =
-    useCompactScene();
-
-  const reducedMotion =
-    useReducedMotion();
-
+function ResearchBackgroundField({
+  compact,
+  reducedMotion,
+}: {
+  compact: boolean;
+  reducedMotion: boolean;
+}) {
   return (
     <>
       <Sparkles
@@ -1715,16 +1705,38 @@ function ResearchLighting() {
    CANVAS CONTENT
 ============================================================ */
 
-function ResearchCanvasContent() {
+function ResearchCanvasContent({
+  compact,
+  reducedMotion,
+  pointer,
+}: {
+  compact: boolean;
+  reducedMotion: boolean;
+  pointer: ReturnType<typeof useGlobalPointer>;
+}) {
+  const {
+    activeScene,
+  } = useResearchSceneExperience();
+
   return (
     <>
       <ResearchLighting />
 
-      <ResearchBackgroundField />
+      <ResearchBackgroundField
+        compact={compact}
+        reducedMotion={reducedMotion}
+      />
 
-      <ResearchSceneDirector />
+      <ResearchSceneDirector
+        compact={compact}
+        reducedMotion={reducedMotion}
+      />
 
-      <ResearchCameraRig />
+      <ResearchCameraRig
+        activeScene={activeScene}
+        pointer={pointer}
+        reducedMotion={reducedMotion}
+      />
     </>
   );
 }
@@ -1737,6 +1749,12 @@ export function ResearchPageScene() {
   const compact =
     useCompactScene();
 
+  const reducedMotion =
+    useReducedMotion();
+
+  const pointer =
+    useGlobalPointer();
+
   return (
     <Canvas
       camera={{
@@ -1747,8 +1765,8 @@ export function ResearchPageScene() {
       }}
       dpr={
         compact
-          ? [1, 1.25]
-          : [1, 1.75]
+          ? 1
+          : [1, 1.35]
       }
       gl={{
         antialias: !compact,
@@ -1756,7 +1774,11 @@ export function ResearchPageScene() {
         powerPreference:
           "high-performance",
       }}
-      frameloop="always"
+      frameloop={
+        reducedMotion
+          ? "demand"
+          : "always"
+      }
       onCreated={({ gl }) => {
         gl.toneMapping =
           ACESFilmicToneMapping;
@@ -1775,7 +1797,11 @@ export function ResearchPageScene() {
         background: "transparent",
       }}
     >
-      <ResearchCanvasContent />
+      <ResearchCanvasContent
+        compact={compact}
+        reducedMotion={reducedMotion}
+        pointer={pointer}
+      />
     </Canvas>
   );
 }

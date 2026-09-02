@@ -4,48 +4,60 @@ import {
   Canvas,
   useFrame,
 } from "@react-three/fiber";
-import {
-  Float,
-  Sparkles,
-} from "@react-three/drei";
 import * as THREE from "three";
 import {
   useEffect,
   useMemo,
   useRef,
   useState,
+  type ComponentType,
 } from "react";
 
 import { useTheme } from "@/src/components/theme-provider";
+
 import {
   type AboutSceneName,
-  useAboutSceneExperience,
+  useAboutActiveScene,
+  useAboutSceneRuntime,
 } from "./about-scene-experience";
 
-/* =========================================================
+/* ============================================================
    GLOBAL POINTER
-========================================================= */
+============================================================ */
 
-function useGlobalPointer() {
-  const pointer = useRef({
-    x: 0,
-    y: 0,
-  });
+const globalPointer = {
+  x: 0,
+  y: 0,
+};
 
+function useGlobalPointerTracking(
+  enabled: boolean,
+) {
   useEffect(() => {
-    const handlePointerMove = (
+    if (!enabled) {
+      globalPointer.x = 0;
+      globalPointer.y = 0;
+
+      return;
+    }
+
+    const update = (
       event: PointerEvent,
     ) => {
-      pointer.current.x =
-        (event.clientX /
-          window.innerWidth) *
+      globalPointer.x =
+        (
+          event.clientX /
+          window.innerWidth
+        ) *
           2 -
         1;
 
-      pointer.current.y =
+      globalPointer.y =
         -(
-          (event.clientY /
-            window.innerHeight) *
+          (
+            event.clientY /
+            window.innerHeight
+          ) *
             2 -
           1
         );
@@ -53,7 +65,7 @@ function useGlobalPointer() {
 
     window.addEventListener(
       "pointermove",
-      handlePointerMove,
+      update,
       {
         passive: true,
       },
@@ -62,32 +74,31 @@ function useGlobalPointer() {
     return () => {
       window.removeEventListener(
         "pointermove",
-        handlePointerMove,
+        update,
       );
-    };
-  }, []);
 
-  return pointer;
+      globalPointer.x = 0;
+      globalPointer.y = 0;
+    };
+  }, [enabled]);
 }
 
-/* =========================================================
+/* ============================================================
    MEDIA HELPERS
-========================================================= */
+============================================================ */
 
-function useReducedMotion() {
-  const [reducedMotion, setReducedMotion] =
+function useMediaQuery(
+  query: string,
+) {
+  const [matches, setMatches] =
     useState(false);
 
   useEffect(() => {
     const media =
-      window.matchMedia(
-        "(prefers-reduced-motion: reduce)",
-      );
+      window.matchMedia(query);
 
     const update = () => {
-      setReducedMotion(
-        media.matches,
-      );
+      setMatches(media.matches);
     };
 
     update();
@@ -103,1135 +114,445 @@ function useReducedMotion() {
         update,
       );
     };
-  }, []);
+  }, [query]);
 
-  return reducedMotion;
+  return matches;
+}
+
+function useReducedMotion() {
+  return useMediaQuery(
+    "(prefers-reduced-motion: reduce)",
+  );
 }
 
 function useCompactScene() {
-  const [compact, setCompact] =
-    useState(false);
-
-  useEffect(() => {
-    const media =
-      window.matchMedia(
-        "(max-width: 767px)",
-      );
-
-    const update = () => {
-      setCompact(
-        media.matches,
-      );
-    };
-
-    update();
-
-    media.addEventListener(
-      "change",
-      update,
-    );
-
-    return () => {
-      media.removeEventListener(
-        "change",
-        update,
-      );
-    };
-  }, []);
-
-  return compact;
-}
-
-/* =========================================================
-   MATH HELPERS
-========================================================= */
-
-function getSceneWeight(
-  progress: number,
-  scene: AboutSceneName,
-) {
-  if (scene === "hero") {
-    return (
-      1 -
-      THREE.MathUtils.smoothstep(
-        progress,
-        0.68,
-        0.98,
-      )
-    );
-  }
-
-  if (scene === "cta") {
-    return THREE.MathUtils.smoothstep(
-      progress,
-      0.06,
-      0.36,
-    );
-  }
-
-  const entering =
-    THREE.MathUtils.smoothstep(
-      progress,
-      0.04,
-      0.3,
-    );
-
-  const leaving =
-    1 -
-    THREE.MathUtils.smoothstep(
-      progress,
-      0.7,
-      0.96,
-    );
-
-  return Math.min(
-    entering,
-    leaving,
+  return useMediaQuery(
+    "(max-width: 767px)",
   );
 }
 
-/* =========================================================
-   HERO / ORIGIN WORLD
-========================================================= */
+/* ============================================================
+   SHARED HELPERS
+============================================================ */
+
+type Vec3 = [
+  number,
+  number,
+  number,
+];
+
+function Connection({
+  start,
+  end,
+  color,
+  opacity,
+}: {
+  start: Vec3;
+  end: Vec3;
+  color: string;
+  opacity: number;
+}) {
+  const {
+    midpoint,
+    length,
+    quaternion,
+  } = useMemo(() => {
+    const from =
+      new THREE.Vector3(...start);
+
+    const to =
+      new THREE.Vector3(...end);
+
+    const direction =
+      new THREE.Vector3().subVectors(
+        to,
+        from,
+      );
+
+    const distance =
+      direction.length();
+
+    const middle =
+      new THREE.Vector3()
+        .addVectors(from, to)
+        .multiplyScalar(0.5);
+
+    const rotation =
+      new THREE.Quaternion();
+
+    if (distance > 0) {
+      rotation.setFromUnitVectors(
+        new THREE.Vector3(
+          0,
+          1,
+          0,
+        ),
+        direction
+          .clone()
+          .normalize(),
+      );
+    }
+
+    return {
+      midpoint: middle,
+      length: distance,
+      quaternion: rotation,
+    };
+  }, [start, end]);
+
+  return (
+    <mesh
+      position={midpoint}
+      quaternion={quaternion}
+    >
+      <cylinderGeometry
+        args={[
+          0.012,
+          0.012,
+          length,
+          6,
+        ]}
+      />
+
+      <meshBasicMaterial
+        color={color}
+        transparent
+        opacity={opacity}
+      />
+    </mesh>
+  );
+}
+
+/* ============================================================
+   WORLD DEFINITIONS
+============================================================ */
+
+type WorldProps = {
+  isDark: boolean;
+};
 
 function OriginWorld({
   isDark,
-}: {
-  isDark: boolean;
-}) {
-  const groupRef =
-    useRef<THREE.Group>(null);
-
-  const coreRef =
-    useRef<THREE.Mesh>(null);
-
-  const ribbonRefs =
-    useRef<
-      Array<THREE.Mesh | null>
-    >([]);
-
-  const fragmentRefs =
-    useRef<
-      Array<THREE.Mesh | null>
-    >([]);
-
-  const pointer =
-    useGlobalPointer();
-
-  const {
-    sceneProgress,
-  } = useAboutSceneExperience();
-
-  const ribbons =
-    useMemo(() => {
-      return [
-        {
-          color: "#3B82F6",
-          curve:
-            new THREE.CatmullRomCurve3(
-              [
-                new THREE.Vector3(
-                  -2.6,
-                  -1.2,
-                  -0.4,
-                ),
-                new THREE.Vector3(
-                  -1.7,
-                  -0.3,
-                  0.2,
-                ),
-                new THREE.Vector3(
-                  -0.7,
-                  0.65,
-                  -0.15,
-                ),
-                new THREE.Vector3(
-                  0.4,
-                  0.25,
-                  0.2,
-                ),
-                new THREE.Vector3(
-                  1.45,
-                  -0.45,
-                  -0.1,
-                ),
-                new THREE.Vector3(
-                  2.55,
-                  0.5,
-                  0.15,
-                ),
-              ],
-            ),
-        },
-        {
-          color: "#22D3EE",
-          curve:
-            new THREE.CatmullRomCurve3(
-              [
-                new THREE.Vector3(
-                  -2.3,
-                  1.25,
-                  -0.6,
-                ),
-                new THREE.Vector3(
-                  -1.35,
-                  0.55,
-                  0.15,
-                ),
-                new THREE.Vector3(
-                  -0.3,
-                  -0.35,
-                  0.3,
-                ),
-                new THREE.Vector3(
-                  0.8,
-                  0.3,
-                  -0.1,
-                ),
-                new THREE.Vector3(
-                  1.65,
-                  1,
-                  0.15,
-                ),
-                new THREE.Vector3(
-                  2.6,
-                  0.1,
-                  -0.35,
-                ),
-              ],
-            ),
-        },
-        {
-          color: "#A855F7",
-          curve:
-            new THREE.CatmullRomCurve3(
-              [
-                new THREE.Vector3(
-                  -2.15,
-                  0.2,
-                  -1,
-                ),
-                new THREE.Vector3(
-                  -1.25,
-                  -0.7,
-                  -0.2,
-                ),
-                new THREE.Vector3(
-                  -0.15,
-                  -0.1,
-                  0.3,
-                ),
-                new THREE.Vector3(
-                  0.95,
-                  0.8,
-                  -0.25,
-                ),
-                new THREE.Vector3(
-                  1.75,
-                  0.2,
-                  0.1,
-                ),
-                new THREE.Vector3(
-                  2.3,
-                  -0.8,
-                  -0.5,
-                ),
-              ],
-            ),
-        },
-      ];
-    }, []);
-
-  const fragments =
+}: WorldProps) {
+  const ribbonOne =
     useMemo(
       () =>
-        Array.from(
-          { length: 18 },
-          (_, index) => {
-            const angle =
-              (index / 18) *
-              Math.PI *
-              2;
-
-            const radius =
-              2.4 +
-              (index % 3) *
-                0.35;
-
-            return {
-              x:
-                Math.cos(angle) *
-                radius,
-
-              y:
-                Math.sin(angle) *
-                radius *
-                0.7,
-
-              z:
-                Math.sin(
-                  angle * 1.8,
-                ) * 0.9,
-
-              phase:
-                index * 0.37,
-            };
-          },
-        ),
+        new THREE.CatmullRomCurve3([
+          new THREE.Vector3(
+            -2.6,
+            -1.2,
+            -0.4,
+          ),
+          new THREE.Vector3(
+            -1.4,
+            -0.2,
+            0.15,
+          ),
+          new THREE.Vector3(
+            -0.2,
+            0.6,
+            -0.1,
+          ),
+          new THREE.Vector3(
+            1.1,
+            -0.25,
+            0.1,
+          ),
+          new THREE.Vector3(
+            2.55,
+            0.5,
+            0.15,
+          ),
+        ]),
       [],
     );
 
-  useFrame(
-    (state, delta) => {
-      const group =
-        groupRef.current;
-
-      if (!group) return;
-
-      const progress =
-        sceneProgress.current
-          .hero;
-
-      const time =
-        state.clock.elapsedTime;
-
-      group.rotation.y =
-        THREE.MathUtils.damp(
-          group.rotation.y,
-          pointer.current.x *
-            0.06 +
-            Math.sin(
-              time * 0.12,
-            ) *
-              0.035,
-          3,
-          delta,
-        );
-
-      group.rotation.x =
-        THREE.MathUtils.damp(
-          group.rotation.x,
-          pointer.current.y *
-            -0.035,
-          3,
-          delta,
-        );
-
-      /*
-       * Hero starts coherent.
-       * As the visitor leaves,
-       * the system begins opening.
-       */
-
-      const opening =
-        THREE.MathUtils.smoothstep(
-          progress,
-          0.5,
-          0.92,
-        );
-
-      ribbonRefs.current.forEach(
-        (ribbon, index) => {
-          if (!ribbon) return;
-
-          const direction =
-            index === 0
-              ? -1
-              : index === 1
-                ? 1
-                : 0;
-
-          ribbon.position.y =
-            THREE.MathUtils.damp(
-              ribbon.position.y,
-              direction *
-                opening *
-                0.65,
-              4,
-              delta,
-            );
-
-          ribbon.position.z =
-            THREE.MathUtils.damp(
-              ribbon.position.z,
-              -opening *
-                (0.25 +
-                  index *
-                    0.18),
-              4,
-              delta,
-            );
-
-          ribbon.rotation.z =
-            THREE.MathUtils.damp(
-              ribbon.rotation.z,
-              direction *
-                opening *
-                0.08,
-              4,
-              delta,
-            );
-        },
-      );
-
-      if (coreRef.current) {
-        coreRef.current.rotation.x +=
-          delta * 0.09;
-
-        coreRef.current.rotation.y +=
-          delta * 0.15;
-
-        const pulse =
-          1 +
-          Math.sin(
-            time * 0.9,
-          ) *
-            0.035;
-
-        coreRef.current.scale.setScalar(
-          THREE.MathUtils.lerp(
-            pulse,
-            0.7,
-            opening,
+  const ribbonTwo =
+    useMemo(
+      () =>
+        new THREE.CatmullRomCurve3([
+          new THREE.Vector3(
+            -2.3,
+            1.2,
+            -0.55,
           ),
-        );
-      }
-
-      /*
-       * Fragments move from a loose
-       * outer cloud into a tighter
-       * evolving structure.
-       */
-
-      fragmentRefs.current.forEach(
-        (fragment, index) => {
-          if (!fragment) return;
-
-          const source =
-            fragments[index];
-
-          const coherence =
-            1 -
-            THREE.MathUtils.smoothstep(
-              progress,
-              0.55,
-              0.95,
-            );
-
-          const compression =
-            THREE.MathUtils.lerp(
-              1,
-              0.38,
-              coherence,
-            );
-
-          fragment.position.x =
-            source.x *
-            compression;
-
-          fragment.position.y =
-            source.y *
-              compression +
-            Math.sin(
-              time * 0.3 +
-                source.phase,
-            ) *
-              0.04;
-
-          fragment.position.z =
-            source.z *
-            compression;
-        },
-      );
-    },
-  );
+          new THREE.Vector3(
+            -1.1,
+            0.4,
+            0.1,
+          ),
+          new THREE.Vector3(
+            0,
+            -0.35,
+            0.25,
+          ),
+          new THREE.Vector3(
+            1.25,
+            0.65,
+            0,
+          ),
+          new THREE.Vector3(
+            2.5,
+            0,
+            -0.3,
+          ),
+        ]),
+      [],
+    );
 
   return (
     <group
-      ref={groupRef}
       position={[
         1.5,
         0,
         -2.3,
       ]}
     >
-      {ribbons.map(
-        (
-          ribbon,
-          index,
-        ) => (
-          <mesh
-            key={`origin-ribbon-${index}`}
-            ref={(element) => {
-              ribbonRefs.current[
-                index
-              ] = element;
-            }}
-          >
-            <tubeGeometry
-              args={[
-                ribbon.curve,
-                120,
-                index === 0
-                  ? 0.07
-                  : 0.045,
-                12,
-                false,
-              ]}
-            />
+      <mesh>
+        <tubeGeometry
+          args={[
+            ribbonOne,
+            48,
+            0.075,
+            8,
+            false,
+          ]}
+        />
 
-            <meshPhysicalMaterial
-              color={
-                ribbon.color
-              }
-              emissive={
-                ribbon.color
-              }
-              emissiveIntensity={
-                isDark
-                  ? 0.2
-                  : 0.03
-              }
-              metalness={0.28}
-              roughness={0.16}
-              clearcoat={1}
-              transparent
-              opacity={
-                isDark
-                  ? 0.82
-                  : 0.62
-              }
-            />
-          </mesh>
-        ),
-      )}
-
-      <Float
-        speed={0.45}
-        floatIntensity={0.06}
-      >
-        <mesh ref={coreRef}>
-          <icosahedronGeometry
-            args={[0.5, 3]}
-          />
-
-          <meshPhysicalMaterial
-            color={
-              isDark
-                ? "#F5FAFF"
-                : "#0A1D2F"
-            }
-            metalness={
-              isDark
-                ? 0.06
-                : 0.5
-            }
-            roughness={0.1}
-            transmission={
-              isDark
-                ? 0.55
-                : 0.05
-            }
-            thickness={1}
-            clearcoat={1}
-            transparent
-            opacity={0.9}
-          />
-        </mesh>
-      </Float>
+        <meshStandardMaterial
+          color="#3B82F6"
+          emissive="#3B82F6"
+          emissiveIntensity={
+            isDark ? 0.18 : 0.02
+          }
+          roughness={0.4}
+          metalness={0.1}
+          transparent
+          opacity={
+            isDark ? 0.78 : 0.5
+          }
+        />
+      </mesh>
 
       <mesh>
-        <sphereGeometry
+        <tubeGeometry
           args={[
-            0.12,
-            24,
-            24,
+            ribbonTwo,
+            48,
+            0.055,
+            8,
+            false,
           ]}
+        />
+
+        <meshStandardMaterial
+          color="#22D3EE"
+          emissive="#22D3EE"
+          emissiveIntensity={
+            isDark ? 0.15 : 0.02
+          }
+          roughness={0.42}
+          metalness={0.08}
+          transparent
+          opacity={
+            isDark ? 0.7 : 0.42
+          }
+        />
+      </mesh>
+
+      <mesh>
+        <icosahedronGeometry
+          args={[0.5, 2]}
+        />
+
+        <meshStandardMaterial
+          color={
+            isDark
+              ? "#F5FAFF"
+              : "#0A1D2F"
+          }
+          roughness={0.3}
+          metalness={0.25}
+        />
+      </mesh>
+
+      <mesh scale={0.3}>
+        <icosahedronGeometry
+          args={[0.5, 1]}
         />
 
         <meshBasicMaterial
           color="#3B82F6"
         />
       </mesh>
-
-      {fragments.map(
-        (
-          fragment,
-          index,
-        ) => (
-          <mesh
-            key={`origin-fragment-${index}`}
-            ref={(element) => {
-              fragmentRefs.current[
-                index
-              ] = element;
-            }}
-            position={[
-              fragment.x,
-              fragment.y,
-              fragment.z,
-            ]}
-          >
-            {index % 4 === 0 ? (
-              <octahedronGeometry
-                args={[
-                  0.045,
-                  0,
-                ]}
-              />
-            ) : (
-              <sphereGeometry
-                args={[
-                  0.022,
-                  8,
-                  8,
-                ]}
-              />
-            )}
-
-            <meshBasicMaterial
-              color={
-                index % 3 === 0
-                  ? "#3B82F6"
-                  : index % 3 ===
-                      1
-                    ? "#22D3EE"
-                    : "#A855F7"
-              }
-              transparent
-              opacity={
-                isDark
-                  ? 0.65
-                  : 0.34
-              }
-            />
-          </mesh>
-        ),
-      )}
-
-      <pointLight
-        position={[
-          0,
-          0,
-          1.2,
-        ]}
-        intensity={
-          isDark
-            ? 10
-            : 5
-        }
-        distance={8}
-        color="#3B82F6"
-      />
-
-      <Sparkles
-        count={22}
-        scale={[8, 5, 5]}
-        size={0.55}
-        speed={0.035}
-        opacity={
-          isDark
-            ? 0.14
-            : 0.05
-        }
-        color="#BFDBFE"
-      />
     </group>
   );
 }
 
-/* =========================================================
-   STORY WORLD
-========================================================= */
-
 function StoryWorld({
   isDark,
-}: {
-  isDark: boolean;
-}) {
-  const groupRef =
-    useRef<THREE.Group>(null);
-
-  const signalRefs =
-    useRef<
-      Array<THREE.Mesh | null>
-    >([]);
-
-  const coreRef =
-    useRef<THREE.Mesh>(null);
-
-  const {
-    sceneProgress,
-  } = useAboutSceneExperience();
-
-  const signals =
-    useMemo(
-      () => [
-        {
-          start: [
-            -2.5,
-            1.4,
-            -0.3,
-          ] as [
-            number,
-            number,
-            number,
-          ],
-
-          target: [
-            -0.5,
-            0.3,
-            0,
-          ] as [
-            number,
-            number,
-            number,
-          ],
-
-          color:
-            "#3B82F6",
-        },
-
-        {
-          start: [
-            -2.2,
-            -1.2,
-            -0.5,
-          ] as [
-            number,
-            number,
-            number,
-          ],
-
-          target: [
-            -0.25,
-            -0.25,
-            0.1,
-          ] as [
-            number,
-            number,
-            number,
-          ],
-
-          color:
-            "#22D3EE",
-        },
-
-        {
-          start: [
-            2.6,
-            1,
-            -0.6,
-          ] as [
-            number,
-            number,
-            number,
-          ],
-
-          target: [
-            0.45,
-            0.22,
-            -0.05,
-          ] as [
-            number,
-            number,
-            number,
-          ],
-
-          color:
-            "#A855F7",
-        },
-
-        {
-          start: [
-            2.4,
-            -1.35,
-            -0.3,
-          ] as [
-            number,
-            number,
-            number,
-          ],
-
-          target: [
-            0.3,
-            -0.3,
-            0.05,
-          ] as [
-            number,
-            number,
-            number,
-          ],
-
-          color:
-            "#3B82F6",
-        },
-      ],
-      [],
-    );
-
-  useFrame((state, delta) => {
-    const group =
-      groupRef.current;
-
-    if (!group) return;
-
-    const progress =
-      sceneProgress.current
-        .story;
-
-    const time =
-      state.clock.elapsedTime;
-
-    const convergence =
-      THREE.MathUtils.smoothstep(
-        progress,
-        0.1,
-        0.72,
-      );
-
-    group.rotation.y =
-      Math.sin(
-        time * 0.1,
-      ) * 0.025;
-
-    signalRefs.current.forEach(
-      (signal, index) => {
-        if (!signal) return;
-
-        const config =
-          signals[index];
-
-        signal.position.x =
-          THREE.MathUtils.damp(
-            signal.position.x,
-            THREE.MathUtils.lerp(
-              config.start[0],
-              config.target[0],
-              convergence,
-            ),
-            5,
-            delta,
-          );
-
-        signal.position.y =
-          THREE.MathUtils.damp(
-            signal.position.y,
-            THREE.MathUtils.lerp(
-              config.start[1],
-              config.target[1],
-              convergence,
-            ),
-            5,
-            delta,
-          );
-
-        signal.position.z =
-          THREE.MathUtils.damp(
-            signal.position.z,
-            THREE.MathUtils.lerp(
-              config.start[2],
-              config.target[2],
-              convergence,
-            ),
-            5,
-            delta,
-          );
-
-        signal.rotation.x +=
-          delta * 0.08;
-
-        signal.rotation.y +=
-          delta * 0.12;
+}: WorldProps) {
+  const nodes = useMemo<
+    Array<{
+      position: Vec3;
+      color: string;
+    }>
+  >(
+    () => [
+      {
+        position: [
+          -2.1,
+          1.1,
+          -0.2,
+        ],
+        color: "#3B82F6",
       },
-    );
-
-    if (coreRef.current) {
-      const coreEntry =
-        THREE.MathUtils.smoothstep(
-          progress,
-          0.35,
-          0.78,
-        );
-
-      coreRef.current.scale.setScalar(
-        THREE.MathUtils.lerp(
-          0.08,
-          1,
-          coreEntry,
-        ),
-      );
-
-      coreRef.current.rotation.y +=
-        delta * 0.14;
-    }
-  });
+      {
+        position: [
+          -1.8,
+          -1,
+          0,
+        ],
+        color: "#22D3EE",
+      },
+      {
+        position: [
+          2.1,
+          0.9,
+          -0.3,
+        ],
+        color: "#A855F7",
+      },
+      {
+        position: [
+          1.9,
+          -1.1,
+          0.05,
+        ],
+        color: "#3B82F6",
+      },
+    ],
+    [],
+  );
 
   return (
     <group
-      ref={groupRef}
       position={[
         1.45,
         0,
         -2.45,
       ]}
     >
-      {signals.map(
-        (
-          signal,
-          index,
-        ) => (
-          <mesh
-            key={`story-signal-${index}`}
-            ref={(element) => {
-              signalRefs.current[
-                index
-              ] = element;
-            }}
-            position={
-              signal.start
-            }
+      {nodes.map(
+        (node, index) => (
+          <group
+            key={index}
           >
-            {index % 2 === 0 ? (
-              <icosahedronGeometry
-                args={[
-                  0.22,
-                  1,
-                ]}
-              />
-            ) : (
+            <Connection
+              start={
+                node.position
+              }
+              end={[0, 0, 0]}
+              color={
+                node.color
+              }
+              opacity={
+                isDark
+                  ? 0.3
+                  : 0.13
+              }
+            />
+
+            <mesh
+              position={
+                node.position
+              }
+            >
               <octahedronGeometry
                 args={[
                   0.2,
                   0,
                 ]}
               />
-            )}
 
-            <meshPhysicalMaterial
-              color={
-                signal.color
-              }
-              emissive={
-                signal.color
-              }
-              emissiveIntensity={
-                isDark
-                  ? 0.18
-                  : 0.03
-              }
-              metalness={0.3}
-              roughness={0.16}
-              clearcoat={1}
-            />
-          </mesh>
+              <meshStandardMaterial
+                color={
+                  node.color
+                }
+                emissive={
+                  node.color
+                }
+                emissiveIntensity={
+                  isDark
+                    ? 0.12
+                    : 0.015
+                }
+                roughness={0.4}
+              />
+            </mesh>
+          </group>
         ),
       )}
 
-      <mesh ref={coreRef}>
+      <mesh>
         <dodecahedronGeometry
-          args={[0.42, 1]}
+          args={[0.43, 1]}
         />
 
-        <meshPhysicalMaterial
+        <meshStandardMaterial
           color={
             isDark
               ? "#EAF3FF"
               : "#0A1D2F"
           }
-          roughness={0.12}
-          metalness={0.3}
-          transmission={
-            isDark
-              ? 0.42
-              : 0.02
-          }
-          clearcoat={1}
+          roughness={0.3}
+          metalness={0.2}
         />
       </mesh>
-
-      <pointLight
-        intensity={
-          isDark
-            ? 7
-            : 3
-        }
-        distance={7}
-        color="#22D3EE"
-      />
     </group>
   );
 }
 
-/* =========================================================
-   CAPABILITIES WORLD
-========================================================= */
-
 function CapabilitiesWorld({
   isDark,
-}: {
-  isDark: boolean;
-}) {
-  const groupRef =
-    useRef<THREE.Group>(null);
-
-  const nodeRefs =
-    useRef<
-      Array<THREE.Mesh | null>
-    >([]);
-
-  const coreRef =
-    useRef<THREE.Mesh>(null);
-
-  const {
-    sceneProgress,
-  } = useAboutSceneExperience();
-
-  const nodes =
-    useMemo(
-      () => [
-        {
-          position: [
-            -1.65,
-            0.9,
-            0,
-          ] as [
-            number,
-            number,
-            number,
-          ],
-
-          color:
-            "#3B82F6",
-        },
-
-        {
-          position: [
-            0,
-            -1.2,
-            0.25,
-          ] as [
-            number,
-            number,
-            number,
-          ],
-
-          color:
-            "#22D3EE",
-        },
-
-        {
-          position: [
-            1.65,
-            0.9,
-            -0.1,
-          ] as [
-            number,
-            number,
-            number,
-          ],
-
-          color:
-            "#A855F7",
-        },
-      ],
-      [],
-    );
-
-  useFrame(
-    (state, delta) => {
-      const group =
-        groupRef.current;
-
-      if (!group) return;
-
-      const progress =
-        sceneProgress.current
-          .capabilities;
-
-      const time =
-        state.clock.elapsedTime;
-
-      const spread =
-        THREE.MathUtils.smoothstep(
-          progress,
-          0.08,
-          0.5,
-        );
-
-      group.rotation.y =
-        Math.sin(
-          time * 0.12,
-        ) * 0.03;
-
-      nodeRefs.current.forEach(
-        (node, index) => {
-          if (!node) return;
-
-          const target =
-            nodes[index]
-              .position;
-
-          node.position.x =
-            THREE.MathUtils.damp(
-              node.position.x,
-              target[0] *
-                spread,
-              5,
-              delta,
-            );
-
-          node.position.y =
-            THREE.MathUtils.damp(
-              node.position.y,
-              target[1] *
-                spread,
-              5,
-              delta,
-            );
-
-          node.position.z =
-            THREE.MathUtils.damp(
-              node.position.z,
-              target[2] *
-                spread,
-              5,
-              delta,
-            );
-
-          node.rotation.x +=
-            delta *
-            (0.08 +
-              index * 0.02);
-
-          node.rotation.y +=
-            delta *
-            (0.12 +
-              index * 0.025);
-        },
-      );
-
-      if (coreRef.current) {
-        coreRef.current.rotation.x +=
-          delta * 0.08;
-
-        coreRef.current.rotation.y +=
-          delta * 0.15;
-
-        coreRef.current.scale.setScalar(
-          1 +
-            Math.sin(
-              time * 0.9,
-            ) *
-              0.035,
-        );
-      }
-    },
+}: WorldProps) {
+  const nodes = useMemo<
+    Array<{
+      position: Vec3;
+      color: string;
+    }>
+  >(
+    () => [
+      {
+        position: [
+          -1.65,
+          0.9,
+          0,
+        ],
+        color: "#3B82F6",
+      },
+      {
+        position: [
+          0,
+          -1.2,
+          0.25,
+        ],
+        color: "#22D3EE",
+      },
+      {
+        position: [
+          1.65,
+          0.9,
+          -0.1,
+        ],
+        color: "#A855F7",
+      },
+    ],
+    [],
   );
 
   return (
     <group
-      ref={groupRef}
       position={[
         1.4,
         0,
@@ -1239,276 +560,115 @@ function CapabilitiesWorld({
       ]}
     >
       {nodes.map(
-        (
-          node,
-          index,
-        ) => (
-          <mesh
-            key={`capability-${index}`}
-            ref={(element) => {
-              nodeRefs.current[
-                index
-              ] = element;
-            }}
-          >
-            {index === 0 ? (
-              <icosahedronGeometry
-                args={[
-                  0.34,
-                  2,
-                ]}
-              />
-            ) : index === 1 ? (
-              <octahedronGeometry
-                args={[
-                  0.38,
-                  1,
-                ]}
-              />
-            ) : (
-              <dodecahedronGeometry
-                args={[
-                  0.34,
-                  1,
-                ]}
-              />
-            )}
-
-            <meshPhysicalMaterial
+        (node, index) => (
+          <group key={index}>
+            <Connection
+              start={[
+                0,
+                0,
+                0,
+              ]}
+              end={
+                node.position
+              }
               color={
                 node.color
               }
-              emissive={
-                node.color
-              }
-              emissiveIntensity={
+              opacity={
                 isDark
-                  ? 0.18
-                  : 0.03
+                  ? 0.3
+                  : 0.12
               }
-              metalness={0.3}
-              roughness={0.15}
-              clearcoat={1}
             />
-          </mesh>
+
+            <mesh
+              position={
+                node.position
+              }
+            >
+              {index === 1 ? (
+                <octahedronGeometry
+                  args={[
+                    0.34,
+                    1,
+                  ]}
+                />
+              ) : (
+                <icosahedronGeometry
+                  args={[
+                    0.32,
+                    1,
+                  ]}
+                />
+              )}
+
+              <meshStandardMaterial
+                color={
+                  node.color
+                }
+                emissive={
+                  node.color
+                }
+                emissiveIntensity={
+                  isDark
+                    ? 0.13
+                    : 0.015
+                }
+                roughness={0.38}
+              />
+            </mesh>
+          </group>
         ),
       )}
 
-      <mesh ref={coreRef}>
+      <mesh>
         <icosahedronGeometry
-          args={[0.48, 3]}
+          args={[0.48, 2]}
         />
 
-        <meshPhysicalMaterial
+        <meshStandardMaterial
           color={
             isDark
               ? "#F4F8FF"
               : "#0A1D2F"
           }
-          roughness={0.1}
-          metalness={0.25}
-          transmission={
-            isDark
-              ? 0.55
-              : 0.04
-          }
-          clearcoat={1}
-          transparent
-          opacity={0.9}
+          roughness={0.3}
+          metalness={0.2}
         />
       </mesh>
-
-      {nodes.map(
-        (
-          node,
-          index,
-        ) => (
-          <mesh
-            key={`capability-line-${index}`}
-            position={[
-              node.position[0] /
-                2,
-              node.position[1] /
-                2,
-              node.position[2] /
-                2,
-            ]}
-            rotation={[
-              0,
-              0,
-              index === 0
-                ? -0.5
-                : index === 1
-                  ? 0
-                  : 0.5,
-            ]}
-          >
-            <boxGeometry
-              args={[
-                0.012,
-                1.8,
-                0.012,
-              ]}
-            />
-
-            <meshBasicMaterial
-              color={
-                node.color
-              }
-              transparent
-              opacity={
-                isDark
-                  ? 0.24
-                  : 0.12
-              }
-            />
-          </mesh>
-        ),
-      )}
-
-      <pointLight
-        position={[
-          0,
-          0,
-          1,
-        ]}
-        intensity={
-          isDark
-            ? 9
-            : 4
-        }
-        distance={8}
-        color="#3B82F6"
-      />
     </group>
   );
 }
 
-/* =========================================================
-   SUPPORT WORLDS
-========================================================= */
-
 function OperatingWorld({
   isDark,
-}: {
-  isDark: boolean;
-}) {
-  const groupRef =
-    useRef<THREE.Group>(null);
-
-  const stepRefs =
-    useRef<
-      Array<THREE.Mesh | null>
-    >([]);
-
-  const {
-    sceneProgress,
-  } = useAboutSceneExperience();
-
-  const steps =
-    useMemo(
-      () => [
-        [
-          -2.2,
-          0.75,
-          0,
-        ],
-        [
-          -0.75,
-          0.15,
-          -0.15,
-        ],
-        [
-          0.75,
-          -0.35,
-          0.1,
-        ],
-        [
-          2.2,
-          0.45,
-          -0.2,
-        ],
-      ] as Array<
-        [
-          number,
-          number,
-          number,
-        ]
-      >,
-      [],
-    );
-
-  useFrame((state, delta) => {
-    const progress =
-      sceneProgress.current
-        .operating;
-
-    const time =
-      state.clock.elapsedTime;
-
-    stepRefs.current.forEach(
-      (step, index) => {
-        if (!step) return;
-
-        const delay =
-          index * 0.08;
-
-        const entry =
-          THREE.MathUtils.smoothstep(
-            progress,
-            0.08 + delay,
-            0.38 + delay,
-          );
-
-        const target =
-          steps[index];
-
-        step.position.x =
-          THREE.MathUtils.damp(
-            step.position.x,
-            THREE.MathUtils.lerp(
-              -2.8,
-              target[0],
-              entry,
-            ),
-            5,
-            delta,
-          );
-
-        step.position.y =
-          THREE.MathUtils.damp(
-            step.position.y,
-            target[1],
-            5,
-            delta,
-          );
-
-        step.position.z =
-          THREE.MathUtils.damp(
-            step.position.z,
-            target[2],
-            5,
-            delta,
-          );
-
-        step.rotation.y +=
-          delta *
-          (0.1 +
-            index * 0.02);
-
-        step.position.y +=
-          Math.sin(
-            time * 0.5 +
-              index,
-          ) *
-          0.0015;
-      },
-    );
-  });
+}: WorldProps) {
+  const steps = useMemo<
+    Array<Vec3>
+  >(
+    () => [
+      [-2.2, 0.75, 0],
+      [
+        -0.75,
+        0.15,
+        -0.15,
+      ],
+      [
+        0.75,
+        -0.35,
+        0.1,
+      ],
+      [
+        2.2,
+        0.45,
+        -0.2,
+      ],
+    ],
+    [],
+  );
 
   return (
     <group
-      ref={groupRef}
       position={[
         1.35,
         0,
@@ -1516,52 +676,69 @@ function OperatingWorld({
       ]}
     >
       {steps.map(
-        (
-          step,
-          index,
-        ) => (
-          <mesh
-            key={`operating-step-${index}`}
-            ref={(element) => {
-              stepRefs.current[
-                index
-              ] = element;
-            }}
-            position={[
-              -2.8,
-              step[1],
-              step[2],
-            ]}
-          >
-            <boxGeometry
-              args={[
-                0.46,
-                0.46,
-                0.46,
-              ]}
-            />
+        (position, index) => (
+          <group key={index}>
+            {index <
+              steps.length -
+                1 && (
+              <Connection
+                start={
+                  position
+                }
+                end={
+                  steps[
+                    index + 1
+                  ]
+                }
+                color={
+                  index % 2 ===
+                  0
+                    ? "#3B82F6"
+                    : "#22D3EE"
+                }
+                opacity={
+                  isDark
+                    ? 0.28
+                    : 0.11
+                }
+              />
+            )}
 
-            <meshPhysicalMaterial
-              color={
-                index % 2 === 0
-                  ? "#3B82F6"
-                  : "#22D3EE"
+            <mesh
+              position={
+                position
               }
-              emissive={
-                index % 2 === 0
-                  ? "#3B82F6"
-                  : "#22D3EE"
-              }
-              emissiveIntensity={
-                isDark
-                  ? 0.14
-                  : 0.02
-              }
-              metalness={0.35}
-              roughness={0.18}
-              clearcoat={1}
-            />
-          </mesh>
+            >
+              <boxGeometry
+                args={[
+                  0.42,
+                  0.42,
+                  0.42,
+                ]}
+              />
+
+              <meshStandardMaterial
+                color={
+                  index % 2 ===
+                  0
+                    ? "#3B82F6"
+                    : "#22D3EE"
+                }
+                emissive={
+                  index % 2 ===
+                  0
+                    ? "#3B82F6"
+                    : "#22D3EE"
+                }
+                emissiveIntensity={
+                  isDark
+                    ? 0.1
+                    : 0.01
+                }
+                roughness={0.4}
+              />
+            </mesh>
+          </group>
         ),
       )}
     </group>
@@ -1570,59 +747,7 @@ function OperatingWorld({
 
 function EvolutionWorld({
   isDark,
-}: {
-  isDark: boolean;
-}) {
-  const meshRef =
-    useRef<THREE.Mesh>(null);
-
-  const {
-    sceneProgress,
-  } = useAboutSceneExperience();
-
-  useFrame((state, delta) => {
-    const mesh =
-      meshRef.current;
-
-    if (!mesh) return;
-
-    const progress =
-      sceneProgress.current
-        .evolution;
-
-    const time =
-      state.clock.elapsedTime;
-
-    mesh.rotation.x =
-      THREE.MathUtils.damp(
-        mesh.rotation.x,
-        progress *
-          Math.PI *
-          0.45,
-        3,
-        delta,
-      );
-
-    mesh.rotation.y =
-      time * 0.12 +
-      progress *
-        Math.PI *
-        0.6;
-
-    const scale =
-      0.9 +
-      THREE.MathUtils.smoothstep(
-        progress,
-        0.15,
-        0.75,
-      ) *
-        0.35;
-
-    mesh.scale.setScalar(
-      scale,
-    );
-  });
-
+}: WorldProps) {
   return (
     <group
       position={[
@@ -1631,33 +756,40 @@ function EvolutionWorld({
         -2.5,
       ]}
     >
-      <mesh ref={meshRef}>
+      <mesh>
         <icosahedronGeometry
-          args={[1.25, 4]}
+          args={[1.25, 2]}
         />
 
-        <meshPhysicalMaterial
+        <meshBasicMaterial
           wireframe
           color={
             isDark
               ? "#22D3EE"
               : "#2563EB"
           }
-          emissive={
-            isDark
-              ? "#22D3EE"
-              : "#2563EB"
-          }
-          emissiveIntensity={
-            isDark
-              ? 0.2
-              : 0.03
-          }
           transparent
           opacity={
             isDark
-              ? 0.7
-              : 0.36
+              ? 0.62
+              : 0.3
+          }
+        />
+      </mesh>
+
+      <mesh scale={0.62}>
+        <icosahedronGeometry
+          args={[1, 1]}
+        />
+
+        <meshBasicMaterial
+          wireframe
+          color="#A855F7"
+          transparent
+          opacity={
+            isDark
+              ? 0.28
+              : 0.12
           }
         />
       </mesh>
@@ -1667,11 +799,9 @@ function EvolutionWorld({
 
 function PrinciplesWorld({
   isDark,
-}: {
-  isDark: boolean;
-}) {
+}: WorldProps) {
   const anchors =
-    useMemo(
+    useMemo<Array<Vec3>>(
       () => [
         [
           -1.6,
@@ -1693,13 +823,7 @@ function PrinciplesWorld({
           -1.15,
           0,
         ],
-      ] as Array<
-        [
-          number,
-          number,
-          number,
-        ]
-      >,
+      ],
       [],
     );
 
@@ -1712,64 +836,79 @@ function PrinciplesWorld({
       ]}
     >
       {anchors.map(
-        (
-          position,
-          index,
-        ) => (
-          <mesh
-            key={`principle-anchor-${index}`}
-            position={
-              position
-            }
-          >
-            <octahedronGeometry
-              args={[
-                0.26,
-                0,
-              ]}
-            />
-
-            <meshPhysicalMaterial
+        (position, index) => (
+          <group key={index}>
+            <Connection
+              start={
+                position
+              }
+              end={[0, 0, 0]}
               color={
                 index % 2 === 0
                   ? "#3B82F6"
                   : "#22D3EE"
               }
-              emissive={
-                index % 2 === 0
-                  ? "#3B82F6"
-                  : "#22D3EE"
-              }
-              emissiveIntensity={
+              opacity={
                 isDark
-                  ? 0.16
-                  : 0.03
+                  ? 0.25
+                  : 0.1
               }
-              metalness={0.3}
-              roughness={0.16}
-              clearcoat={1}
             />
-          </mesh>
+
+            <mesh
+              position={
+                position
+              }
+            >
+              <octahedronGeometry
+                args={[
+                  0.25,
+                  0,
+                ]}
+              />
+
+              <meshStandardMaterial
+                color={
+                  index % 2 ===
+                  0
+                    ? "#3B82F6"
+                    : "#22D3EE"
+                }
+                emissive={
+                  index % 2 ===
+                  0
+                    ? "#3B82F6"
+                    : "#22D3EE"
+                }
+                emissiveIntensity={
+                  isDark
+                    ? 0.1
+                    : 0.01
+                }
+                roughness={0.4}
+              />
+            </mesh>
+          </group>
         ),
       )}
 
       <mesh>
         <boxGeometry
           args={[
-            1.2,
-            1.2,
-            1.2,
+            1.15,
+            1.15,
+            1.15,
           ]}
         />
 
-        <meshPhysicalMaterial
+        <meshBasicMaterial
           wireframe
           color="#A855F7"
           transparent
           opacity={
             isDark
-              ? 0.42
-              : 0.18
+              ? 0.4
+              : 0.17
           }
         />
       </mesh>
@@ -1779,56 +918,9 @@ function PrinciplesWorld({
 
 function AmbitionWorld({
   isDark,
-}: {
-  isDark: boolean;
-}) {
-  const groupRef =
-    useRef<THREE.Group>(null);
-
-  const {
-    sceneProgress,
-  } = useAboutSceneExperience();
-
-  useFrame((_, delta) => {
-    const group =
-      groupRef.current;
-
-    if (!group) return;
-
-    const progress =
-      sceneProgress.current
-        .ambition;
-
-    const expansion =
-      THREE.MathUtils.smoothstep(
-        progress,
-        0.1,
-        0.8,
-      );
-
-    const scale =
-      THREE.MathUtils.lerp(
-        0.7,
-        1.6,
-        expansion,
-      );
-
-    const next =
-      THREE.MathUtils.damp(
-        group.scale.x,
-        scale,
-        3,
-        delta,
-      );
-
-    group.scale.setScalar(
-      next,
-    );
-  });
-
+}: WorldProps) {
   return (
     <group
-      ref={groupRef}
       position={[
         1.4,
         0,
@@ -1840,14 +932,14 @@ function AmbitionWorld({
           args={[1, 2]}
         />
 
-        <meshPhysicalMaterial
+        <meshBasicMaterial
           wireframe
           color="#3B82F6"
           transparent
           opacity={
             isDark
               ? 0.55
-              : 0.28
+              : 0.27
           }
         />
       </mesh>
@@ -1857,81 +949,99 @@ function AmbitionWorld({
           args={[1, 1]}
         />
 
-        <meshPhysicalMaterial
+        <meshBasicMaterial
           wireframe
           color="#22D3EE"
           transparent
           opacity={
             isDark
-              ? 0.26
-              : 0.12
+              ? 0.25
+              : 0.11
           }
         />
       </mesh>
 
-      <Sparkles
-        count={28}
-        scale={[7, 5, 5]}
-        size={0.55}
-        speed={0.04}
-        opacity={
-          isDark
-            ? 0.13
-            : 0.05
-        }
-        color="#93C5FD"
-      />
+      <mesh scale={0.3}>
+        <icosahedronGeometry
+          args={[1, 1]}
+        />
+
+        <meshBasicMaterial
+          color="#A855F7"
+          transparent
+          opacity={
+            isDark
+              ? 0.8
+              : 0.5
+          }
+        />
+      </mesh>
     </group>
   );
 }
 
 function CtaWorld({
   isDark,
-}: {
-  isDark: boolean;
-}) {
-  const coreRef =
-    useRef<THREE.Mesh>(null);
+}: WorldProps) {
+  const streams =
+    useMemo(
+      () => [
+        new THREE.CatmullRomCurve3([
+          new THREE.Vector3(
+            -2.3,
+            1.1,
+            0,
+          ),
+          new THREE.Vector3(
+            -1.1,
+            0.5,
+            0.1,
+          ),
+          new THREE.Vector3(
+            0,
+            0,
+            0,
+          ),
+        ]),
 
-  const {
-    sceneProgress,
-  } = useAboutSceneExperience();
+        new THREE.CatmullRomCurve3([
+          new THREE.Vector3(
+            -2.1,
+            -1.1,
+            -0.2,
+          ),
+          new THREE.Vector3(
+            -0.9,
+            -0.5,
+            0,
+          ),
+          new THREE.Vector3(
+            0,
+            0,
+            0,
+          ),
+        ]),
 
-  useFrame((state) => {
-    const core =
-      coreRef.current;
-
-    if (!core) return;
-
-    const progress =
-      sceneProgress.current
-        .cta;
-
-    const pulse =
-      1 +
-      Math.sin(
-        state.clock.elapsedTime *
-          1.1,
-      ) *
-        0.04;
-
-    const scale =
-      THREE.MathUtils.lerp(
-        0.55,
-        1.2,
-        THREE.MathUtils.smoothstep(
-          progress,
-          0.08,
-          0.55,
-        ),
-      );
-
-    core.scale.setScalar(
-      scale * pulse,
+        new THREE.CatmullRomCurve3([
+          new THREE.Vector3(
+            2.3,
+            0.9,
+            -0.2,
+          ),
+          new THREE.Vector3(
+            1.1,
+            0.4,
+            0.1,
+          ),
+          new THREE.Vector3(
+            0,
+            0,
+            0,
+          ),
+        ]),
+      ],
+      [],
     );
-
-    core.rotation.y += 0.003;
-  });
 
   return (
     <group
@@ -1941,32 +1051,66 @@ function CtaWorld({
         -2.2,
       ]}
     >
-      <mesh ref={coreRef}>
+      {streams.map(
+        (curve, index) => (
+          <mesh key={index}>
+            <tubeGeometry
+              args={[
+                curve,
+                40,
+                0.025,
+                6,
+                false,
+              ]}
+            />
+
+            <meshBasicMaterial
+              color={
+                index === 0
+                  ? "#3B82F6"
+                  : index === 1
+                    ? "#22D3EE"
+                    : "#A855F7"
+              }
+              transparent
+              opacity={
+                isDark
+                  ? 0.5
+                  : 0.25
+              }
+            />
+          </mesh>
+        ),
+      )}
+
+      <mesh>
         <icosahedronGeometry
-          args={[0.5, 4]}
+          args={[0.5, 2]}
         />
 
-        <meshPhysicalMaterial
+        <meshStandardMaterial
           color={
             isDark
               ? "#F4F8FF"
               : "#EAF3FF"
           }
-          transmission={0.6}
-          thickness={1}
-          roughness={0.08}
-          clearcoat={1}
-          transparent
-          opacity={0.92}
+          emissive="#3B82F6"
+          emissiveIntensity={
+            isDark
+              ? 0.16
+              : 0.03
+          }
+          roughness={0.3}
+          metalness={0.15}
         />
       </mesh>
 
-      <mesh>
+      <mesh scale={0.28}>
         <sphereGeometry
           args={[
-            0.16,
-            32,
-            32,
+            0.5,
+            12,
+            12,
           ]}
         />
 
@@ -1974,130 +1118,268 @@ function CtaWorld({
           color="#3B82F6"
         />
       </mesh>
-
-      <pointLight
-        intensity={
-          isDark
-            ? 14
-            : 7
-        }
-        distance={9}
-        color="#3B82F6"
-      />
     </group>
   );
 }
 
-/* =========================================================
-   SCENE TRANSITION GROUP
-========================================================= */
+/* ============================================================
+   WORLD REGISTRY
+============================================================ */
 
-function AboutTransitionGroup({
+const ABOUT_SCENE_WORLDS =
+  {
+    hero: OriginWorld,
+    story: StoryWorld,
+    capabilities:
+      CapabilitiesWorld,
+    operating: OperatingWorld,
+    evolution: EvolutionWorld,
+    principles: PrinciplesWorld,
+    ambition: AmbitionWorld,
+    cta: CtaWorld,
+  } satisfies Record<
+    AboutSceneName,
+    ComponentType<WorldProps>
+  >;
+
+/* ============================================================
+   ACTIVE WORLD
+============================================================ */
+
+function ActiveWorld({
   scene,
-  activeScene,
+  isDark,
   reducedMotion,
-  children,
 }: {
   scene: AboutSceneName;
-  activeScene: AboutSceneName;
+  isDark: boolean;
   reducedMotion: boolean;
-  children: React.ReactNode;
 }) {
   const groupRef =
     useRef<THREE.Group>(null);
 
   const {
     sceneProgress,
-  } = useAboutSceneExperience();
+  } = useAboutSceneRuntime();
 
-  useFrame((_, delta) => {
-    const group =
-      groupRef.current;
+  const World =
+    ABOUT_SCENE_WORLDS[scene];
 
-    if (!group) return;
+  useFrame(
+    (state, delta) => {
+      const group =
+        groupRef.current;
 
-    const progress =
-      sceneProgress.current[
-        scene
-      ];
+      if (!group) {
+        return;
+      }
 
-    const weight =
-      reducedMotion
-        ? scene === activeScene
-          ? 1
-          : 0
-        : getSceneWeight(
-            progress,
-            scene,
-          );
+      const progress =
+        sceneProgress.current[
+          scene
+        ];
 
-    const direction =
-      progress < 0.5
-        ? -1
-        : 1;
+      const time =
+        state.clock.elapsedTime;
 
-    const distance =
-      1 - weight;
-
-    const targetScale =
-      THREE.MathUtils.lerp(
-        0.82,
-        1,
-        weight,
-      );
-
-    const nextScale =
-      THREE.MathUtils.damp(
-        group.scale.x,
-        targetScale,
+      const pointerX =
         reducedMotion
-          ? 14
-          : 5,
-        delta,
-      );
+          ? 0
+          : globalPointer.x;
 
-    group.scale.setScalar(
-      nextScale,
-    );
+      const pointerY =
+        reducedMotion
+          ? 0
+          : globalPointer.y;
 
-    group.position.z =
-      THREE.MathUtils.damp(
-        group.position.z,
-        -distance * 3,
-        5,
-        delta,
-      );
+      const targetRotationY =
+        pointerX * 0.055 +
+        (
+          reducedMotion
+            ? 0
+            : Math.sin(
+                time * 0.22,
+              ) * 0.025
+        );
 
-    group.position.y =
-      THREE.MathUtils.damp(
-        group.position.y,
-        direction *
-          distance *
-          0.5,
-        5,
-        delta,
-      );
+      const targetRotationX =
+        pointerY * -0.03;
 
-    group.visible =
-      weight > 0.01 ||
-      scene === activeScene;
-  });
+      group.rotation.y =
+        THREE.MathUtils.damp(
+          group.rotation.y,
+          targetRotationY,
+          3,
+          delta,
+        );
+
+      group.rotation.x =
+        THREE.MathUtils.damp(
+          group.rotation.x,
+          targetRotationX,
+          3,
+          delta,
+        );
+
+      /*
+       * One subtle shared motion system
+       * replaces the individual useFrame
+       * callback previously living inside
+       * every world.
+       */
+      const progressLift =
+        THREE.MathUtils.lerp(
+          -0.08,
+          0.08,
+          THREE.MathUtils.smoothstep(
+            progress,
+            0.15,
+            0.85,
+          ),
+        );
+
+      group.position.y =
+        THREE.MathUtils.damp(
+          group.position.y,
+          progressLift +
+            (
+              reducedMotion
+                ? 0
+                : Math.sin(
+                    time * 0.32,
+                  ) * 0.035
+            ),
+          3,
+          delta,
+        );
+    },
+  );
 
   return (
-    <group
-      ref={groupRef}
-      visible={
-        scene === activeScene
-      }
-    >
-      {children}
+    <group ref={groupRef}>
+      <World
+        isDark={isDark}
+      />
     </group>
   );
 }
 
-/* =========================================================
+/* ============================================================
    CAMERA
-========================================================= */
+============================================================ */
+
+const CAMERA_TARGETS: Record<
+  AboutSceneName,
+  {
+    position: Vec3;
+    lookAt: Vec3;
+    fov: number;
+  }
+> = {
+  hero: {
+    position: [0, 0, 7.2],
+    lookAt: [
+      0.45,
+      0,
+      -1.8,
+    ],
+    fov: 42,
+  },
+
+  story: {
+    position: [
+      -0.08,
+      0.15,
+      7.4,
+    ],
+    lookAt: [
+      0.4,
+      0,
+      -1.9,
+    ],
+    fov: 41,
+  },
+
+  capabilities: {
+    position: [
+      0.05,
+      0.1,
+      7.15,
+    ],
+    lookAt: [
+      0.35,
+      0,
+      -1.85,
+    ],
+    fov: 42,
+  },
+
+  operating: {
+    position: [
+      -0.08,
+      0.2,
+      7.5,
+    ],
+    lookAt: [
+      0.45,
+      0,
+      -2,
+    ],
+    fov: 40,
+  },
+
+  evolution: {
+    position: [0, 0, 7],
+    lookAt: [
+      0.4,
+      0,
+      -2,
+    ],
+    fov: 43,
+  },
+
+  principles: {
+    position: [
+      0,
+      0.1,
+      7.25,
+    ],
+    lookAt: [
+      0.5,
+      0,
+      -1.8,
+    ],
+    fov: 41,
+  },
+
+  ambition: {
+    position: [
+      0,
+      0.15,
+      7.7,
+    ],
+    lookAt: [
+      0.5,
+      0,
+      -2.2,
+    ],
+    fov: 39,
+  },
+
+  cta: {
+    position: [
+      0,
+      0.05,
+      7.9,
+    ],
+    lookAt: [
+      0.55,
+      0,
+      -2.1,
+    ],
+    fov: 38,
+  },
+};
 
 function CameraRig({
   activeScene,
@@ -2106,337 +1388,64 @@ function CameraRig({
   activeScene: AboutSceneName;
   reducedMotion: boolean;
 }) {
-  const pointer =
-    useGlobalPointer();
-
-  const {
-    sceneProgress,
-  } = useAboutSceneExperience();
-
   const lookTarget =
     useRef(
       new THREE.Vector3(
-        0.5,
-        0,
-        -1.8,
+        ...CAMERA_TARGETS.hero
+          .lookAt,
       ),
-    );
-
-  const targets =
-    useMemo<
-      Record<
-        AboutSceneName,
-        {
-          position: [
-            number,
-            number,
-            number,
-          ];
-          lookAt: [
-            number,
-            number,
-            number,
-          ];
-          fov: number;
-        }
-      >
-    >(
-      () => ({
-        hero: {
-          position: [
-            0,
-            0,
-            7.2,
-          ],
-          lookAt: [
-            0.45,
-            0,
-            -1.8,
-          ],
-          fov: 42,
-        },
-
-        story: {
-          position: [
-            -0.08,
-            0.15,
-            7.4,
-          ],
-          lookAt: [
-            0.4,
-            0,
-            -1.9,
-          ],
-          fov: 41,
-        },
-
-        capabilities: {
-          position: [
-            0.05,
-            0.1,
-            7.15,
-          ],
-          lookAt: [
-            0.35,
-            0,
-            -1.85,
-          ],
-          fov: 42,
-        },
-
-        operating: {
-          position: [
-            -0.08,
-            0.2,
-            7.5,
-          ],
-          lookAt: [
-            0.45,
-            0,
-            -2,
-          ],
-          fov: 40,
-        },
-
-        evolution: {
-          position: [
-            0,
-            0,
-            7,
-          ],
-          lookAt: [
-            0.4,
-            0,
-            -2,
-          ],
-          fov: 43,
-        },
-
-        principles: {
-          position: [
-            0,
-            0.1,
-            7.25,
-          ],
-          lookAt: [
-            0.5,
-            0,
-            -1.8,
-          ],
-          fov: 41,
-        },
-
-        ambition: {
-          position: [
-            0,
-            0.15,
-            7.7,
-          ],
-          lookAt: [
-            0.5,
-            0,
-            -2.2,
-          ],
-          fov: 39,
-        },
-
-        cta: {
-          position: [
-            0,
-            0.05,
-            7.9,
-          ],
-          lookAt: [
-            0.55,
-            0,
-            -2.1,
-          ],
-          fov: 38,
-        },
-      }),
-      [],
     );
 
   useFrame(
     (state, delta) => {
-      let totalWeight = 0;
+      const target =
+        CAMERA_TARGETS[
+          activeScene
+        ];
 
-      let cameraX = 0;
-      let cameraY = 0;
-      let cameraZ = 0;
+      const pointerX =
+        reducedMotion
+          ? 0
+          : globalPointer.x;
 
-      let lookX = 0;
-      let lookY = 0;
-      let lookZ = 0;
+      const pointerY =
+        reducedMotion
+          ? 0
+          : globalPointer.y;
 
-      let targetFov = 0;
+      const targetX =
+        target.position[0] +
+        pointerX * 0.1;
 
-      (
-        Object.keys(
-          targets,
-        ) as AboutSceneName[]
-      ).forEach((scene) => {
-        let weight =
-          reducedMotion
-            ? scene ===
-              activeScene
-              ? 1
-              : 0
-            : getSceneWeight(
-                sceneProgress
-                  .current[
-                  scene
-                ],
-                scene,
-              );
-
-        if (
-          scene ===
-            activeScene &&
-          weight < 0.01
-        ) {
-          weight = 0.01;
-        }
-
-        if (weight <= 0) {
-          return;
-        }
-
-        const target =
-          targets[scene];
-
-        totalWeight +=
-          weight;
-
-        cameraX +=
-          target.position[0] *
-          weight;
-
-        cameraY +=
-          target.position[1] *
-          weight;
-
-        cameraZ +=
-          target.position[2] *
-          weight;
-
-        lookX +=
-          target.lookAt[0] *
-          weight;
-
-        lookY +=
-          target.lookAt[1] *
-          weight;
-
-        lookZ +=
-          target.lookAt[2] *
-          weight;
-
-        targetFov +=
-          target.fov *
-          weight;
-      });
-
-      if (
-        totalWeight <=
-        0.0001
-      ) {
-        const fallback =
-          targets[
-            activeScene
-          ];
-
-        cameraX =
-          fallback.position[0];
-
-        cameraY =
-          fallback.position[1];
-
-        cameraZ =
-          fallback.position[2];
-
-        lookX =
-          fallback.lookAt[0];
-
-        lookY =
-          fallback.lookAt[1];
-
-        lookZ =
-          fallback.lookAt[2];
-
-        targetFov =
-          fallback.fov;
-
-        totalWeight = 1;
-      }
-
-      cameraX /=
-        totalWeight;
-
-      cameraY /=
-        totalWeight;
-
-      cameraZ /=
-        totalWeight;
-
-      lookX /=
-        totalWeight;
-
-      lookY /=
-        totalWeight;
-
-      lookZ /=
-        totalWeight;
-
-      targetFov /=
-        totalWeight;
-
-      if (!reducedMotion) {
-        cameraX +=
-          pointer.current.x *
-          0.13;
-
-        cameraY +=
-          pointer.current.y *
-          0.08;
-
-        lookX +=
-          pointer.current.x *
-          0.035;
-
-        lookY +=
-          pointer.current.y *
-          0.02;
-      }
+      const targetY =
+        target.position[1] +
+        pointerY * 0.06;
 
       const damping =
         reducedMotion
-          ? 14
-          : 3.2;
+          ? 12
+          : 3.4;
 
       state.camera.position.x =
         THREE.MathUtils.damp(
-          state.camera
-            .position.x,
-          cameraX,
+          state.camera.position.x,
+          targetX,
           damping,
           delta,
         );
 
       state.camera.position.y =
         THREE.MathUtils.damp(
-          state.camera
-            .position.y,
-          cameraY,
+          state.camera.position.y,
+          targetY,
           damping,
           delta,
         );
 
       state.camera.position.z =
         THREE.MathUtils.damp(
-          state.camera
-            .position.z,
-          cameraZ,
+          state.camera.position.z,
+          target.position[2],
           damping,
           delta,
         );
@@ -2444,7 +1453,8 @@ function CameraRig({
       lookTarget.current.x =
         THREE.MathUtils.damp(
           lookTarget.current.x,
-          lookX,
+          target.lookAt[0] +
+            pointerX * 0.025,
           damping,
           delta,
         );
@@ -2452,7 +1462,8 @@ function CameraRig({
       lookTarget.current.y =
         THREE.MathUtils.damp(
           lookTarget.current.y,
-          lookY,
+          target.lookAt[1] +
+            pointerY * 0.015,
           damping,
           delta,
         );
@@ -2460,7 +1471,7 @@ function CameraRig({
       lookTarget.current.z =
         THREE.MathUtils.damp(
           lookTarget.current.z,
-          lookZ,
+          target.lookAt[2],
           damping,
           delta,
         );
@@ -2473,15 +1484,25 @@ function CameraRig({
         state.camera instanceof
         THREE.PerspectiveCamera
       ) {
-        state.camera.fov =
+        const nextFov =
           THREE.MathUtils.damp(
             state.camera.fov,
-            targetFov,
+            target.fov,
             damping,
             delta,
           );
 
-        state.camera.updateProjectionMatrix();
+        if (
+          Math.abs(
+            nextFov -
+              state.camera.fov,
+          ) > 0.001
+        ) {
+          state.camera.fov =
+            nextFov;
+
+          state.camera.updateProjectionMatrix();
+        }
       }
     },
   );
@@ -2489,9 +1510,9 @@ function CameraRig({
   return null;
 }
 
-/* =========================================================
+/* ============================================================
    LIGHTING
-========================================================= */
+============================================================ */
 
 function Lighting({
   isDark,
@@ -2502,62 +1523,24 @@ function Lighting({
     <>
       <ambientLight
         intensity={
-          isDark
-            ? 0.7
-            : 1.2
+          isDark ? 0.8 : 1.25
         }
       />
 
       <directionalLight
-        position={[
-          4,
-          5,
-          4,
-        ]}
+        position={[4, 5, 4]}
         intensity={
-          isDark
-            ? 2.4
-            : 3.2
+          isDark ? 2.2 : 3
         }
         color="#EAF3FF"
-      />
-
-      <pointLight
-        position={[
-          4,
-          1,
-          3,
-        ]}
-        intensity={
-          isDark
-            ? 8
-            : 4
-        }
-        distance={10}
-        color="#3B82F6"
-      />
-
-      <pointLight
-        position={[
-          -4,
-          -1,
-          2,
-        ]}
-        intensity={
-          isDark
-            ? 5
-            : 2.5
-        }
-        distance={9}
-        color="#22D3EE"
       />
     </>
   );
 }
 
-/* =========================================================
+/* ============================================================
    DIRECTOR
-========================================================= */
+============================================================ */
 
 function AboutSceneDirector({
   activeScene,
@@ -2583,132 +1566,30 @@ function AboutSceneDirector({
         }
       />
 
-      <AboutTransitionGroup
-        scene="hero"
-        activeScene={
-          activeScene
-        }
+      <ActiveWorld
+        key={activeScene}
+        scene={activeScene}
+        isDark={isDark}
         reducedMotion={
           reducedMotion
         }
-      >
-        <OriginWorld
-          isDark={isDark}
-        />
-      </AboutTransitionGroup>
-
-      <AboutTransitionGroup
-        scene="story"
-        activeScene={
-          activeScene
-        }
-        reducedMotion={
-          reducedMotion
-        }
-      >
-        <StoryWorld
-          isDark={isDark}
-        />
-      </AboutTransitionGroup>
-
-      <AboutTransitionGroup
-        scene="capabilities"
-        activeScene={
-          activeScene
-        }
-        reducedMotion={
-          reducedMotion
-        }
-      >
-        <CapabilitiesWorld
-          isDark={isDark}
-        />
-      </AboutTransitionGroup>
-
-      <AboutTransitionGroup
-        scene="operating"
-        activeScene={
-          activeScene
-        }
-        reducedMotion={
-          reducedMotion
-        }
-      >
-        <OperatingWorld
-          isDark={isDark}
-        />
-      </AboutTransitionGroup>
-
-      <AboutTransitionGroup
-        scene="evolution"
-        activeScene={
-          activeScene
-        }
-        reducedMotion={
-          reducedMotion
-        }
-      >
-        <EvolutionWorld
-          isDark={isDark}
-        />
-      </AboutTransitionGroup>
-
-      <AboutTransitionGroup
-        scene="principles"
-        activeScene={
-          activeScene
-        }
-        reducedMotion={
-          reducedMotion
-        }
-      >
-        <PrinciplesWorld
-          isDark={isDark}
-        />
-      </AboutTransitionGroup>
-
-      <AboutTransitionGroup
-        scene="ambition"
-        activeScene={
-          activeScene
-        }
-        reducedMotion={
-          reducedMotion
-        }
-      >
-        <AmbitionWorld
-          isDark={isDark}
-        />
-      </AboutTransitionGroup>
-
-      <AboutTransitionGroup
-        scene="cta"
-        activeScene={
-          activeScene
-        }
-        reducedMotion={
-          reducedMotion
-        }
-      >
-        <CtaWorld
-          isDark={isDark}
-        />
-      </AboutTransitionGroup>
+      />
     </>
   );
 }
 
-/* =========================================================
+/* ============================================================
    CANVAS
-========================================================= */
+============================================================ */
 
 export function AboutScene() {
   const {
     activeScene,
-  } = useAboutSceneExperience();
+  } = useAboutActiveScene();
 
   const {
     theme,
+    mounted,
   } = useTheme();
 
   const reducedMotion =
@@ -2717,8 +1598,22 @@ export function AboutScene() {
   const compact =
     useCompactScene();
 
+  useGlobalPointerTracking(
+    !compact &&
+      !reducedMotion,
+  );
+
   const isDark =
     theme === "dark";
+
+  if (!mounted) {
+    return (
+      <div
+        aria-hidden="true"
+        className="h-full w-full"
+      />
+    );
+  }
 
   return (
     <Canvas
@@ -2730,27 +1625,21 @@ export function AboutScene() {
         ],
         fov: 42,
         near: 0.1,
-        far: 100,
+        far: 50,
       }}
-      dpr={
-        compact
-          ? 1
-          : [
-              1,
-              1.4,
-            ]
+      dpr={1}
+      frameloop={
+        reducedMotion
+          ? "demand"
+          : "always"
       }
-      frameloop="always"
       gl={{
-        antialias:
-          !compact,
+        antialias: false,
         alpha: true,
         powerPreference:
           "high-performance",
       }}
-      onCreated={({
-        gl,
-      }) => {
+      onCreated={({ gl }) => {
         gl.outputColorSpace =
           THREE.SRGBColorSpace;
 

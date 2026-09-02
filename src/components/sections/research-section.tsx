@@ -1,17 +1,11 @@
-"use client";
-
 import Link from "next/link";
+
 import {
   ArrowUpRight,
   BookOpen,
   FlaskConical,
   Radar,
 } from "lucide-react";
-import {
-  useEffect,
-  useRef,
-  type CSSProperties,
-} from "react";
 
 const researchAreas = [
   {
@@ -49,83 +43,38 @@ const researchAreas = [
 const accents = {
   blue: {
     text: "text-blue",
-    border: "group-hover:border-blue/30",
-    glow: "bg-blue/20 dark:bg-blue/25",
+    border:
+      "group-hover:border-blue/30 dark:group-hover:border-blue/35",
+    icon:
+      "bg-blue/[0.07] text-blue dark:bg-blue/[0.09]",
+    atmosphere:
+      "bg-[radial-gradient(circle_at_86%_50%,rgba(37,99,235,0.075),transparent_36%)] dark:bg-[radial-gradient(circle_at_86%_50%,rgba(59,130,246,0.105),transparent_37%)]",
   },
+
   teal: {
     text: "text-teal",
-    border: "group-hover:border-teal/30",
-    glow: "bg-teal/20 dark:bg-teal/25",
+    border:
+      "group-hover:border-teal/30 dark:group-hover:border-teal/35",
+    icon:
+      "bg-teal/[0.07] text-teal dark:bg-teal/[0.09]",
+    atmosphere:
+      "bg-[radial-gradient(circle_at_86%_50%,rgba(16,185,129,0.07),transparent_36%)] dark:bg-[radial-gradient(circle_at_86%_50%,rgba(34,211,238,0.095),transparent_37%)]",
   },
+
   violet: {
     text: "text-violet",
-    border: "group-hover:border-violet/30",
-    glow: "bg-violet/20 dark:bg-violet/25",
+    border:
+      "group-hover:border-violet/30 dark:group-hover:border-violet/35",
+    icon:
+      "bg-violet/[0.065] text-violet dark:bg-violet/[0.085]",
+    atmosphere:
+      "bg-[radial-gradient(circle_at_86%_50%,rgba(124,58,237,0.07),transparent_36%)] dark:bg-[radial-gradient(circle_at_86%_50%,rgba(168,85,247,0.10),transparent_37%)]",
   },
-};
+} as const;
 
 export function ResearchSection() {
-  const sectionRef =
-    useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const section =
-      sectionRef.current;
-
-    if (!section) return;
-
-    const handlePointerMove = (
-      event: PointerEvent,
-    ) => {
-      const rect =
-        section.getBoundingClientRect();
-
-      const x =
-        (event.clientX -
-          rect.left) /
-        rect.width;
-
-      const y =
-        (event.clientY -
-          rect.top) /
-        rect.height;
-
-      section.style.setProperty(
-        "--research-x",
-        `${x * 100}%`,
-      );
-
-      section.style.setProperty(
-        "--research-y",
-        `${y * 100}%`,
-      );
-    };
-
-    section.addEventListener(
-      "pointermove",
-      handlePointerMove,
-      {
-        passive: true,
-      },
-    );
-
-    return () => {
-      section.removeEventListener(
-        "pointermove",
-        handlePointerMove,
-      );
-    };
-  }, []);
-
   return (
     <section
-      ref={sectionRef}
-      style={
-        {
-          "--research-x": "65%",
-          "--research-y": "38%",
-        } as CSSProperties
-      }
       className="
         relative
         overflow-hidden
@@ -137,92 +86,96 @@ export function ResearchSection() {
       "
     >
       {/* =====================================================
-          SPATIAL BACKGROUND
+          ATMOSPHERE
       ===================================================== */}
 
       <div
         aria-hidden="true"
         className="
           pointer-events-none
-          absolute inset-0
+          absolute
+          inset-0
         "
       >
-        <div
-          className="
-            absolute inset-0
-
-            bg-white/[0.58]
-            backdrop-blur-[2px]
-
-            dark:bg-[#0d1117]/[0.60]
-          "
-        />
-
-        <div
-          className="
-            absolute inset-0
-          "
-          style={{
-            background:
-              "radial-gradient(circle at var(--research-x) var(--research-y), rgba(168,85,247,0.075), transparent 28%)",
-          }}
-        />
+        {/* Persistent 3D remains visible */}
 
         <div
           className="
             absolute
-            -left-48
-            top-[8%]
+            inset-0
 
-            h-[38rem]
-            w-[38rem]
+            bg-white/[0.6]
 
-            rounded-full
-            bg-violet/[0.05]
-            blur-[170px]
-
-            dark:bg-violet/[0.09]
+            dark:bg-[#0d1117]/[0.62]
           "
         />
+
+        {/* Violet field */}
 
         <div
           className="
             absolute
-            -bottom-56
-            right-[-12rem]
+            inset-0
 
-            h-[40rem]
-            w-[40rem]
+            bg-[radial-gradient(circle_at_15%_23%,rgba(124,58,237,0.07),transparent_33%)]
 
-            rounded-full
-            bg-blue/[0.055]
-            blur-[180px]
+            dark:bg-[radial-gradient(circle_at_15%_23%,rgba(168,85,247,0.105),transparent_34%)]
+          "
+        />
 
-            dark:bg-blue/[0.09]
+        {/* Blue field */}
+
+        <div
+          className="
+            absolute
+            inset-0
+
+            bg-[radial-gradient(circle_at_91%_86%,rgba(37,99,235,0.075),transparent_35%)]
+
+            dark:bg-[radial-gradient(circle_at_91%_86%,rgba(59,130,246,0.105),transparent_36%)]
+          "
+        />
+
+        {/* Teal balance */}
+
+        <div
+          className="
+            absolute
+            inset-0
+
+            bg-[radial-gradient(circle_at_62%_48%,rgba(16,185,129,0.03),transparent_27%)]
+
+            dark:bg-[radial-gradient(circle_at_62%_48%,rgba(34,211,238,0.048),transparent_28%)]
           "
         />
 
         <div
           className="
             brand-grid
-            absolute inset-0
+            absolute
+            inset-0
 
-            opacity-[0.13]
+            opacity-[0.12]
 
-            dark:opacity-[0.1]
+            dark:opacity-[0.085]
           "
         />
       </div>
 
+      {/* =====================================================
+          CONTENT
+      ===================================================== */}
+
       <div
         className="
           evolvaer-container
-          relative z-10
+          relative
+          z-10
         "
       >
-        {/* =====================================================
+        {/* ===================================================
             HEADING
-        ===================================================== */}
+        =================================================== */}
 
         <div
           className="
@@ -243,6 +196,7 @@ export function ResearchSection() {
               "
             >
               <span
+                aria-hidden="true"
                 className="
                   h-px
                   w-10
@@ -280,6 +234,7 @@ export function ResearchSection() {
               Questions first.
               <br />
               Technology{" "}
+
               <span className="brand-gradient-text">
                 second.
               </span>
@@ -289,6 +244,7 @@ export function ResearchSection() {
           <div
             className="
               max-w-xl
+
               lg:justify-self-end
             "
           >
@@ -303,10 +259,11 @@ export function ResearchSection() {
             >
               We investigate emerging
               technologies through the
-              problems they could solve, the
-              value they might create and the
-              consequences of putting them
-              into the real world.
+              problems they could solve,
+              the value they might create
+              and the consequences of
+              putting them into the real
+              world.
             </p>
 
             <Link
@@ -338,22 +295,27 @@ export function ResearchSection() {
 
                   text-violet
 
-                  transition-all
-                  duration-300
+                  transition-[transform,background-color,color,border-color]
+                  duration-200
 
+                  group-hover:translate-x-0.5
+                  group-hover:border-violet
                   group-hover:bg-violet
                   group-hover:text-white
                 "
               >
-                <ArrowUpRight className="h-4 w-4" />
+                <ArrowUpRight
+                  aria-hidden="true"
+                  className="h-4 w-4"
+                />
               </span>
             </Link>
           </div>
         </div>
 
-        {/* =====================================================
+        {/* ===================================================
             RESEARCH AREAS
-        ===================================================== */}
+        =================================================== */}
 
         <div
           className="
@@ -379,9 +341,7 @@ export function ResearchSection() {
 
               return (
                 <article
-                  key={
-                    item.number
-                  }
+                  key={item.number}
                   className={`
                     group
                     relative
@@ -395,10 +355,13 @@ export function ResearchSection() {
 
                     py-10
 
-                    transition-all
-                    duration-500
+                    transition-[background-color,border-color]
+                    duration-200
+
+                    hover:bg-white/[0.24]
 
                     dark:border-white/[0.08]
+                    dark:hover:bg-white/[0.018]
 
                     lg:grid-cols-[0.1fr_0.25fr_0.9fr_auto]
                     lg:items-start
@@ -408,37 +371,32 @@ export function ResearchSection() {
                     ${accent.border}
                   `}
                 >
+                  {/* Static accent field */}
+
                   <div
                     aria-hidden="true"
                     className={`
                       pointer-events-none
-
                       absolute
-                      right-[10%]
-                      top-1/2
+                      inset-0
 
-                      h-32
-                      w-32
-
-                      -translate-y-1/2
-
-                      rounded-full
-                      blur-[65px]
-
-                      opacity-0
+                      opacity-40
 
                       transition-opacity
-                      duration-500
+                      duration-200
 
                       group-hover:opacity-100
 
-                      ${accent.glow}
+                      ${accent.atmosphere}
                     `}
                   />
 
+                  {/* Number */}
+
                   <span
                     className={`
-                      relative z-10
+                      relative
+                      z-10
 
                       text-sm
                       font-semibold
@@ -450,9 +408,11 @@ export function ResearchSection() {
                     {item.number}
                   </span>
 
+                  {/* Category */}
+
                   <div className="relative z-10">
                     <div
-                      className="
+                      className={`
                         flex
                         h-11
                         w-11
@@ -462,25 +422,21 @@ export function ResearchSection() {
                         rounded-2xl
                         border
                         border-navy/[0.08]
-                        bg-white/[0.4]
-
-                        backdrop-blur-xl
 
                         transition-transform
-                        duration-300
+                        duration-200
 
-                        group-hover:-translate-y-1
+                        group-hover:-translate-y-0.5
 
                         dark:border-white/[0.08]
-                        dark:bg-white/[0.035]
-                      "
+
+                        ${accent.icon}
+                      `}
                     >
                       <Icon
-                        className={`
-                          h-4
-                          w-4
-                          ${accent.text}
-                        `}
+                        aria-hidden="true"
+                        strokeWidth={1.7}
+                        className="h-4 w-4"
                       />
                     </div>
 
@@ -499,9 +455,12 @@ export function ResearchSection() {
                     </p>
                   </div>
 
+                  {/* Copy */}
+
                   <div
                     className="
-                      relative z-10
+                      relative
+                      z-10
                       max-w-3xl
                     "
                   >
@@ -526,13 +485,18 @@ export function ResearchSection() {
                         text-muted
                       "
                     >
-                      {item.description}
+                      {
+                        item.description
+                      }
                     </p>
                   </div>
 
+                  {/* Arrow */}
+
                   <span
                     className={`
-                      relative z-10
+                      relative
+                      z-10
 
                       flex
                       h-10
@@ -544,17 +508,20 @@ export function ResearchSection() {
                       border
                       border-navy/[0.08]
 
-                      text-muted
+                      transition-[transform,border-color,background-color]
+                      duration-200
 
-                      transition-all
-                      duration-300
+                      group-hover:translate-x-0.5
 
                       dark:border-white/[0.08]
 
                       ${accent.text}
                     `}
                   >
-                    <ArrowUpRight className="h-4 w-4" />
+                    <ArrowUpRight
+                      aria-hidden="true"
+                      className="h-4 w-4"
+                    />
                   </span>
                 </article>
               );
@@ -562,9 +529,9 @@ export function ResearchSection() {
           )}
         </div>
 
-        {/* =====================================================
+        {/* ===================================================
             MANIFESTO
-        ===================================================== */}
+        =================================================== */}
 
         <div
           className="
@@ -575,6 +542,8 @@ export function ResearchSection() {
             lg:grid-cols-[1.25fr_0.75fr]
           "
         >
+          {/* Principle */}
+
           <article
             className="
               relative
@@ -583,14 +552,16 @@ export function ResearchSection() {
               rounded-[2rem]
               border
               border-navy/[0.08]
-              bg-white/[0.34]
+
+              bg-white/[0.72]
 
               p-7
 
-              backdrop-blur-2xl
+              shadow-[0_12px_36px_rgba(10,29,47,0.035)]
 
               dark:border-white/[0.08]
-              dark:bg-white/[0.02]
+              dark:bg-[#111821]/[0.72]
+              dark:shadow-[0_14px_40px_rgba(0,0,0,0.14)]
 
               sm:p-9
               lg:p-11
@@ -600,25 +571,19 @@ export function ResearchSection() {
               aria-hidden="true"
               className="
                 pointer-events-none
-
                 absolute
-                -right-20
-                -top-20
+                inset-0
 
-                h-64
-                w-64
+                bg-[radial-gradient(circle_at_95%_8%,rgba(124,58,237,0.09),transparent_32%)]
 
-                rounded-full
-                bg-violet/[0.08]
-                blur-[90px]
-
-                dark:bg-violet/[0.12]
+                dark:bg-[radial-gradient(circle_at_95%_8%,rgba(168,85,247,0.125),transparent_33%)]
               "
             />
 
             <span
               className="
-                relative z-10
+                relative
+                z-10
 
                 text-[0.62rem]
                 font-semibold
@@ -632,7 +597,8 @@ export function ResearchSection() {
 
             <p
               className="
-                relative z-10
+                relative
+                z-10
 
                 mt-9
                 max-w-5xl
@@ -643,17 +609,22 @@ export function ResearchSection() {
                 tracking-[-0.045em]
               "
             >
-              We are less interested in what
-              technology{" "}
+              We are less interested
+              in what technology{" "}
+
               <span className="text-blue">
                 can
               </span>{" "}
+
               do than in what it{" "}
+
               <span className="text-teal">
                 should enable.
               </span>
             </p>
           </article>
+
+          {/* Research loop */}
 
           <article
             className="
@@ -666,14 +637,15 @@ export function ResearchSection() {
               overflow-hidden
 
               rounded-[2rem]
-              bg-[#0a1d2f]/[0.88]
+
+              bg-[#0a1d2f]/[0.96]
 
               p-7
               text-white
 
-              backdrop-blur-2xl
+              shadow-[0_16px_48px_rgba(10,29,47,0.1)]
 
-              dark:bg-[#101523]/[0.84]
+              dark:bg-[#101523]/[0.96]
 
               sm:p-9
             "
@@ -682,23 +654,29 @@ export function ResearchSection() {
               aria-hidden="true"
               className="
                 pointer-events-none
-
                 absolute
-                -bottom-28
-                -right-24
+                inset-0
 
-                h-72
-                w-72
+                bg-[radial-gradient(circle_at_95%_95%,rgba(59,130,246,0.16),transparent_38%)]
+              "
+            />
 
-                rounded-full
-                bg-blue/10
-                blur-[100px]
+            <div
+              aria-hidden="true"
+              className="
+                brand-grid
+                pointer-events-none
+                absolute
+                inset-0
+
+                opacity-[0.07]
               "
             />
 
             <span
               className="
-                relative z-10
+                relative
+                z-10
 
                 text-[0.6rem]
                 font-semibold
@@ -729,6 +707,7 @@ export function ResearchSection() {
               </p>
 
               <div
+                aria-hidden="true"
                 className="
                   mt-8
                   h-px

@@ -8,56 +8,103 @@ import {
 
 import {
   type WorkSceneName,
-  useWorkSceneExperience,
+  useWorkActiveScene,
+  useWorkSceneRuntime,
 } from "./work-scene-experience";
 
 type WorkSceneSectionProps = {
   scene: WorkSceneName;
   children: ReactNode;
+  className?: string;
 };
 
-export function WorkSceneSection({
-  scene,
-  children,
-}: WorkSceneSectionProps) {
-  const sectionRef =
-    useRef<HTMLDivElement>(null);
+type WorkSceneEntry = {
+  element: HTMLDivElement;
+  scene: WorkSceneName;
+  top: number;
+  height: number;
+  sceneProgress: ReturnType<
+    typeof useWorkSceneRuntime
+  >["sceneProgress"];
+  setActiveScene: ReturnType<
+    typeof useWorkActiveScene
+  >["setActiveScene"];
+};
 
-  const {
-    setActiveScene,
-    sceneProgress,
-  } = useWorkSceneExperience();
+const entries: Set<WorkSceneEntry> =
+  new Set();
 
-  useEffect(() => {
-    const element =
-      sectionRef.current;
+let frame = 0;
+let listenersAttached = false;
+let resizeObserver:
+  | ResizeObserver
+  | null = null;
 
-    if (!element) return;
+let lastActiveScene:
+  | WorkSceneName
+  | null = null;
 
-    let frame = 0;
+function measureEntry(
+  entry: WorkSceneEntry,
+) {
+  const rect =
+    entry.element.getBoundingClientRect();
 
-    const updateProgress = () => {
-      frame = 0;
+  entry.top =
+    rect.top + window.scrollY;
 
-      const rect =
-        element.getBoundingClientRect();
+  entry.height =
+    rect.height;
+}
 
-      const viewportHeight =
-        window.innerHeight;
+function measureAll() {
+  entries.forEach(
+    measureEntry,
+  );
+}
 
-      /*
-       * Progress begins as the section
-       * enters the viewport and reaches 1
-       * once it has travelled completely
-       * through it.
-       */
+function updateScenes() {
+  frame = 0;
+
+  if (!entries.size) return;
+
+  const scrollY =
+    window.scrollY;
+
+  const viewportHeight =
+    window.innerHeight;
+
+  const viewportCentre =
+    scrollY +
+    viewportHeight * 0.5;
+
+  let nearest:
+    | WorkSceneEntry
+    | null = null;
+
+  let nearestDistance =
+    Number.POSITIVE_INFINITY;
+
+  entries.forEach(
+    (entry) => {
+      const sectionTop =
+        entry.top;
+
+      const sectionHeight =
+        entry.height;
+
+      const sectionBottom =
+        sectionTop +
+        sectionHeight;
+
       const totalDistance =
-        rect.height +
+        sectionHeight +
         viewportHeight;
 
       const travelled =
+        scrollY +
         viewportHeight -
-        rect.top;
+        sectionTop;
 
       const progress =
         Math.min(
@@ -69,23 +116,9 @@ export function WorkSceneSection({
           ),
         );
 
-      sceneProgress.current[
-        scene
+      entry.sceneProgress.current[
+        entry.scene
       ] = progress;
-
-      /*
-       * Whichever section currently owns
-       * the centre of the viewport becomes
-       * the active 3D stage.
-       */
-      const viewportCentre =
-        viewportHeight * 0.5;
-
-      const sectionTop =
-        rect.top;
-
-      const sectionBottom =
-        rect.bottom;
 
       if (
         viewportCentre >=
@@ -93,50 +126,199 @@ export function WorkSceneSection({
         viewportCentre <=
           sectionBottom
       ) {
-        setActiveScene(scene);
+        nearest = entry;
+        nearestDistance = 0;
+
+        return;
       }
-    };
 
-    const handleScroll = () => {
-      if (frame) return;
+      const distance =
+        viewportCentre <
+        sectionTop
+          ? sectionTop -
+            viewportCentre
+          : viewportCentre -
+            sectionBottom;
 
-      frame =
-        window.requestAnimationFrame(
-          updateProgress,
+      if (
+        distance <
+        nearestDistance
+      ) {
+        nearestDistance =
+          distance;
+
+        nearest = entry;
+      }
+    },
+  );
+
+  if (
+    nearest !== null &&
+    nearest.scene !== lastActiveScene
+  ) {
+    lastActiveScene =
+      nearest.scene;
+
+    nearest.setActiveScene(
+      nearest.scene,
+    );
+  }
+}
+
+function scheduleUpdate() {
+  if (frame) return;
+
+  frame =
+    window.requestAnimationFrame(
+      updateScenes,
+    );
+}
+
+function handleScroll() {
+  scheduleUpdate();
+}
+
+function handleResize() {
+  measureAll();
+  scheduleUpdate();
+}
+
+function attachListeners() {
+  if (
+    listenersAttached ||
+    !entries.size
+  ) {
+    return;
+  }
+
+  listenersAttached = true;
+
+  window.addEventListener(
+    "scroll",
+    handleScroll,
+    {
+      passive: true,
+    },
+  );
+
+  window.addEventListener(
+    "resize",
+    handleResize,
+  );
+
+  if (
+    typeof ResizeObserver !==
+    "undefined"
+  ) {
+    resizeObserver =
+      new ResizeObserver(() => {
+        measureAll();
+        scheduleUpdate();
+      });
+
+    entries.forEach(
+      (entry) => {
+        resizeObserver?.observe(
+          entry.element,
         );
-    };
-
-    updateProgress();
-
-    window.addEventListener(
-      "scroll",
-      handleScroll,
-      {
-        passive: true,
       },
     );
+  }
 
-    window.addEventListener(
-      "resize",
-      handleScroll,
+  measureAll();
+  scheduleUpdate();
+}
+
+function detachListeners() {
+  if (
+    entries.size ||
+    !listenersAttached
+  ) {
+    return;
+  }
+
+  listenersAttached = false;
+
+  window.removeEventListener(
+    "scroll",
+    handleScroll,
+  );
+
+  window.removeEventListener(
+    "resize",
+    handleResize,
+  );
+
+  resizeObserver?.disconnect();
+  resizeObserver = null;
+
+  if (frame) {
+    window.cancelAnimationFrame(
+      frame,
     );
 
+    frame = 0;
+  }
+
+  lastActiveScene = null;
+}
+
+export function WorkSceneSection({
+  scene,
+  children,
+  className,
+}: WorkSceneSectionProps) {
+  const sectionRef =
+    useRef<HTMLDivElement>(null);
+
+  const {
+    sceneProgress,
+  } = useWorkSceneRuntime();
+
+  const {
+    setActiveScene,
+  } = useWorkActiveScene();
+
+  useEffect(() => {
+    const element =
+      sectionRef.current;
+
+    if (!element) return;
+
+    const entry: WorkSceneEntry =
+      {
+        element,
+        scene,
+        top: 0,
+        height: 0,
+        sceneProgress,
+        setActiveScene,
+      };
+
+    entries.add(entry);
+
+    measureEntry(entry);
+
+    if (
+      resizeObserver
+    ) {
+      resizeObserver.observe(
+        element,
+      );
+    }
+
+    attachListeners();
+    scheduleUpdate();
+
     return () => {
-      window.removeEventListener(
-        "scroll",
-        handleScroll,
+      resizeObserver?.unobserve(
+        element,
       );
 
-      window.removeEventListener(
-        "resize",
-        handleScroll,
-      );
+      entries.delete(entry);
 
-      if (frame) {
-        window.cancelAnimationFrame(
-          frame,
-        );
-      }
+      detachListeners();
+      scheduleUpdate();
     };
   }, [
     scene,
@@ -148,7 +330,11 @@ export function WorkSceneSection({
     <div
       ref={sectionRef}
       data-work-scene={scene}
-      className="relative"
+      className={
+        className
+          ? `relative ${className}`
+          : "relative"
+      }
     >
       {children}
     </div>

@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import {
   ArrowUpRight,
@@ -47,7 +45,14 @@ const engineeringAreas = [
       "Software, AI, data and external services need to operate as one coherent system. We engineer the connections that make that possible.",
     accent: "#10B981",
   },
-];
+] as const;
+
+const SYSTEM_LAYERS = [
+  "Software",
+  "AI & data",
+  "Integrations",
+  "Infrastructure",
+] as const;
 
 export function EngineerStage() {
   return (
@@ -63,20 +68,42 @@ export function EngineerStage() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
       >
-        <div className="absolute inset-0 bg-white/[0.57] backdrop-blur-[2px] dark:bg-[#0D1117]/[0.56]" />
+        <div className="absolute inset-0 bg-white/[0.57] dark:bg-[#0D1117]/[0.56]" />
 
-        <div className="absolute -right-52 top-[8%] h-[36rem] w-[36rem] rounded-full bg-[#22D3EE]/[0.05] blur-[170px] dark:bg-[#22D3EE]/[0.07]" />
-
-        <div className="absolute -left-48 bottom-[-12rem] h-[32rem] w-[32rem] rounded-full bg-[#2563EB]/[0.045] blur-[160px] dark:bg-[#3B82F6]/[0.06]" />
+        <div
+          className="absolute inset-0"
+          style={{
+            background: `
+              radial-gradient(
+                circle at 94% 14%,
+                rgba(34,211,238,0.07),
+                transparent 30%
+              ),
+              radial-gradient(
+                circle at 5% 90%,
+                rgba(37,99,235,0.06),
+                transparent 29%
+              )
+            `,
+          }}
+        />
 
         <div
           className="absolute inset-0 opacity-[0.018] dark:opacity-[0.035]"
           style={{
             backgroundImage: `
-              linear-gradient(rgba(34,211,238,.22) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(37,99,235,.22) 1px, transparent 1px)
+              linear-gradient(
+                rgba(34,211,238,.22) 1px,
+                transparent 1px
+              ),
+              linear-gradient(
+                90deg,
+                rgba(37,99,235,.22) 1px,
+                transparent 1px
+              )
             `,
-            backgroundSize: "76px 76px",
+            backgroundSize:
+              "76px 76px",
           }}
         />
       </div>
@@ -130,62 +157,86 @@ export function EngineerStage() {
 
         <div className="mt-16 lg:mt-20">
           <div className="grid gap-px overflow-hidden rounded-[1.8rem] border border-[#0A1D2F]/[0.08] bg-[#0A1D2F]/[0.07] dark:border-white/[0.08] dark:bg-white/[0.07] md:grid-cols-2">
-            {engineeringAreas.map((area) => {
-              const Icon = area.icon;
+            {engineeringAreas.map(
+              (area) => {
+                const Icon =
+                  area.icon;
 
-              return (
-                <article
-                  key={area.title}
-                  className="group relative min-h-[22rem] overflow-hidden bg-white/[0.66] p-7 backdrop-blur-xl dark:bg-[#0D1117]/[0.68] sm:p-9"
-                >
-                  <div
-                    aria-hidden="true"
-                    className="absolute -right-20 -top-20 h-48 w-48 rounded-full opacity-0 blur-[70px] transition-opacity duration-500 group-hover:opacity-100"
-                    style={{
-                      backgroundColor: `${area.accent}18`,
-                    }}
-                  />
+                return (
+                  <article
+                    key={area.title}
+                    className="group relative min-h-[22rem] overflow-hidden bg-white/[0.72] p-7 dark:bg-[#0D1117]/[0.74] sm:p-9"
+                  >
+                    <div
+                      aria-hidden="true"
+                      className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                      style={{
+                        background: `radial-gradient(
+                          circle at 94% 8%,
+                          ${area.accent}16,
+                          transparent 30%
+                        )`,
+                      }}
+                    />
 
-                  <div className="relative flex h-full flex-col">
-                    <div className="flex items-start justify-between">
-                      <div
-                        className="flex h-11 w-11 items-center justify-center rounded-xl border"
-                        style={{
-                          color: area.accent,
-                          borderColor: `${area.accent}30`,
-                          backgroundColor: `${area.accent}0D`,
-                        }}
-                      >
-                        <Icon className="h-[18px] w-[18px]" />
+                    <div
+                      aria-hidden="true"
+                      className="absolute inset-x-0 top-0 h-px origin-left scale-x-0 transition-transform duration-500 group-hover:scale-x-100"
+                      style={{
+                        background: `linear-gradient(
+                          90deg,
+                          ${area.accent},
+                          transparent
+                        )`,
+                      }}
+                    />
+
+                    <div className="relative flex h-full flex-col">
+                      <div className="flex items-start justify-between">
+                        <div
+                          className="flex h-11 w-11 items-center justify-center rounded-xl border transition-transform duration-300 group-hover:-translate-y-0.5"
+                          style={{
+                            color:
+                              area.accent,
+                            borderColor: `${area.accent}30`,
+                            backgroundColor: `${area.accent}0D`,
+                          }}
+                        >
+                          <Icon className="h-[18px] w-[18px]" />
+                        </div>
+
+                        <span className="font-mono text-[0.55rem] tracking-[0.18em] text-[#0A1D2F]/20 dark:text-white/18">
+                          ENG /{" "}
+                          {area.number}
+                        </span>
                       </div>
 
-                      <span className="font-mono text-[0.55rem] tracking-[0.18em] text-[#0A1D2F]/20 dark:text-white/18">
-                        ENG / {area.number}
-                      </span>
+                      <div className="mt-auto pt-16">
+                        <p
+                          className="text-[0.55rem] font-semibold uppercase tracking-[0.23em]"
+                          style={{
+                            color:
+                              area.accent,
+                          }}
+                        >
+                          {area.label}
+                        </p>
+
+                        <h3 className="mt-3 text-[1.4rem] font-semibold tracking-[-0.035em] text-[#0A1D2F] dark:text-white">
+                          {area.title}
+                        </h3>
+
+                        <p className="mt-4 max-w-[29rem] text-sm leading-7 text-[#0A1D2F]/46 dark:text-white/40">
+                          {
+                            area.description
+                          }
+                        </p>
+                      </div>
                     </div>
-
-                    <div className="mt-auto pt-16">
-                      <p
-                        className="text-[0.55rem] font-semibold uppercase tracking-[0.23em]"
-                        style={{
-                          color: area.accent,
-                        }}
-                      >
-                        {area.label}
-                      </p>
-
-                      <h3 className="mt-3 text-[1.4rem] font-semibold tracking-[-0.035em] text-[#0A1D2F] dark:text-white">
-                        {area.title}
-                      </h3>
-
-                      <p className="mt-4 max-w-[29rem] text-sm leading-7 text-[#0A1D2F]/46 dark:text-white/40">
-                        {area.description}
-                      </p>
-                    </div>
-                  </div>
-                </article>
-              );
-            })}
+                  </article>
+                );
+              },
+            )}
           </div>
         </div>
 
@@ -211,8 +262,27 @@ export function EngineerStage() {
               </h3>
             </div>
 
-            <div className="relative overflow-hidden rounded-[1.7rem] border border-[#0A1D2F]/[0.08] bg-white/[0.28] p-6 backdrop-blur-xl dark:border-white/[0.08] dark:bg-white/[0.02] sm:p-8">
-              <div className="grid gap-3 md:grid-cols-[1fr_auto_1fr_auto_1fr] md:items-center">
+            <div className="relative overflow-hidden rounded-[1.7rem] border border-[#0A1D2F]/[0.08] bg-white/[0.35] p-6 dark:border-white/[0.08] dark:bg-white/[0.03] sm:p-8">
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0"
+                style={{
+                  background: `
+                    radial-gradient(
+                      circle at 48% 0%,
+                      rgba(34,211,238,0.06),
+                      transparent 32%
+                    ),
+                    radial-gradient(
+                      circle at 98% 100%,
+                      rgba(124,58,237,0.045),
+                      transparent 27%
+                    )
+                  `,
+                }}
+              />
+
+              <div className="relative grid gap-3 md:grid-cols-[1fr_auto_1fr_auto_1fr] md:items-center">
                 <SystemModule
                   code="INPUT"
                   title="Signals + Data"
@@ -237,26 +307,27 @@ export function EngineerStage() {
                 />
               </div>
 
-              <div className="mt-7 grid gap-px overflow-hidden rounded-xl bg-[#0A1D2F]/[0.06] dark:bg-white/[0.06] sm:grid-cols-4">
-                {[
-                  "Software",
-                  "AI & data",
-                  "Integrations",
-                  "Infrastructure",
-                ].map((item, index) => (
-                  <div
-                    key={item}
-                    className="bg-white/45 px-4 py-3 dark:bg-[#0D1117]/65"
-                  >
-                    <p className="text-[0.48rem] font-semibold uppercase tracking-[0.17em] text-[#0A1D2F]/20 dark:text-white/18">
-                      0{index + 1}
-                    </p>
+              <div className="relative mt-7 grid gap-px overflow-hidden rounded-xl bg-[#0A1D2F]/[0.06] dark:bg-white/[0.06] sm:grid-cols-4">
+                {SYSTEM_LAYERS.map(
+                  (
+                    item,
+                    index,
+                  ) => (
+                    <div
+                      key={item}
+                      className="bg-white/50 px-4 py-3 dark:bg-[#0D1117]/70"
+                    >
+                      <p className="text-[0.48rem] font-semibold uppercase tracking-[0.17em] text-[#0A1D2F]/20 dark:text-white/18">
+                        0
+                        {index + 1}
+                      </p>
 
-                    <p className="mt-1 text-xs font-semibold text-[#0A1D2F]/50 dark:text-white/42">
-                      {item}
-                    </p>
-                  </div>
-                ))}
+                      <p className="mt-1 text-xs font-semibold text-[#0A1D2F]/50 dark:text-white/42">
+                        {item}
+                      </p>
+                    </div>
+                  ),
+                )}
               </div>
             </div>
           </div>
@@ -301,11 +372,11 @@ export function EngineerStage() {
 
           <Link
             href="#build"
-            className="group inline-flex items-center gap-3 text-sm font-semibold text-[#0A1D2F]/55 transition-colors hover:text-[#2563EB] dark:text-white/45 dark:hover:text-[#60A5FA]"
+            className="group inline-flex items-center gap-3 text-sm font-semibold text-[#0A1D2F]/55 transition-colors duration-300 hover:text-[#2563EB] dark:text-white/45 dark:hover:text-[#60A5FA]"
           >
             Continue to build
 
-            <span className="flex h-8 w-8 items-center justify-center rounded-full border border-[#22D3EE]/20 transition-all duration-300 group-hover:border-[#22D3EE] group-hover:bg-[#22D3EE] group-hover:text-[#0D1117]">
+            <span className="flex h-8 w-8 items-center justify-center rounded-full border border-[#22D3EE]/20 transition-[transform,border-color,background-color,color] duration-300 group-hover:-translate-y-0.5 group-hover:border-[#22D3EE] group-hover:bg-[#22D3EE] group-hover:text-[#0D1117]">
               <ArrowUpRight className="h-3.5 w-3.5" />
             </span>
           </Link>
@@ -330,16 +401,25 @@ function SystemModule({
     <div
       className="relative rounded-xl border px-4 py-5"
       style={{
-        borderColor: `${accent}${active ? "55" : "28"}`,
-        backgroundColor: `${accent}${active ? "0D" : "07"}`,
+        borderColor: `${accent}${
+          active
+            ? "55"
+            : "28"
+        }`,
+        backgroundColor: `${accent}${
+          active
+            ? "0D"
+            : "07"
+        }`,
       }}
     >
       {active && (
         <span
           className="absolute right-3 top-3 h-1.5 w-1.5 rounded-full"
           style={{
-            backgroundColor: accent,
-            boxShadow: `0 0 14px ${accent}`,
+            backgroundColor:
+              accent,
+            boxShadow: `0 0 10px ${accent}90`,
           }}
         />
       )}
@@ -359,9 +439,11 @@ function SystemConnector() {
   return (
     <div className="hidden items-center md:flex">
       <span className="h-px w-5 bg-[#0A1D2F]/10 dark:bg-white/10" />
+
       <span className="mx-1 text-[0.55rem] text-[#22D3EE]">
         →
       </span>
+
       <span className="h-px w-5 bg-[#0A1D2F]/10 dark:bg-white/10" />
     </div>
   );

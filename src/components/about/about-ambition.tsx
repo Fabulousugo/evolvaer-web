@@ -1,7 +1,5 @@
-"use client";
-
-import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 
 export function AboutAmbition() {
   return (
@@ -10,13 +8,30 @@ export function AboutAmbition() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
       >
-        <div className="absolute inset-0 bg-white/[0.48] backdrop-blur-[1px] dark:bg-[#0D1117]/[0.45]" />
+        <div className="absolute inset-0 bg-white/[0.48] dark:bg-[#0D1117]/[0.45]" />
 
-        <div className="absolute left-1/2 top-1/2 h-[44rem] w-[44rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#2563EB]/[0.045] blur-[180px] dark:bg-[#3B82F6]/[0.07]" />
-
-        <div className="absolute right-[8%] top-[8%] h-[28rem] w-[28rem] rounded-full bg-[#22D3EE]/[0.04] blur-[150px] dark:bg-[#22D3EE]/[0.055]" />
-
-        <div className="absolute bottom-[-12rem] left-[8%] h-[30rem] w-[30rem] rounded-full bg-[#A855F7]/[0.04] blur-[160px] dark:bg-[#A855F7]/[0.055]" />
+        <div
+          className="absolute inset-0"
+          style={{
+            background: `
+              radial-gradient(
+                circle at 50% 50%,
+                rgba(37,99,235,0.055),
+                transparent 34%
+              ),
+              radial-gradient(
+                circle at 88% 10%,
+                rgba(34,211,238,0.045),
+                transparent 25%
+              ),
+              radial-gradient(
+                circle at 10% 92%,
+                rgba(168,85,247,0.045),
+                transparent 28%
+              )
+            `,
+          }}
+        />
       </div>
 
       <div className="evolvaer-container relative z-10">
@@ -91,7 +106,7 @@ export function AboutAmbition() {
           <div className="mt-9 flex justify-center">
             <Link
               href="/ventures"
-              className="group inline-flex items-center gap-3 text-sm font-semibold text-[#0A1D2F]/52 transition-colors hover:text-[#2563EB] dark:text-white/45 dark:hover:text-[#60A5FA]"
+              className="group inline-flex items-center gap-3 text-sm font-semibold text-[#0A1D2F]/52 transition-colors duration-300 hover:text-[#2563EB] dark:text-white/45 dark:hover:text-[#60A5FA]"
             >
               Explore what we&apos;re building
 

@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import {
   ArrowUpRight,
@@ -47,7 +45,49 @@ const scaleDimensions = [
       "We examine the commercial model, positioning and growth assumptions alongside the technology so promising products can become sustainable ventures.",
     accent: "#10B981",
   },
-];
+] as const;
+
+const coordinatedSystems = [
+  {
+    number: "01",
+    title: "Technology",
+    text: "Performance, reliability and infrastructure.",
+    accent: "#2563EB",
+  },
+  {
+    number: "02",
+    title: "Product",
+    text: "Experience, capability and adoption.",
+    accent: "#A855F7",
+  },
+  {
+    number: "03",
+    title: "Operations",
+    text: "Processes, tooling and repeatability.",
+    accent: "#22D3EE",
+  },
+  {
+    number: "04",
+    title: "Venture",
+    text: "Positioning, economics and commercial readiness.",
+    accent: "#F97316",
+  },
+] as const;
+
+const readinessChecks = [
+  {
+    label: "Useful",
+    text: "People receive meaningful value.",
+  },
+  {
+    label: "Reliable",
+    text: "The system performs consistently.",
+  },
+  {
+    label: "Repeatable",
+    text: "Growth does not depend on improvisation.",
+  },
+] as const;
 
 export function ScaleStage() {
   return (
@@ -63,18 +103,39 @@ export function ScaleStage() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
       >
-        <div className="absolute inset-0 bg-white/[0.58] backdrop-blur-[2px] dark:bg-[#0D1117]/[0.58]" />
+        <div className="absolute inset-0 bg-white/[0.58] dark:bg-[#0D1117]/[0.58]" />
 
-        <div className="absolute -right-48 top-[5%] h-[38rem] w-[38rem] rounded-full bg-[#F97316]/[0.04] blur-[175px] dark:bg-[#F97316]/[0.055]" />
-
-        <div className="absolute -left-52 bottom-[-13rem] h-[36rem] w-[36rem] rounded-full bg-[#22D3EE]/[0.04] blur-[170px] dark:bg-[#22D3EE]/[0.06]" />
+        <div
+          className="absolute inset-0"
+          style={{
+            background: `
+              radial-gradient(
+                circle at 94% 12%,
+                rgba(249,115,22,0.065),
+                transparent 31%
+              ),
+              radial-gradient(
+                circle at 5% 90%,
+                rgba(34,211,238,0.06),
+                transparent 30%
+              )
+            `,
+          }}
+        />
 
         <div
           className="absolute inset-0 opacity-[0.018] dark:opacity-[0.032]"
           style={{
             backgroundImage: `
-              linear-gradient(rgba(249,115,22,.18) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(37,99,235,.18) 1px, transparent 1px)
+              linear-gradient(
+                rgba(249,115,22,.18) 1px,
+                transparent 1px
+              ),
+              linear-gradient(
+                90deg,
+                rgba(37,99,235,.18) 1px,
+                transparent 1px
+              )
             `,
             backgroundSize: "104px 104px",
           }}
@@ -135,20 +196,36 @@ export function ScaleStage() {
               return (
                 <article
                   key={dimension.title}
-                  className="group relative min-h-[22rem] overflow-hidden bg-white/[0.67] p-7 backdrop-blur-xl dark:bg-[#0D1117]/[0.69] sm:p-9"
+                  className="group relative min-h-[22rem] overflow-hidden bg-white/[0.74] p-7 dark:bg-[#0D1117]/[0.75] sm:p-9"
                 >
                   <div
                     aria-hidden="true"
-                    className="absolute -right-20 -top-20 h-48 w-48 rounded-full opacity-0 blur-[70px] transition-opacity duration-500 group-hover:opacity-100"
+                    className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
                     style={{
-                      backgroundColor: `${dimension.accent}18`,
+                      background: `radial-gradient(
+                        circle at 94% 8%,
+                        ${dimension.accent}16,
+                        transparent 30%
+                      )`,
+                    }}
+                  />
+
+                  <div
+                    aria-hidden="true"
+                    className="absolute inset-x-0 top-0 h-px origin-left scale-x-0 transition-transform duration-500 group-hover:scale-x-100"
+                    style={{
+                      background: `linear-gradient(
+                        90deg,
+                        ${dimension.accent},
+                        transparent
+                      )`,
                     }}
                   />
 
                   <div className="relative flex h-full flex-col">
                     <div className="flex items-start justify-between">
                       <div
-                        className="flex h-11 w-11 items-center justify-center rounded-xl border"
+                        className="flex h-11 w-11 items-center justify-center rounded-xl border transition-transform duration-300 group-hover:-translate-y-0.5"
                         style={{
                           color: dimension.accent,
                           borderColor: `${dimension.accent}30`,
@@ -203,12 +280,32 @@ export function ScaleStage() {
             </p>
 
             <h3 className="mt-3 max-w-[24rem] text-2xl font-semibold leading-tight tracking-[-0.035em] text-[#0A1D2F] dark:text-white">
-              Growth exposes the weaknesses that small systems can hide.
+              Growth exposes the weaknesses that small systems can
+              hide.
             </h3>
           </div>
 
-          <div className="relative overflow-hidden rounded-[1.7rem] border border-[#0A1D2F]/[0.08] bg-white/[0.28] p-6 backdrop-blur-xl dark:border-white/[0.08] dark:bg-white/[0.02] sm:p-8">
-            <div className="grid gap-6 md:grid-cols-[0.8fr_auto_1fr_auto_1.2fr] md:items-center">
+          <div className="relative overflow-hidden rounded-[1.7rem] border border-[#0A1D2F]/[0.08] bg-white/[0.35] p-6 dark:border-white/[0.08] dark:bg-white/[0.03] sm:p-8">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0"
+              style={{
+                background: `
+                  radial-gradient(
+                    circle at 92% 8%,
+                    rgba(249,115,22,0.055),
+                    transparent 31%
+                  ),
+                  radial-gradient(
+                    circle at 5% 95%,
+                    rgba(37,99,235,0.045),
+                    transparent 28%
+                  )
+                `,
+              }}
+            />
+
+            <div className="relative grid gap-6 md:grid-cols-[0.8fr_auto_1fr_auto_1.2fr] md:items-center">
               <ScaleNode
                 number="01"
                 eyebrow="Prove"
@@ -265,36 +362,11 @@ export function ScaleStage() {
           </div>
 
           <div className="grid md:grid-cols-4">
-            {[
-              {
-                number: "01",
-                title: "Technology",
-                text: "Performance, reliability and infrastructure.",
-                accent: "#2563EB",
-              },
-              {
-                number: "02",
-                title: "Product",
-                text: "Experience, capability and adoption.",
-                accent: "#A855F7",
-              },
-              {
-                number: "03",
-                title: "Operations",
-                text: "Processes, tooling and repeatability.",
-                accent: "#22D3EE",
-              },
-              {
-                number: "04",
-                title: "Venture",
-                text: "Positioning, economics and commercial readiness.",
-                accent: "#F97316",
-              },
-            ].map((item, index) => (
+            {coordinatedSystems.map((item, index) => (
               <div
                 key={item.title}
                 className={[
-                  "relative py-8 md:px-6",
+                  "group relative py-8 md:px-6",
                   index > 0
                     ? "border-t border-[#0A1D2F]/[0.08] dark:border-white/[0.08] md:border-l md:border-t-0"
                     : "",
@@ -322,7 +394,8 @@ export function ScaleStage() {
                 </p>
 
                 <div
-                  className="absolute bottom-0 left-0 h-px w-10"
+                  aria-hidden="true"
+                  className="absolute bottom-0 left-0 h-px w-10 origin-left transition-transform duration-300 group-hover:scale-x-150"
                   style={{
                     backgroundColor: item.accent,
                   }}
@@ -357,53 +430,51 @@ export function ScaleStage() {
             READINESS CHECK
         ===================================================== */}
 
-        <div className="mt-14 grid gap-8 rounded-[1.7rem] border border-[#0A1D2F]/[0.08] bg-white/[0.25] p-6 backdrop-blur-xl dark:border-white/[0.08] dark:bg-white/[0.02] sm:p-8 lg:mt-20 lg:grid-cols-[0.7fr_1.3fr] lg:items-center">
-          <div className="flex items-start gap-4">
-            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#10B981]/20 bg-[#10B981]/[0.06] text-[#059669] dark:text-[#34D399]">
-              <ShieldCheck className="h-[18px] w-[18px]" />
-            </span>
+        <div className="relative mt-14 overflow-hidden rounded-[1.7rem] border border-[#0A1D2F]/[0.08] bg-white/[0.34] p-6 dark:border-white/[0.08] dark:bg-white/[0.03] sm:p-8 lg:mt-20">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(circle at 0% 50%, rgba(16,185,129,0.055), transparent 28%)",
+            }}
+          />
 
-            <div>
-              <p className="text-[0.54rem] font-semibold uppercase tracking-[0.22em] text-[#059669] dark:text-[#34D399]">
-                Scale readiness
-              </p>
+          <div className="relative grid gap-8 lg:grid-cols-[0.7fr_1.3fr] lg:items-center">
+            <div className="flex items-start gap-4">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#10B981]/20 bg-[#10B981]/[0.06] text-[#059669] dark:text-[#34D399]">
+                <ShieldCheck className="h-[18px] w-[18px]" />
+              </span>
 
-              <h3 className="mt-2 text-xl font-semibold tracking-[-0.03em] text-[#0A1D2F] dark:text-white">
-                Growth should be earned.
-              </h3>
-            </div>
-          </div>
-
-          <div className="grid gap-3 sm:grid-cols-3">
-            {[
-              {
-                label: "Useful",
-                text: "People receive meaningful value.",
-              },
-              {
-                label: "Reliable",
-                text: "The system performs consistently.",
-              },
-              {
-                label: "Repeatable",
-                text: "Growth does not depend on improvisation.",
-              },
-            ].map((item) => (
-              <div
-                key={item.label}
-                className="rounded-xl border border-[#0A1D2F]/[0.07] bg-white/[0.35] px-4 py-4 dark:border-white/[0.07] dark:bg-white/[0.018]"
-              >
-                <span className="h-1.5 w-1.5 rounded-full bg-[#10B981] shadow-[0_0_12px_rgba(16,185,129,.5)]" />
-
-                <p className="mt-4 text-sm font-semibold text-[#0A1D2F]/65 dark:text-white/56">
-                  {item.label}
+              <div>
+                <p className="text-[0.54rem] font-semibold uppercase tracking-[0.22em] text-[#059669] dark:text-[#34D399]">
+                  Scale readiness
                 </p>
 
-                <p className="mt-2 text-xs leading-5 text-[#0A1D2F]/36 dark:text-white/32">
-                  {item.text}
-                </p>
+                <h3 className="mt-2 text-xl font-semibold tracking-[-0.03em] text-[#0A1D2F] dark:text-white">
+                  Growth should be earned.
+                </h3>
               </div>
-            ))}
+            </div>
+
+            <div className="grid gap-3 sm:grid-cols-3">
+              {readinessChecks.map((item) => (
+                <div
+                  key={item.label}
+                  className="rounded-xl border border-[#0A1D2F]/[0.07] bg-white/[0.46] px-4 py-4 dark:border-white/[0.07] dark:bg-white/[0.025]"
+                >
+                  <span className="block h-1.5 w-1.5 rounded-full bg-[#10B981] shadow-[0_0_10px_rgba(16,185,129,.45)]" />
+
+                  <p className="mt-4 text-sm font-semibold text-[#0A1D2F]/65 dark:text-white/56">
+                    {item.label}
+                  </p>
+
+                  <p className="mt-2 text-xs leading-5 text-[#0A1D2F]/36 dark:text-white/32">
+                    {item.text}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -426,11 +497,11 @@ export function ScaleStage() {
 
           <Link
             href="#impact"
-            className="group inline-flex items-center gap-3 text-sm font-semibold text-[#0A1D2F]/55 transition-colors hover:text-[#10B981] dark:text-white/45 dark:hover:text-[#34D399]"
+            className="group inline-flex items-center gap-3 text-sm font-semibold text-[#0A1D2F]/55 transition-colors duration-300 hover:text-[#10B981] dark:text-white/45 dark:hover:text-[#34D399]"
           >
             Continue to impact
 
-            <span className="flex h-8 w-8 items-center justify-center rounded-full border border-[#10B981]/20 transition-all duration-300 group-hover:border-[#10B981] group-hover:bg-[#10B981] group-hover:text-white">
+            <span className="flex h-8 w-8 items-center justify-center rounded-full border border-[#10B981]/20 transition-[transform,border-color,background-color,color] duration-300 group-hover:-translate-y-0.5 group-hover:border-[#10B981] group-hover:bg-[#10B981] group-hover:text-white">
               <ArrowUpRight className="h-3.5 w-3.5" />
             </span>
           </Link>
@@ -468,7 +539,7 @@ function ScaleNode({
           className="absolute right-4 top-4 h-1.5 w-1.5 rounded-full"
           style={{
             backgroundColor: accent,
-            boxShadow: `0 0 14px ${accent}`,
+            boxShadow: `0 0 10px ${accent}90`,
           }}
         />
       )}

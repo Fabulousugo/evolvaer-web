@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import {
   ArrowUpRight,
@@ -47,7 +45,34 @@ const buildLayers = [
       "We strengthen reliability, security, usability, observability and operational readiness before the product is pushed further into the world.",
     accent: "#10B981",
   },
-];
+] as const;
+
+const BUILD_LOOP = [
+  {
+    number: "01",
+    label: "Build",
+    description:
+      "Create the next meaningful version.",
+  },
+  {
+    number: "02",
+    label: "Use",
+    description:
+      "Put it into a real context.",
+  },
+  {
+    number: "03",
+    label: "Learn",
+    description:
+      "Observe behaviour and outcomes.",
+  },
+  {
+    number: "04",
+    label: "Improve",
+    description:
+      "Strengthen what deserves to continue.",
+  },
+] as const;
 
 export function BuildStage() {
   return (
@@ -63,20 +88,42 @@ export function BuildStage() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
       >
-        <div className="absolute inset-0 bg-[#F8FAFC]/[0.62] backdrop-blur-[2px] dark:bg-[#0D1117]/[0.6]" />
+        <div className="absolute inset-0 bg-[#F8FAFC]/[0.62] dark:bg-[#0D1117]/[0.6]" />
 
-        <div className="absolute -right-48 top-[7%] h-[36rem] w-[36rem] rounded-full bg-[#A855F7]/[0.05] blur-[170px] dark:bg-[#A855F7]/[0.075]" />
-
-        <div className="absolute -left-48 bottom-[-13rem] h-[34rem] w-[34rem] rounded-full bg-[#2563EB]/[0.04] blur-[165px] dark:bg-[#3B82F6]/[0.06]" />
+        <div
+          className="absolute inset-0"
+          style={{
+            background: `
+              radial-gradient(
+                circle at 94% 14%,
+                rgba(168,85,247,0.075),
+                transparent 30%
+              ),
+              radial-gradient(
+                circle at 5% 90%,
+                rgba(37,99,235,0.055),
+                transparent 29%
+              )
+            `,
+          }}
+        />
 
         <div
           className="absolute inset-0 opacity-[0.018] dark:opacity-[0.035]"
           style={{
             backgroundImage: `
-              linear-gradient(rgba(168,85,247,.2) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(37,99,235,.2) 1px, transparent 1px)
+              linear-gradient(
+                rgba(168,85,247,.2) 1px,
+                transparent 1px
+              ),
+              linear-gradient(
+                90deg,
+                rgba(37,99,235,.2) 1px,
+                transparent 1px
+              )
             `,
-            backgroundSize: "84px 84px",
+            backgroundSize:
+              "84px 84px",
           }}
         />
       </div>
@@ -111,8 +158,8 @@ export function BuildStage() {
           <div className="max-w-[610px] lg:justify-self-end">
             <p className="text-base leading-8 text-[#0A1D2F]/58 dark:text-white/54 sm:text-[1.05rem]">
               Engineering proves that the system can work. Building
-              turns that system into something people can actually use,
-              adopt and rely on.
+              turns that system into something people can actually
+              use, adopt and rely on.
             </p>
 
             <p className="mt-5 text-sm leading-7 text-[#0A1D2F]/40 dark:text-white/36">
@@ -129,62 +176,86 @@ export function BuildStage() {
 
         <div className="mt-16 lg:mt-20">
           <div className="grid gap-px overflow-hidden rounded-[1.8rem] border border-[#0A1D2F]/[0.08] bg-[#0A1D2F]/[0.07] dark:border-white/[0.08] dark:bg-white/[0.07] md:grid-cols-2">
-            {buildLayers.map((layer) => {
-              const Icon = layer.icon;
+            {buildLayers.map(
+              (layer) => {
+                const Icon =
+                  layer.icon;
 
-              return (
-                <article
-                  key={layer.title}
-                  className="group relative min-h-[22rem] overflow-hidden bg-white/[0.68] p-7 backdrop-blur-xl dark:bg-[#0D1117]/[0.7] sm:p-9"
-                >
-                  <div
-                    aria-hidden="true"
-                    className="absolute -right-20 -top-20 h-48 w-48 rounded-full opacity-0 blur-[70px] transition-opacity duration-500 group-hover:opacity-100"
-                    style={{
-                      backgroundColor: `${layer.accent}18`,
-                    }}
-                  />
+                return (
+                  <article
+                    key={layer.title}
+                    className="group relative min-h-[22rem] overflow-hidden bg-white/[0.74] p-7 dark:bg-[#0D1117]/[0.75] sm:p-9"
+                  >
+                    <div
+                      aria-hidden="true"
+                      className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                      style={{
+                        background: `radial-gradient(
+                          circle at 94% 8%,
+                          ${layer.accent}16,
+                          transparent 30%
+                        )`,
+                      }}
+                    />
 
-                  <div className="relative flex h-full flex-col">
-                    <div className="flex items-start justify-between">
-                      <div
-                        className="flex h-11 w-11 items-center justify-center rounded-xl border"
-                        style={{
-                          color: layer.accent,
-                          borderColor: `${layer.accent}30`,
-                          backgroundColor: `${layer.accent}0D`,
-                        }}
-                      >
-                        <Icon className="h-[18px] w-[18px]" />
+                    <div
+                      aria-hidden="true"
+                      className="absolute inset-x-0 top-0 h-px origin-left scale-x-0 transition-transform duration-500 group-hover:scale-x-100"
+                      style={{
+                        background: `linear-gradient(
+                          90deg,
+                          ${layer.accent},
+                          transparent
+                        )`,
+                      }}
+                    />
+
+                    <div className="relative flex h-full flex-col">
+                      <div className="flex items-start justify-between">
+                        <div
+                          className="flex h-11 w-11 items-center justify-center rounded-xl border transition-transform duration-300 group-hover:-translate-y-0.5"
+                          style={{
+                            color:
+                              layer.accent,
+                            borderColor: `${layer.accent}30`,
+                            backgroundColor: `${layer.accent}0D`,
+                          }}
+                        >
+                          <Icon className="h-[18px] w-[18px]" />
+                        </div>
+
+                        <span className="font-mono text-[0.55rem] tracking-[0.18em] text-[#0A1D2F]/20 dark:text-white/18">
+                          BUILD /{" "}
+                          {layer.number}
+                        </span>
                       </div>
 
-                      <span className="font-mono text-[0.55rem] tracking-[0.18em] text-[#0A1D2F]/20 dark:text-white/18">
-                        BUILD / {layer.number}
-                      </span>
+                      <div className="mt-auto pt-16">
+                        <p
+                          className="text-[0.55rem] font-semibold uppercase tracking-[0.23em]"
+                          style={{
+                            color:
+                              layer.accent,
+                          }}
+                        >
+                          {layer.label}
+                        </p>
+
+                        <h3 className="mt-3 text-[1.4rem] font-semibold tracking-[-0.035em] text-[#0A1D2F] dark:text-white">
+                          {layer.title}
+                        </h3>
+
+                        <p className="mt-4 max-w-[29rem] text-sm leading-7 text-[#0A1D2F]/46 dark:text-white/40">
+                          {
+                            layer.description
+                          }
+                        </p>
+                      </div>
                     </div>
-
-                    <div className="mt-auto pt-16">
-                      <p
-                        className="text-[0.55rem] font-semibold uppercase tracking-[0.23em]"
-                        style={{
-                          color: layer.accent,
-                        }}
-                      >
-                        {layer.label}
-                      </p>
-
-                      <h3 className="mt-3 text-[1.4rem] font-semibold tracking-[-0.035em] text-[#0A1D2F] dark:text-white">
-                        {layer.title}
-                      </h3>
-
-                      <p className="mt-4 max-w-[29rem] text-sm leading-7 text-[#0A1D2F]/46 dark:text-white/40">
-                        {layer.description}
-                      </p>
-                    </div>
-                  </div>
-                </article>
-              );
-            })}
+                  </article>
+                );
+              },
+            )}
           </div>
         </div>
 
@@ -213,8 +284,27 @@ export function BuildStage() {
             </p>
           </div>
 
-          <div className="relative overflow-hidden rounded-[1.7rem] border border-[#0A1D2F]/[0.08] bg-white/[0.28] p-6 backdrop-blur-xl dark:border-white/[0.08] dark:bg-white/[0.02] sm:p-8">
-            <div className="grid gap-4 md:grid-cols-[1fr_auto_1fr] md:items-stretch">
+          <div className="relative overflow-hidden rounded-[1.7rem] border border-[#0A1D2F]/[0.08] bg-white/[0.35] p-6 dark:border-white/[0.08] dark:bg-white/[0.03] sm:p-8">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0"
+              style={{
+                background: `
+                  radial-gradient(
+                    circle at 48% 4%,
+                    rgba(168,85,247,0.06),
+                    transparent 32%
+                  ),
+                  radial-gradient(
+                    circle at 98% 96%,
+                    rgba(34,211,238,0.04),
+                    transparent 28%
+                  )
+                `,
+              }}
+            />
+
+            <div className="relative grid gap-4 md:grid-cols-[1fr_auto_1fr] md:items-stretch">
               <ProductState
                 eyebrow="Technical state"
                 title="Working system"
@@ -253,7 +343,7 @@ export function BuildStage() {
               />
             </div>
 
-            <div className="mt-7 border-t border-[#0A1D2F]/[0.07] pt-6 dark:border-white/[0.07]">
+            <div className="relative mt-7 border-t border-[#0A1D2F]/[0.07] pt-6 dark:border-white/[0.07]">
               <p className="text-sm leading-7 text-[#0A1D2F]/46 dark:text-white/40">
                 This transition is where{" "}
                 <span className="font-semibold text-[#0A1D2F]/68 dark:text-white/64">
@@ -269,7 +359,7 @@ export function BuildStage() {
             BUILD LOOP
         ===================================================== */}
 
-        <div className="mt-14 overflow-hidden rounded-[1.7rem] border border-[#0A1D2F]/[0.08] bg-[#0A1D2F]/[0.018] backdrop-blur-xl dark:border-white/[0.08] dark:bg-white/[0.018] lg:mt-20">
+        <div className="mt-14 overflow-hidden rounded-[1.7rem] border border-[#0A1D2F]/[0.08] bg-[#0A1D2F]/[0.022] dark:border-white/[0.08] dark:bg-white/[0.022] lg:mt-20">
           <div className="border-b border-[#0A1D2F]/[0.07] px-6 py-5 dark:border-white/[0.07] sm:px-8">
             <p className="text-[0.56rem] font-semibold uppercase tracking-[0.26em] text-[#0A1D2F]/30 dark:text-white/28">
               Build loop
@@ -277,57 +367,46 @@ export function BuildStage() {
           </div>
 
           <div className="grid gap-px bg-[#0A1D2F]/[0.06] dark:bg-white/[0.06] sm:grid-cols-4">
-            {[
-              {
-                number: "01",
-                label: "Build",
-                description:
-                  "Create the next meaningful version.",
-              },
-              {
-                number: "02",
-                label: "Use",
-                description:
-                  "Put it into a real context.",
-              },
-              {
-                number: "03",
-                label: "Learn",
-                description:
-                  "Observe behaviour and outcomes.",
-              },
-              {
-                number: "04",
-                label: "Improve",
-                description:
-                  "Strengthen what deserves to continue.",
-              },
-            ].map((item, index) => (
-              <div
-                key={item.label}
-                className="relative bg-white/[0.58] px-6 py-7 dark:bg-[#0D1117]/[0.65]"
-              >
-                <div className="flex items-center justify-between">
-                  <span className="font-mono text-[0.5rem] tracking-[0.18em] text-[#0A1D2F]/20 dark:text-white/18">
-                    {item.number}
-                  </span>
+            {BUILD_LOOP.map(
+              (
+                item,
+                index,
+              ) => (
+                <div
+                  key={item.label}
+                  className="group relative bg-white/[0.64] px-6 py-7 dark:bg-[#0D1117]/[0.7]"
+                >
+                  <div
+                    aria-hidden="true"
+                    className="absolute inset-x-0 top-0 h-px origin-left scale-x-0 bg-gradient-to-r from-[#A855F7] via-[#2563EB] to-transparent transition-transform duration-500 group-hover:scale-x-100"
+                  />
 
-                  {index < 3 && (
-                    <span className="text-xs text-[#A855F7]/50">
-                      →
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-[0.5rem] tracking-[0.18em] text-[#0A1D2F]/20 dark:text-white/18">
+                      {item.number}
                     </span>
-                  )}
+
+                    {index <
+                      BUILD_LOOP.length -
+                        1 && (
+                      <span className="text-xs text-[#A855F7]/50">
+                        →
+                      </span>
+                    )}
+                  </div>
+
+                  <p className="mt-8 text-base font-semibold tracking-[-0.02em] text-[#0A1D2F] dark:text-white">
+                    {item.label}
+                  </p>
+
+                  <p className="mt-2 text-xs leading-6 text-[#0A1D2F]/40 dark:text-white/35">
+                    {
+                      item.description
+                    }
+                  </p>
                 </div>
-
-                <p className="mt-8 text-base font-semibold tracking-[-0.02em] text-[#0A1D2F] dark:text-white">
-                  {item.label}
-                </p>
-
-                <p className="mt-2 text-xs leading-6 text-[#0A1D2F]/40 dark:text-white/35">
-                  {item.description}
-                </p>
-              </div>
-            ))}
+              ),
+            )}
           </div>
         </div>
 
@@ -342,7 +421,8 @@ export function BuildStage() {
             </p>
 
             <p className="max-w-[55rem] text-lg font-medium leading-8 tracking-[-0.02em] text-[#0A1D2F]/62 dark:text-white/56">
-              We build enough to learn, but with enough discipline that{" "}
+              We build enough to learn, but with enough discipline
+              that{" "}
               <span className="text-[#0A1D2F] dark:text-white">
                 the strongest ideas can keep moving forward without
                 being rebuilt from scratch.
@@ -364,17 +444,17 @@ export function BuildStage() {
             <span className="h-px w-12 bg-gradient-to-r from-[#A855F7] via-[#2563EB] to-[#22D3EE]" />
 
             <span className="text-[0.55rem] font-semibold uppercase tracking-[0.22em] text-[#F97316]">
-              Strengthen & scale
+              Strengthen &amp; scale
             </span>
           </div>
 
           <Link
             href="#scale"
-            className="group inline-flex items-center gap-3 text-sm font-semibold text-[#0A1D2F]/55 transition-colors hover:text-[#2563EB] dark:text-white/45 dark:hover:text-[#60A5FA]"
+            className="group inline-flex items-center gap-3 text-sm font-semibold text-[#0A1D2F]/55 transition-colors duration-300 hover:text-[#2563EB] dark:text-white/45 dark:hover:text-[#60A5FA]"
           >
             Continue to scale
 
-            <span className="flex h-8 w-8 items-center justify-center rounded-full border border-[#A855F7]/20 transition-all duration-300 group-hover:border-[#A855F7] group-hover:bg-[#A855F7] group-hover:text-white">
+            <span className="flex h-8 w-8 items-center justify-center rounded-full border border-[#A855F7]/20 transition-[transform,border-color,background-color,color] duration-300 group-hover:-translate-y-0.5 group-hover:border-[#A855F7] group-hover:bg-[#A855F7] group-hover:text-white">
               <ArrowUpRight className="h-3.5 w-3.5" />
             </span>
           </Link>
@@ -395,7 +475,7 @@ function ProductState({
   eyebrow: string;
   title: string;
   description: string;
-  items: string[];
+  items: readonly string[];
   accent: string;
   active?: boolean;
 }) {
@@ -403,16 +483,25 @@ function ProductState({
     <div
       className="relative rounded-[1.25rem] border p-5 sm:p-6"
       style={{
-        borderColor: `${accent}${active ? "50" : "24"}`,
-        backgroundColor: `${accent}${active ? "0D" : "06"}`,
+        borderColor: `${accent}${
+          active
+            ? "50"
+            : "24"
+        }`,
+        backgroundColor: `${accent}${
+          active
+            ? "0D"
+            : "06"
+        }`,
       }}
     >
       {active && (
         <span
           className="absolute right-4 top-4 h-1.5 w-1.5 rounded-full"
           style={{
-            backgroundColor: accent,
-            boxShadow: `0 0 14px ${accent}`,
+            backgroundColor:
+              accent,
+            boxShadow: `0 0 10px ${accent}90`,
           }}
         />
       )}

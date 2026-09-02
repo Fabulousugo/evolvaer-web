@@ -3,11 +3,12 @@
 import {
   createContext,
   useContext,
-  useMemo,
   useRef,
   useState,
+  type Dispatch,
   type MutableRefObject,
   type ReactNode,
+  type SetStateAction,
 } from "react";
 
 export type SceneName =
@@ -19,18 +20,19 @@ export type SceneName =
   | "philosophy"
   | "final";
 
-type SceneProgressMap = Record<
+export type SceneProgressMap = Record<
   SceneName,
   number
 >;
 
-type SceneExperienceContextValue = {
+type ActiveSceneContextValue = {
   activeScene: SceneName;
+  setActiveScene: Dispatch<
+    SetStateAction<SceneName>
+  >;
+};
 
-  setActiveScene: (
-    scene: SceneName,
-  ) => void;
-
+type SceneRuntimeContextValue = {
   sceneProgress: MutableRefObject<SceneProgressMap>;
 };
 
@@ -44,9 +46,14 @@ const initialProgress: SceneProgressMap = {
   final: 0,
 };
 
-const SceneExperienceContext =
+const ActiveSceneContext =
   createContext<
-    SceneExperienceContextValue | undefined
+    ActiveSceneContextValue | undefined
+  >(undefined);
+
+const SceneRuntimeContext =
+  createContext<
+    SceneRuntimeContextValue | undefined
   >(undefined);
 
 export function SceneExperienceProvider({
@@ -57,50 +64,67 @@ export function SceneExperienceProvider({
   const [
     activeScene,
     setActiveScene,
-  ] =
-    useState<SceneName>("hero");
+  ] = useState<SceneName>("hero");
 
   /*
-   * Progress is deliberately kept in a ref.
+   * Scroll progress lives entirely in a ref.
    *
-   * Scroll updates can happen many times
-   * per second. We do NOT want the whole
-   * React tree re-rendering for every
-   * scroll event.
+   * Updating this object does not trigger
+   * React renders.
    */
   const sceneProgress =
     useRef<SceneProgressMap>({
       ...initialProgress,
     });
 
-  const value =
-    useMemo(
-      () => ({
-        activeScene,
-        setActiveScene,
-        sceneProgress,
-      }),
-      [activeScene],
-    );
+  /*
+   * sceneProgress itself is a stable ref object,
+   * so this provider value does not need useMemo.
+   */
+  const runtimeValue = {
+    sceneProgress,
+  };
 
   return (
-    <SceneExperienceContext.Provider
-      value={value}
+    <SceneRuntimeContext.Provider
+      value={runtimeValue}
     >
-      {children}
-    </SceneExperienceContext.Provider>
+      <ActiveSceneContext.Provider
+        value={{
+          activeScene,
+          setActiveScene,
+        }}
+      >
+        {children}
+      </ActiveSceneContext.Provider>
+    </SceneRuntimeContext.Provider>
   );
 }
 
-export function useSceneExperience() {
+export function useActiveScene() {
   const context =
     useContext(
-      SceneExperienceContext,
+      ActiveSceneContext,
     );
 
   if (!context) {
     throw new Error(
-      "useSceneExperience must be used within SceneExperienceProvider",
+      "useActiveScene must be used within SceneExperienceProvider",
+    );
+  }
+
+  return context;
+}
+
+export function useSceneRuntime() {
+  const context =
+    useContext(
+      SceneRuntimeContext,
+    );
+
+  if (!context) {
+    throw new Error(
+      "useSceneRuntime must be used within SceneExperienceProvider",
     );
   }
 

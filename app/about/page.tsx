@@ -24,28 +24,16 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <AboutSceneExperienceProvider>
-      <main className="relative min-h-screen overflow-x-clip bg-background text-foreground">
-        <Navbar />
+    <main className="relative min-h-screen overflow-x-clip bg-background text-foreground">
+      <Navbar />
 
-        {/* =====================================================
-            PERSISTENT 3D ENVIRONMENT
-
-            One Canvas for the entire About page.
-            The DOM scrolls above it while individual
-            sections update the scene state.
-        ===================================================== */}
-
+      <AboutSceneExperienceProvider>
         <div
           aria-hidden="true"
           className="pointer-events-none fixed inset-0 z-0"
         >
           <AboutScene />
         </div>
-
-        {/* =====================================================
-            PAGE CONTENT
-        ===================================================== */}
 
         <div className="relative z-10">
           <AboutSceneSection scene="hero">
@@ -79,10 +67,12 @@ export default function AboutPage() {
           <AboutSceneSection scene="cta">
             <AboutCta />
           </AboutSceneSection>
-
-          <Footer />
         </div>
-      </main>
-    </AboutSceneExperienceProvider>
+      </AboutSceneExperienceProvider>
+
+      <div className="relative z-10">
+        <Footer />
+      </div>
+    </main>
   );
 }

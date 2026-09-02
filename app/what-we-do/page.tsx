@@ -1,3 +1,4 @@
+import { BuildStage } from "@/src/components/what-we-do/build-stage";
 import { EngineerStage } from "@/src/components/what-we-do/engineer-stage";
 import { ExploreSection } from "@/src/components/what-we-do/explore-section";
 import { ImpactStage } from "@/src/components/what-we-do/impact-stage";
@@ -6,27 +7,20 @@ import { ResearchStage } from "@/src/components/what-we-do/research-stage";
 import { ScaleStage } from "@/src/components/what-we-do/scale-stage";
 import { WhatWeDoCta } from "@/src/components/what-we-do/what-we-do-cta";
 import { WhatWeDoHero } from "@/src/components/what-we-do/what-we-do-hero";
-import { BuildStage } from "@/src/components/what-we-do/build-stage";
+
+import { Footer } from "@/src/components/layout/footer";
+import { Navbar } from "@/src/components/layout/navbar";
 
 import { WorkScene } from "@/src/components/three/work-scene";
 import { WorkSceneExperienceProvider } from "@/src/components/three/work-scene-experience";
 import { WorkSceneSection } from "@/src/components/three/work-scene-section";
-import { Navbar } from "@/src/components/layout/navbar";
-import { Footer } from "@/src/components/layout/footer";
 
 export default function WhatWeDoPage() {
   return (
-    <WorkSceneExperienceProvider>
+    <main className="relative min-h-screen overflow-x-clip bg-background text-foreground">
       <Navbar />
 
-      <div className="relative isolate overflow-x-clip">
-        {/* =====================================================
-            PERSISTENT 3D WORLD
-
-            This Canvas never unmounts while moving through the page.
-            Each section changes the state of the same 3D environment.
-        ===================================================== */}
-
+      <WorkSceneExperienceProvider>
         <div
           aria-hidden="true"
           className="pointer-events-none fixed inset-0 z-0"
@@ -34,11 +28,7 @@ export default function WhatWeDoPage() {
           <WorkScene />
         </div>
 
-        {/* =====================================================
-            PAGE CONTENT
-        ===================================================== */}
-
-        <main className="relative z-10">
+        <div className="relative z-10">
           <WorkSceneSection scene="hero">
             <WhatWeDoHero />
           </WorkSceneSection>
@@ -74,10 +64,12 @@ export default function WhatWeDoPage() {
           <WorkSceneSection scene="cta">
             <WhatWeDoCta />
           </WorkSceneSection>
+        </div>
+      </WorkSceneExperienceProvider>
 
-          <Footer />
-        </main>
+      <div className="relative z-10">
+        <Footer />
       </div>
-    </WorkSceneExperienceProvider>
+    </main>
   );
 }

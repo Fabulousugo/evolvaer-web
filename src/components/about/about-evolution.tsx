@@ -1,5 +1,3 @@
-"use client";
-
 import { ArrowDownRight } from "lucide-react";
 
 const evolution = [
@@ -17,20 +15,44 @@ export function AboutEvolution() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
       >
-        <div className="absolute inset-0 bg-[#07111D]/[0.84] backdrop-blur-[2px] dark:bg-[#050A11]/[0.82]" />
+        <div className="absolute inset-0 bg-[#07111D]/[0.84] dark:bg-[#050A11]/[0.82]" />
 
-        <div className="absolute right-[-12rem] top-[-10rem] h-[38rem] w-[38rem] rounded-full bg-[#3B82F6]/[0.10] blur-[180px]" />
-
-        <div className="absolute bottom-[-14rem] left-[-8rem] h-[34rem] w-[34rem] rounded-full bg-[#22D3EE]/[0.07] blur-[165px]" />
-
-        <div className="absolute left-[38%] top-[18%] h-[24rem] w-[24rem] rounded-full bg-[#A855F7]/[0.055] blur-[150px]" />
+        <div
+          className="absolute inset-0"
+          style={{
+            background: `
+              radial-gradient(
+                circle at 90% 8%,
+                rgba(59,130,246,0.11),
+                transparent 30%
+              ),
+              radial-gradient(
+                circle at 8% 92%,
+                rgba(34,211,238,0.075),
+                transparent 28%
+              ),
+              radial-gradient(
+                circle at 48% 22%,
+                rgba(168,85,247,0.06),
+                transparent 24%
+              )
+            `,
+          }}
+        />
 
         <div
           className="absolute inset-0 opacity-[0.045]"
           style={{
             backgroundImage: `
-              linear-gradient(rgba(96,165,250,.16) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(96,165,250,.16) 1px, transparent 1px)
+              linear-gradient(
+                rgba(96,165,250,.16) 1px,
+                transparent 1px
+              ),
+              linear-gradient(
+                90deg,
+                rgba(96,165,250,.16) 1px,
+                transparent 1px
+              )
             `,
             backgroundSize: "92px 92px",
           }}
@@ -81,7 +103,7 @@ export function AboutEvolution() {
                     {item}
                   </span>
 
-                  <span className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 text-white/25 transition-all duration-300 group-hover:border-[#22D3EE]/30 group-hover:text-[#22D3EE]">
+                  <span className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 text-white/25 transition-[border-color,color,transform] duration-300 group-hover:translate-x-0.5 group-hover:translate-y-0.5 group-hover:border-[#22D3EE]/30 group-hover:text-[#22D3EE]">
                     <ArrowDownRight className="h-4 w-4" />
                   </span>
                 </div>

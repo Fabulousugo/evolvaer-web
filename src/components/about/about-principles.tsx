@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Compass,
   Lightbulb,
@@ -44,33 +42,30 @@ const principles = [
 
 const accents = {
   blue: {
-    line: "bg-[#2563EB] dark:bg-[#3B82F6]",
+    line:
+      "bg-[#2563EB] dark:bg-[#3B82F6]",
     icon:
       "border-[#2563EB]/20 bg-[#2563EB]/[0.06] text-[#2563EB] dark:border-[#3B82F6]/25 dark:bg-[#3B82F6]/[0.08] dark:text-[#60A5FA]",
-    hover:
-      "hover:border-[#2563EB]/25 dark:hover:border-[#3B82F6]/30",
-    glow:
-      "bg-[#2563EB]/[0.07] dark:bg-[#3B82F6]/[0.08]",
+    field:
+      "radial-gradient(circle at 88% 12%, rgba(37,99,235,0.085), transparent 32%)",
   },
 
   teal: {
-    line: "bg-[#10B981] dark:bg-[#22D3EE]",
+    line:
+      "bg-[#10B981] dark:bg-[#22D3EE]",
     icon:
       "border-[#10B981]/20 bg-[#10B981]/[0.06] text-[#10B981] dark:border-[#22D3EE]/25 dark:bg-[#22D3EE]/[0.08] dark:text-[#22D3EE]",
-    hover:
-      "hover:border-[#10B981]/25 dark:hover:border-[#22D3EE]/30",
-    glow:
-      "bg-[#10B981]/[0.07] dark:bg-[#22D3EE]/[0.08]",
+    field:
+      "radial-gradient(circle at 88% 12%, rgba(16,185,129,0.08), transparent 32%)",
   },
 
   violet: {
-    line: "bg-[#7C3AED] dark:bg-[#A855F7]",
+    line:
+      "bg-[#7C3AED] dark:bg-[#A855F7]",
     icon:
       "border-[#7C3AED]/20 bg-[#7C3AED]/[0.06] text-[#7C3AED] dark:border-[#A855F7]/25 dark:bg-[#A855F7]/[0.08] dark:text-[#C084FC]",
-    hover:
-      "hover:border-[#7C3AED]/25 dark:hover:border-[#A855F7]/30",
-    glow:
-      "bg-[#7C3AED]/[0.07] dark:bg-[#A855F7]/[0.08]",
+    field:
+      "radial-gradient(circle at 88% 12%, rgba(124,58,237,0.08), transparent 32%)",
   },
 };
 
@@ -81,11 +76,23 @@ export function AboutPrinciples() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
       >
-        <div className="absolute inset-0 bg-white/[0.62] backdrop-blur-[1px] dark:bg-[#0D1117]/[0.57]" />
+        <div className="absolute inset-0 bg-white/[0.62] dark:bg-[#0D1117]/[0.57]" />
 
-        <div className="absolute -right-32 top-[10%] h-[30rem] w-[30rem] rounded-full bg-[#A855F7]/[0.045] blur-[150px] dark:bg-[#A855F7]/[0.06]" />
+        <div
+          className="absolute inset-0 opacity-75 dark:opacity-90"
+          style={{
+            background:
+              "radial-gradient(circle at 92% 14%, rgba(168,85,247,0.05), transparent 28%)",
+          }}
+        />
 
-        <div className="absolute -bottom-48 left-[8%] h-[34rem] w-[34rem] rounded-full bg-[#22D3EE]/[0.045] blur-[160px] dark:bg-[#22D3EE]/[0.06]" />
+        <div
+          className="absolute inset-0 opacity-75 dark:opacity-90"
+          style={{
+            background:
+              "radial-gradient(circle at 10% 92%, rgba(34,211,238,0.05), transparent 30%)",
+          }}
+        />
 
         <div
           className="absolute inset-0 opacity-[0.018] dark:opacity-[0.03]"
@@ -94,7 +101,8 @@ export function AboutPrinciples() {
               linear-gradient(rgba(37,99,235,.3) 1px, transparent 1px),
               linear-gradient(90deg, rgba(37,99,235,.3) 1px, transparent 1px)
             `,
-            backgroundSize: "104px 104px",
+            backgroundSize:
+              "104px 104px",
           }}
         />
       </div>
@@ -131,17 +139,28 @@ export function AboutPrinciples() {
 
         <div className="mt-16 grid gap-px overflow-hidden rounded-[2rem] border border-[#0A1D2F]/[0.08] bg-[#0A1D2F]/[0.07] dark:border-white/[0.07] dark:bg-white/[0.07] md:grid-cols-2">
           {principles.map((principle) => {
-            const Icon = principle.icon;
-            const accent = accents[principle.accent];
+            const Icon =
+              principle.icon;
+
+            const accent =
+              accents[
+                principle.accent
+              ];
 
             return (
               <article
-                key={principle.number}
-                className={`group relative min-h-[22rem] overflow-hidden bg-white/65 p-7 backdrop-blur-xl transition-colors duration-500 hover:bg-white/85 dark:bg-[#0D1117]/75 dark:hover:bg-[#111823]/90 sm:p-9 ${accent.hover}`}
+                key={
+                  principle.number
+                }
+                className="group relative min-h-[22rem] overflow-hidden bg-white/70 p-7 transition-colors duration-300 hover:bg-white/85 dark:bg-[#0D1117]/78 dark:hover:bg-[#111823]/90 sm:p-9"
               >
                 <div
                   aria-hidden="true"
-                  className={`absolute -right-24 -top-24 h-64 w-64 rounded-full blur-[100px] opacity-50 transition-opacity duration-500 group-hover:opacity-90 ${accent.glow}`}
+                  className="pointer-events-none absolute inset-0 opacity-75 transition-opacity duration-300 group-hover:opacity-100 dark:opacity-90"
+                  style={{
+                    background:
+                      accent.field,
+                  }}
                 />
 
                 <div className="relative z-10 flex h-full flex-col">
@@ -153,13 +172,17 @@ export function AboutPrinciples() {
                     </div>
 
                     <span className="text-[0.6rem] font-semibold tracking-[0.22em] text-[#0A1D2F]/22 dark:text-white/22">
-                      {principle.number}
+                      {
+                        principle.number
+                      }
                     </span>
                   </div>
 
                   <div className="mt-auto pt-20">
                     <div className="flex items-center gap-3">
-                      <span className={`h-px w-7 ${accent.line}`} />
+                      <span
+                        className={`h-px w-7 ${accent.line}`}
+                      />
 
                       <span className="text-[0.56rem] font-semibold uppercase tracking-[0.25em] text-[#0A1D2F]/28 dark:text-white/27">
                         Structural principle
@@ -167,11 +190,15 @@ export function AboutPrinciples() {
                     </div>
 
                     <h3 className="mt-5 text-[2rem] font-semibold tracking-[-0.04em] text-[#0A1D2F] dark:text-white sm:text-[2.25rem]">
-                      {principle.title}
+                      {
+                        principle.title
+                      }
                     </h3>
 
                     <p className="mt-4 max-w-lg text-sm leading-7 text-[#0A1D2F]/48 dark:text-white/42 sm:text-base sm:leading-8">
-                      {principle.description}
+                      {
+                        principle.description
+                      }
                     </p>
                   </div>
                 </div>

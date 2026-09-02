@@ -1,67 +1,12 @@
-"use client";
-
 import Link from "next/link";
-import { ArrowDown, ArrowUpRight } from "lucide-react";
 import {
-  useRef,
-  type CSSProperties,
-  type PointerEvent as ReactPointerEvent,
-} from "react";
+  ArrowDown,
+  ArrowUpRight,
+} from "lucide-react";
 
 export function AboutHero() {
-  const sectionRef =
-    useRef<HTMLElement>(null);
-
-  const handlePointerMove = (
-    event: ReactPointerEvent<HTMLElement>,
-  ) => {
-    const section =
-      sectionRef.current;
-
-    if (!section) return;
-
-    const rect =
-      section.getBoundingClientRect();
-
-    const x =
-      ((event.clientX -
-        rect.left) /
-        rect.width) *
-      100;
-
-    const y =
-      ((event.clientY -
-        rect.top) /
-        rect.height) *
-      100;
-
-    section.style.setProperty(
-      "--about-hero-x",
-      `${x}%`,
-    );
-
-    section.style.setProperty(
-      "--about-hero-y",
-      `${y}%`,
-    );
-  };
-
   return (
-    <section
-      ref={sectionRef}
-      onPointerMove={
-        handlePointerMove
-      }
-      className="relative flex min-h-[100svh] overflow-hidden pt-28 sm:pt-32"
-      style={
-        {
-          "--about-hero-x":
-            "72%",
-          "--about-hero-y":
-            "38%",
-        } as CSSProperties
-      }
-    >
+    <section className="relative flex min-h-[100svh] overflow-hidden pt-28 sm:pt-32">
       {/* =====================================================
           ATMOSPHERE
       ===================================================== */}
@@ -70,29 +15,31 @@ export function AboutHero() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
       >
-        {/* Keep the actual 3D scene visible */}
-
-        <div className="absolute inset-0 bg-white/[0.54] backdrop-blur-[1px] transition-colors duration-700 dark:bg-[#0D1117]/[0.48]" />
-
-        {/* Main interactive field */}
+        <div className="absolute inset-0 bg-white/[0.54] dark:bg-[#0D1117]/[0.48]" />
 
         <div
           className="absolute inset-0 opacity-80"
           style={{
             background:
-              "radial-gradient(circle at var(--about-hero-x) var(--about-hero-y), rgba(59,130,246,0.12), transparent 30%)",
+              "radial-gradient(circle at 72% 38%, rgba(59,130,246,0.12), transparent 30%)",
           }}
         />
 
-        {/* Teal atmosphere */}
+        <div
+          className="absolute inset-0 opacity-70 dark:opacity-90"
+          style={{
+            background:
+              "radial-gradient(circle at 90% 12%, rgba(34,211,238,0.07), transparent 24%)",
+          }}
+        />
 
-        <div className="absolute -right-40 top-[6%] max-w-full overflow-hidden rounded-full bg-[#22D3EE]/[0.07] blur-[150px] dark:bg-[#22D3EE]/[0.09]" />
-
-        {/* Violet atmosphere */}
-
-        <div className="absolute bottom-[-14rem] left-[8%] h-[34rem] w-[34rem] rounded-full bg-[#A855F7]/[0.055] blur-[170px] dark:bg-[#A855F7]/[0.07]" />
-
-        {/* Fine technical grid */}
+        <div
+          className="absolute inset-0 opacity-70 dark:opacity-90"
+          style={{
+            background:
+              "radial-gradient(circle at 18% 92%, rgba(168,85,247,0.055), transparent 26%)",
+          }}
+        />
 
         <div
           className="absolute inset-0 opacity-[0.025] dark:opacity-[0.045]"
@@ -106,8 +53,6 @@ export function AboutHero() {
           }}
         />
 
-        {/* Fine horizon line */}
-
         <div className="absolute left-0 right-0 top-[48%] h-px bg-gradient-to-r from-transparent via-[#2563EB]/10 to-transparent dark:via-[#3B82F6]/15" />
       </div>
 
@@ -117,8 +62,6 @@ export function AboutHero() {
 
       <div className="evolvaer-container relative z-10 flex flex-1 flex-col justify-between pb-9 pt-12 sm:pb-12 sm:pt-16 lg:pt-20">
         <div className="grid flex-1 gap-12 lg:grid-cols-[1.12fr_0.88fr] lg:items-center">
-          {/* Main statement */}
-
           <div className="max-w-5xl">
             <div className="mb-7 flex items-center gap-4">
               <span className="h-px w-10 bg-[#2563EB] dark:bg-[#3B82F6]" />
@@ -150,8 +93,6 @@ export function AboutHero() {
             </div>
           </div>
 
-          {/* Supporting copy */}
-
           <div className="max-w-xl lg:justify-self-end lg:pt-24">
             <div className="border-l border-[#2563EB]/15 pl-6 dark:border-[#3B82F6]/20 sm:pl-8">
               <p className="text-base leading-8 text-[#0A1D2F]/62 dark:text-white/55 sm:text-lg sm:leading-9">
@@ -172,7 +113,7 @@ export function AboutHero() {
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <Link
                 href="#our-story"
-                className="group inline-flex min-h-12 items-center gap-4 rounded-full border border-[#2563EB]/20 bg-white/45 px-5 text-sm font-semibold text-[#0A1D2F] backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:border-[#2563EB]/45 hover:bg-white/70 dark:border-white/10 dark:bg-white/[0.045] dark:text-white dark:hover:border-[#3B82F6]/45 dark:hover:bg-white/[0.075]"
+                className="group inline-flex min-h-12 items-center gap-4 rounded-full border border-[#2563EB]/20 bg-white/55 px-5 text-sm font-semibold text-[#0A1D2F] transition-[transform,border-color,background-color] duration-300 hover:-translate-y-0.5 hover:border-[#2563EB]/45 hover:bg-white/75 dark:border-white/10 dark:bg-white/[0.045] dark:text-white dark:hover:border-[#3B82F6]/45 dark:hover:bg-white/[0.075]"
               >
                 Discover our thinking
 
@@ -183,7 +124,7 @@ export function AboutHero() {
 
               <Link
                 href="/what-we-do"
-                className="group inline-flex min-h-12 items-center gap-2 px-3 text-sm font-semibold text-[#0A1D2F]/55 transition-colors hover:text-[#2563EB] dark:text-white/48 dark:hover:text-[#60A5FA]"
+                className="group inline-flex min-h-12 items-center gap-2 px-3 text-sm font-semibold text-[#0A1D2F]/55 transition-colors duration-300 hover:text-[#2563EB] dark:text-white/48 dark:hover:text-[#60A5FA]"
               >
                 What we do
 
@@ -237,40 +178,12 @@ export function AboutHero() {
               </span>
 
               <div className="relative h-10 w-px overflow-hidden bg-[#0A1D2F]/10 dark:bg-white/10">
-                <span className="absolute left-0 top-0 h-4 w-px animate-[aboutScroll_2s_ease-in-out_infinite] bg-[#2563EB] dark:bg-[#3B82F6]" />
+                <span className="about-scroll-indicator absolute left-0 top-0 h-4 w-px bg-[#2563EB] dark:bg-[#3B82F6]" />
               </div>
             </div>
           </div>
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes aboutScroll {
-          0% {
-            transform: translateY(-140%);
-            opacity: 0;
-          }
-
-          25% {
-            opacity: 1;
-          }
-
-          75% {
-            opacity: 1;
-          }
-
-          100% {
-            transform: translateY(260%);
-            opacity: 0;
-          }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          span {
-            animation: none !important;
-          }
-        }
-      `}</style>
     </section>
   );
 }

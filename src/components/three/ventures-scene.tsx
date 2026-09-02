@@ -38,17 +38,17 @@ import {
    CONFIGURATION
 ============================================================ */
 
-const SCENE_INDEX: Record<VenturesSceneName, number> = {
-  hero: 0,
-  philosophy: 1,
-  portfolio: 2,
-  featured: 3,
-  emergence: 4,
-  capabilities: 5,
-  stages: 6,
-  future: 7,
-  cta: 8,
-};
+const SCENE_ORDER: VenturesSceneName[] = [
+  "hero",
+  "philosophy",
+  "portfolio",
+  "featured",
+  "emergence",
+  "capabilities",
+  "stages",
+  "future",
+  "cta",
+];
 
 const BLUE = "#3B82F6";
 const TEAL = "#22D3EE";
@@ -1674,17 +1674,16 @@ function CtaWorld({
 
 function VenturesTransitionGroup({
   scene,
+  activeScene,
+  progress,
   children,
 }: {
   scene: VenturesSceneName;
+  activeScene: VenturesSceneName;
+  progress: number;
   children: ReactNode;
 }) {
   const group = useRef<Group>(null);
-
-  const {
-    activeScene,
-    sceneProgress,
-  } = useVenturesSceneExperience();
 
   useFrame((_, delta) => {
     if (!group.current) {
@@ -1692,16 +1691,11 @@ function VenturesTransitionGroup({
     }
 
     const activeIndex =
-      SCENE_INDEX[activeScene];
-
-    const index =
-      SCENE_INDEX[scene];
+      SCENE_ORDER.indexOf(activeScene);
 
     const difference =
-      index - activeIndex;
-
-    const progress =
-      sceneProgress.current[scene];
+      SCENE_ORDER.indexOf(scene) -
+      activeIndex;
 
     const weight =
       scene === activeScene
@@ -1794,61 +1788,74 @@ function VenturesTransitionGroup({
    DIRECTOR
 ============================================================ */
 
-function VenturesSceneDirector() {
-  const compact =
-    useCompactScene();
+type VenturesWorldProps = {
+  scene: VenturesSceneName;
+  compact: boolean;
+};
+
+function VenturesWorld({
+  scene,
+  compact,
+}: VenturesWorldProps) {
+  switch (scene) {
+    case "hero":
+      return <HeroWorld compact={compact} />;
+    case "philosophy":
+      return <PhilosophyWorld compact={compact} />;
+    case "portfolio":
+      return <PortfolioWorld compact={compact} />;
+    case "featured":
+      return <FeaturedWorld compact={compact} />;
+    case "emergence":
+      return <EmergenceWorld compact={compact} />;
+    case "capabilities":
+      return <CapabilitiesWorld compact={compact} />;
+    case "stages":
+      return <StagesWorld compact={compact} />;
+    case "future":
+      return <FutureWorld compact={compact} />;
+    case "cta":
+      return <CtaWorld compact={compact} />;
+  }
+}
+
+function VenturesSceneDirector({
+  compact,
+  reducedMotion,
+}: {
+  compact: boolean;
+  reducedMotion: boolean;
+}) {
+  const {
+    activeScene,
+    sceneProgress,
+  } = useVenturesSceneExperience();
+
+  const activeIndex =
+    SCENE_ORDER.indexOf(activeScene);
+
+  const mountedScenes = reducedMotion
+    ? [activeScene]
+    : SCENE_ORDER.filter(
+        (_, index) =>
+          Math.abs(index - activeIndex) <= 1,
+      );
 
   return (
     <group>
-      <VenturesTransitionGroup scene="hero">
-        <HeroWorld compact={compact} />
-      </VenturesTransitionGroup>
-
-      <VenturesTransitionGroup scene="philosophy">
-        <PhilosophyWorld
-          compact={compact}
-        />
-      </VenturesTransitionGroup>
-
-      <VenturesTransitionGroup scene="portfolio">
-        <PortfolioWorld
-          compact={compact}
-        />
-      </VenturesTransitionGroup>
-
-      <VenturesTransitionGroup scene="featured">
-        <FeaturedWorld
-          compact={compact}
-        />
-      </VenturesTransitionGroup>
-
-      <VenturesTransitionGroup scene="emergence">
-        <EmergenceWorld
-          compact={compact}
-        />
-      </VenturesTransitionGroup>
-
-      <VenturesTransitionGroup scene="capabilities">
-        <CapabilitiesWorld
-          compact={compact}
-        />
-      </VenturesTransitionGroup>
-
-      <VenturesTransitionGroup scene="stages">
-        <StagesWorld
-          compact={compact}
-        />
-      </VenturesTransitionGroup>
-
-      <VenturesTransitionGroup scene="future">
-        <FutureWorld
-          compact={compact}
-        />
-      </VenturesTransitionGroup>
-
-      <VenturesTransitionGroup scene="cta">
-        <CtaWorld compact={compact} />
-      </VenturesTransitionGroup>
+      {mountedScenes.map((scene) => (
+        <VenturesTransitionGroup
+          key={scene}
+          scene={scene}
+          activeScene={activeScene}
+          progress={sceneProgress.current[scene]}
+        >
+          <VenturesWorld
+            scene={scene}
+            compact={compact}
+          />
+        </VenturesTransitionGroup>
+      ))}
     </group>
   );
 }
@@ -1861,18 +1868,16 @@ function VenturesSceneDirector() {
    to one side so Adaptcues content has room.
 ============================================================ */
 
-function VenturesCameraRig() {
+function VenturesCameraRig({
+  activeScene,
+  pointer,
+  reducedMotion,
+}: {
+  activeScene: VenturesSceneName;
+  pointer: ReturnType<typeof useGlobalPointer>;
+  reducedMotion: boolean;
+}) {
   const { camera } = useThree();
-
-  const {
-    activeScene,
-  } = useVenturesSceneExperience();
-
-  const pointer =
-    useGlobalPointer();
-
-  const reducedMotion =
-    useReducedMotion();
 
   useFrame((_, delta) => {
     const perspectiveCamera =
@@ -2023,10 +2028,11 @@ function VenturesLighting() {
    BACKGROUND FIELD
 ============================================================ */
 
-function BackgroundField() {
-  const compact =
-    useCompactScene();
-
+function BackgroundField({
+  compact,
+}: {
+  compact: boolean;
+}) {
   return (
     <Sparkles
       count={compact ? 28 : 65}
@@ -2047,9 +2053,19 @@ export function VenturesScene() {
   const compact =
     useCompactScene();
 
+  const reducedMotion =
+    useReducedMotion();
+
+  const pointer =
+    useGlobalPointer();
+
+  const {
+    activeScene,
+  } = useVenturesSceneExperience();
+
   return (
     <Canvas
-      dpr={compact ? [1, 1.25] : [1, 1.75]}
+      dpr={compact ? 1 : [1, 1.35]}
       camera={{
         position: [0, 0, 8.2],
         fov: compact ? 52 : 46,
@@ -2062,7 +2078,11 @@ export function VenturesScene() {
         powerPreference:
           "high-performance",
       }}
-      frameloop="always"
+      frameloop={
+        reducedMotion
+          ? "demand"
+          : "always"
+      }
       onCreated={({ gl }) => {
         gl.toneMapping =
           ACESFilmicToneMapping;
@@ -2078,11 +2098,18 @@ export function VenturesScene() {
     >
       <VenturesLighting />
 
-      <BackgroundField />
+      <BackgroundField compact={compact} />
 
-      <VenturesSceneDirector />
+      <VenturesSceneDirector
+        compact={compact}
+        reducedMotion={reducedMotion}
+      />
 
-      <VenturesCameraRig />
+      <VenturesCameraRig
+        activeScene={activeScene}
+        pointer={pointer}
+        reducedMotion={reducedMotion}
+      />
     </Canvas>
   );
 }

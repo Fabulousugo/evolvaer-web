@@ -1,16 +1,9 @@
-"use client";
-
 import {
   Lightbulb,
   ShieldCheck,
   Target,
   Users,
 } from "lucide-react";
-import {
-  useEffect,
-  useRef,
-  type CSSProperties,
-} from "react";
 
 const principles = [
   {
@@ -50,159 +43,162 @@ const principles = [
 const accents = {
   blue: {
     text: "text-blue",
-    border: "group-hover:border-blue/30",
-    glow: "bg-blue/20 dark:bg-blue/20",
+    border:
+      "group-hover:border-blue/30 dark:group-hover:border-blue/35",
+    icon:
+      "bg-blue/[0.07] text-blue dark:bg-blue/[0.09]",
+    atmosphere:
+      "bg-[radial-gradient(circle_at_88%_50%,rgba(37,99,235,0.07),transparent_37%)] dark:bg-[radial-gradient(circle_at_88%_50%,rgba(59,130,246,0.10),transparent_38%)]",
   },
+
   teal: {
     text: "text-teal",
-    border: "group-hover:border-teal/30",
-    glow: "bg-teal/20 dark:bg-teal/20",
+    border:
+      "group-hover:border-teal/30 dark:group-hover:border-teal/35",
+    icon:
+      "bg-teal/[0.07] text-teal dark:bg-teal/[0.09]",
+    atmosphere:
+      "bg-[radial-gradient(circle_at_88%_50%,rgba(16,185,129,0.065),transparent_37%)] dark:bg-[radial-gradient(circle_at_88%_50%,rgba(34,211,238,0.09),transparent_38%)]",
   },
+
   violet: {
     text: "text-violet",
-    border: "group-hover:border-violet/30",
-    glow: "bg-violet/20 dark:bg-violet/20",
+    border:
+      "group-hover:border-violet/30 dark:group-hover:border-violet/35",
+    icon:
+      "bg-violet/[0.065] text-violet dark:bg-violet/[0.085]",
+    atmosphere:
+      "bg-[radial-gradient(circle_at_88%_50%,rgba(124,58,237,0.065),transparent_37%)] dark:bg-[radial-gradient(circle_at_88%_50%,rgba(168,85,247,0.095),transparent_38%)]",
   },
-};
+} as const;
 
 export function PhilosophySection() {
-  const sectionRef =
-    useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const section =
-      sectionRef.current;
-
-    if (!section) return;
-
-    const handlePointerMove = (
-      event: PointerEvent,
-    ) => {
-      const rect =
-        section.getBoundingClientRect();
-
-      const x =
-        (event.clientX -
-          rect.left) /
-        rect.width;
-
-      const y =
-        (event.clientY -
-          rect.top) /
-        rect.height;
-
-      section.style.setProperty(
-        "--philosophy-x",
-        `${x * 100}%`,
-      );
-
-      section.style.setProperty(
-        "--philosophy-y",
-        `${y * 100}%`,
-      );
-    };
-
-    section.addEventListener(
-      "pointermove",
-      handlePointerMove,
-      {
-        passive: true,
-      },
-    );
-
-    return () => {
-      section.removeEventListener(
-        "pointermove",
-        handlePointerMove,
-      );
-    };
-  }, []);
-
   return (
     <section
-      ref={sectionRef}
-      style={
-        {
-          "--philosophy-x": "60%",
-          "--philosophy-y": "42%",
-        } as CSSProperties
-      }
       className="
         relative
         overflow-hidden
+
         py-24
+
         sm:py-28
         lg:py-36
       "
     >
+      {/* =====================================================
+          ATMOSPHERE
+      ===================================================== */}
+
       <div
         aria-hidden="true"
         className="
           pointer-events-none
-          absolute inset-0
+          absolute
+          inset-0
         "
       >
         <div
           className="
-            absolute inset-0
-            bg-white/[0.62]
-            backdrop-blur-[2px]
-            dark:bg-[#0d1117]/[0.62]
+            absolute
+            inset-0
+
+            bg-white/[0.63]
+
+            dark:bg-[#0d1117]/[0.64]
           "
         />
 
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(circle at var(--philosophy-x) var(--philosophy-y), rgba(59,130,246,0.06), transparent 30%)",
-          }}
-        />
+        {/* Blue upper field */}
 
         <div
           className="
             absolute
-            right-[-16rem]
-            top-[2%]
-            h-[38rem]
-            w-[38rem]
-            rounded-full
-            bg-blue/[0.045]
-            blur-[180px]
-            dark:bg-blue/[0.07]
+            inset-0
+
+            bg-[radial-gradient(circle_at_90%_16%,rgba(37,99,235,0.065),transparent_34%)]
+
+            dark:bg-[radial-gradient(circle_at_90%_16%,rgba(59,130,246,0.09),transparent_35%)]
+          "
+        />
+
+        {/* Teal lower field */}
+
+        <div
+          className="
+            absolute
+            inset-0
+
+            bg-[radial-gradient(circle_at_35%_92%,rgba(16,185,129,0.05),transparent_33%)]
+
+            dark:bg-[radial-gradient(circle_at_35%_92%,rgba(34,211,238,0.07),transparent_34%)]
+          "
+        />
+
+        {/* Very subtle violet balance */}
+
+        <div
+          className="
+            absolute
+            inset-0
+
+            bg-[radial-gradient(circle_at_60%_40%,rgba(124,58,237,0.025),transparent_26%)]
+
+            dark:bg-[radial-gradient(circle_at_60%_40%,rgba(168,85,247,0.04),transparent_27%)]
           "
         />
 
         <div
           className="
+            brand-grid
             absolute
-            bottom-[-16rem]
-            left-[20%]
-            h-[30rem]
-            w-[30rem]
-            rounded-full
-            bg-teal/[0.035]
-            blur-[160px]
-            dark:bg-teal/[0.055]
+            inset-0
+
+            opacity-[0.09]
+
+            dark:opacity-[0.065]
           "
         />
       </div>
 
-      <div className="evolvaer-container relative z-10">
+      {/* =====================================================
+          CONTENT
+      ===================================================== */}
+
+      <div
+        className="
+          evolvaer-container
+          relative
+          z-10
+        "
+      >
         <div
           className="
             grid
             gap-14
+
             lg:grid-cols-[0.78fr_1.22fr]
             lg:gap-20
           "
         >
+          {/* =================================================
+              HEADING
+          ================================================= */}
+
           <div>
-            <div className="mb-5 flex items-center gap-4">
+            <div
+              className="
+                mb-5
+                flex
+                items-center
+                gap-4
+              "
+            >
               <span
+                aria-hidden="true"
                 className="
                   h-px
                   w-10
+
                   bg-gradient-to-r
                   from-blue
                   via-teal
@@ -226,6 +222,7 @@ export function PhilosophySection() {
             <h2
               className="
                 max-w-3xl
+
                 text-[clamp(3.2rem,5vw,5.7rem)]
                 font-bold
                 leading-[0.92]
@@ -236,34 +233,44 @@ export function PhilosophySection() {
               <br />
               principles that
               <br />
+
               <span className="brand-gradient-text">
                 endure.
               </span>
             </h2>
           </div>
 
+          {/* =================================================
+              PRINCIPLES
+          ================================================= */}
+
           <div>
             <p
               className="
                 max-w-2xl
+
                 text-base
                 leading-8
                 text-muted
+
                 sm:text-[1.05rem]
               "
             >
-              What we build will change. The
-              technologies will change. The
-              problems will change. The
-              principles shaping how Evolvaer
-              approaches them should not.
+              What we build will change.
+              The technologies will change.
+              The problems will change. The
+              principles shaping how
+              Evolvaer approaches them
+              should not.
             </p>
 
             <div
               className="
                 mt-10
+
                 border-t
                 border-navy/[0.08]
+
                 dark:border-white/[0.08]
               "
             >
@@ -287,39 +294,55 @@ export function PhilosophySection() {
                         relative
                         grid
                         gap-5
+
                         overflow-hidden
+
                         border-b
                         border-navy/[0.08]
+
                         py-8
+
+                        transition-[background-color,border-color]
+                        duration-200
+
+                        hover:bg-white/[0.22]
+
                         dark:border-white/[0.075]
+                        dark:hover:bg-white/[0.016]
+
                         sm:grid-cols-[auto_1fr]
                         sm:gap-7
+
                         ${accent.border}
                       `}
                     >
+                      {/* Static accent */}
+
                       <div
                         aria-hidden="true"
                         className={`
                           pointer-events-none
                           absolute
-                          right-[8%]
-                          top-1/2
-                          h-28
-                          w-28
-                          -translate-y-1/2
-                          rounded-full
-                          blur-[60px]
-                          opacity-0
+                          inset-0
+
+                          opacity-35
+
                           transition-opacity
-                          duration-500
+                          duration-200
+
                           group-hover:opacity-100
-                          ${accent.glow}
+
+                          ${accent.atmosphere}
                         `}
                       />
 
+                      {/* Number + icon */}
+
                       <div
                         className="
-                          relative z-10
+                          relative
+                          z-10
+
                           flex
                           items-start
                           gap-4
@@ -329,9 +352,11 @@ export function PhilosophySection() {
                           className={`
                             w-8
                             pt-2
+
                             text-sm
                             font-semibold
                             tracking-[0.1em]
+
                             ${accent.text}
                           `}
                         >
@@ -341,35 +366,45 @@ export function PhilosophySection() {
                         </span>
 
                         <div
-                          className="
+                          className={`
                             flex
                             h-10
                             w-10
                             items-center
                             justify-center
+
                             rounded-xl
                             border
                             border-navy/[0.08]
-                            bg-white/[0.35]
-                            backdrop-blur-xl
+
                             transition-transform
-                            duration-300
-                            group-hover:-translate-y-1
+                            duration-200
+
+                            group-hover:-translate-y-0.5
+
                             dark:border-white/[0.08]
-                            dark:bg-white/[0.025]
-                          "
+
+                            ${accent.icon}
+                          `}
                         >
                           <Icon
-                            className={`
-                              h-4
-                              w-4
-                              ${accent.text}
-                            `}
+                            aria-hidden="true"
+                            strokeWidth={
+                              1.7
+                            }
+                            className="h-4 w-4"
                           />
                         </div>
                       </div>
 
-                      <div className="relative z-10">
+                      {/* Copy */}
+
+                      <div
+                        className="
+                          relative
+                          z-10
+                        "
+                      >
                         <h3
                           className="
                             text-[2rem]
@@ -386,6 +421,7 @@ export function PhilosophySection() {
                           className="
                             mt-3
                             max-w-2xl
+
                             text-sm
                             leading-7
                             text-muted
@@ -404,44 +440,78 @@ export function PhilosophySection() {
           </div>
         </div>
 
+        {/* ===================================================
+            CLOSING BELIEF
+        =================================================== */}
+
         <div
           className="
             relative
             mt-16
             overflow-hidden
+
             rounded-[2.25rem]
             border
-            border-navy/[0.08]
-            bg-[#0a1d2f]/[0.86]
+            border-white/[0.08]
+
+            bg-[#0a1d2f]/[0.96]
+
             p-7
             text-white
-            backdrop-blur-2xl
-            dark:border-white/[0.08]
-            dark:bg-[#0f1622]/[0.82]
+
+            shadow-[0_18px_56px_rgba(10,29,47,0.1)]
+
+            dark:bg-[#0f1622]/[0.96]
+
             sm:p-10
             lg:p-12
           "
         >
+          {/* Blue light field */}
+
           <div
             aria-hidden="true"
             className="
               pointer-events-none
               absolute
-              right-[-10rem]
-              top-[-10rem]
-              h-[30rem]
-              w-[30rem]
-              rounded-full
-              bg-blue/10
-              blur-[120px]
+              inset-0
+
+              bg-[radial-gradient(circle_at_93%_8%,rgba(59,130,246,0.17),transparent_35%)]
+            "
+          />
+
+          {/* Teal balance */}
+
+          <div
+            aria-hidden="true"
+            className="
+              pointer-events-none
+              absolute
+              inset-0
+
+              bg-[radial-gradient(circle_at_35%_100%,rgba(34,211,238,0.07),transparent_34%)]
+            "
+          />
+
+          <div
+            aria-hidden="true"
+            className="
+              brand-grid
+              pointer-events-none
+              absolute
+              inset-0
+
+              opacity-[0.06]
             "
           />
 
           <div
             className="
-              relative z-10
+              relative
+              z-10
               grid
               gap-10
+
               lg:grid-cols-[0.35fr_1.65fr]
             "
           >
@@ -460,16 +530,19 @@ export function PhilosophySection() {
             <p
               className="
                 max-w-5xl
+
                 text-[clamp(2.5rem,4.4vw,5rem)]
                 font-semibold
                 leading-[1]
                 tracking-[-0.05em]
               "
             >
-              The future is not something we
-              simply predict.
+              The future is not
+              something we simply
+              predict.
               <br />
               It is something we{" "}
+
               <span className="text-blue">
                 help shape.
               </span>

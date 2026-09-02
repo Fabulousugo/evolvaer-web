@@ -3,7 +3,6 @@
 import {
   createContext,
   useContext,
-  useMemo,
   useRef,
   useState,
   type MutableRefObject,
@@ -21,14 +20,17 @@ export type WorkSceneName =
   | "integrated"
   | "cta";
 
-type WorkSceneProgressMap =
+export type WorkSceneProgressMap =
   Record<WorkSceneName, number>;
 
-type WorkSceneExperienceContextValue = {
+type WorkActiveSceneContextValue = {
   activeScene: WorkSceneName;
   setActiveScene: (
     scene: WorkSceneName,
   ) => void;
+};
+
+type WorkSceneRuntimeContextValue = {
   sceneProgress: MutableRefObject<WorkSceneProgressMap>;
 };
 
@@ -44,9 +46,14 @@ const initialProgress: WorkSceneProgressMap = {
   cta: 0,
 };
 
-const WorkSceneExperienceContext =
+const WorkActiveSceneContext =
   createContext<
-    WorkSceneExperienceContextValue | undefined
+    WorkActiveSceneContextValue | undefined
+  >(undefined);
+
+const WorkSceneRuntimeContext =
+  createContext<
+    WorkSceneRuntimeContextValue | undefined
   >(undefined);
 
 export function WorkSceneExperienceProvider({
@@ -62,33 +69,51 @@ export function WorkSceneExperienceProvider({
       ...initialProgress,
     });
 
-  const value = useMemo(
-    () => ({
-      activeScene,
-      setActiveScene,
+  const runtimeValue =
+    useRef<WorkSceneRuntimeContextValue>({
       sceneProgress,
-    }),
-    [activeScene],
-  );
+    }).current;
 
   return (
-    <WorkSceneExperienceContext.Provider
-      value={value}
+    <WorkSceneRuntimeContext.Provider
+      value={runtimeValue}
     >
-      {children}
-    </WorkSceneExperienceContext.Provider>
+      <WorkActiveSceneContext.Provider
+        value={{
+          activeScene,
+          setActiveScene,
+        }}
+      >
+        {children}
+      </WorkActiveSceneContext.Provider>
+    </WorkSceneRuntimeContext.Provider>
   );
 }
 
-export function useWorkSceneExperience() {
+export function useWorkActiveScene() {
   const context =
     useContext(
-      WorkSceneExperienceContext,
+      WorkActiveSceneContext,
     );
 
   if (!context) {
     throw new Error(
-      "useWorkSceneExperience must be used within WorkSceneExperienceProvider",
+      "useWorkActiveScene must be used within WorkSceneExperienceProvider",
+    );
+  }
+
+  return context;
+}
+
+export function useWorkSceneRuntime() {
+  const context =
+    useContext(
+      WorkSceneRuntimeContext,
+    );
+
+  if (!context) {
+    throw new Error(
+      "useWorkSceneRuntime must be used within WorkSceneExperienceProvider",
     );
   }
 

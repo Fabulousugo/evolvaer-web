@@ -3,11 +3,12 @@
 import {
   createContext,
   useContext,
-  useMemo,
   useRef,
   useState,
+  type Dispatch,
   type MutableRefObject,
   type ReactNode,
+  type SetStateAction,
 } from "react";
 
 export type AboutSceneName =
@@ -20,14 +21,17 @@ export type AboutSceneName =
   | "ambition"
   | "cta";
 
-type AboutSceneProgressMap =
+export type AboutSceneProgressMap =
   Record<AboutSceneName, number>;
 
-type AboutSceneExperienceContextValue = {
+type AboutActiveSceneContextValue = {
   activeScene: AboutSceneName;
-  setActiveScene: (
-    scene: AboutSceneName,
-  ) => void;
+  setActiveScene: Dispatch<
+    SetStateAction<AboutSceneName>
+  >;
+};
+
+type AboutSceneRuntimeContextValue = {
   sceneProgress: MutableRefObject<AboutSceneProgressMap>;
 };
 
@@ -42,9 +46,14 @@ const initialProgress: AboutSceneProgressMap = {
   cta: 0,
 };
 
-const AboutSceneExperienceContext =
+const AboutActiveSceneContext =
   createContext<
-    AboutSceneExperienceContextValue | undefined
+    AboutActiveSceneContextValue | undefined
+  >(undefined);
+
+const AboutSceneRuntimeContext =
+  createContext<
+    AboutSceneRuntimeContextValue | undefined
   >(undefined);
 
 export function AboutSceneExperienceProvider({
@@ -52,48 +61,60 @@ export function AboutSceneExperienceProvider({
 }: {
   children: ReactNode;
 }) {
-  const [activeScene, setActiveScene] =
-    useState<AboutSceneName>("hero");
+  const [
+    activeScene,
+    setActiveScene,
+  ] = useState<AboutSceneName>("hero");
 
-  /*
-   * Progress lives inside a ref rather
-   * than React state.
-   *
-   * Scroll updates can therefore happen
-   * continuously without re-rendering the
-   * entire About page.
-   */
   const sceneProgress =
     useRef<AboutSceneProgressMap>({
       ...initialProgress,
     });
 
-  const value = useMemo(
-    () => ({
-      activeScene,
-      setActiveScene,
-      sceneProgress,
-    }),
-    [activeScene],
-  );
+  const runtimeValue = {
+    sceneProgress,
+  };
 
   return (
-    <AboutSceneExperienceContext.Provider
-      value={value}
+    <AboutSceneRuntimeContext.Provider
+      value={runtimeValue}
     >
-      {children}
-    </AboutSceneExperienceContext.Provider>
+      <AboutActiveSceneContext.Provider
+        value={{
+          activeScene,
+          setActiveScene,
+        }}
+      >
+        {children}
+      </AboutActiveSceneContext.Provider>
+    </AboutSceneRuntimeContext.Provider>
   );
 }
 
-export function useAboutSceneExperience() {
-  const context = useContext(
-    AboutSceneExperienceContext,
-  );
+export function useAboutActiveScene() {
+  const context =
+    useContext(
+      AboutActiveSceneContext,
+    );
 
   if (!context) {
     throw new Error(
-      "useAboutSceneExperience must be used within AboutSceneExperienceProvider",
+      "useAboutActiveScene must be used within AboutSceneExperienceProvider",
+    );
+  }
+
+  return context;
+}
+
+export function useAboutSceneRuntime() {
+  const context =
+    useContext(
+      AboutSceneRuntimeContext,
+    );
+
+  if (!context) {
+    throw new Error(
+      "useAboutSceneRuntime must be used within AboutSceneExperienceProvider",
     );
   }
 

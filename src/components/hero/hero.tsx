@@ -1,68 +1,13 @@
-"use client";
-
 import {
   ArrowDown,
   ArrowUpRight,
 } from "lucide-react";
+
 import Link from "next/link";
-import {
-  useEffect,
-  useRef,
-} from "react";
 
 export function Hero() {
-  const heroRef =
-    useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const hero =
-      heroRef.current;
-
-    if (!hero) return;
-
-    const handlePointerMove = (
-      event: PointerEvent,
-    ) => {
-      const rect =
-        hero.getBoundingClientRect();
-
-      const x =
-        (event.clientX -
-          rect.left) /
-        rect.width;
-
-      const y =
-        (event.clientY -
-          rect.top) /
-        rect.height;
-
-      hero.style.setProperty(
-        "--hero-x",
-        `${x * 100}%`,
-      );
-
-      hero.style.setProperty(
-        "--hero-y",
-        `${y * 100}%`,
-      );
-    };
-
-    hero.addEventListener(
-      "pointermove",
-      handlePointerMove,
-    );
-
-    return () => {
-      hero.removeEventListener(
-        "pointermove",
-        handlePointerMove,
-      );
-    };
-  }, []);
-
   return (
     <section
-      ref={heroRef}
       className="
         relative
         flex
@@ -70,114 +15,92 @@ export function Hero() {
         items-center
         overflow-hidden
       "
-      style={
-        {
-          "--hero-x": "68%",
-          "--hero-y": "38%",
-        } as React.CSSProperties
-      }
     >
       {/* =====================================================
-          HERO ATMOSPHERE
-          ===================================================== */}
+          ATMOSPHERE
+      ===================================================== */}
 
       <div
         aria-hidden="true"
         className="
           pointer-events-none
-          absolute inset-0
+          absolute
+          inset-0
         "
       >
-        {/* Cursor reactive glow */}
-
-        <div
-          className="
-            absolute inset-0
-            opacity-70
-            transition-opacity
-            duration-700
-
-            dark:opacity-80
-          "
-          style={{
-            background:
-              "radial-gradient(circle at var(--hero-x) var(--hero-y), rgba(37,99,235,0.10), transparent 30%)",
-          }}
-        />
-
-        {/* Teal atmosphere */}
+        {/* Main blue presence */}
 
         <div
           className="
             absolute
-            bottom-[-20rem]
-            left-[8%]
+            inset-0
 
-            h-[38rem]
-            w-[38rem]
+            bg-[radial-gradient(circle_at_72%_34%,rgba(37,99,235,0.10),transparent_31%)]
 
-            rounded-full
-            bg-teal/[0.055]
-            blur-[170px]
-
-            dark:bg-teal/[0.08]
+            dark:bg-[radial-gradient(circle_at_72%_34%,rgba(59,130,246,0.13),transparent_32%)]
           "
         />
 
-        {/* Violet atmosphere */}
+        {/* Teal lower field */}
 
         <div
           className="
             absolute
-            right-[4%]
-            top-[18%]
+            inset-0
 
-            h-[28rem]
-            w-[28rem]
+            bg-[radial-gradient(circle_at_26%_92%,rgba(16,185,129,0.07),transparent_34%)]
 
-            rounded-full
-            bg-violet/[0.035]
-            blur-[150px]
-
-            dark:bg-violet/[0.075]
+            dark:bg-[radial-gradient(circle_at_26%_92%,rgba(34,211,238,0.085),transparent_35%)]
           "
         />
 
-        {/* Subtle content vignette */}
+        {/* Violet counterweight */}
 
         <div
           className="
-            absolute inset-0
+            absolute
+            inset-0
 
-            bg-[linear-gradient(90deg,rgba(255,255,255,0.92)_0%,rgba(255,255,255,0.78)_36%,rgba(255,255,255,0.18)_68%,transparent_100%)]
+            bg-[radial-gradient(circle_at_88%_46%,rgba(124,58,237,0.045),transparent_27%)]
 
-            dark:bg-[linear-gradient(90deg,rgba(13,17,23,0.94)_0%,rgba(13,17,23,0.78)_38%,rgba(13,17,23,0.18)_70%,transparent_100%)]
+            dark:bg-[radial-gradient(circle_at_88%_46%,rgba(168,85,247,0.075),transparent_28%)]
+          "
+        />
+
+        {/* Protect text against scene */}
+
+        <div
+          className="
+            absolute
+            inset-0
+
+            bg-[linear-gradient(90deg,rgba(255,255,255,0.95)_0%,rgba(255,255,255,0.82)_34%,rgba(255,255,255,0.24)_67%,transparent_100%)]
+
+            dark:bg-[linear-gradient(90deg,rgba(13,17,23,0.96)_0%,rgba(13,17,23,0.82)_36%,rgba(13,17,23,0.22)_70%,transparent_100%)]
           "
         />
       </div>
 
       {/* =====================================================
           CONTENT
-          ===================================================== */}
+      ===================================================== */}
 
       <div
         className="
           evolvaer-container
-          relative z-10
+          relative
+          z-10
           w-full
           pb-20
           pt-36
 
           sm:pt-40
+
           lg:pb-16
           lg:pt-32
-      "
+        "
       >
-        <div
-          className="
-            max-w-[62rem]
-          "
-        >
+        <div className="max-w-[62rem]">
           {/* Eyebrow */}
 
           <div
@@ -186,9 +109,10 @@ export function Hero() {
               flex
               items-center
               gap-4
-          "
+            "
           >
             <span
+              aria-hidden="true"
               className="
                 h-px
                 w-12
@@ -197,7 +121,7 @@ export function Hero() {
                 from-blue
                 via-teal
                 to-transparent
-            "
+              "
             />
 
             <p
@@ -209,21 +133,27 @@ export function Hero() {
                 text-muted
 
                 sm:text-xs
-            "
+              "
             >
               Technology
+
               <span className="mx-3 text-blue">
                 ·
               </span>
+
               Research
+
               <span className="mx-3 text-teal">
                 ·
               </span>
+
               Venture Building
             </p>
           </div>
 
-          {/* Main headline */}
+          {/* =================================================
+              HEADLINE
+          ================================================= */}
 
           <h1
             className="
@@ -233,7 +163,7 @@ export function Hero() {
               font-bold
               leading-[0.84]
               tracking-[-0.068em]
-          "
+            "
           >
             <span className="block">
               Exploring
@@ -241,17 +171,16 @@ export function Hero() {
 
             <span className="block">
               what&apos;s{" "}
-              <span
-                className="
-                  brand-gradient-text
-                "
-              >
+
+              <span className="brand-gradient-text">
                 next.
               </span>
             </span>
           </h1>
 
-          {/* Secondary statement */}
+          {/* =================================================
+              SECONDARY STATEMENT
+          ================================================= */}
 
           <div
             className="
@@ -262,7 +191,7 @@ export function Hero() {
 
               lg:grid-cols-[0.9fr_1.1fr]
               lg:items-end
-          "
+            "
           >
             <p
               className="
@@ -270,7 +199,7 @@ export function Hero() {
                 font-semibold
                 leading-[0.95]
                 tracking-[-0.05em]
-            "
+              "
             >
               Building what
               <br />
@@ -284,7 +213,7 @@ export function Hero() {
               className="
                 max-w-xl
                 lg:pb-1
-            "
+              "
             >
               <p
                 className="
@@ -293,7 +222,7 @@ export function Hero() {
                   text-muted
 
                   sm:text-[1.05rem]
-              "
+                "
               >
                 We research, engineer and
                 commercialise emerging
@@ -312,12 +241,13 @@ export function Hero() {
                   flex-wrap
                   items-center
                   gap-4
-              "
+                "
               >
                 <Link
                   href="/what-we-do"
                   className="
                     group
+
                     inline-flex
                     min-h-14
                     items-center
@@ -331,32 +261,33 @@ export function Hero() {
                     font-semibold
                     text-white
 
-                    shadow-[0_14px_42px_rgba(37,99,235,0.20)]
+                    shadow-[0_10px_30px_rgba(37,99,235,0.16)]
 
-                    transition-all
-                    duration-300
+                    transition-[transform,background-color,box-shadow]
+                    duration-200
 
-                    hover:-translate-y-1
+                    hover:-translate-y-0.5
                     hover:bg-[#1d4ed8]
-                    hover:shadow-[0_18px_50px_rgba(37,99,235,0.28)]
+                    hover:shadow-[0_12px_34px_rgba(37,99,235,0.22)]
 
                     dark:bg-[#3b82f6]
                     dark:hover:bg-[#4b8df8]
-                "
+                  "
                 >
                   Explore our work
 
                   <ArrowUpRight
+                    aria-hidden="true"
                     className="
                       h-4
                       w-4
 
                       transition-transform
-                      duration-300
+                      duration-200
 
-                      group-hover:translate-x-1
-                      group-hover:-translate-y-1
-                  "
+                      group-hover:translate-x-0.5
+                      group-hover:-translate-y-0.5
+                    "
                   />
                 </Link>
 
@@ -370,33 +301,32 @@ export function Hero() {
                     rounded-2xl
                     border
                     border-navy/10
-                    bg-white/55
+                    bg-white/[0.78]
                     px-7
 
                     text-sm
                     font-medium
                     text-navy/70
 
-                    shadow-[0_10px_30px_rgba(10,29,47,0.04)]
-                    backdrop-blur-xl
+                    shadow-[0_6px_20px_rgba(10,29,47,0.035)]
 
-                    transition-all
-                    duration-300
+                    transition-[transform,color,background-color,border-color]
+                    duration-200
 
-                    hover:-translate-y-1
+                    hover:-translate-y-0.5
                     hover:border-blue/20
                     hover:bg-white
                     hover:text-blue
 
                     dark:border-white/12
-                    dark:bg-white/[0.035]
+                    dark:bg-white/[0.045]
                     dark:text-white/70
                     dark:shadow-none
 
                     dark:hover:border-blue/30
                     dark:hover:bg-blue/[0.08]
                     dark:hover:text-blue
-                "
+                  "
                 >
                   Learn about us
                 </Link>
@@ -406,8 +336,8 @@ export function Hero() {
         </div>
 
         {/* =====================================================
-            FLOATING SPATIAL LABELS
-            ===================================================== */}
+            SPATIAL LABELS
+        ===================================================== */}
 
         <div
           aria-hidden="true"
@@ -418,7 +348,7 @@ export function Hero() {
             hidden
 
             lg:block
-        "
+          "
         >
           <div
             className="
@@ -429,7 +359,7 @@ export function Hero() {
               rounded-full
               border
               border-blue/15
-              bg-white/30
+              bg-white/[0.5]
               px-4
               py-2
 
@@ -439,12 +369,10 @@ export function Hero() {
               tracking-[0.28em]
               text-blue/70
 
-              backdrop-blur-xl
-
               dark:border-blue/25
-              dark:bg-white/[0.025]
+              dark:bg-[#0d1117]/[0.56]
               dark:text-blue/80
-          "
+            "
           >
             Research
           </div>
@@ -458,7 +386,7 @@ export function Hero() {
               rounded-full
               border
               border-teal/15
-              bg-white/30
+              bg-white/[0.5]
               px-4
               py-2
 
@@ -468,11 +396,9 @@ export function Hero() {
               tracking-[0.28em]
               text-teal/80
 
-              backdrop-blur-xl
-
               dark:border-teal/25
-              dark:bg-white/[0.025]
-          "
+              dark:bg-[#0d1117]/[0.56]
+            "
           >
             Engineer
           </div>
@@ -480,13 +406,13 @@ export function Hero() {
           <div
             className="
               absolute
-              right-[5%]
               bottom-[22%]
+              right-[5%]
 
               rounded-full
               border
               border-violet/15
-              bg-white/30
+              bg-white/[0.5]
               px-4
               py-2
 
@@ -496,12 +422,10 @@ export function Hero() {
               tracking-[0.28em]
               text-violet/70
 
-              backdrop-blur-xl
-
               dark:border-violet/25
-              dark:bg-white/[0.025]
+              dark:bg-[#0d1117]/[0.56]
               dark:text-violet/80
-          "
+            "
           >
             Build
           </div>
@@ -509,7 +433,7 @@ export function Hero() {
 
         {/* =====================================================
             SCROLL INDICATOR
-            ===================================================== */}
+        ===================================================== */}
 
         <div
           className="
@@ -522,7 +446,7 @@ export function Hero() {
             gap-5
 
             xl:flex
-        "
+          "
         >
           <span
             className="
@@ -533,7 +457,7 @@ export function Hero() {
               uppercase
               tracking-[0.34em]
               text-muted
-          "
+            "
           >
             Scroll to explore
           </span>
@@ -543,9 +467,10 @@ export function Hero() {
               flex
               flex-col
               items-center
-          "
+            "
           >
             <span
+              aria-hidden="true"
               className="
                 h-11
                 w-px
@@ -554,16 +479,17 @@ export function Hero() {
                 from-blue
                 via-teal
                 to-transparent
-            "
+              "
             />
 
             <ArrowDown
+              aria-hidden="true"
               className="
                 mt-[-2px]
                 h-5
                 w-5
                 text-blue
-            "
+              "
             />
           </div>
         </div>
@@ -571,7 +497,7 @@ export function Hero() {
 
       {/* =====================================================
           BOTTOM TRANSITION
-          ===================================================== */}
+      ===================================================== */}
 
       <div
         aria-hidden="true"
@@ -593,7 +519,7 @@ export function Hero() {
           to-transparent
 
           dark:via-blue/25
-      "
+        "
       />
     </section>
   );
