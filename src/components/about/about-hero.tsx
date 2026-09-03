@@ -1,8 +1,5 @@
 import Link from "next/link";
-import {
-  ArrowDown,
-  ArrowUpRight,
-} from "lucide-react";
+import { ArrowDown, ArrowUpRight } from "lucide-react";
 
 export function AboutHero() {
   return (
@@ -48,8 +45,7 @@ export function AboutHero() {
               linear-gradient(rgba(37,99,235,.4) 1px, transparent 1px),
               linear-gradient(90deg, rgba(37,99,235,.4) 1px, transparent 1px)
             `,
-            backgroundSize:
-              "84px 84px",
+            backgroundSize: "84px 84px",
           }}
         />
 
@@ -60,7 +56,8 @@ export function AboutHero() {
           CONTENT
       ===================================================== */}
 
-      <div className="evolvaer-container relative z-10 flex flex-1 flex-col justify-between pb-9 pt-12 sm:pb-12 sm:pt-16 lg:pt-20">
+      {/* Added responsive horizontal padding (px-4 sm:px-6 lg:px-8) for soft side margins */}
+      <div className="evolvaer-container relative z-10 flex flex-1 flex-col justify-between px-4 pb-9 pt-12 sm:px-6 sm:pb-12 sm:pt-16 lg:px-8 lg:pt-20">
         <div className="grid flex-1 gap-12 lg:grid-cols-[1.12fr_0.88fr] lg:items-center">
           <div className="max-w-5xl">
             <div className="mb-7 flex items-center gap-4">
@@ -74,10 +71,8 @@ export function AboutHero() {
             <h1 className="text-[clamp(3.9rem,7.8vw,8.5rem)] font-semibold leading-[0.87] tracking-[-0.065em] text-[#0A1D2F] dark:text-white">
               Built to explore
               <br />
-
               <span className="inline-flex flex-wrap items-baseline gap-x-[0.18em]">
                 what comes
-
                 <span className="bg-gradient-to-r from-[#2563EB] via-[#22D3EE] to-[#7C3AED] bg-clip-text text-transparent dark:from-[#3B82F6] dark:via-[#22D3EE] dark:to-[#A855F7]">
                   next.
                 </span>
@@ -96,17 +91,15 @@ export function AboutHero() {
           <div className="max-w-xl lg:justify-self-end lg:pt-24">
             <div className="border-l border-[#2563EB]/15 pl-6 dark:border-[#3B82F6]/20 sm:pl-8">
               <p className="text-base leading-8 text-[#0A1D2F]/62 dark:text-white/55 sm:text-lg sm:leading-9">
-                Evolvaer Technologies is an emerging technology
-                company that researches, engineers and builds
-                products around ideas with the potential to create
-                meaningful real-world value.
+                Evolvaer Technologies is an emerging technology company that
+                researches, engineers and builds products around ideas with the
+                potential to create meaningful real-world value.
               </p>
 
               <p className="mt-6 text-sm leading-7 text-[#0A1D2F]/43 dark:text-white/38">
-                We work across the space between technological
-                possibility and practical usefulness — exploring
-                what is changing, understanding what matters and
-                building what proves worth pursuing.
+                We work across the space between technological possibility and
+                practical usefulness — exploring what is changing, understanding
+                what matters and building what proves worth pursuing.
               </p>
             </div>
 
@@ -116,7 +109,6 @@ export function AboutHero() {
                 className="group inline-flex min-h-12 items-center gap-4 rounded-full border border-[#2563EB]/20 bg-white/55 px-5 text-sm font-semibold text-[#0A1D2F] transition-[transform,border-color,background-color] duration-300 hover:-translate-y-0.5 hover:border-[#2563EB]/45 hover:bg-white/75 dark:border-white/10 dark:bg-white/[0.045] dark:text-white dark:hover:border-[#3B82F6]/45 dark:hover:bg-white/[0.075]"
               >
                 Discover our thinking
-
                 <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#2563EB] text-white transition-transform duration-300 group-hover:translate-y-0.5 dark:bg-[#3B82F6]">
                   <ArrowDown className="h-3.5 w-3.5" />
                 </span>
@@ -127,7 +119,6 @@ export function AboutHero() {
                 className="group inline-flex min-h-12 items-center gap-2 px-3 text-sm font-semibold text-[#0A1D2F]/55 transition-colors duration-300 hover:text-[#2563EB] dark:text-white/48 dark:hover:text-[#60A5FA]"
               >
                 What we do
-
                 <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </Link>
             </div>

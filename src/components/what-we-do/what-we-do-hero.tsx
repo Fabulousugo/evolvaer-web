@@ -1,8 +1,5 @@
 import Link from "next/link";
-import {
-  ArrowDown,
-  ArrowUpRight,
-} from "lucide-react";
+import { ArrowDown, ArrowUpRight } from "lucide-react";
 
 const PROCESS_STEPS = [
   {
@@ -87,8 +84,7 @@ export function WhatWeDoHero() {
                 transparent 1px
               )
             `,
-            backgroundSize:
-              "88px 88px",
+            backgroundSize: "88px 88px",
           }}
         />
 
@@ -99,7 +95,8 @@ export function WhatWeDoHero() {
           CONTENT
       ===================================================== */}
 
-      <div className="evolvaer-container relative z-10 flex flex-1 flex-col">
+      {/* Added responsive horizontal padding (px-4 sm:px-6 lg:px-8) for soft side margins */}
+      <div className="evolvaer-container relative z-10 flex flex-1 flex-col px-4 sm:px-6 lg:px-8">
         <div className="grid flex-1 items-center gap-10 py-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(360px,1.1fr)] lg:gap-12 lg:py-14">
           {/* =================================================
               LEFT — MESSAGE
@@ -115,9 +112,7 @@ export function WhatWeDoHero() {
             </div>
 
             <h1 className="max-w-[650px] text-[clamp(3rem,5.2vw,6rem)] font-semibold leading-[0.96] tracking-[-0.052em] text-[#0A1D2F] dark:text-white">
-              <span className="block">
-                From possibility
-              </span>
+              <span className="block">From possibility</span>
 
               <span className="block">
                 to{" "}
@@ -128,10 +123,9 @@ export function WhatWeDoHero() {
             </h1>
 
             <p className="mt-7 max-w-[570px] text-base leading-8 text-[#0A1D2F]/60 dark:text-white/55 sm:text-[1.05rem]">
-              We identify meaningful technological opportunities,
-              understand them deeply, engineer practical systems
-              around them and turn the strongest ideas into products
-              and ventures.
+              We identify meaningful technological opportunities, understand
+              them deeply, engineer practical systems around them and turn the
+              strongest ideas into products and ventures.
             </p>
 
             <div className="mt-8 flex flex-wrap items-center gap-3">
@@ -140,7 +134,6 @@ export function WhatWeDoHero() {
                 className="group inline-flex min-h-12 items-center gap-4 rounded-full bg-[#2563EB] px-5 text-sm font-semibold text-white shadow-[0_12px_34px_rgba(37,99,235,0.22)] transition-[transform,background-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:bg-[#1D4ED8] dark:bg-[#3B82F6] dark:hover:bg-[#60A5FA]"
               >
                 Explore our process
-
                 <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white/15 transition-transform duration-300 group-hover:translate-y-0.5">
                   <ArrowDown className="h-3.5 w-3.5" />
                 </span>
@@ -151,7 +144,6 @@ export function WhatWeDoHero() {
                 className="group inline-flex min-h-12 items-center gap-2 px-3 text-sm font-semibold text-[#0A1D2F]/56 transition-colors duration-300 hover:text-[#2563EB] dark:text-white/48 dark:hover:text-[#60A5FA]"
               >
                 Explore ventures
-
                 <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </Link>
             </div>
@@ -177,28 +169,25 @@ export function WhatWeDoHero() {
 
                   <span className="flex items-center gap-2 text-[0.55rem] font-semibold uppercase tracking-[0.2em] text-[#0A1D2F]/30 dark:text-white/26">
                     <span className="h-1.5 w-1.5 rounded-full bg-[#22D3EE] shadow-[0_0_14px_rgba(34,211,238,.8)]" />
-
                     Live process
                   </span>
                 </div>
 
                 <div className="mt-5 grid grid-cols-3 gap-2">
-                  {PROCESS_STEPS.map(
-                    (item) => (
-                      <div
-                        key={item.label}
-                        className="rounded-xl border border-[#0A1D2F]/[0.06] bg-white/[0.14] px-3 py-3 dark:border-white/[0.06] dark:bg-white/[0.025]"
-                      >
-                        <p className="text-[0.48rem] font-semibold uppercase tracking-[0.18em] text-[#0A1D2F]/22 dark:text-white/20">
-                          {item.index}
-                        </p>
+                  {PROCESS_STEPS.map((item) => (
+                    <div
+                      key={item.label}
+                      className="rounded-xl border border-[#0A1D2F]/[0.06] bg-white/[0.14] px-3 py-3 dark:border-white/[0.06] dark:bg-white/[0.025]"
+                    >
+                      <p className="text-[0.48rem] font-semibold uppercase tracking-[0.18em] text-[#0A1D2F]/22 dark:text-white/20">
+                        {item.index}
+                      </p>
 
-                        <p className="mt-1 text-xs font-semibold text-[#0A1D2F]/52 dark:text-white/44">
-                          {item.label}
-                        </p>
-                      </div>
-                    ),
-                  )}
+                      <p className="mt-1 text-xs font-semibold text-[#0A1D2F]/52 dark:text-white/44">
+                        {item.label}
+                      </p>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -212,32 +201,26 @@ export function WhatWeDoHero() {
         <div className="border-t border-[#0A1D2F]/[0.08] py-5 dark:border-white/[0.08]">
           <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
             <div className="flex flex-wrap gap-x-7 gap-y-4">
-              {PROCESS_STEPS.map(
-                (item) => (
-                  <div
-                    key={item.label}
-                    className="flex items-center gap-2.5"
-                  >
-                    <span
-                      className="h-1.5 w-1.5 rounded-full"
-                      style={{
-                        backgroundColor:
-                          item.color,
-                      }}
-                    />
+              {PROCESS_STEPS.map((item) => (
+                <div key={item.label} className="flex items-center gap-2.5">
+                  <span
+                    className="h-1.5 w-1.5 rounded-full"
+                    style={{
+                      backgroundColor: item.color,
+                    }}
+                  />
 
-                    <div>
-                      <p className="text-[0.48rem] font-semibold uppercase tracking-[0.18em] text-[#0A1D2F]/22 dark:text-white/20">
-                        {item.index}
-                      </p>
+                  <div>
+                    <p className="text-[0.48rem] font-semibold uppercase tracking-[0.18em] text-[#0A1D2F]/22 dark:text-white/20">
+                      {item.index}
+                    </p>
 
-                      <p className="mt-0.5 text-[0.68rem] font-semibold text-[#0A1D2F]/48 dark:text-white/40">
-                        {item.label}
-                      </p>
-                    </div>
+                    <p className="mt-0.5 text-[0.68rem] font-semibold text-[#0A1D2F]/48 dark:text-white/40">
+                      {item.label}
+                    </p>
                   </div>
-                ),
-              )}
+                </div>
+              ))}
             </div>
 
             <div className="hidden items-center gap-3 md:flex">

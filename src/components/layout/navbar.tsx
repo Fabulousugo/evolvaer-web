@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { NavbarLogo } from "@/src/components/layout/navbar-logo";
 import {
   Menu,
   Moon,
@@ -723,7 +724,7 @@ export function Navbar() {
                         className={`
                           w-8
 
-                          text-sm
+                          text-[14px]
                           font-semibold
 
                           ${
@@ -746,7 +747,7 @@ export function Navbar() {
                         className={`
                           flex-1
 
-                          text-[clamp(2rem,8vw,3.2rem)]
+                          text-[16px]
                           font-bold
                           leading-none
                           tracking-[-0.045em]
@@ -826,7 +827,7 @@ export function Navbar() {
 
                   text-sm
                   font-semibold
-                  text-white
+                  !text-white
 
                   shadow-[0_8px_28px_rgba(10,29,47,0.10)]
 
