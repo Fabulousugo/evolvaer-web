@@ -18,9 +18,18 @@ export default function WhatWeDoPage() {
     <main className="relative min-h-screen overflow-x-clip bg-background text-foreground">
       <Navbar />
 
+      {/* Reduced to opacity-15 for an ultra-subtle background presence */}
       <div
         aria-hidden="true"
-        className="pointer-events-none fixed inset-0 z-0"
+        className="
+          pointer-events-none 
+          fixed 
+          inset-0 
+          z-0 
+          opacity-15
+          transition-opacity
+          duration-500
+        "
       >
         <WorkSceneLoader />
       </div>

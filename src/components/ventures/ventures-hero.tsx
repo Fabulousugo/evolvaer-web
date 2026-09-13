@@ -1,51 +1,46 @@
 import Link from "next/link";
 import {
   ArrowDown,
-  ArrowUpRight,
   CircleDot,
 } from "lucide-react";
 
-const ventureStages = [
+const ventureLogic = [
   {
     number: "01",
-    label: "Explore",
+    label: "Possible",
+    description: "Can it be built?",
     accent: "#2563EB",
   },
   {
     number: "02",
-    label: "Validate",
-    accent: "#7C3AED",
+    label: "Useful",
+    description: "Does it solve something that matters?",
+    accent: "#22D3EE",
   },
   {
     number: "03",
-    label: "Build",
-    accent: "#22D3EE",
-  },
-  {
-    number: "04",
-    label: "Grow",
-    accent: "#10B981",
-  },
-] as const;
-
-const ventureLogic = [
-  {
-    label: "Possible",
-    accent: "#2563EB",
-  },
-  {
-    label: "Useful",
-    accent: "#22D3EE",
-  },
-  {
     label: "Viable",
+    description: "Can it become something sustainable?",
     accent: "#10B981",
   },
 ] as const;
 
 export function VenturesHero() {
   return (
-    <section className="relative min-h-[92svh] overflow-hidden pt-24 sm:pt-28 lg:pt-32">
+    <section
+      className="
+        relative
+        overflow-hidden
+        border-b
+        border-[#0A1D2F]/[0.07]
+        bg-white
+        pt-24
+        dark:border-white/[0.07]
+        dark:bg-[#0D1117]
+        sm:pt-28
+        lg:pt-28
+      "
+    >
       {/* =====================================================
           ATMOSPHERE
       ===================================================== */}
@@ -54,210 +49,468 @@ export function VenturesHero() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
       >
-        <div className="absolute inset-0 bg-white/[0.38] dark:bg-[#0D1117]/[0.38]" />
-
         <div
-          className="absolute inset-0 opacity-90 dark:opacity-100"
+          className="absolute inset-0"
           style={{
             background:
-              "radial-gradient(circle at 72% 36%, rgba(37,99,235,.09), transparent 27%), radial-gradient(circle at 93% 15%, rgba(34,211,238,.055), transparent 30%), radial-gradient(circle at 40% 102%, rgba(168,85,247,.045), transparent 31%)",
+              "radial-gradient(circle at 76% 38%, rgba(37,99,235,.065), transparent 28%), radial-gradient(circle at 92% 16%, rgba(34,211,238,.04), transparent 27%), radial-gradient(circle at 44% 105%, rgba(16,185,129,.03), transparent 30%)",
           }}
         />
 
         <div
-          className="absolute inset-0 opacity-[0.016] dark:opacity-[0.03]"
+          className="
+            absolute
+            inset-0
+            opacity-[0.014]
+            dark:opacity-[0.025]
+          "
           style={{
             backgroundImage: `
               linear-gradient(rgba(37,99,235,.18) 1px, transparent 1px),
               linear-gradient(90deg, rgba(37,99,235,.18) 1px, transparent 1px)
             `,
-            backgroundSize: "92px 92px",
+            backgroundSize: "96px 96px",
           }}
         />
       </div>
 
-      {/* =====================================================
-          HERO
-      ===================================================== */}
-
-      <div className="evolvaer-container relative z-10 flex min-h-[calc(92svh-8rem)] flex-col">
-        <div className="grid flex-1 gap-12 py-14 sm:py-16 lg:grid-cols-[minmax(0,0.88fr)_minmax(380px,1.12fr)] lg:items-center lg:py-12">
+      <div className="evolvaer-container relative z-10">
+        <div
+          className="
+            grid
+            min-h-[calc(82svh-7rem)]
+            gap-12
+            py-12
+            sm:py-14
+            lg:grid-cols-[minmax(0,0.95fr)_minmax(400px,1.05fr)]
+            lg:items-center
+            lg:gap-16
+            lg:py-14
+          "
+        >
           {/* =================================================
               LEFT
           ================================================= */}
 
-          <div className="max-w-[720px]">
-            <div className="flex items-center gap-4">
-              <span className="flex h-9 w-9 items-center justify-center rounded-full border border-[#2563EB]/20 bg-[#2563EB]/[0.05] text-[#2563EB] dark:border-[#3B82F6]/25 dark:bg-[#3B82F6]/[0.07] dark:text-[#60A5FA]">
-                <CircleDot className="h-3.5 w-3.5" />
+          <div className="max-w-[690px]">
+            <div className="flex items-center gap-3">
+              <span
+                className="
+                  flex
+                  h-8
+                  w-8
+                  items-center
+                  justify-center
+                  rounded-full
+                  border
+                  border-[#2563EB]/20
+                  bg-[#2563EB]/[0.045]
+                  text-[#2563EB]
+                  dark:border-[#60A5FA]/20
+                  dark:bg-[#60A5FA]/[0.055]
+                  dark:text-[#60A5FA]
+                "
+              >
+                <CircleDot className="h-3 w-3" />
               </span>
 
-              <span className="text-[0.6rem] font-semibold uppercase tracking-[0.3em] text-[#0A1D2F]/42 dark:text-white/40">
+              <span
+                className="
+                  text-[0.54rem]
+                  font-semibold
+                  uppercase
+                  tracking-[0.25em]
+                  text-[#0A1D2F]/55
+                  dark:text-white/52
+                "
+              >
                 Evolvaer Ventures
               </span>
             </div>
 
-            <h1 className="mt-7 max-w-[650px] text-[clamp(3rem,4.8vw,5.5rem)] font-semibold leading-[0.92] tracking-[-0.058em] text-[#0A1D2F] dark:text-white">
-              Ideas worth
-              <br />
-
-              <span className="bg-gradient-to-r from-[#2563EB] via-[#22D3EE] to-[#10B981] bg-clip-text text-transparent dark:from-[#3B82F6] dark:via-[#22D3EE] dark:to-[#34D399]">
+            <h1
+              className="
+                mt-6
+                max-w-[620px]
+                text-[clamp(2.8rem,4.6vw,4.65rem)]
+                font-semibold
+                leading-[0.94]
+                tracking-[-0.052em]
+                text-[#0A1D2F]
+                dark:text-white
+              "
+            >
+              Ideas worth{" "}
+              <span
+                className="
+                  bg-gradient-to-r
+                  from-[#2563EB]
+                  via-[#0891B2]
+                  to-[#10B981]
+                  bg-clip-text
+                  text-transparent
+                  dark:from-[#60A5FA]
+                  dark:via-[#67E8F9]
+                  dark:to-[#34D399]
+                "
+              >
                 building.
               </span>
             </h1>
 
-            <p className="mt-7 max-w-[590px] text-base leading-8 text-[#0A1D2F]/58 dark:text-white/54 sm:text-[1.05rem]">
+            <p
+              className="
+                mt-6
+                max-w-[570px]
+                text-[0.9rem]
+                leading-7
+                text-[#0A1D2F]/70
+                dark:text-white/67
+                sm:text-[0.96rem]
+              "
+            >
               We turn selected technological opportunities into
               products and ventures — combining research,
-              engineering and product thinking to build ideas with
-              the potential to create meaningful real-world value.
+              engineering and product thinking to create
+              meaningful real-world value.
             </p>
 
-            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-7">
               <Link
                 href="#portfolio"
-                className="group inline-flex min-h-12 items-center justify-center gap-3 rounded-full bg-[#2563EB] px-6 text-sm font-semibold text-white shadow-[0_16px_40px_rgba(37,99,235,.2)] transition-[transform,background-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:bg-[#1D4ED8] hover:shadow-[0_20px_48px_rgba(37,99,235,.25)]"
+                className="
+                  group
+                  inline-flex
+                  min-h-11
+                  items-center
+                  justify-center
+                  gap-2.5
+                  rounded-full
+                  bg-[#2563EB]
+                  px-5
+                  text-[0.78rem]
+                  font-semibold
+                  text-white
+                  shadow-[0_12px_32px_rgba(37,99,235,.17)]
+                  transition-[transform,background-color,box-shadow]
+                  duration-300
+                  hover:-translate-y-0.5
+                  hover:bg-[#1D4ED8]
+                  hover:shadow-[0_16px_38px_rgba(37,99,235,.22)]
+                "
               >
                 Explore our ventures
 
-                <ArrowDown className="h-4 w-4 transition-transform duration-300 group-hover:translate-y-0.5" />
-              </Link>
-
-              <Link
-                href="#how-ventures-emerge"
-                className="group inline-flex min-h-12 items-center justify-center gap-3 rounded-full border border-[#0A1D2F]/10 bg-white/[0.48] px-6 text-sm font-semibold text-[#0A1D2F]/68 transition-[transform,border-color,background-color,color] duration-300 hover:-translate-y-0.5 hover:border-[#2563EB]/25 hover:bg-white/[0.72] hover:text-[#2563EB] dark:border-white/10 dark:bg-white/[0.045] dark:text-white/62 dark:hover:border-[#3B82F6]/30 dark:hover:bg-white/[0.075] dark:hover:text-[#60A5FA]"
-              >
-                How ventures emerge
-
-                <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                <ArrowDown
+                  className="
+                    h-3.5
+                    w-3.5
+                    transition-transform
+                    duration-300
+                    group-hover:translate-y-0.5
+                  "
+                />
               </Link>
             </div>
 
-            <div className="mt-11 flex max-w-[570px] items-start gap-4 border-t border-[#0A1D2F]/[0.08] pt-6 dark:border-white/[0.08]">
-              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#22D3EE] shadow-[0_0_10px_rgba(34,211,238,.42)]" />
+            {/* Selection principle */}
 
-              <p className="text-xs leading-6 text-[#0A1D2F]/38 dark:text-white/34">
-                We do not build every idea we encounter. Ventures
-                emerge when technological possibility, meaningful
-                need and credible opportunity converge.
+            <div
+              className="
+                mt-8
+                flex
+                max-w-[560px]
+                items-start
+                gap-3
+                border-t
+                border-[#0A1D2F]/[0.08]
+                pt-5
+                dark:border-white/[0.08]
+              "
+            >
+              <span
+                className="
+                  mt-[0.45rem]
+                  h-1.5
+                  w-1.5
+                  shrink-0
+                  rounded-full
+                  bg-[#22D3EE]
+                  shadow-[0_0_7px_rgba(34,211,238,.38)]
+                "
+              />
+
+              <p
+                className="
+                  text-[0.7rem]
+                  leading-5
+                  text-[#0A1D2F]/58
+                  dark:text-white/55
+                "
+              >
+                We do not build every idea we encounter.
+                Ventures emerge when technological possibility,
+                meaningful need and credible opportunity
+                converge.
               </p>
             </div>
           </div>
 
           {/* =================================================
-              RIGHT — OPEN 3D FIELD
+              RIGHT — VENTURE SELECTION
           ================================================= */}
 
           <div
             aria-hidden="true"
-            className="relative hidden min-h-[540px] lg:block"
+            className="
+              relative
+              hidden
+              min-h-[440px]
+              lg:block
+            "
           >
-            <div className="absolute right-[5%] top-[9%] flex items-center gap-3">
-              <span className="h-px w-10 bg-gradient-to-r from-transparent to-[#2563EB]/35" />
+            {/* field */}
 
-              <span className="font-mono text-[0.48rem] uppercase tracking-[0.16em] text-[#0A1D2F]/24 dark:text-white/22">
-                Possibility field
-              </span>
-            </div>
+            <div
+              className="
+                absolute
+                left-1/2
+                top-1/2
+                h-[350px]
+                w-[350px]
+                -translate-x-1/2
+                -translate-y-1/2
+                rounded-full
+                border
+                border-[#2563EB]/[0.07]
+                dark:border-[#60A5FA]/[0.08]
+              "
+            />
 
-            <div className="absolute bottom-[13%] left-[7%] flex items-center gap-3">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#A855F7]/70" />
+            <div
+              className="
+                absolute
+                left-1/2
+                top-1/2
+                h-[260px]
+                w-[260px]
+                -translate-x-1/2
+                -translate-y-1/2
+                rotate-45
+                border
+                border-[#22D3EE]/[0.08]
+              "
+            />
 
-              <span className="font-mono text-[0.48rem] uppercase tracking-[0.16em] text-[#0A1D2F]/22 dark:text-white/20">
-                Opportunity signal
-              </span>
-            </div>
+            <div
+              className="
+                absolute
+                left-1/2
+                top-1/2
+                h-px
+                w-[70%]
+                -translate-x-1/2
+                bg-gradient-to-r
+                from-transparent
+                via-[#22D3EE]/25
+                to-transparent
+              "
+            />
 
-            <div className="absolute bottom-[22%] right-[1%] w-[220px] rounded-[1.1rem] border border-[#0A1D2F]/[0.07] bg-white/[0.24] p-4 dark:border-white/[0.07] dark:bg-white/[0.025]">
-              <div className="flex items-center justify-between">
-                <span className="text-[0.48rem] font-semibold uppercase tracking-[0.18em] text-[#0A1D2F]/25 dark:text-white/22">
-                  Venture logic
-                </span>
+            <div
+              className="
+                absolute
+                left-1/2
+                top-1/2
+                h-[72%]
+                w-px
+                -translate-x-1/2
+                -translate-y-1/2
+                bg-gradient-to-b
+                from-transparent
+                via-[#2563EB]/20
+                to-transparent
+              "
+            />
 
-                <span className="h-1.5 w-1.5 rounded-full bg-[#10B981] shadow-[0_0_8px_rgba(16,185,129,.4)]" />
+            {/* Core */}
+
+            <div
+              className="
+                absolute
+                left-1/2
+                top-1/2
+                z-20
+                flex
+                h-[8.5rem]
+                w-[8.5rem]
+                -translate-x-1/2
+                -translate-y-1/2
+                items-center
+                justify-center
+                rounded-full
+                border
+                border-[#22D3EE]/20
+                bg-white/[0.88]
+                shadow-[0_0_36px_rgba(34,211,238,.07)]
+                backdrop-blur-sm
+                dark:bg-[#0D1117]/[0.9]
+              "
+            >
+              <span
+                className="
+                  absolute
+                  inset-[8px]
+                  rounded-full
+                  border
+                  border-[#22D3EE]/10
+                "
+              />
+
+              <div className="text-center">
+                <span
+                  className="
+                    mx-auto
+                    block
+                    h-2
+                    w-2
+                    rounded-full
+                    bg-[#22D3EE]
+                    shadow-[0_0_9px_rgba(34,211,238,.55)]
+                  "
+                />
+
+                <p
+                  className="
+                    mt-3
+                    text-[0.7rem]
+                    font-semibold
+                    text-[#0A1D2F]
+                    dark:text-white
+                  "
+                >
+                  Venture signal
+                </p>
+
+                <p
+                  className="
+                    mt-1
+                    font-mono
+                    text-[0.38rem]
+                    uppercase
+                    tracking-[0.11em]
+                    text-[#0A1D2F]/43
+                    dark:text-white/40
+                  "
+                >
+                  Worth exploring
+                </p>
               </div>
-
-              <div className="mt-4 space-y-2.5">
-                {ventureLogic.map(
-                  (item) => (
-                    <div
-                      key={
-                        item.label
-                      }
-                      className="flex items-center gap-3"
-                    >
-                      <span
-                        className="h-1 w-1 rounded-full"
-                        style={{
-                          backgroundColor:
-                            item.accent,
-                        }}
-                      />
-
-                      <span className="text-[0.62rem] font-medium text-[#0A1D2F]/38 dark:text-white/34">
-                        {
-                          item.label
-                        }
-                      </span>
-                    </div>
-                  ),
-                )}
-              </div>
             </div>
-          </div>
-        </div>
 
-        {/* =====================================================
-            VENTURE FLOW
-        ===================================================== */}
+            {/* Logic nodes */}
 
-        <div className="border-t border-[#0A1D2F]/[0.08] py-5 dark:border-white/[0.08]">
-          <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
-            <div className="grid flex-1 grid-cols-2 gap-px overflow-hidden rounded-xl border border-[#0A1D2F]/[0.07] bg-[#0A1D2F]/[0.06] dark:border-white/[0.07] dark:bg-white/[0.06] sm:grid-cols-4 lg:max-w-[690px]">
-              {ventureStages.map(
-                (stage) => (
+            {ventureLogic.map((item, index) => {
+              const positions = [
+                "left-1/2 top-[3%] -translate-x-1/2",
+                "left-[1%] top-1/2 -translate-y-1/2",
+                "right-[1%] top-1/2 -translate-y-1/2",
+              ];
+
+              return (
+                <div
+                  key={item.label}
+                  className={`
+                    absolute
+                    z-10
+                    ${positions[index]}
+                  `}
+                >
                   <div
-                    key={
-                      stage.label
-                    }
-                    className="relative bg-white/[0.46] px-4 py-3.5 dark:bg-[#0D1117]/[0.5]"
+                    className="
+                      min-w-[138px]
+                      rounded-[1rem]
+                      border
+                      bg-white/[0.72]
+                      px-4
+                      py-3.5
+                      backdrop-blur-sm
+                      dark:bg-[#0D1117]/[0.76]
+                    "
+                    style={{
+                      borderColor: `${item.accent}28`,
+                    }}
                   >
-                    <div className="flex items-center gap-2.5">
+                    <div className="flex items-center gap-2">
                       <span
                         className="h-1.5 w-1.5 rounded-full"
                         style={{
-                          backgroundColor:
-                            stage.accent,
+                          backgroundColor: item.accent,
+                          boxShadow: `0 0 6px ${item.accent}45`,
                         }}
                       />
 
-                      <span className="font-mono text-[0.45rem] text-[#0A1D2F]/22 dark:text-white/20">
-                        {
-                          stage.number
-                        }
+                      <span
+                        className="font-mono text-[0.38rem]"
+                        style={{
+                          color: item.accent,
+                        }}
+                      >
+                        {item.number}
                       </span>
                     </div>
 
-                    <p className="mt-2 text-[0.66rem] font-semibold text-[#0A1D2F]/52 dark:text-white/44">
-                      {
-                        stage.label
-                      }
+                    <p
+                      className="
+                        mt-2
+                        text-[0.72rem]
+                        font-semibold
+                        text-[#0A1D2F]
+                        dark:text-white
+                      "
+                    >
+                      {item.label}
+                    </p>
+
+                    <p
+                      className="
+                        mt-1
+                        max-w-[125px]
+                        text-[0.58rem]
+                        leading-4
+                        text-[#0A1D2F]/53
+                        dark:text-white/50
+                      "
+                    >
+                      {item.description}
                     </p>
                   </div>
-                ),
-              )}
-            </div>
+                </div>
+              );
+            })}
 
-            <div className="flex items-center gap-3">
-              <span className="text-[0.52rem] font-semibold uppercase tracking-[0.2em] text-[#0A1D2F]/25 dark:text-white/22">
-                Scroll into the
-                portfolio
-              </span>
+            {/* Field points */}
 
-              <span className="relative flex h-8 w-5 justify-center rounded-full border border-[#0A1D2F]/10 dark:border-white/10">
-                <span className="venture-scroll-dot absolute top-1.5 h-1 w-1 rounded-full bg-[#2563EB] dark:bg-[#60A5FA]" />
-              </span>
-            </div>
+            <span className="absolute left-[18%] top-[18%] h-1 w-1 rounded-full bg-[#2563EB]/35" />
+            <span className="absolute right-[18%] top-[23%] h-1.5 w-1.5 rounded-full bg-[#22D3EE]/30" />
+            <span className="absolute bottom-[14%] left-[30%] h-1 w-1 rounded-full bg-[#10B981]/35" />
+
+            <span
+              className="
+                absolute
+                bottom-[4%]
+                left-1/2
+                -translate-x-1/2
+                font-mono
+                text-[0.4rem]
+                uppercase
+                tracking-[0.14em]
+                text-[#0A1D2F]/30
+                dark:text-white/28
+              "
+            >
+              Possible · Useful · Viable
+            </span>
           </div>
         </div>
       </div>

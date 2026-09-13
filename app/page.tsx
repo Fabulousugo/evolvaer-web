@@ -20,9 +20,17 @@ export default function Home() {
           STATIC 3D HOMEPAGE ENVIRONMENT
       ===================================================== */}
 
-      <div
+       <div
         aria-hidden="true"
-        className="pointer-events-none fixed inset-0 z-0"
+        className="
+          pointer-events-none 
+          fixed 
+          inset-0 
+          z-0 
+          opacity-40
+          transition-opacity
+          duration-500
+        "
       >
         <ContactSceneLoader />
       </div>

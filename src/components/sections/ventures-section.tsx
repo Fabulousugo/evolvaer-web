@@ -480,7 +480,7 @@ export function VenturesSection() {
                 className="absolute inset-0 bg-cover bg-center opacity-45 mix-blend-luminosity"
                 style={{
                   backgroundImage:
-                    "url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1400&q=80')",
+                    "url('/why-evolvaer.png')",
                 }}
               />
 

@@ -24,7 +24,15 @@ export default function ResearchPage() {
 
       <div
         aria-hidden="true"
-        className="pointer-events-none fixed inset-0 z-0"
+        className="
+          pointer-events-none 
+          fixed 
+          inset-0 
+          z-0 
+          opacity-15
+          transition-opacity
+          duration-500
+        "
       >
         <ResearchSceneLoader />
       </div>
@@ -35,14 +43,14 @@ export default function ResearchPage() {
 
       <div className="relative z-10">
         <ResearchHero />
-        <WhyResearch />
+        {/* <WhyResearch /> */}
         <ResearchAreas />
         <ResearchMethod />
         <CurrentResearch />
         <ResearchApplication />
-        <ResearchPrinciples />
+        {/* <ResearchPrinciples /> */}
         <OpenQuestions />
-        <ResearchCta />
+        {/* <ResearchCta /> */}
       </div>
 
       <div className="relative z-10">

@@ -1,8 +1,4 @@
-import Link from "next/link";
 import {
-  ArrowDown,
-  ArrowUpRight,
-  CircleDot,
   FlaskConical,
   Lightbulb,
   PackageCheck,
@@ -12,34 +8,34 @@ import {
 const stages = [
   {
     number: "01",
-    label: "Opportunity",
+    label: "Explore",
     title: "Find the signal.",
     description:
-      "We identify a meaningful problem or shift where emerging technology may create a new and useful possibility.",
-    question:
-      "Is there something here worth investigating?",
+      "Identify a meaningful problem or shift where emerging technology may create a useful possibility.",
+    question: "Is there something here worth investigating?",
+    commitment: "Low commitment",
     icon: Lightbulb,
     accent: "#2563EB",
   },
   {
     number: "02",
-    label: "Validation",
+    label: "Validate",
     title: "Earn the next step.",
     description:
-      "Research tests the problem, assumptions, technical feasibility and opportunity before significant resources are committed.",
-    question:
-      "Does the evidence justify moving forward?",
+      "Test the problem, assumptions, technical feasibility and opportunity before committing significant resources.",
+    question: "Does the evidence justify moving forward?",
+    commitment: "Growing commitment",
     icon: FlaskConical,
     accent: "#7C3AED",
   },
   {
     number: "03",
-    label: "Product",
+    label: "Build",
     title: "Make it real.",
     description:
-      "Engineering and product development turn the validated opportunity into something people can actually experience and use.",
-    question:
-      "Can we create something genuinely useful?",
+      "Turn a validated opportunity into something people can experience, use and respond to.",
+    question: "Can we create something genuinely useful?",
+    commitment: "Deeper commitment",
     icon: PackageCheck,
     accent: "#22D3EE",
   },
@@ -48,33 +44,10 @@ const stages = [
     label: "Venture",
     title: "Build around what works.",
     description:
-      "When the product and opportunity continue to prove themselves, we develop the systems required for an independent, scalable venture.",
-    question:
-      "Can this become an enduring business?",
+      "When product and opportunity continue to prove themselves, develop the systems for an independent, scalable venture.",
+    question: "Can this become an enduring business?",
+    commitment: "Highest commitment",
     icon: Rocket,
-    accent: "#10B981",
-  },
-] as const;
-
-const commitmentLevels = [
-  {
-    label: "Explore",
-    width: "24%",
-    accent: "#2563EB",
-  },
-  {
-    label: "Validate",
-    width: "48%",
-    accent: "#7C3AED",
-  },
-  {
-    label: "Build",
-    width: "72%",
-    accent: "#22D3EE",
-  },
-  {
-    label: "Venture",
-    width: "100%",
     accent: "#10B981",
   },
 ] as const;
@@ -83,7 +56,18 @@ export function VentureEmergence() {
   return (
     <section
       id="how-ventures-emerge"
-      className="relative overflow-hidden py-20 sm:py-24 lg:py-28"
+      className="
+        relative
+        overflow-hidden
+        border-b
+        border-[#0A1D2F]/[0.07]
+        bg-white
+        py-14
+        dark:border-white/[0.07]
+        dark:bg-[#0D1117]
+        sm:py-16
+        lg:py-20
+      "
     >
       {/* =====================================================
           ATMOSPHERE
@@ -93,25 +77,11 @@ export function VentureEmergence() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
       >
-        <div className="absolute inset-0 bg-white/[0.7] dark:bg-[#0D1117]/[0.7]" />
-
         <div
           className="absolute inset-0"
           style={{
             background:
-              "radial-gradient(circle at 5% 25%, rgba(37,99,235,.05), transparent 29%), radial-gradient(circle at 94% 48%, rgba(16,185,129,.045), transparent 30%)",
-          }}
-        />
-
-        <div
-          className="absolute inset-0 opacity-[0.014] dark:opacity-[0.025]"
-          style={{
-            backgroundImage: `
-              linear-gradient(rgba(37,99,235,.16) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(37,99,235,.16) 1px, transparent 1px)
-            `,
-            backgroundSize:
-              "96px 96px",
+              "radial-gradient(circle at 4% 24%, rgba(37,99,235,.035), transparent 28%), radial-gradient(circle at 95% 74%, rgba(16,185,129,.03), transparent 28%)",
           }}
         />
       </div>
@@ -121,331 +91,484 @@ export function VentureEmergence() {
             INTRO
         ===================================================== */}
 
-        <div className="grid gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-end">
+        <div
+          className="
+            grid
+            gap-7
+            lg:grid-cols-[0.9fr_1.1fr]
+            lg:items-end
+            lg:gap-12
+          "
+        >
           <div>
-            <div className="flex items-center gap-4">
-              <span className="font-mono text-[0.5rem] text-[#7C3AED] dark:text-[#C084FC]">
+            <div className="flex items-center gap-3">
+              <span
+                className="
+                  font-mono
+                  text-[0.45rem]
+                  text-[#7C3AED]
+                  dark:text-[#C084FC]
+                "
+              >
                 03
               </span>
 
-              <span className="h-px w-8 bg-[#7C3AED]/35" />
+              <span className="h-px w-7 bg-[#7C3AED]/30" />
 
-              <p className="text-[0.6rem] font-semibold uppercase tracking-[0.3em] text-[#7C3AED] dark:text-[#C084FC]">
+              <p
+                className="
+                  text-[0.52rem]
+                  font-semibold
+                  uppercase
+                  tracking-[0.22em]
+                  text-[#7C3AED]
+                  dark:text-[#C084FC]
+                "
+              >
                 How ventures emerge
               </p>
             </div>
 
-            <h2 className="mt-6 max-w-[720px] text-[clamp(2.4rem,4vw,4.3rem)] font-semibold leading-[0.96] tracking-[-0.052em] text-[#0A1D2F] dark:text-white">
-              Ideas don&apos;t become
-              <br />
-              ventures{" "}
-              <span className="bg-gradient-to-r from-[#2563EB] via-[#7C3AED] to-[#10B981] bg-clip-text text-transparent dark:from-[#60A5FA] dark:via-[#C084FC] dark:to-[#34D399]">
-                immediately.
+            <h2
+              className="
+                mt-4
+                max-w-[610px]
+                text-[clamp(1.95rem,3.2vw,2.7rem)]
+                font-semibold
+                leading-[1]
+                tracking-[-0.045em]
+                text-[#0A1D2F]
+                dark:text-white
+              "
+            >
+              Ideas have to earn their way{" "}
+              <span
+                className="
+                  bg-gradient-to-r
+                  from-[#2563EB]
+                  via-[#7C3AED]
+                  to-[#10B981]
+                  bg-clip-text
+                  text-transparent
+                  dark:from-[#60A5FA]
+                  dark:via-[#C084FC]
+                  dark:to-[#34D399]
+                "
+              >
+                forward.
               </span>
             </h2>
           </div>
 
-          <div className="max-w-[610px] lg:justify-self-end">
-            <p className="text-base leading-8 text-[#0A1D2F]/58 dark:text-white/54 sm:text-[1.05rem]">
-              Every stage increases our level of commitment. An idea
-              has to earn its way forward through evidence,
-              technical progress and real-world learning.
+          <div className="max-w-[570px] lg:justify-self-end">
+            <p
+              className="
+                text-[0.86rem]
+                leading-7
+                text-[#0A1D2F]/68
+                dark:text-white/65
+                sm:text-[0.9rem]
+              "
+            >
+              We increase our commitment as evidence gets
+              stronger. An opportunity moves forward through
+              research, technical progress and real-world
+              learning — not enthusiasm alone.
             </p>
 
-            <p className="mt-5 text-sm leading-7 text-[#0A1D2F]/40 dark:text-white/36">
-              That allows us to explore ambitiously without assuming
-              that every interesting possibility deserves to become
-              a product or company.
+            <p
+              className="
+                mt-3
+                text-[0.7rem]
+                leading-5
+                text-[#0A1D2F]/52
+                dark:text-white/49
+              "
+            >
+              That lets us explore ambitiously without assuming
+              every interesting possibility deserves to become a
+              product or company.
             </p>
           </div>
         </div>
 
         {/* =====================================================
-            VENTURE FORMATION PIPELINE
+            PROCESS
         ===================================================== */}
 
-        <div className="relative mt-16 lg:mt-24">
+        <div
+          className="
+            relative
+            mt-9
+            overflow-hidden
+            rounded-[1.2rem]
+            border
+            border-[#0A1D2F]/[0.08]
+            dark:border-white/[0.08]
+            lg:mt-11
+          "
+        >
+          {/* desktop progress line */}
+
           <div
             aria-hidden="true"
-            className="absolute left-[8%] right-[8%] top-[3.3rem] hidden h-px bg-gradient-to-r from-[#2563EB]/30 via-[#7C3AED]/30 via-50% to-[#10B981]/30 lg:block"
+            className="
+              absolute
+              left-[12.5%]
+              right-[12.5%]
+              top-[3.15rem]
+              hidden
+              h-px
+              bg-gradient-to-r
+              from-[#2563EB]/30
+              via-[#7C3AED]/30
+              via-50%
+              to-[#10B981]/30
+              lg:block
+            "
           />
 
-          <div className="grid gap-5 lg:grid-cols-4">
-            {stages.map(
-              (stage, index) => {
-                const Icon =
-                  stage.icon;
+          <div className="grid lg:grid-cols-4">
+            {stages.map((stage, index) => {
+              const Icon = stage.icon;
 
-                return (
-                  <article
-                    key={
-                      stage.label
+              return (
+                <article
+                  key={stage.label}
+                  className={`
+                    relative
+                    p-5
+                    sm:p-6
+                    ${
+                      index < stages.length - 1
+                        ? `
+                          border-b
+                          border-[#0A1D2F]/[0.07]
+                          dark:border-white/[0.07]
+                          lg:border-b-0
+                          lg:border-r
+                        `
+                        : ""
                     }
-                    className="group relative"
+                  `}
+                >
+                  {/* stage header */}
+
+                  <div
+                    className="
+                      relative
+                      z-10
+                      flex
+                      items-center
+                      justify-between
+                    "
                   >
-                    {/* node */}
-
-                    <div className="relative z-10 mb-6 flex items-center lg:justify-center">
-                      <div
-                        className="relative flex h-[6.6rem] w-[6.6rem] items-center justify-center rounded-full border bg-white/[0.84] transition-transform duration-300 group-hover:scale-[1.035] dark:bg-[#0D1117]/[0.86]"
-                        style={{
-                          borderColor: `${stage.accent}35`,
-                          boxShadow: `0 0 28px ${stage.accent}0B`,
-                        }}
-                      >
-                        <div
-                          className="absolute inset-[8px] rounded-full border"
-                          style={{
-                            borderColor: `${stage.accent}18`,
-                          }}
-                        />
-
-                        <div
-                          className="flex h-10 w-10 items-center justify-center rounded-full"
-                          style={{
-                            color:
-                              stage.accent,
-                            backgroundColor: `${stage.accent}0E`,
-                          }}
-                        >
-                          <Icon className="h-[18px] w-[18px]" />
-                        </div>
-
-                        <span
-                          className="absolute -right-1 top-1 flex h-7 w-7 items-center justify-center rounded-full border bg-white font-mono text-[0.43rem] dark:bg-[#0D1117]"
-                          style={{
-                            borderColor: `${stage.accent}35`,
-                            color:
-                              stage.accent,
-                          }}
-                        >
-                          {
-                            stage.number
-                          }
-                        </span>
-                      </div>
-
-                      {index <
-                        stages.length -
-                          1 && (
-                        <ArrowDown
-                          aria-hidden="true"
-                          className="ml-4 h-4 w-4 text-[#0A1D2F]/18 dark:text-white/16 lg:hidden"
-                        />
-                      )}
+                    <div
+                      className="
+                        flex
+                        h-9
+                        w-9
+                        items-center
+                        justify-center
+                        rounded-full
+                        border
+                        bg-white
+                        dark:bg-[#0D1117]
+                      "
+                      style={{
+                        borderColor: `${stage.accent}35`,
+                        color: stage.accent,
+                      }}
+                    >
+                      <Icon className="h-3.5 w-3.5" />
                     </div>
 
-                    {/* content */}
+                    <span
+                      className="
+                        font-mono
+                        text-[0.4rem]
+                      "
+                      style={{
+                        color: stage.accent,
+                      }}
+                    >
+                      {stage.number}
+                    </span>
+                  </div>
 
-                    <div className="relative min-h-[20rem] overflow-hidden rounded-[1.6rem] border border-[#0A1D2F]/[0.08] bg-white/[0.72] p-7 transition-[transform,border-color,background-color] duration-300 group-hover:-translate-y-0.5 group-hover:border-[#0A1D2F]/[0.11] group-hover:bg-white/[0.88] dark:border-white/[0.08] dark:bg-white/[0.028] dark:group-hover:border-white/[0.12] dark:group-hover:bg-white/[0.045]">
-                      <div
-                        aria-hidden="true"
-                        className="pointer-events-none absolute right-0 top-0 h-32 w-32 opacity-25 transition-opacity duration-300 group-hover:opacity-65"
-                        style={{
-                          background: `radial-gradient(circle at 100% 0%, ${stage.accent}18, transparent 68%)`,
-                        }}
-                      />
+                  {/* content */}
 
-                      <div className="relative flex h-full flex-col">
-                        <p
-                          className="text-[0.54rem] font-semibold uppercase tracking-[0.22em]"
-                          style={{
-                            color:
-                              stage.accent,
-                          }}
-                        >
-                          {
-                            stage.label
-                          }
-                        </p>
+                  <p
+                    className="
+                      mt-5
+                      text-[0.43rem]
+                      font-semibold
+                      uppercase
+                      tracking-[0.17em]
+                    "
+                    style={{
+                      color: stage.accent,
+                    }}
+                  >
+                    {stage.label}
+                  </p>
 
-                        <h3 className="mt-4 text-xl font-semibold tracking-[-0.035em] text-[#0A1D2F] dark:text-white">
-                          {
-                            stage.title
-                          }
-                        </h3>
+                  <h3
+                    className="
+                      mt-2
+                      text-[0.96rem]
+                      font-semibold
+                      tracking-[-0.025em]
+                      text-[#0A1D2F]
+                      dark:text-white
+                    "
+                  >
+                    {stage.title}
+                  </h3>
 
-                        <p className="mt-4 text-sm leading-7 text-[#0A1D2F]/44 dark:text-white/39">
-                          {
-                            stage.description
-                          }
-                        </p>
+                  <p
+                    className="
+                      mt-2.5
+                      text-[0.67rem]
+                      leading-5
+                      text-[#0A1D2F]/58
+                      dark:text-white/55
+                    "
+                  >
+                    {stage.description}
+                  </p>
 
-                        <div className="mt-auto pt-9">
-                          <div className="border-t border-[#0A1D2F]/[0.07] pt-5 dark:border-white/[0.07]">
-                            <p className="text-[0.47rem] font-semibold uppercase tracking-[0.17em] text-[#0A1D2F]/24 dark:text-white/22">
-                              Decision
-                              question
-                            </p>
+                  {/* decision */}
 
-                            <p className="mt-2 text-xs font-medium leading-5 text-[#0A1D2F]/52 dark:text-white/46">
-                              {
-                                stage.question
-                              }
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </article>
-                );
-              },
-            )}
+                  <div
+                    className="
+                      mt-5
+                      border-t
+                      border-[#0A1D2F]/[0.07]
+                      pt-4
+                      dark:border-white/[0.07]
+                    "
+                  >
+                    <p
+                      className="
+                        text-[0.39rem]
+                        font-semibold
+                        uppercase
+                        tracking-[0.14em]
+                        text-[#0A1D2F]/42
+                        dark:text-white/39
+                      "
+                    >
+                      Decision question
+                    </p>
+
+                    <p
+                      className="
+                        mt-1.5
+                        text-[0.64rem]
+                        font-medium
+                        leading-5
+                        text-[#0A1D2F]/70
+                        dark:text-white/65
+                      "
+                    >
+                      {stage.question}
+                    </p>
+                  </div>
+
+                  {/* commitment */}
+
+                  <div className="mt-4 flex items-center gap-2">
+                    <span
+                      className="h-1.5 w-1.5 rounded-full"
+                      style={{
+                        backgroundColor: stage.accent,
+                      }}
+                    />
+
+                    <span
+                      className="
+                        text-[0.4rem]
+                        font-semibold
+                        uppercase
+                        tracking-[0.12em]
+                        text-[#0A1D2F]/40
+                        dark:text-white/37
+                      "
+                    >
+                      {stage.commitment}
+                    </span>
+                  </div>
+                </article>
+              );
+            })}
           </div>
         </div>
 
         {/* =====================================================
-            COMMITMENT MODEL
+            SELECTIVITY
         ===================================================== */}
 
-        <div className="relative mt-16 overflow-hidden rounded-[1.8rem] border border-[#0A1D2F]/[0.08] bg-white/[0.48] p-7 dark:border-white/[0.08] dark:bg-white/[0.028] sm:p-9 lg:mt-24">
+        <div
+          className="
+            mt-6
+            grid
+            gap-5
+            border-y
+            border-[#0A1D2F]/[0.08]
+            py-6
+            dark:border-white/[0.08]
+            md:grid-cols-[0.55fr_1.45fr]
+            md:items-center
+            md:gap-10
+          "
+        >
+          <div>
+            <p
+              className="
+                text-[0.43rem]
+                font-semibold
+                uppercase
+                tracking-[0.17em]
+                text-[#A855F7]
+                dark:text-[#C084FC]
+              "
+            >
+              Selectivity matters
+            </p>
+
+            <h3
+              className="
+                mt-2
+                text-[1rem]
+                font-semibold
+                tracking-[-0.025em]
+                text-[#0A1D2F]
+                dark:text-white
+              "
+            >
+              Saying no is part of venture building.
+            </h3>
+          </div>
+
           <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0"
-            style={{
-              background:
-                "linear-gradient(115deg, rgba(37,99,235,.025), transparent 32%, rgba(124,58,237,.025) 58%, rgba(16,185,129,.025))",
-            }}
-          />
+            className="
+              grid
+              gap-3
+              sm:grid-cols-2
+            "
+          >
+            <div
+              className="
+                rounded-[0.9rem]
+                border
+                border-[#64748B]/15
+                bg-[#64748B]/[0.025]
+                px-4
+                py-3.5
+              "
+            >
+              <div className="flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#64748B]" />
 
-          <div className="relative grid gap-10 lg:grid-cols-[0.58fr_1.42fr] lg:items-center">
-            <div>
-              <div className="flex items-center gap-3">
-                <CircleDot className="h-4 w-4 text-[#2563EB]" />
-
-                <p className="text-[0.56rem] font-semibold uppercase tracking-[0.24em] text-[#0A1D2F]/34 dark:text-white/30">
-                  Commitment model
+                <p
+                  className="
+                    text-[0.42rem]
+                    font-semibold
+                    uppercase
+                    tracking-[0.14em]
+                    text-[#64748B]
+                  "
+                >
+                  Learn + stop
                 </p>
               </div>
 
-              <h3 className="mt-5 max-w-[360px] text-2xl font-semibold leading-tight tracking-[-0.04em] text-[#0A1D2F] dark:text-white">
-                Evidence increases.
-                <br />
-                Commitment follows.
-              </h3>
+              <p
+                className="
+                  mt-2
+                  text-[0.64rem]
+                  leading-5
+                  text-[#0A1D2F]/57
+                  dark:text-white/53
+                "
+              >
+                If the evidence weakens the opportunity, keep the
+                learning and avoid committing resources to the
+                wrong venture.
+              </p>
             </div>
 
-            <CommitmentScale />
-          </div>
-        </div>
-
-        {/* =====================================================
-            TWO POSSIBLE OUTCOMES
-        ===================================================== */}
-
-        <div className="mt-8 grid gap-px overflow-hidden rounded-[1.6rem] border border-[#0A1D2F]/[0.07] bg-[#0A1D2F]/[0.055] dark:border-white/[0.07] dark:bg-white/[0.055] md:grid-cols-2">
-          <div className="bg-white/[0.58] p-7 dark:bg-[#0D1117]/[0.5] sm:p-8">
-            <span className="font-mono text-[0.48rem] text-[#64748B]">
-              OUTCOME / A
-            </span>
-
-            <h3 className="mt-5 text-lg font-semibold tracking-[-0.03em] text-[#0A1D2F] dark:text-white">
-              Learn and stop.
-            </h3>
-
-            <p className="mt-3 max-w-[470px] text-sm leading-7 text-[#0A1D2F]/42 dark:text-white/37">
-              If the evidence weakens the opportunity, we keep the
-              learning and avoid committing resources to the wrong
-              venture.
-            </p>
-          </div>
-
-          <div className="relative overflow-hidden bg-white/[0.68] p-7 dark:bg-[#0D1117]/[0.58] sm:p-8">
             <div
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-0"
-              style={{
-                background:
-                  "radial-gradient(circle at 100% 0%, rgba(16,185,129,.04), transparent 48%)",
-              }}
-            />
+              className="
+                rounded-[0.9rem]
+                border
+                border-[#10B981]/15
+                bg-[#10B981]/[0.025]
+                px-4
+                py-3.5
+              "
+            >
+              <div className="flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#10B981]" />
 
-            <div className="relative">
-              <span className="font-mono text-[0.48rem] text-[#10B981] dark:text-[#34D399]">
-                OUTCOME / B
-              </span>
+                <p
+                  className="
+                    text-[0.42rem]
+                    font-semibold
+                    uppercase
+                    tracking-[0.14em]
+                    text-[#059669]
+                    dark:text-[#34D399]
+                  "
+                >
+                  Learn + build
+                </p>
+              </div>
 
-              <h3 className="mt-5 text-lg font-semibold tracking-[-0.03em] text-[#0A1D2F] dark:text-white">
-                Learn and build.
-              </h3>
-
-              <p className="mt-3 max-w-[470px] text-sm leading-7 text-[#0A1D2F]/42 dark:text-white/37">
-                If evidence, product learning and technical progress
-                strengthen the opportunity, the idea earns deeper
-                investment.
+              <p
+                className="
+                  mt-2
+                  text-[0.64rem]
+                  leading-5
+                  text-[#0A1D2F]/57
+                  dark:text-white/53
+                "
+              >
+                If evidence and product learning strengthen the
+                opportunity, it earns deeper investment.
               </p>
             </div>
           </div>
         </div>
 
         {/* =====================================================
-            PRINCIPLE + HANDOFF
+            PRINCIPLE
         ===================================================== */}
 
-        <div className="mt-14 flex flex-col gap-8 border-y border-[#0A1D2F]/[0.08] py-9 dark:border-white/[0.08] lg:mt-20 lg:flex-row lg:items-center lg:justify-between">
-          <p className="max-w-[760px] text-lg font-medium leading-8 tracking-[-0.02em] text-[#0A1D2F]/62 dark:text-white/56">
-            A venture is not the starting point.{" "}
-            <span className="text-[#0A1D2F] dark:text-white">
-              It is the result of progressively stronger evidence
-              that something deserves to be built.
-            </span>
-          </p>
-
-          <Link
-            href="#venture-capabilities"
-            className="group inline-flex shrink-0 items-center gap-3 text-sm font-semibold text-[#2563EB] transition-colors duration-300 hover:text-[#1D4ED8] dark:text-[#60A5FA] dark:hover:text-[#93C5FD]"
+        <p
+          className="
+            mt-5
+            max-w-[760px]
+            text-[0.72rem]
+            leading-6
+            text-[#0A1D2F]/58
+            dark:text-white/55
+          "
+        >
+          A venture is not the starting point.{" "}
+          <span
+            className="
+              font-medium
+              text-[#0A1D2F]/85
+              dark:text-white/82
+            "
           >
-            What Evolvaer provides
-
-            <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </Link>
-        </div>
+            It is the result of progressively stronger evidence
+            that something deserves to be built.
+          </span>
+        </p>
       </div>
     </section>
-  );
-}
-
-function CommitmentScale() {
-  return (
-    <div>
-      <div className="flex items-center justify-between">
-        <span className="text-[0.48rem] font-semibold uppercase tracking-[0.17em] text-[#0A1D2F]/25 dark:text-white/22">
-          Lower commitment
-        </span>
-
-        <span className="text-[0.48rem] font-semibold uppercase tracking-[0.17em] text-[#0A1D2F]/25 dark:text-white/22">
-          Higher commitment
-        </span>
-      </div>
-
-      <div className="mt-5 space-y-3">
-        {commitmentLevels.map(
-          (level) => (
-            <div
-              key={level.label}
-              className="flex items-center gap-4"
-            >
-              <span className="w-[4.2rem] shrink-0 text-[0.55rem] font-semibold text-[#0A1D2F]/42 dark:text-white/37">
-                {
-                  level.label
-                }
-              </span>
-
-              <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-[#0A1D2F]/[0.055] dark:bg-white/[0.055]">
-                <div
-                  className="h-full rounded-full"
-                  style={{
-                    width:
-                      level.width,
-                    backgroundColor:
-                      level.accent,
-                  }}
-                />
-              </div>
-            </div>
-          ),
-        )}
-      </div>
-    </div>
   );
 }

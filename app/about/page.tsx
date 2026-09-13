@@ -27,7 +27,15 @@ export default function AboutPage() {
 
       <div
         aria-hidden="true"
-        className="pointer-events-none fixed inset-0 z-0"
+        className="
+          pointer-events-none 
+          fixed 
+          inset-0 
+          z-0 
+          opacity-15
+          transition-opacity
+          duration-500
+        "
       >
         <AboutSceneLoader />
       </div>
@@ -37,7 +45,7 @@ export default function AboutPage() {
         <AboutStory />
         <AboutCapabilities />
         <AboutOperatingModel />
-        <AboutEvolution />
+        {/* <AboutEvolution /> */}
         <AboutPrinciples />
         <AboutAmbition />
         <AboutCta />

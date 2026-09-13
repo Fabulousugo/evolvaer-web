@@ -2,8 +2,7 @@ import { FeaturedVenture } from "@/src/components/ventures/featured-venture";
 import { FutureVentures } from "@/src/components/ventures/future-ventures";
 import { VentureCapabilities } from "@/src/components/ventures/venture-capabilities";
 import { VentureEmergence } from "@/src/components/ventures/venture-emergence";
-import { VenturePhilosophy } from "@/src/components/ventures/venture-philosophy";
-import { VenturePortfolio } from "@/src/components/ventures/venture-portfolio";
+
 import { VentureStages } from "@/src/components/ventures/venture-stages";
 import { VenturesCta } from "@/src/components/ventures/ventures-cta";
 import { VenturesHero } from "@/src/components/ventures/ventures-hero";
@@ -22,9 +21,17 @@ export default function VenturesPage() {
           STATIC 3D ENVIRONMENT
       ===================================================== */}
 
-      <div
+     <div
         aria-hidden="true"
-        className="pointer-events-none fixed inset-0 z-0"
+        className="
+          pointer-events-none 
+          fixed 
+          inset-0 
+          z-0 
+          opacity-15
+          transition-opacity
+          duration-500
+        "
       >
         <VenturesSceneLoader />
       </div>
@@ -35,13 +42,11 @@ export default function VenturesPage() {
 
       <div className="relative z-10">
         <VenturesHero />
-        <VenturePhilosophy />
-        <VenturePortfolio />
         <FeaturedVenture />
         <VentureEmergence />
         <VentureCapabilities />
         <VentureStages />
-        <FutureVentures />
+        {/* <FutureVentures /> */}
         <VenturesCta />
       </div>
 

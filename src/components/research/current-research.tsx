@@ -1,5 +1,5 @@
+import Image from "next/image";
 import {
-  ArrowUpRight,
   Braces,
   CircleDot,
   MessageSquareText,
@@ -13,7 +13,7 @@ const researchTracks = [
     eyebrow: "Active inquiry",
     title: "AI-assisted communication",
     description:
-      "Exploring how intelligent systems could help people communicate more effectively in situations where speech, language or interpretation creates friction.",
+      "Exploring how intelligent systems could help people communicate more effectively where speech, language or interpretation creates friction.",
     questions: [
       "How reliably can context improve interpretation?",
       "Where should human judgement remain central?",
@@ -28,7 +28,7 @@ const researchTracks = [
     eyebrow: "Applied research",
     title: "Accessible interaction",
     description:
-      "Investigating how software can adapt around different communication needs rather than forcing every person into the same interaction model.",
+      "Investigating how software can adapt around different communication needs rather than forcing everyone into the same interaction model.",
     questions: [
       "What forms of interaction create the least friction?",
       "How should systems communicate uncertainty?",
@@ -47,7 +47,7 @@ const researchTracks = [
     questions: [
       "How should confidence be represented to users?",
       "When should a system defer instead of decide?",
-      "How can technical performance and user trust be evaluated together?",
+      "How can performance and user trust be evaluated together?",
     ],
     accent: "#A855F7",
     icon: ShieldCheck,
@@ -55,51 +55,33 @@ const researchTracks = [
   },
 ] as const;
 
-const productMapNodes = [
-  {
-    className: "left-0 top-[12%]",
-    label: "Research",
-    accent: "#2563EB",
-  },
-  {
-    className: "left-[38%] top-[38%]",
-    label: "Evidence",
-    accent: "#22D3EE",
-    active: true,
-  },
-  {
-    className: "right-0 top-[12%]",
-    label: "Product",
-    accent: "#10B981",
-  },
-  {
-    className: "bottom-0 left-[38%]",
-    label: "Learning",
-    accent: "#A855F7",
-  },
-] as const;
-
 export function CurrentResearch() {
   return (
     <section
       id="current-research"
-      className="relative overflow-hidden py-20 sm:py-24 lg:py-28"
+      className="
+        relative
+        overflow-hidden
+        border-t
+        border-[#0A1D2F]/[0.07]
+        bg-white
+        py-12
+        dark:border-white/[0.07]
+        dark:bg-[#0D1117]
+        sm:py-14
+        lg:py-16
+      "
     >
-      {/* =====================================================
-          ATMOSPHERE
-      ===================================================== */}
-
+      {/* Background */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
       >
-        <div className="absolute inset-0 bg-[#F8FAFC]/[0.42] dark:bg-[#0D1117]/[0.45]" />
-
         <div
           className="absolute inset-0"
           style={{
             background:
-              "radial-gradient(circle at 6% 14%, rgba(37,99,235,.045), transparent 31%), radial-gradient(circle at 96% 88%, rgba(168,85,247,.04), transparent 30%)",
+              "radial-gradient(circle at 5% 12%, rgba(37,99,235,.035), transparent 27%), radial-gradient(circle at 96% 88%, rgba(168,85,247,.025), transparent 28%)",
           }}
         />
       </div>
@@ -109,371 +91,506 @@ export function CurrentResearch() {
             HEADER
         ===================================================== */}
 
-        <div className="grid gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:items-end">
+        <div
+          className="
+            grid
+            gap-8
+            lg:grid-cols-[0.92fr_1.08fr]
+            lg:items-center
+            lg:gap-14
+          "
+        >
+          {/* Copy */}
           <div>
-            <div className="flex items-center gap-4">
-              <span className="font-mono text-[0.5rem] text-[#2563EB] dark:text-[#60A5FA]">
-                05
+            <div className="flex items-center gap-3">
+              <span
+                className="
+                  font-mono
+                  text-[0.46rem]
+                  text-[#2563EB]
+                  dark:text-[#60A5FA]
+                "
+              >
+                02
               </span>
 
-              <span className="h-px w-8 bg-[#2563EB]/35" />
+              <span className="h-px w-7 bg-[#2563EB]/35" />
 
-              <p className="text-[0.6rem] font-semibold uppercase tracking-[0.3em] text-[#2563EB] dark:text-[#60A5FA]">
-                Current research
-              </p>
+              <div className="flex items-center gap-2">
+                <CircleDot
+                  className="
+                    h-3
+                    w-3
+                    text-[#2563EB]
+                    dark:text-[#60A5FA]
+                  "
+                />
+
+                <p
+                  className="
+                    text-[0.54rem]
+                    font-semibold
+                    uppercase
+                    tracking-[0.23em]
+                    text-[#2563EB]
+                    dark:text-[#60A5FA]
+                  "
+                >
+                  Current research
+                </p>
+              </div>
             </div>
 
-            <h2 className="mt-6 max-w-[780px] text-[clamp(2.35rem,4vw,4.2rem)] font-semibold leading-[0.96] tracking-[-0.052em] text-[#0A1D2F] dark:text-white">
-              What we are
-              <br />
-              trying to{" "}
-              <span className="bg-gradient-to-r from-[#2563EB] via-[#22D3EE] to-[#A855F7] bg-clip-text text-transparent dark:from-[#60A5FA] dark:via-[#67E8F9] dark:to-[#C084FC]">
+            <h2
+              className="
+                mt-4
+                max-w-[600px]
+                text-[clamp(2rem,3.2vw,2.85rem)]
+                font-semibold
+                leading-[1.02]
+                tracking-[-0.045em]
+                text-[#0A1D2F]
+                dark:text-white
+              "
+            >
+              What we are trying to{" "}
+              <span
+                className="
+                  bg-gradient-to-r
+                  from-[#2563EB]
+                  via-[#0891B2]
+                  to-[#A855F7]
+                  bg-clip-text
+                  text-transparent
+                  dark:from-[#60A5FA]
+                  dark:via-[#67E8F9]
+                  dark:to-[#C084FC]
+                "
+              >
                 understand.
               </span>
             </h2>
-          </div>
 
-          <div className="max-w-[620px] lg:justify-self-end">
-            <p className="text-base leading-8 text-[#0A1D2F]/58 dark:text-white/54 sm:text-[1.05rem]">
-              Our research portfolio is intentionally selective. We
-              focus on questions that can deepen our understanding and
-              potentially inform useful technologies, products or
-              ventures.
+            <p
+              className="
+                mt-5
+                max-w-[590px]
+                text-[0.88rem]
+                leading-6
+                text-[#0A1D2F]/70
+                dark:text-white/68
+                sm:text-[0.93rem]
+              "
+            >
+              Our research portfolio is intentionally selective.
+              We focus on questions that can deepen understanding
+              and potentially inform useful technologies, products
+              or ventures.
             </p>
 
-            <p className="mt-5 text-sm leading-7 text-[#0A1D2F]/41 dark:text-white/37">
-              Some investigations may become prototypes. Some may
-              shape product decisions. Others may simply tell us that
-              an idea should not move forward.
+            <p
+              className="
+                mt-4
+                max-w-[570px]
+                text-[0.76rem]
+                leading-5
+                text-[#0A1D2F]/55
+                dark:text-white/52
+              "
+            >
+              Some inquiries may become prototypes. Others may
+              change a product decision — or show us that an idea
+              should not move forward.
             </p>
           </div>
-        </div>
 
-        {/* =====================================================
-            ACTIVE RESEARCH
-        ===================================================== */}
+          {/* Editorial research image */}
+          <div
+            className="
+              relative
+              aspect-[16/9]
+              overflow-hidden
+              rounded-[1.35rem]
+              border
+              border-[#0A1D2F]/[0.08]
+              bg-[#F1F5F9]
+              dark:border-white/[0.08]
+              dark:bg-[#101820]
+            "
+          >
+            <Image
+              src="/images/current-research.jpg"
+              alt="Technical research and computational investigation"
+              fill
+              sizes="(max-width: 1024px) 100vw, 52vw"
+              className="
+                object-cover
+                transition-transform
+                duration-700
+                hover:scale-[1.015]
+              "
+            />
 
-        <div className="mt-16 space-y-4 lg:mt-24">
-          {researchTracks.map(
-            (track) => {
-              const Icon =
-                track.icon;
+            <div
+              aria-hidden="true"
+              className="
+                absolute
+                inset-0
+                bg-gradient-to-t
+                from-[#07111D]/55
+                via-transparent
+                to-transparent
+              "
+            />
 
-              return (
-                <article
-                  key={track.number}
-                  className="group relative overflow-hidden rounded-[1.8rem] border border-[#0A1D2F]/[0.08] bg-white/[0.54] transition-colors duration-300 hover:bg-white/[0.68] dark:border-white/[0.08] dark:bg-white/[0.025] dark:hover:bg-white/[0.04]"
+            <div
+              className="
+                absolute
+                inset-x-4
+                bottom-4
+                flex
+                items-end
+                justify-between
+                gap-5
+              "
+            >
+              <div>
+                <p
+                  className="
+                    text-[0.43rem]
+                    font-semibold
+                    uppercase
+                    tracking-[0.16em]
+                    text-white/65
+                  "
                 >
-                  <div
-                    aria-hidden="true"
-                    className="absolute inset-x-0 top-0 h-px opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                    style={{
-                      background: `linear-gradient(90deg, transparent, ${track.accent}60, transparent)`,
-                    }}
-                  />
+                  Research portfolio
+                </p>
 
-                  <div
-                    aria-hidden="true"
-                    className="pointer-events-none absolute right-0 top-0 h-44 w-44 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                    style={{
-                      background: `radial-gradient(circle at 100% 0%, ${track.accent}10, transparent 70%)`,
-                    }}
-                  />
-
-                  <div className="relative grid lg:grid-cols-[0.18fr_0.92fr_1.1fr]">
-                    {/* INDEX */}
-
-                    <div className="border-b border-[#0A1D2F]/[0.07] p-7 dark:border-white/[0.07] lg:border-b-0 lg:border-r lg:p-8">
-                      <div className="flex items-center justify-between lg:block">
-                        <span
-                          className="font-mono text-[0.48rem]"
-                          style={{
-                            color:
-                              track.accent,
-                          }}
-                        >
-                          {track.number}
-                        </span>
-
-                        <div
-                          className="mt-0 flex h-10 w-10 items-center justify-center rounded-full border lg:mt-8"
-                          style={{
-                            borderColor: `${track.accent}25`,
-                            backgroundColor: `${track.accent}0A`,
-                          }}
-                        >
-                          <Icon
-                            className="h-4 w-4"
-                            style={{
-                              color:
-                                track.accent,
-                            }}
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* DESCRIPTION */}
-
-                    <div className="border-b border-[#0A1D2F]/[0.07] p-7 dark:border-white/[0.07] sm:p-8 lg:border-b-0 lg:border-r lg:p-10">
-                      <div className="flex flex-wrap items-center gap-3">
-                        <span
-                          className="text-[0.5rem] font-semibold uppercase tracking-[0.18em]"
-                          style={{
-                            color:
-                              track.accent,
-                          }}
-                        >
-                          {
-                            track.eyebrow
-                          }
-                        </span>
-
-                        <span className="h-1 w-1 rounded-full bg-[#0A1D2F]/18 dark:bg-white/18" />
-
-                        <span className="font-mono text-[0.43rem] uppercase tracking-[0.13em] text-[#0A1D2F]/23 dark:text-white/20">
-                          {track.status}
-                        </span>
-                      </div>
-
-                      <h3 className="mt-6 max-w-[500px] text-[2rem] font-semibold leading-[1.04] tracking-[-0.045em] text-[#0A1D2F] dark:text-white sm:text-[2.2rem]">
-                        {track.title}
-                      </h3>
-
-                      <p className="mt-5 max-w-[520px] text-sm leading-7 text-[#0A1D2F]/43 dark:text-white/38">
-                        {
-                          track.description
-                        }
-                      </p>
-                    </div>
-
-                    {/* QUESTIONS */}
-
-                    <div className="p-7 sm:p-8 lg:p-10">
-                      <div className="flex items-center gap-3">
-                        <Braces
-                          className="h-4 w-4"
-                          style={{
-                            color:
-                              track.accent,
-                          }}
-                        />
-
-                        <p className="text-[0.52rem] font-semibold uppercase tracking-[0.2em] text-[#0A1D2F]/31 dark:text-white/28">
-                          Questions under investigation
-                        </p>
-                      </div>
-
-                      <div className="mt-8 divide-y divide-[#0A1D2F]/[0.065] border-y border-[#0A1D2F]/[0.065] dark:divide-white/[0.065] dark:border-white/[0.065]">
-                        {track.questions.map(
-                          (
-                            question,
-                            index,
-                          ) => (
-                            <div
-                              key={
-                                question
-                              }
-                              className="grid grid-cols-[2rem_1fr] gap-3 py-5"
-                            >
-                              <span
-                                className="pt-1 font-mono text-[0.43rem]"
-                                style={{
-                                  color:
-                                    track.accent,
-                                }}
-                              >
-                                0
-                                {index +
-                                  1}
-                              </span>
-
-                              <p className="text-sm leading-7 text-[#0A1D2F]/52 dark:text-white/46">
-                                {
-                                  question
-                                }
-                              </p>
-                            </div>
-                          ),
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </article>
-              );
-            },
-          )}
-        </div>
-
-        {/* =====================================================
-            ADAPTCUES CONNECTION
-        ===================================================== */}
-
-        <div className="mt-16 overflow-hidden rounded-[2rem] border border-[#22D3EE]/[0.13] bg-white/[0.5] dark:border-[#22D3EE]/[0.11] dark:bg-white/[0.03] lg:mt-24">
-          <div className="grid lg:grid-cols-[1.1fr_0.9fr]">
-            <div className="p-7 sm:p-9 lg:p-11">
-              <div className="flex items-center gap-3">
-                <CircleDot className="h-4 w-4 text-[#22D3EE]" />
-
-                <p className="text-[0.55rem] font-semibold uppercase tracking-[0.23em] text-[#0891B2] dark:text-[#67E8F9]">
-                  Research into application
+                <p
+                  className="
+                    mt-1
+                    text-[0.72rem]
+                    font-medium
+                    text-white
+                  "
+                >
+                  Questions before conclusions.
                 </p>
               </div>
 
-              <h3 className="mt-7 max-w-[650px] text-[2.2rem] font-semibold leading-[1.02] tracking-[-0.045em] text-[#0A1D2F] dark:text-white sm:text-[2.55rem]">
-                Adaptcues sits at the intersection of several
-                questions.
-              </h3>
-
-              <p className="mt-6 max-w-[650px] text-sm leading-7 text-[#0A1D2F]/43 dark:text-white/38">
-                Work around intelligent communication, accessibility,
-                interpretation and human-centred software can inform
-                how products such as Adaptcues are explored and
-                developed.
-              </p>
-
-              <p className="mt-4 max-w-[650px] text-sm leading-7 text-[#0A1D2F]/43 dark:text-white/38">
-                The purpose is not to force research toward a
-                predetermined product. It is to let evidence improve
-                the decisions made around that product.
-              </p>
-            </div>
-
-            <div className="relative min-h-[17rem] overflow-hidden border-t border-[#0A1D2F]/[0.07] p-7 dark:border-white/[0.07] sm:p-9 lg:border-l lg:border-t-0">
-              <div
-                aria-hidden="true"
-                className="pointer-events-none absolute inset-0"
-                style={{
-                  background:
-                    "radial-gradient(circle at 50% 48%, rgba(34,211,238,.035), transparent 42%)",
-                }}
-              />
-
-              <ResearchToProductMap />
+              <span
+                className="
+                  font-mono
+                  text-[0.4rem]
+                  uppercase
+                  tracking-[0.12em]
+                  text-white/50
+                "
+              >
+                R / Active
+              </span>
             </div>
           </div>
         </div>
 
         {/* =====================================================
-            STATUS NOTE
+            RESEARCH TRACKS
         ===================================================== */}
 
-        <div className="mt-14 flex items-start gap-4 border-l border-[#2563EB]/25 pl-5">
-          <CircleDot className="mt-1 h-3.5 w-3.5 shrink-0 text-[#2563EB]" />
+        <div
+          className="
+            mt-9
+            grid
+            overflow-hidden
+            rounded-[1.25rem]
+            border
+            border-[#0A1D2F]/[0.08]
+            bg-[#F8FAFC]
+            dark:border-white/[0.08]
+            dark:bg-[#101820]
+            lg:grid-cols-3
+          "
+        >
+          {researchTracks.map((track, index) => {
+            const Icon = track.icon;
 
-          <p className="max-w-[780px] text-sm leading-7 text-[#0A1D2F]/38 dark:text-white/34">
-            Research themes will evolve as questions are answered,
-            abandoned or replaced. This page is designed to grow with
-            the work rather than imply that every inquiry becomes a
-            permanent programme.
-          </p>
+            return (
+              <article
+                key={track.number}
+                className={`
+                  group
+                  relative
+                  flex
+                  min-h-[24rem]
+                  flex-col
+                  px-5
+                  py-5
+                  transition-colors
+                  duration-300
+                  hover:bg-white
+                  dark:hover:bg-white/[0.025]
+
+                  ${
+                    index < researchTracks.length - 1
+                      ? `
+                        border-b
+                        border-[#0A1D2F]/[0.07]
+                        dark:border-white/[0.07]
+                        lg:border-b-0
+                        lg:border-r
+                      `
+                      : ""
+                  }
+                `}
+              >
+                {/* Top */}
+                <div className="flex items-center justify-between">
+                  <div
+                    className="
+                      flex
+                      h-9
+                      w-9
+                      items-center
+                      justify-center
+                      rounded-full
+                      border
+                    "
+                    style={{
+                      borderColor: `${track.accent}30`,
+                      backgroundColor: `${track.accent}0D`,
+                    }}
+                  >
+                    <Icon
+                      className="h-3.5 w-3.5"
+                      style={{
+                        color: track.accent,
+                      }}
+                    />
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <span
+                      className="h-1.5 w-1.5 rounded-full"
+                      style={{
+                        backgroundColor: track.accent,
+                        boxShadow: `0 0 7px ${track.accent}55`,
+                      }}
+                    />
+
+                    <span
+                      className="
+                        font-mono
+                        text-[0.4rem]
+                        uppercase
+                        tracking-[0.11em]
+                        text-[#0A1D2F]/48
+                        dark:text-white/45
+                      "
+                    >
+                      {track.status}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Main */}
+                <div className="mt-5">
+                  <div className="flex items-center gap-2">
+                    <span
+                      className="font-mono text-[0.4rem]"
+                      style={{
+                        color: track.accent,
+                      }}
+                    >
+                      {track.number}
+                    </span>
+
+                    <span
+                      className="
+                        text-[0.46rem]
+                        font-semibold
+                        uppercase
+                        tracking-[0.14em]
+                      "
+                      style={{
+                        color: track.accent,
+                      }}
+                    >
+                      {track.eyebrow}
+                    </span>
+                  </div>
+
+                  <h3
+                    className="
+                      mt-3
+                      max-w-[300px]
+                      text-[1.18rem]
+                      font-semibold
+                      leading-[1.12]
+                      tracking-[-0.03em]
+                      text-[#0A1D2F]
+                      dark:text-white
+                    "
+                  >
+                    {track.title}
+                  </h3>
+
+                  <p
+                    className="
+                      mt-3
+                      text-[0.77rem]
+                      leading-5
+                      text-[#0A1D2F]/67
+                      dark:text-white/63
+                    "
+                  >
+                    {track.description}
+                  </p>
+                </div>
+
+                {/* Questions */}
+                <div
+                  className="
+                    mt-5
+                    border-t
+                    border-[#0A1D2F]/[0.07]
+                    pt-4
+                    dark:border-white/[0.07]
+                  "
+                >
+                  <div className="flex items-center gap-2">
+                    <Braces
+                      className="h-3 w-3"
+                      style={{
+                        color: track.accent,
+                      }}
+                    />
+
+                    <p
+                      className="
+                        text-[0.43rem]
+                        font-semibold
+                        uppercase
+                        tracking-[0.13em]
+                        text-[#0A1D2F]/50
+                        dark:text-white/46
+                      "
+                    >
+                      Questions under investigation
+                    </p>
+                  </div>
+
+                  <div className="mt-3 space-y-2.5">
+                    {track.questions.map(
+                      (question, questionIndex) => (
+                        <div
+                          key={question}
+                          className="
+                            grid
+                            grid-cols-[1.25rem_1fr]
+                            gap-2
+                          "
+                        >
+                          <span
+                            className="
+                              pt-[0.1rem]
+                              font-mono
+                              text-[0.4rem]
+                            "
+                            style={{
+                              color: track.accent,
+                            }}
+                          >
+                            0{questionIndex + 1}
+                          </span>
+
+                          <p
+                            className="
+                              text-[0.7rem]
+                              leading-[1.15rem]
+                              text-[#0A1D2F]/62
+                              dark:text-white/58
+                            "
+                          >
+                            {question}
+                          </p>
+                        </div>
+                      ),
+                    )}
+                  </div>
+                </div>
+              </article>
+            );
+          })}
         </div>
 
         {/* =====================================================
-            HANDOFF
+            RESEARCH → APPLICATION
         ===================================================== */}
 
-        <div className="mt-12 flex flex-col gap-6 border-t border-[#0A1D2F]/[0.07] pt-8 dark:border-white/[0.07] sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <p className="text-[0.5rem] font-semibold uppercase tracking-[0.18em] text-[#0A1D2F]/24 dark:text-white/21">
-              Evidence becomes useful
-            </p>
+        <div
+          className="
+            mt-7
+            grid
+            gap-4
+            border-t
+            border-[#0A1D2F]/[0.08]
+            pt-6
+            dark:border-white/[0.08]
+            sm:grid-cols-[auto_1fr]
+            sm:items-start
+            sm:gap-8
+          "
+        >
+          <div className="flex items-center gap-2">
+            <CircleDot className="h-3 w-3 text-[#22D3EE]" />
 
-            <p className="mt-2 text-sm text-[#0A1D2F]/42 dark:text-white/37">
-              Research matters when understanding can inform action.
+            <p
+              className="
+                whitespace-nowrap
+                text-[0.47rem]
+                font-semibold
+                uppercase
+                tracking-[0.16em]
+                text-[#0891B2]
+                dark:text-[#67E8F9]
+              "
+            >
+              Research → application
             </p>
           </div>
 
-          <a
-            href="#research-application"
-            className="group inline-flex items-center gap-3 text-[0.52rem] font-semibold uppercase tracking-[0.17em] text-[#2563EB] transition-colors duration-300 hover:text-[#1D4ED8] dark:text-[#60A5FA] dark:hover:text-[#93C5FD]"
-          >
-            From research to application
+          <div className="max-w-[760px]">
+            <p
+              className="
+                text-[0.86rem]
+                font-medium
+                leading-6
+                text-[#0A1D2F]/78
+                dark:text-white/74
+              "
+            >
+              Adaptcues sits at the intersection of several of
+              these questions.
+            </p>
 
-            <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </a>
+            <p
+              className="
+                mt-1.5
+                text-[0.74rem]
+                leading-5
+                text-[#0A1D2F]/60
+                dark:text-white/56
+              "
+            >
+              Research around intelligent communication,
+              accessibility and human-centred software can inform
+              its development — without forcing evidence toward a
+              predetermined product.
+            </p>
+          </div>
         </div>
       </div>
     </section>
-  );
-}
-
-function ResearchToProductMap() {
-  return (
-    <div className="relative flex h-full min-h-[18rem] items-center justify-center">
-      <div className="relative h-[17rem] w-full max-w-[25rem]">
-        {productMapNodes.map(
-          (node) => (
-            <MapNode
-              key={node.label}
-              className={
-                node.className
-              }
-              label={node.label}
-              accent={node.accent}
-              active={
-                "active" in node
-                  ? node.active
-                  : false
-              }
-            />
-          ),
-        )}
-
-        <div className="absolute left-[16%] top-[28%] h-px w-[29%] rotate-[18deg] bg-gradient-to-r from-[#2563EB]/15 to-[#22D3EE]/45" />
-
-        <div className="absolute right-[17%] top-[28%] h-px w-[29%] -rotate-[18deg] bg-gradient-to-l from-[#10B981]/15 to-[#22D3EE]/45" />
-
-        <div className="absolute bottom-[28%] left-[46%] h-[26%] w-px bg-gradient-to-b from-[#22D3EE]/40 to-[#A855F7]/15" />
-      </div>
-    </div>
-  );
-}
-
-function MapNode({
-  className,
-  label,
-  accent,
-  active = false,
-}: {
-  className: string;
-  label: string;
-  accent: string;
-  active?: boolean;
-}) {
-  return (
-    <div
-      className={`absolute flex flex-col items-center gap-3 ${className}`}
-    >
-      <div
-        className="relative flex h-[4.8rem] w-[4.8rem] items-center justify-center rounded-full border bg-white/[0.82] dark:bg-[#0D1117]/[0.86]"
-        style={{
-          borderColor: `${accent}32`,
-          boxShadow: active
-            ? `0 0 22px ${accent}18`
-            : undefined,
-        }}
-      >
-        <span
-          className="h-2 w-2 rounded-full"
-          style={{
-            backgroundColor:
-              accent,
-            boxShadow: `0 0 7px ${accent}55`,
-          }}
-        />
-
-        <span
-          className="absolute inset-[7px] rounded-full border"
-          style={{
-            borderColor: `${accent}12`,
-          }}
-        />
-      </div>
-
-      <span className="text-[0.5rem] font-semibold uppercase tracking-[0.14em] text-[#0A1D2F]/42 dark:text-white/37">
-        {label}
-      </span>
-    </div>
   );
 }

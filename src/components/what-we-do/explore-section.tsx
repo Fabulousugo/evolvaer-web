@@ -1,7 +1,4 @@
-import Link from "next/link";
 import {
-  ArrowDownRight,
-  ArrowUpRight,
   Crosshair,
   Radar,
   ScanSearch,
@@ -13,21 +10,42 @@ const signals = [
     number: "01",
     title: "Technology shifts",
     description:
-      "We track emerging technologies, capabilities and technical shifts that could unlock new ways of solving problems.",
+      "Emerging technologies and capabilities that could unlock new ways of solving problems.",
+    accent: "#2563EB",
   },
   {
     icon: Crosshair,
     number: "02",
     title: "Meaningful problems",
     description:
-      "We look for persistent problems where better technology could create genuine practical value.",
+      "Persistent real-world problems where better technology could create practical value.",
+    accent: "#22D3EE",
   },
   {
     icon: ScanSearch,
     number: "03",
     title: "Opportunity signals",
     description:
-      "We examine where technological possibility, real need and viable opportunity begin to intersect.",
+      "Places where technical possibility, genuine need and viable opportunity begin to intersect.",
+    accent: "#7C3AED",
+  },
+] as const;
+
+const convergence = [
+  {
+    number: "A",
+    label: "New capability",
+    accent: "#2563EB",
+  },
+  {
+    number: "B",
+    label: "Real need",
+    accent: "#22D3EE",
+  },
+  {
+    number: "C",
+    label: "Viable opportunity",
+    accent: "#7C3AED",
   },
 ] as const;
 
@@ -35,7 +53,16 @@ export function ExploreSection() {
   return (
     <section
       id="explore"
-      className="relative min-h-[100svh] overflow-hidden py-20 sm:py-24 lg:py-28"
+      className="
+        relative
+        overflow-hidden
+        border-t
+        border-[#0A1D2F]/[0.07]
+        py-14
+        dark:border-white/[0.07]
+        sm:py-16
+        lg:py-20
+      "
     >
       {/* =====================================================
           ATMOSPHERE
@@ -45,284 +72,406 @@ export function ExploreSection() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
       >
-        <div className="absolute inset-0 bg-white/[0.62] dark:bg-[#0D1117]/[0.58]" />
+        <div
+          className="
+            absolute
+            inset-0
+            bg-white/[0.5]
+            dark:bg-[#0D1117]/[0.48]
+          "
+        />
 
         <div
           className="absolute inset-0"
           style={{
-            background: `
-              radial-gradient(
-                circle at 4% 18%,
-                rgba(37,99,235,0.075),
-                transparent 29%
-              ),
-              radial-gradient(
-                circle at 94% 88%,
-                rgba(34,211,238,0.065),
-                transparent 28%
-              )
-            `,
-          }}
-        />
-
-        <div
-          className="absolute inset-0 opacity-[0.018] dark:opacity-[0.035]"
-          style={{
-            backgroundImage: `
-              linear-gradient(
-                rgba(37,99,235,.28) 1px,
-                transparent 1px
-              ),
-              linear-gradient(
-                90deg,
-                rgba(37,99,235,.28) 1px,
-                transparent 1px
-              )
-            `,
-            backgroundSize:
-              "92px 92px",
+            background:
+              "radial-gradient(circle at 4% 18%, rgba(37,99,235,.055), transparent 27%), radial-gradient(circle at 94% 82%, rgba(34,211,238,.045), transparent 27%)",
           }}
         />
       </div>
 
       <div className="evolvaer-container relative z-10">
         {/* =====================================================
-            SECTION HEADER
+            HEADER
         ===================================================== */}
 
-        <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
+        <div
+          className="
+            grid
+            gap-7
+            lg:grid-cols-[0.82fr_1.18fr]
+            lg:items-end
+            lg:gap-14
+          "
+        >
           <div>
-            <div className="flex items-center gap-4">
-              <span className="flex h-9 w-9 items-center justify-center rounded-full border border-[#2563EB]/20 bg-[#2563EB]/[0.06] text-[0.58rem] font-bold tracking-[0.12em] text-[#2563EB] dark:border-[#3B82F6]/25 dark:bg-[#3B82F6]/[0.08] dark:text-[#60A5FA]">
+            <div className="flex items-center gap-3">
+              <span
+                className="
+                  font-mono
+                  text-[0.46rem]
+                  text-[#2563EB]
+                  dark:text-[#60A5FA]
+                "
+              >
                 01
               </span>
 
-              <span className="text-[0.62rem] font-semibold uppercase tracking-[0.3em] text-[#0A1D2F]/40 dark:text-white/38">
+              <span className="h-px w-7 bg-[#2563EB]/35" />
+
+              <p
+                className="
+                  text-[0.5rem]
+                  font-semibold
+                  uppercase
+                  tracking-[0.2em]
+                  text-[#2563EB]
+                  dark:text-[#60A5FA]
+                "
+              >
                 Explore
-              </span>
+              </p>
             </div>
 
-            <h2 className="mt-7 max-w-[650px] text-[clamp(2.8rem,4.8vw,5.4rem)] font-semibold leading-[0.96] tracking-[-0.05em] text-[#0A1D2F] dark:text-white">
-              We start with
-              <br />
-
-              <span className="bg-gradient-to-r from-[#2563EB] to-[#22D3EE] bg-clip-text text-transparent dark:from-[#3B82F6] dark:to-[#22D3EE]">
+            <h2
+              className="
+                mt-4
+                max-w-[560px]
+                text-[clamp(1.95rem,3.2vw,2.75rem)]
+                font-semibold
+                leading-[1]
+                tracking-[-0.045em]
+                text-[#0A1D2F]
+                dark:text-white
+              "
+            >
+              We start with{" "}
+              <span
+                className="
+                  text-[#2563EB]
+                  dark:text-[#60A5FA]
+                "
+              >
                 the signal.
               </span>
             </h2>
           </div>
 
-          <div className="max-w-[590px] lg:justify-self-end">
-            <p className="text-base leading-8 text-[#0A1D2F]/58 dark:text-white/54 sm:text-[1.05rem]">
-              Before deciding what to build, we explore what is
-              changing. We look across technology, industries and
-              real-world needs to identify signals worth
-              investigating.
+          <div
+            className="
+              max-w-[650px]
+              lg:justify-self-end
+            "
+          >
+            <p
+              className="
+                text-[0.84rem]
+                leading-7
+                text-[#0A1D2F]/68
+                dark:text-white/64
+                sm:text-[0.9rem]
+              "
+            >
+              Before deciding what to build, we look at what is
+              changing across technology, industries and real-world
+              needs — searching for signals worth investigating.
             </p>
 
-            <p className="mt-5 text-sm leading-7 text-[#0A1D2F]/40 dark:text-white/36">
-              Exploration is not about chasing every new technology.
-              It is about finding the intersections where new
-              capability could become genuinely useful.
+            <p
+              className="
+                mt-3
+                text-[0.72rem]
+                leading-6
+                text-[#0A1D2F]/52
+                dark:text-white/49
+              "
+            >
+              The aim is not to chase every new technology. It is to
+              find where new capability could become genuinely useful.
             </p>
           </div>
         </div>
 
         {/* =====================================================
-            SIGNAL FIELD
+            SIGNALS
         ===================================================== */}
 
-        <div className="mt-16 lg:mt-20">
-          <div className="grid border-y border-[#0A1D2F]/[0.08] dark:border-white/[0.08] lg:grid-cols-3">
-            {signals.map(
-              (
-                signal,
-                index,
-              ) => {
-                const Icon =
-                  signal.icon;
+        <div
+          className="
+            mt-10
+            grid
+            overflow-hidden
+            border-y
+            border-[#0A1D2F]/[0.08]
+            dark:border-white/[0.08]
+            lg:grid-cols-3
+          "
+        >
+          {signals.map((signal, index) => {
+            const Icon = signal.icon;
 
-                return (
-                  <article
-                    key={
-                      signal.title
-                    }
-                    className={[
-                      "group relative min-h-[20rem] px-1 py-8 sm:py-10 lg:px-8 lg:py-12",
-                      index !== 0
-                        ? "border-t border-[#0A1D2F]/[0.08] dark:border-white/[0.08] lg:border-l lg:border-t-0"
-                        : "",
-                    ].join(" ")}
+            return (
+              <article
+                key={signal.title}
+                className={`
+                  group
+                  relative
+                  px-1
+                  py-6
+                  sm:py-7
+                  lg:px-6
+                  lg:py-7
+
+                  ${
+                    index !== 0
+                      ? `
+                        border-t
+                        border-[#0A1D2F]/[0.07]
+                        dark:border-white/[0.07]
+                        lg:border-l
+                        lg:border-t-0
+                      `
+                      : ""
+                  }
+                `}
+              >
+                <div
+                  className="
+                    pointer-events-none
+                    absolute
+                    inset-x-0
+                    top-0
+                    h-px
+                    origin-left
+                    scale-x-0
+                    transition-transform
+                    duration-500
+                    group-hover:scale-x-100
+                  "
+                  style={{
+                    background: `linear-gradient(to right, ${signal.accent}, transparent)`,
+                  }}
+                />
+
+                <div className="flex items-start justify-between">
+                  <div
+                    className="
+                      flex
+                      h-9
+                      w-9
+                      items-center
+                      justify-center
+                      rounded-lg
+                      border
+                    "
+                    style={{
+                      borderColor: `${signal.accent}25`,
+                      color: signal.accent,
+                      backgroundColor: `${signal.accent}0A`,
+                    }}
                   >
-                    <div className="pointer-events-none absolute inset-x-0 top-0 h-px origin-left scale-x-0 bg-gradient-to-r from-[#2563EB] via-[#22D3EE] to-transparent transition-transform duration-500 group-hover:scale-x-100" />
+                    <Icon className="h-4 w-4" />
+                  </div>
 
-                    <div className="flex items-start justify-between">
-                      <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-[#0A1D2F]/[0.08] bg-white/45 text-[#2563EB] transition-[border-color,background-color,transform] duration-300 group-hover:-translate-y-0.5 group-hover:border-[#2563EB]/25 group-hover:bg-[#2563EB]/[0.06] dark:border-white/[0.08] dark:bg-white/[0.035] dark:text-[#60A5FA] dark:group-hover:border-[#3B82F6]/30">
-                        <Icon className="h-4.5 w-4.5" />
-                      </div>
+                  <span
+                    className="
+                      font-mono
+                      text-[0.42rem]
+                      text-[#0A1D2F]/30
+                      dark:text-white/28
+                    "
+                  >
+                    {signal.number}
+                  </span>
+                </div>
 
-                      <span className="text-[0.55rem] font-semibold tracking-[0.18em] text-[#0A1D2F]/20 dark:text-white/18">
-                        {
-                          signal.number
-                        }
-                      </span>
-                    </div>
+                <h3
+                  className="
+                    mt-5
+                    text-[0.94rem]
+                    font-semibold
+                    tracking-[-0.025em]
+                    text-[#0A1D2F]
+                    dark:text-white
+                  "
+                >
+                  {signal.title}
+                </h3>
 
-                    <div className="mt-20 sm:mt-24">
-                      <h3 className="text-xl font-semibold tracking-[-0.025em] text-[#0A1D2F] dark:text-white">
-                        {
-                          signal.title
-                        }
-                      </h3>
-
-                      <p className="mt-4 max-w-[22rem] text-sm leading-7 text-[#0A1D2F]/48 dark:text-white/42">
-                        {
-                          signal.description
-                        }
-                      </p>
-                    </div>
-
-                    <div className="absolute bottom-7 right-1 flex h-7 w-7 items-center justify-center rounded-full border border-[#0A1D2F]/[0.08] text-[#0A1D2F]/22 transition-[border-color,color,transform] duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:border-[#2563EB]/25 group-hover:text-[#2563EB] dark:border-white/[0.08] dark:text-white/20 dark:group-hover:text-[#60A5FA] lg:right-7">
-                      <ArrowDownRight className="h-3.5 w-3.5" />
-                    </div>
-                  </article>
-                );
-              },
-            )}
-          </div>
+                <p
+                  className="
+                    mt-2.5
+                    max-w-[22rem]
+                    text-[0.7rem]
+                    leading-5
+                    text-[#0A1D2F]/56
+                    dark:text-white/52
+                  "
+                >
+                  {signal.description}
+                </p>
+              </article>
+            );
+          })}
         </div>
 
         {/* =====================================================
-            INTERSECTION
+            CONVERGENCE
         ===================================================== */}
 
-        <div className="mt-14 grid gap-8 lg:mt-18 lg:grid-cols-[0.72fr_1.28fr] lg:items-center">
+        <div
+          className="
+            mt-8
+            grid
+            gap-5
+            lg:grid-cols-[0.55fr_1.45fr]
+            lg:items-center
+            lg:gap-12
+          "
+        >
           <div>
-            <p className="text-[0.58rem] font-semibold uppercase tracking-[0.27em] text-[#0A1D2F]/30 dark:text-white/28">
+            <p
+              className="
+                text-[0.45rem]
+                font-semibold
+                uppercase
+                tracking-[0.18em]
+                text-[#0A1D2F]/40
+                dark:text-white/38
+              "
+            >
               The intersection
             </p>
 
-            <p className="mt-3 max-w-[18rem] text-sm leading-6 text-[#0A1D2F]/42 dark:text-white/36">
-              An idea becomes interesting when several signals begin
-              pointing in the same direction.
+            <p
+              className="
+                mt-2
+                max-w-[300px]
+                text-[0.7rem]
+                leading-5
+                text-[#0A1D2F]/53
+                dark:text-white/49
+              "
+            >
+              An opportunity becomes interesting when several
+              signals begin pointing in the same direction.
             </p>
           </div>
 
-          <div className="relative overflow-hidden rounded-[1.6rem] border border-[#0A1D2F]/[0.08] bg-white/[0.32] p-6 dark:border-white/[0.08] dark:bg-white/[0.03] sm:p-8">
+          <div
+            className="
+              overflow-hidden
+              rounded-[1rem]
+              border
+              border-[#0A1D2F]/[0.08]
+              bg-white/[0.38]
+              dark:border-white/[0.08]
+              dark:bg-white/[0.025]
+            "
+          >
             <div
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-0"
-              style={{
-                background:
-                  "radial-gradient(circle at 42% 50%, rgba(34,211,238,0.09), transparent 25%)",
-              }}
-            />
+              className="
+                grid
+                sm:grid-cols-3
+              "
+            >
+              {convergence.map((item, index) => (
+                <div
+                  key={item.label}
+                  className={`
+                    flex
+                    items-center
+                    gap-3
+                    px-5
+                    py-4
 
-            <div className="relative grid gap-5 sm:grid-cols-[1fr_auto_1fr_auto_1fr] sm:items-center">
-              <SignalLabel
-                number="A"
-                label="New capability"
-                color="#2563EB"
-              />
+                    ${
+                      index !== 0
+                        ? `
+                          border-t
+                          border-[#0A1D2F]/[0.07]
+                          dark:border-white/[0.07]
+                          sm:border-l
+                          sm:border-t-0
+                        `
+                        : ""
+                    }
+                  `}
+                >
+                  <span
+                    className="
+                      flex
+                      h-7
+                      w-7
+                      shrink-0
+                      items-center
+                      justify-center
+                      rounded-full
+                      border
+                      font-mono
+                      text-[0.43rem]
+                    "
+                    style={{
+                      borderColor: `${item.accent}35`,
+                      backgroundColor: `${item.accent}0A`,
+                      color: item.accent,
+                    }}
+                  >
+                    {item.number}
+                  </span>
 
-              <Connector />
-
-              <SignalLabel
-                number="B"
-                label="Real need"
-                color="#22D3EE"
-              />
-
-              <Connector />
-
-              <SignalLabel
-                number="C"
-                label="Viable opportunity"
-                color="#7C3AED"
-              />
+                  <span
+                    className="
+                      text-[0.68rem]
+                      font-semibold
+                      text-[#0A1D2F]/68
+                      dark:text-white/63
+                    "
+                  >
+                    {item.label}
+                  </span>
+                </div>
+              ))}
             </div>
 
-            <div className="relative mt-7 flex items-center gap-4 border-t border-[#0A1D2F]/[0.07] pt-6 dark:border-white/[0.07]">
-              <span className="h-2 w-2 shrink-0 rounded-full bg-[#10B981] shadow-[0_0_18px_rgba(16,185,129,.65)] dark:bg-[#22D3EE]" />
+            <div
+              className="
+                flex
+                items-center
+                gap-3
+                border-t
+                border-[#0A1D2F]/[0.07]
+                px-5
+                py-4
+                dark:border-white/[0.07]
+              "
+            >
+              <span
+                className="
+                  h-1.5
+                  w-1.5
+                  shrink-0
+                  rounded-full
+                  bg-[#10B981]
+                  shadow-[0_0_10px_rgba(16,185,129,.35)]
+                "
+              />
 
-              <p className="text-sm font-medium text-[#0A1D2F]/55 dark:text-white/48">
-                When those signals converge, exploration becomes a
+              <p
+                className="
+                  text-[0.68rem]
+                  font-medium
+                  text-[#0A1D2F]/63
+                  dark:text-white/58
+                "
+              >
+                When these signals converge, exploration becomes a
                 research question.
               </p>
             </div>
           </div>
         </div>
-
-        {/* =====================================================
-            TRANSITION TO RESEARCH
-        ===================================================== */}
-
-        <div className="mt-16 flex flex-col gap-6 border-t border-[#0A1D2F]/[0.08] pt-7 dark:border-white/[0.08] sm:flex-row sm:items-center sm:justify-between lg:mt-20">
-          <div className="flex items-center gap-4">
-            <span className="text-[0.55rem] font-semibold uppercase tracking-[0.22em] text-[#0A1D2F]/25 dark:text-white/22">
-              Signal identified
-            </span>
-
-            <span className="h-px w-12 bg-gradient-to-r from-[#2563EB] to-[#22D3EE]" />
-
-            <span className="text-[0.55rem] font-semibold uppercase tracking-[0.22em] text-[#2563EB] dark:text-[#60A5FA]">
-              Investigate
-            </span>
-          </div>
-
-          <Link
-            href="#research"
-            className="group inline-flex items-center gap-3 text-sm font-semibold text-[#0A1D2F]/55 transition-colors duration-300 hover:text-[#2563EB] dark:text-white/45 dark:hover:text-[#60A5FA]"
-          >
-            Continue to research
-
-            <span className="flex h-8 w-8 items-center justify-center rounded-full border border-[#2563EB]/20 transition-[transform,background-color,color,border-color] duration-300 group-hover:-translate-y-0.5 group-hover:bg-[#2563EB] group-hover:text-white dark:border-[#3B82F6]/25">
-              <ArrowUpRight className="h-3.5 w-3.5" />
-            </span>
-          </Link>
-        </div>
       </div>
     </section>
-  );
-}
-
-function SignalLabel({
-  number,
-  label,
-  color,
-}: {
-  number: string;
-  label: string;
-  color: string;
-}) {
-  return (
-    <div className="flex items-center gap-3">
-      <span
-        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border text-[0.55rem] font-bold"
-        style={{
-          borderColor: `${color}45`,
-          color,
-          backgroundColor: `${color}0D`,
-        }}
-      >
-        {number}
-      </span>
-
-      <span className="text-sm font-semibold text-[#0A1D2F]/58 dark:text-white/48">
-        {label}
-      </span>
-    </div>
-  );
-}
-
-function Connector() {
-  return (
-    <div className="hidden items-center sm:flex">
-      <span className="h-px w-5 bg-[#0A1D2F]/10 dark:bg-white/10" />
-
-      <span className="mx-1 h-1.5 w-1.5 rounded-full bg-[#22D3EE]/70" />
-
-      <span className="h-px w-5 bg-[#0A1D2F]/10 dark:bg-white/10" />
-    </div>
   );
 }
