@@ -68,7 +68,7 @@ export function HowWeWork() {
   return (
     <section
       id="how-we-work"
-      className="relative overflow-x-clip border-t border-[#0A1D2F]/[0.06] bg-[#F8FAFC]/[0.58] py-24 backdrop-blur-[2px] dark:border-white/[0.06] dark:bg-[#0D1117]/[0.54] sm:py-28 lg:py-32"
+      className="relative overflow-x-clip border-t border-[#0A1D2F]/[0.06] bg-[#F8FAFC]/[0.58] py-20 backdrop-blur-[2px] dark:border-white/[0.06] dark:bg-[#0D1117]/[0.54] sm:py-24 lg:py-28"
     >
       {/* =====================================================
           BACKGROUND
@@ -166,7 +166,7 @@ export function HowWeWork() {
                 return (
                   <article
                     key={stage.title}
-                    className="group relative min-h-[29rem] border-r border-[#0A1D2F]/[0.07] bg-white/[0.42] px-6 py-8 backdrop-blur-xl transition-colors duration-300 last:border-r-0 hover:bg-white/[0.64] dark:border-white/[0.07] dark:bg-[#0D1117]/[0.42] dark:hover:bg-white/[0.035]"
+                    className="group relative min-h-[24rem] border-r border-[#0A1D2F]/[0.07] bg-white/[0.42] px-6 py-8 backdrop-blur-xl transition-colors duration-300 last:border-r-0 hover:bg-white/[0.64] dark:border-white/[0.07] dark:bg-[#0D1117]/[0.42] dark:hover:bg-white/[0.035]"
                   >
                     <div className="relative z-10">
                       <div className="flex items-center justify-between">
@@ -324,7 +324,7 @@ export function HowWeWork() {
         ===================================================== */}
 
         <div className="mt-16 grid gap-px overflow-hidden border-y border-[#0A1D2F]/[0.075] bg-[#0A1D2F]/[0.05] dark:border-white/[0.075] dark:bg-white/[0.05] lg:grid-cols-[1.15fr_0.85fr]">
-          <div className="relative min-h-[28rem] overflow-hidden bg-white/[0.42] p-7 backdrop-blur-xl dark:bg-[#0D1117]/[0.46] sm:p-9">
+          <div className="relative min-h-[24rem] overflow-hidden bg-white/[0.42] p-7 backdrop-blur-xl dark:bg-[#0D1117]/[0.46] sm:p-9">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <Users className="h-4 w-4 text-[#22D3EE]" />

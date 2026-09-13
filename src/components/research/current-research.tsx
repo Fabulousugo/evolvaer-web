@@ -83,7 +83,7 @@ export function CurrentResearch() {
   return (
     <section
       id="current-research"
-      className="relative overflow-hidden py-24 sm:py-28 lg:py-36"
+      className="relative overflow-hidden py-20 sm:py-24 lg:py-28"
     >
       {/* =====================================================
           ATMOSPHERE
@@ -123,7 +123,7 @@ export function CurrentResearch() {
               </p>
             </div>
 
-            <h2 className="mt-6 max-w-[780px] text-[clamp(2.8rem,4.8vw,5.2rem)] font-semibold leading-[0.96] tracking-[-0.052em] text-[#0A1D2F] dark:text-white">
+            <h2 className="mt-6 max-w-[780px] text-[clamp(2.35rem,4vw,4.2rem)] font-semibold leading-[0.96] tracking-[-0.052em] text-[#0A1D2F] dark:text-white">
               What we are
               <br />
               trying to{" "}
@@ -339,7 +339,7 @@ export function CurrentResearch() {
               </p>
             </div>
 
-            <div className="relative min-h-[22rem] overflow-hidden border-t border-[#0A1D2F]/[0.07] p-7 dark:border-white/[0.07] sm:p-9 lg:border-l lg:border-t-0">
+            <div className="relative min-h-[17rem] overflow-hidden border-t border-[#0A1D2F]/[0.07] p-7 dark:border-white/[0.07] sm:p-9 lg:border-l lg:border-t-0">
               <div
                 aria-hidden="true"
                 className="pointer-events-none absolute inset-0"

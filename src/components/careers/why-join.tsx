@@ -46,7 +46,7 @@ export function WhyJoin() {
   return (
     <section
       id="why-join"
-      className="relative overflow-x-clip border-t border-[#0A1D2F]/[0.06] bg-white/[0.48] py-24 backdrop-blur-[2px] dark:border-white/[0.06] dark:bg-[#0D1117]/[0.48] sm:py-28 lg:py-32"
+      className="relative overflow-x-clip border-t border-[#0A1D2F]/[0.06] bg-white/[0.48] py-20 backdrop-blur-[2px] dark:border-white/[0.06] dark:bg-[#0D1117]/[0.48] sm:py-24 lg:py-28"
     >
       <div
         aria-hidden="true"
@@ -169,7 +169,7 @@ export function WhyJoin() {
             </div>
           </div>
 
-          <div className="relative min-h-[25rem] overflow-hidden bg-white/[0.4] p-7 backdrop-blur-lg dark:bg-[#0D1117]/[0.43] sm:p-9">
+          <div className="relative min-h-[18rem] overflow-hidden bg-white/[0.4] p-7 backdrop-blur-lg dark:bg-[#0D1117]/[0.43] sm:p-9">
             <div
               aria-hidden="true"
               className="absolute inset-0 opacity-70"

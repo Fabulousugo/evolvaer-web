@@ -6,7 +6,7 @@ import {
 
 export function AboutCta() {
   return (
-    <section className="relative overflow-hidden py-28 text-white sm:py-32 lg:py-40">
+    <section className="relative overflow-hidden py-28 text-white sm:py-32 lg:py-28">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"

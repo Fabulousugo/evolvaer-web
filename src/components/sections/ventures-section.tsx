@@ -21,26 +21,16 @@ export function VenturesSection() {
         relative
         overflow-hidden
 
-        py-24
-
-        sm:py-28
-        lg:py-36
+        py-20
+        sm:py-24
+        lg:py-28
       "
     >
-      {/* =====================================================
-          ATMOSPHERE
-      ===================================================== */}
-
+      {/* Background */}
       <div
         aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-        "
+        className="pointer-events-none absolute inset-0"
       >
-        {/* Preserve visibility of persistent Three.js scene */}
-
         <div
           className="
             absolute
@@ -51,8 +41,6 @@ export function VenturesSection() {
             dark:bg-[#0d1117]/[0.61]
           "
         />
-
-        {/* Violet field */}
 
         <div
           className="
@@ -65,8 +53,6 @@ export function VenturesSection() {
           "
         />
 
-        {/* Blue counterweight */}
-
         <div
           className="
             absolute
@@ -77,8 +63,6 @@ export function VenturesSection() {
             dark:bg-[radial-gradient(circle_at_7%_88%,rgba(59,130,246,0.095),transparent_35%)]
           "
         />
-
-        {/* Teal balance */}
 
         <div
           className="
@@ -97,51 +81,31 @@ export function VenturesSection() {
             absolute
             inset-0
 
-            opacity-[0.1]
+            opacity-[0.09]
 
-            dark:opacity-[0.075]
+            dark:opacity-[0.065]
           "
         />
       </div>
 
-      {/* =====================================================
-          CONTENT
-      ===================================================== */}
-
-      <div
-        className="
-          evolvaer-container
-          relative
-          z-10
-        "
-      >
-        {/* ===================================================
-            HEADING
-        =================================================== */}
-
+      <div className="evolvaer-container relative z-10">
+        {/* Heading */}
         <div
           className="
             grid
-            gap-10
+            gap-8
 
             lg:grid-cols-[1.05fr_0.95fr]
             lg:items-end
           "
         >
           <div>
-            <div
-              className="
-                mb-5
-                flex
-                items-center
-                gap-4
-              "
-            >
+            <div className="mb-4 flex items-center gap-3">
               <span
                 aria-hidden="true"
                 className="
                   h-px
-                  w-10
+                  w-9
 
                   bg-gradient-to-r
                   from-violet
@@ -152,10 +116,10 @@ export function VenturesSection() {
 
               <span
                 className="
-                  text-[0.67rem]
+                  text-[0.58rem]
                   font-semibold
                   uppercase
-                  tracking-[0.32em]
+                  tracking-[0.28em]
                   text-muted
                 "
               >
@@ -165,12 +129,12 @@ export function VenturesSection() {
 
             <h2
               className="
-                max-w-4xl
+                max-w-[44rem]
 
-                text-[clamp(3.2rem,5vw,5.8rem)]
+                text-[clamp(2.4rem,4vw,4.3rem)]
                 font-bold
-                leading-[0.92]
-                tracking-[-0.055em]
+                leading-[0.96]
+                tracking-[-0.045em]
               "
             >
               We don&apos;t just
@@ -187,40 +151,31 @@ export function VenturesSection() {
             </h2>
           </div>
 
-          <div
-            className="
-              max-w-xl
-
-              lg:justify-self-end
-            "
-          >
+          <div className="max-w-xl lg:justify-self-end">
             <p
               className="
-                text-base
-                leading-8
+                text-[0.95rem]
+                leading-7
                 text-muted
 
-                sm:text-[1.05rem]
+                sm:text-base
               "
             >
-              Some opportunities deserve
-              more than a report or
-              prototype. When the problem,
-              technology and market align,
-              we turn them into products
-              and ventures.
+              Some opportunities deserve more than a report or
+              prototype. When the problem, technology and market align,
+              we turn them into products and ventures.
             </p>
 
             <Link
               href="/ventures"
               className="
                 group
-                mt-7
+                mt-6
                 inline-flex
                 items-center
                 gap-3
 
-                text-sm
+                text-[0.82rem]
                 font-semibold
               "
             >
@@ -229,8 +184,8 @@ export function VenturesSection() {
               <span
                 className="
                   flex
-                  h-9
-                  w-9
+                  h-8
+                  w-8
                   items-center
                   justify-center
 
@@ -251,39 +206,34 @@ export function VenturesSection() {
               >
                 <ArrowUpRight
                   aria-hidden="true"
-                  className="h-4 w-4"
+                  className="h-3.5 w-3.5"
                 />
               </span>
             </Link>
           </div>
         </div>
 
-        {/* ===================================================
-            FEATURED VENTURE
-        =================================================== */}
-
+        {/* Featured venture */}
         <article
           className="
             relative
-            mt-16
+            mt-12
             overflow-hidden
 
-            rounded-[2.25rem]
+            rounded-[1.8rem]
             border
             border-white/[0.08]
 
             bg-[#0a1d2f]/[0.96]
             text-white
 
-            shadow-[0_22px_70px_rgba(10,29,47,0.11)]
+            shadow-[0_18px_54px_rgba(10,29,47,0.11)]
 
             dark:bg-[#091522]/[0.96]
 
-            lg:mt-20
+            lg:mt-16
           "
         >
-          {/* Static branded atmosphere */}
-
           <div
             aria-hidden="true"
             className="
@@ -314,24 +264,22 @@ export function VenturesSection() {
               absolute
               inset-0
 
-              opacity-[0.08]
+              opacity-[0.065]
             "
           />
 
-          {/* Decorative venture-world rings */}
-
+          {/* Decorative rings */}
           <div
             aria-hidden="true"
             className="
               pointer-events-none
-
               absolute
               right-[8%]
               top-[14%]
 
               hidden
-              h-[22rem]
-              w-[22rem]
+              h-[17rem]
+              w-[17rem]
 
               rounded-full
               border
@@ -345,14 +293,13 @@ export function VenturesSection() {
             aria-hidden="true"
             className="
               pointer-events-none
-
               absolute
               right-[13%]
               top-[23%]
 
               hidden
-              h-[15rem]
-              w-[15rem]
+              h-[11rem]
+              w-[11rem]
 
               rounded-full
               border
@@ -366,14 +313,13 @@ export function VenturesSection() {
             aria-hidden="true"
             className="
               pointer-events-none
-
               absolute
               right-[18.5%]
               top-[33%]
 
               hidden
-              h-20
-              w-20
+              h-14
+              w-14
 
               rounded-full
               border
@@ -388,32 +334,24 @@ export function VenturesSection() {
               relative
               z-10
               grid
-              min-h-[36rem]
+              min-h-[24rem]
 
               lg:grid-cols-[1.05fr_0.95fr]
             "
           >
             {/* Copy */}
-
             <div
               className="
                 flex
                 flex-col
 
-                p-7
+                p-6
 
-                sm:p-10
-                lg:p-12
+                sm:p-8
+                lg:p-10
               "
             >
-              <div
-                className="
-                  flex
-                  flex-wrap
-                  items-center
-                  gap-3
-                "
-              >
+              <div className="flex flex-wrap items-center gap-3">
                 <span
                   className="
                     rounded-full
@@ -421,13 +359,13 @@ export function VenturesSection() {
                     border-teal/25
                     bg-teal/[0.08]
 
-                    px-4
-                    py-2
+                    px-3.5
+                    py-1.5
 
-                    text-[0.6rem]
+                    text-[0.54rem]
                     font-semibold
                     uppercase
-                    tracking-[0.24em]
+                    tracking-[0.22em]
                     text-teal
                   "
                 >
@@ -436,10 +374,10 @@ export function VenturesSection() {
 
                 <span
                   className="
-                    text-[0.6rem]
+                    text-[0.54rem]
                     font-semibold
                     uppercase
-                    tracking-[0.25em]
+                    tracking-[0.22em]
                     text-white/35
                   "
                 >
@@ -447,19 +385,13 @@ export function VenturesSection() {
                 </span>
               </div>
 
-              <div
-                className="
-                  mt-auto
-                  max-w-3xl
-                  pt-20
-                "
-              >
+              <div className="mt-auto max-w-[42rem] pt-14">
                 <p
                   className="
-                    text-[0.62rem]
+                    text-[0.56rem]
                     font-semibold
                     uppercase
-                    tracking-[0.28em]
+                    tracking-[0.25em]
                     text-blue
                   "
                 >
@@ -468,12 +400,12 @@ export function VenturesSection() {
 
                 <h3
                   className="
-                    mt-4
+                    mt-3
 
-                    text-[clamp(4rem,7vw,7.4rem)]
+                    text-[clamp(3rem,5vw,5rem)]
                     font-bold
-                    leading-[0.84]
-                    tracking-[-0.055em]
+                    leading-[0.9]
+                    tracking-[-0.05em]
                   "
                 >
                   Adaptcues
@@ -481,34 +413,32 @@ export function VenturesSection() {
 
                 <p
                   className="
-                    mt-7
-                    max-w-2xl
+                    mt-5
+                    max-w-xl
 
-                    text-base
-                    leading-8
+                    text-[0.95rem]
+                    leading-7
                     text-white/58
 
-                    sm:text-lg
+                    sm:text-base
                   "
                 >
-                  An intelligent communication
-                  platform designed to help
-                  people prepare for important
-                  conversations, practise how
-                  they respond and communicate
-                  with greater confidence.
+                  An intelligent communication platform designed to
+                  help people prepare for important conversations,
+                  practise how they respond and communicate with
+                  greater confidence.
                 </p>
 
                 <Link
                   href="/ventures"
                   className="
                     group
-                    mt-8
+                    mt-6
                     inline-flex
                     items-center
-                    gap-3
+                    gap-2.5
 
-                    text-sm
+                    text-[0.82rem]
                     font-semibold
                   "
                 >
@@ -517,8 +447,8 @@ export function VenturesSection() {
                   <ArrowUpRight
                     aria-hidden="true"
                     className="
-                      h-4
-                      w-4
+                      h-3.5
+                      w-3.5
                       text-blue
 
                       transition-transform
@@ -532,12 +462,12 @@ export function VenturesSection() {
               </div>
             </div>
 
-            {/* Persistent Three.js visual space */}
-
+            {/* Visual space */}
             <div
               className="
                 relative
                 hidden
+                overflow-hidden
 
                 border-l
                 border-white/[0.07]
@@ -545,8 +475,16 @@ export function VenturesSection() {
                 lg:block
               "
             >
-              {/* Very light spatial markers */}
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 bg-cover bg-center opacity-45 mix-blend-luminosity"
+                style={{
+                  backgroundImage:
+                    "url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1400&q=80')",
+                }}
+              />
 
+              <div className="absolute inset-0 bg-gradient-to-l from-transparent via-[#0a1d2f]/20 to-[#0a1d2f]/85" />
               <div
                 aria-hidden="true"
                 className="
@@ -562,6 +500,7 @@ export function VenturesSection() {
 
                   rounded-full
                   bg-blue
+
                   shadow-[0_0_20px_rgba(59,130,246,0.35)]
                 "
               />
@@ -607,8 +546,8 @@ export function VenturesSection() {
               <div
                 className="
                   absolute
-                  inset-x-9
-                  bottom-9
+                  inset-x-8
+                  bottom-8
 
                   flex
                   items-center
@@ -616,28 +555,23 @@ export function VenturesSection() {
 
                   border-t
                   border-white/[0.08]
-                  pt-5
+
+                  pt-4
                 "
               >
                 <span
                   className="
-                    text-[0.58rem]
+                    text-[0.52rem]
                     font-semibold
                     uppercase
-                    tracking-[0.24em]
+                    tracking-[0.22em]
                     text-white/32
                   "
                 >
                   Human-centred intelligence
                 </span>
 
-                <span
-                  className="
-                    text-sm
-                    font-semibold
-                    text-blue
-                  "
-                >
+                <span className="text-[0.75rem] font-semibold text-blue">
                   01
                 </span>
               </div>
@@ -645,13 +579,10 @@ export function VenturesSection() {
           </div>
         </article>
 
-        {/* ===================================================
-            VENTURE MODEL
-        =================================================== */}
-
+        {/* Venture model */}
         <div
           className="
-            mt-5
+            mt-4
             grid
             gap-4
 
@@ -659,27 +590,25 @@ export function VenturesSection() {
           "
         >
           {/* Venture building */}
-
           <article
             className="
               relative
               overflow-hidden
 
-              rounded-[2rem]
+              rounded-[1.6rem]
               border
               border-navy/[0.08]
 
               bg-white/[0.74]
 
-              p-7
+              p-6
 
-              shadow-[0_10px_32px_rgba(10,29,47,0.035)]
+              shadow-[0_10px_30px_rgba(10,29,47,0.035)]
 
               dark:border-white/[0.08]
               dark:bg-[#111821]/[0.74]
-              dark:shadow-[0_12px_36px_rgba(0,0,0,0.14)]
 
-              sm:p-9
+              sm:p-8
             "
           >
             <div
@@ -696,19 +625,13 @@ export function VenturesSection() {
             />
 
             <div className="relative z-10">
-              <div
-                className="
-                  flex
-                  items-center
-                  justify-between
-                "
-              >
+              <div className="flex items-center justify-between">
                 <p
                   className="
-                    text-[0.62rem]
+                    text-[0.56rem]
                     font-semibold
                     uppercase
-                    tracking-[0.27em]
+                    tracking-[0.25em]
                     text-violet
                   "
                 >
@@ -718,18 +641,18 @@ export function VenturesSection() {
                 <Layers3
                   aria-hidden="true"
                   strokeWidth={1.7}
-                  className="h-5 w-5 text-muted"
+                  className="h-4 w-4 text-muted"
                 />
               </div>
 
               <p
                 className="
-                  mt-14
+                  mt-10
 
-                  text-[clamp(2.2rem,3.4vw,3.7rem)]
+                  text-[clamp(1.7rem,2.8vw,2.8rem)]
                   font-semibold
-                  leading-[1.02]
-                  tracking-[-0.04em]
+                  leading-[1.04]
+                  tracking-[-0.035em]
                 "
               >
                 From insight
@@ -743,45 +666,41 @@ export function VenturesSection() {
 
               <p
                 className="
-                  mt-5
+                  mt-4
                   max-w-xl
 
-                  text-sm
-                  leading-7
+                  text-[0.82rem]
+                  leading-6
                   text-muted
                 "
               >
-                We combine product thinking,
-                research, engineering and
-                commercial exploration to
-                build technology ventures
+                We combine product thinking, research, engineering and
+                commercial exploration to build technology ventures
                 from the ground up.
               </p>
             </div>
           </article>
 
           {/* Venture process */}
-
           <article
             className="
               relative
               overflow-hidden
 
-              rounded-[2rem]
+              rounded-[1.6rem]
               border
               border-navy/[0.08]
 
               bg-white/[0.7]
 
-              p-7
+              p-6
 
-              shadow-[0_10px_32px_rgba(10,29,47,0.03)]
+              shadow-[0_10px_30px_rgba(10,29,47,0.03)]
 
               dark:border-white/[0.08]
               dark:bg-[#111821]/[0.7]
-              dark:shadow-[0_12px_36px_rgba(0,0,0,0.13)]
 
-              sm:p-9
+              sm:p-8
             "
           >
             <div
@@ -798,19 +717,13 @@ export function VenturesSection() {
             />
 
             <div className="relative z-10">
-              <div
-                className="
-                  flex
-                  items-center
-                  justify-between
-                "
-              >
+              <div className="flex items-center justify-between">
                 <p
                   className="
-                    text-[0.62rem]
+                    text-[0.56rem]
                     font-semibold
                     uppercase
-                    tracking-[0.27em]
+                    tracking-[0.25em]
                     text-muted
                   "
                 >
@@ -820,97 +733,84 @@ export function VenturesSection() {
                 <Rocket
                   aria-hidden="true"
                   strokeWidth={1.7}
-                  className="h-5 w-5 text-blue"
+                  className="h-4 w-4 text-blue"
                 />
               </div>
 
-              <div className="mt-12">
-                {ventureProcess.map(
-                  (
-                    step,
-                    index,
-                  ) => (
-                    <div
-                      key={step}
+              <div className="mt-9">
+                {ventureProcess.map((step, index) => (
+                  <div
+                    key={step}
+                    className="
+                      group
+                      flex
+                      items-center
+                      gap-4
+
+                      border-t
+                      border-navy/[0.08]
+
+                      py-4
+
+                      first:border-t-0
+
+                      dark:border-white/[0.075]
+                    "
+                  >
+                    <span
                       className="
-                        group
-                        flex
-                        items-center
-                        gap-5
+                        w-7
 
-                        border-t
-                        border-navy/[0.08]
-
-                        py-5
-
-                        first:border-t-0
-
-                        dark:border-white/[0.075]
+                        text-[0.62rem]
+                        font-semibold
+                        text-blue
                       "
                     >
-                      <span
-                        className="
-                          w-8
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
 
-                          text-sm
-                          font-semibold
-                          text-blue
-                        "
-                      >
-                        {String(
-                          index + 1,
-                        ).padStart(
-                          2,
-                          "0",
-                        )}
-                      </span>
+                    <p
+                      className="
+                        flex-1
 
-                      <p
-                        className="
-                          flex-1
+                        text-[1.25rem]
+                        font-semibold
+                        tracking-[-0.025em]
+                      "
+                    >
+                      {step}
+                    </p>
 
-                          text-[1.55rem]
-                          font-semibold
-                          tracking-[-0.03em]
-                        "
-                      >
-                        {step}
-                      </p>
+                    <ArrowRight
+                      aria-hidden="true"
+                      className="
+                        h-3.5
+                        w-3.5
+                        text-muted/40
 
-                      <ArrowRight
-                        aria-hidden="true"
-                        className="
-                          h-4
-                          w-4
-                          text-muted/40
+                        transition-[transform,color]
+                        duration-200
 
-                          transition-[transform,color]
-                          duration-200
-
-                          group-hover:translate-x-1
-                          group-hover:text-blue
-                        "
-                      />
-                    </div>
-                  ),
-                )}
+                        group-hover:translate-x-1
+                        group-hover:text-blue
+                      "
+                    />
+                  </div>
+                ))}
               </div>
             </div>
           </article>
         </div>
 
-        {/* ===================================================
-            CLOSING
-        =================================================== */}
-
+        {/* Closing */}
         <div
           className="
-            mt-14
+            mt-12
 
             border-t
             border-navy/[0.08]
 
-            pt-10
+            pt-8
 
             dark:border-white/[0.08]
           "
@@ -918,17 +818,17 @@ export function VenturesSection() {
           <div
             className="
               grid
-              gap-6
+              gap-5
 
-              lg:grid-cols-[0.42fr_1.58fr]
+              lg:grid-cols-[0.35fr_1.65fr]
             "
           >
             <p
               className="
-                text-[0.62rem]
+                text-[0.56rem]
                 font-semibold
                 uppercase
-                tracking-[0.3em]
+                tracking-[0.28em]
                 text-violet
               "
             >
@@ -937,16 +837,15 @@ export function VenturesSection() {
 
             <p
               className="
-                max-w-5xl
+                max-w-[54rem]
 
-                text-[clamp(1.9rem,3vw,3.2rem)]
+                text-[clamp(1.5rem,2.4vw,2.5rem)]
                 font-semibold
-                leading-[1.08]
-                tracking-[-0.04em]
+                leading-[1.1]
+                tracking-[-0.03em]
               "
             >
-              Not every experiment becomes
-              a venture. The ones that do
+              Not every experiment becomes a venture. The ones that do
               must earn the right to{" "}
 
               <span className="text-teal">

@@ -68,7 +68,7 @@ const accents = {
 
 export function AboutCapabilities() {
   return (
-    <section className="relative overflow-hidden py-24 sm:py-28 lg:py-36">
+    <section className="relative overflow-hidden py-20 sm:py-24 lg:py-28">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
@@ -91,7 +91,7 @@ export function AboutCapabilities() {
               </span>
             </div>
 
-            <h2 className="mt-7 text-[clamp(3rem,5vw,5.7rem)] font-semibold leading-[0.94] tracking-[-0.055em] text-[#0A1D2F] dark:text-white">
+            <h2 className="mt-7 text-[clamp(2.5rem,4vw,4.3rem)] font-semibold leading-[0.94] tracking-[-0.055em] text-[#0A1D2F] dark:text-white">
               One company.
               <br />
               Three connected
@@ -117,7 +117,7 @@ export function AboutCapabilities() {
             return (
               <article
                 key={capability.number}
-                className={`group relative min-h-[30rem] overflow-hidden rounded-[2rem] border border-[#0A1D2F]/[0.08] bg-white/35 p-7 backdrop-blur-xl transition-all duration-500 hover:-translate-y-1.5 dark:border-white/[0.07] dark:bg-white/[0.025] sm:p-8 ${accent.hover}`}
+                className={`group relative min-h-[18rem] overflow-hidden rounded-[2rem] border border-[#0A1D2F]/[0.08] bg-white/35 p-7 backdrop-blur-xl transition-all duration-500 hover:-translate-y-1.5 dark:border-white/[0.07] dark:bg-white/[0.025] sm:p-8 ${accent.hover}`}
               >
                 <div
                   className={`absolute -right-24 -top-24 h-64 w-64 rounded-full blur-[95px] transition-opacity duration-500 ${accent.glow}`}

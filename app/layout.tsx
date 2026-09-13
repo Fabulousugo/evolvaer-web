@@ -23,6 +23,13 @@ export const metadata: Metadata = {
   description:
     "Evolvaer Technologies explores emerging technologies, engineers intelligent solutions, and builds products that matter.",
 
+  // Define website icons here
+  icons: {
+    icon: "/evolvaer-icon.png", 
+    shortcut: "/evolvaer-icon.png",
+    apple: "/apple-touch-icon.png",
+  },
+
   openGraph: {
     title: "Evolvaer Technologies",
     description: "Exploring what's next. Building what matters.",
@@ -56,6 +63,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body
+        suppressHydrationWarning
         className="
           min-h-screen
           bg-background

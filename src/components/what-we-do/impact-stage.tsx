@@ -84,7 +84,7 @@ export function ImpactStage() {
   return (
     <section
       id="impact"
-      className="relative overflow-hidden py-24 sm:py-28 lg:py-32"
+      className="relative overflow-hidden py-20 sm:py-24 lg:py-28"
     >
       {/* =====================================================
           ATMOSPHERE
@@ -183,7 +183,7 @@ export function ImpactStage() {
               return (
                 <article
                   key={dimension.title}
-                  className="group relative min-h-[22rem] overflow-hidden bg-white/[0.74] p-7 dark:bg-[#0D1117]/[0.75] sm:p-9"
+                  className="group relative min-h-[17rem] overflow-hidden bg-white/[0.74] p-7 dark:bg-[#0D1117]/[0.75] sm:p-9"
                 >
                   <div
                     aria-hidden="true"

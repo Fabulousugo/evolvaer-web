@@ -35,7 +35,7 @@ export function ExploreSection() {
   return (
     <section
       id="explore"
-      className="relative min-h-[100svh] overflow-hidden py-24 sm:py-28 lg:py-32"
+      className="relative min-h-[100svh] overflow-hidden py-20 sm:py-24 lg:py-28"
     >
       {/* =====================================================
           ATMOSPHERE

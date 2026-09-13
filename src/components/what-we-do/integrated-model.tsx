@@ -79,7 +79,7 @@ export function IntegratedModel() {
   return (
     <section
       id="integrated-model"
-      className="relative overflow-hidden py-24 sm:py-28 lg:py-36"
+      className="relative overflow-hidden py-20 sm:py-24 lg:py-28"
     >
       {/* =====================================================
           ATMOSPHERE
@@ -132,7 +132,7 @@ export function IntegratedModel() {
               </span>
             </div>
 
-            <h2 className="mt-7 max-w-[700px] text-[clamp(3rem,5vw,5.7rem)] font-semibold leading-[0.95] tracking-[-0.055em] text-[#0A1D2F] dark:text-white">
+            <h2 className="mt-7 max-w-[700px] text-[clamp(2.5rem,4vw,4.3rem)] font-semibold leading-[0.95] tracking-[-0.055em] text-[#0A1D2F] dark:text-white">
               One system.
               <br />
 

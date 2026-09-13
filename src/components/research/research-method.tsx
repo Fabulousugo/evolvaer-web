@@ -112,7 +112,7 @@ export function ResearchMethod() {
   return (
     <section
       id="research-method"
-      className="relative overflow-hidden py-24 sm:py-28 lg:py-36"
+      className="relative overflow-hidden py-20 sm:py-24 lg:py-28"
     >
       {/* =====================================================
           ATMOSPHERE
@@ -165,7 +165,7 @@ export function ResearchMethod() {
               </p>
             </div>
 
-            <h2 className="mt-6 max-w-[780px] text-[clamp(2.8rem,4.8vw,5.2rem)] font-semibold leading-[0.96] tracking-[-0.052em] text-[#0A1D2F] dark:text-white">
+            <h2 className="mt-6 max-w-[780px] text-[clamp(2.35rem,4vw,4.2rem)] font-semibold leading-[0.96] tracking-[-0.052em] text-[#0A1D2F] dark:text-white">
               Curiosity needs
               <br />
               a{" "}
@@ -376,7 +376,7 @@ function DesktopMethod() {
 
                 {/* CARD */}
 
-                <div className="min-h-[23rem] rounded-[1.5rem] border border-[#0A1D2F]/[0.075] bg-white/[0.54] p-6 transition-colors duration-300 group-hover:bg-white/[0.68] dark:border-white/[0.075] dark:bg-white/[0.025] dark:group-hover:bg-white/[0.04]">
+                <div className="min-h-[20rem] rounded-[1.5rem] border border-[#0A1D2F]/[0.075] bg-white/[0.54] p-6 transition-colors duration-300 group-hover:bg-white/[0.68] dark:border-white/[0.075] dark:bg-white/[0.025] dark:group-hover:bg-white/[0.04]">
                   <div className="flex items-center justify-between">
                     <span
                       className="font-mono text-[0.46rem]"

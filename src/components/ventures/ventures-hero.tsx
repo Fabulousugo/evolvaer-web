@@ -97,7 +97,7 @@ export function VenturesHero() {
               </span>
             </div>
 
-            <h1 className="mt-7 max-w-[650px] text-[clamp(3.4rem,5.7vw,6.6rem)] font-semibold leading-[0.92] tracking-[-0.058em] text-[#0A1D2F] dark:text-white">
+            <h1 className="mt-7 max-w-[650px] text-[clamp(3rem,4.8vw,5.5rem)] font-semibold leading-[0.92] tracking-[-0.058em] text-[#0A1D2F] dark:text-white">
               Ideas worth
               <br />
 

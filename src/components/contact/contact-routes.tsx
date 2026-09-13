@@ -61,7 +61,7 @@ export function ContactRoutes() {
   return (
     <section
       id="contact-routes"
-      className="relative overflow-x-clip border-t border-[#0A1D2F]/[0.06] bg-white/[0.5] py-24 backdrop-blur-[2px] dark:border-white/[0.06] dark:bg-[#0D1117]/[0.5] sm:py-28 lg:py-32"
+      className="relative overflow-x-clip border-t border-[#0A1D2F]/[0.06] bg-white/[0.5] py-20 backdrop-blur-[2px] dark:border-white/[0.06] dark:bg-[#0D1117]/[0.5] sm:py-24 lg:py-28"
     >
       {/* =====================================================
           ATMOSPHERE
@@ -141,7 +141,7 @@ export function ContactRoutes() {
         <div className="mt-16 grid gap-px overflow-hidden border-y border-[#0A1D2F]/[0.075] bg-[#0A1D2F]/[0.05] dark:border-white/[0.075] dark:bg-white/[0.05] lg:grid-cols-[0.64fr_1.36fr]">
           {/* VISUAL ROUTER */}
 
-          <div className="relative min-h-[32rem] overflow-hidden bg-[#0A1D2F]/[0.96] p-7 text-white sm:p-9 lg:min-h-[40rem]">
+          <div className="relative min-h-[17rem] overflow-hidden bg-[#0A1D2F]/[0.96] p-7 text-white sm:p-9 lg:min-h-[17rem]">
             <div
               aria-hidden="true"
               className="pointer-events-none absolute inset-0"

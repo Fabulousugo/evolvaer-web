@@ -78,71 +78,44 @@ export function PhilosophySection() {
       className="
         relative
         overflow-hidden
-
-        py-24
-
-        sm:py-28
-        lg:py-36
+        py-20
+        sm:py-24
+        lg:py-28
       "
     >
-      {/* =====================================================
-          ATMOSPHERE
-      ===================================================== */}
-
+      {/* Background */}
       <div
         aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-        "
+        className="pointer-events-none absolute inset-0"
       >
         <div
           className="
-            absolute
-            inset-0
-
+            absolute inset-0
             bg-white/[0.63]
-
             dark:bg-[#0d1117]/[0.64]
           "
         />
 
-        {/* Blue upper field */}
-
         <div
           className="
-            absolute
-            inset-0
-
+            absolute inset-0
             bg-[radial-gradient(circle_at_90%_16%,rgba(37,99,235,0.065),transparent_34%)]
-
             dark:bg-[radial-gradient(circle_at_90%_16%,rgba(59,130,246,0.09),transparent_35%)]
           "
         />
 
-        {/* Teal lower field */}
-
         <div
           className="
-            absolute
-            inset-0
-
+            absolute inset-0
             bg-[radial-gradient(circle_at_35%_92%,rgba(16,185,129,0.05),transparent_33%)]
-
             dark:bg-[radial-gradient(circle_at_35%_92%,rgba(34,211,238,0.07),transparent_34%)]
           "
         />
 
-        {/* Very subtle violet balance */}
-
         <div
           className="
-            absolute
-            inset-0
-
+            absolute inset-0
             bg-[radial-gradient(circle_at_60%_40%,rgba(124,58,237,0.025),transparent_26%)]
-
             dark:bg-[radial-gradient(circle_at_60%_40%,rgba(168,85,247,0.04),transparent_27%)]
           "
         />
@@ -150,55 +123,31 @@ export function PhilosophySection() {
         <div
           className="
             brand-grid
-            absolute
-            inset-0
-
-            opacity-[0.09]
-
-            dark:opacity-[0.065]
+            absolute inset-0
+            opacity-[0.08]
+            dark:opacity-[0.055]
           "
         />
       </div>
 
-      {/* =====================================================
-          CONTENT
-      ===================================================== */}
-
-      <div
-        className="
-          evolvaer-container
-          relative
-          z-10
-        "
-      >
+      {/* Content */}
+      <div className="evolvaer-container relative z-10">
         <div
           className="
             grid
-            gap-14
-
-            lg:grid-cols-[0.78fr_1.22fr]
-            lg:gap-20
+            gap-10
+            lg:grid-cols-[0.8fr_1.2fr]
+            lg:gap-14
           "
         >
-          {/* =================================================
-              HEADING
-          ================================================= */}
-
+          {/* Heading */}
           <div>
-            <div
-              className="
-                mb-5
-                flex
-                items-center
-                gap-4
-              "
-            >
+            <div className="mb-4 flex items-center gap-3">
               <span
                 aria-hidden="true"
                 className="
                   h-px
-                  w-10
-
+                  w-9
                   bg-gradient-to-r
                   from-blue
                   via-teal
@@ -208,10 +157,10 @@ export function PhilosophySection() {
 
               <span
                 className="
-                  text-[0.67rem]
+                  text-[0.58rem]
                   font-semibold
                   uppercase
-                  tracking-[0.32em]
+                  tracking-[0.28em]
                   text-muted
                 "
               >
@@ -221,12 +170,11 @@ export function PhilosophySection() {
 
             <h2
               className="
-                max-w-3xl
-
-                text-[clamp(3.2rem,5vw,5.7rem)]
+                max-w-[38rem]
+                text-[clamp(2.4rem,4vw,4.25rem)]
                 font-bold
-                leading-[0.92]
-                tracking-[-0.055em]
+                leading-[0.96]
+                tracking-[-0.045em]
               "
             >
               Built around
@@ -240,235 +188,181 @@ export function PhilosophySection() {
             </h2>
           </div>
 
-          {/* =================================================
-              PRINCIPLES
-          ================================================= */}
-
+          {/* Principles */}
           <div>
             <p
               className="
-                max-w-2xl
-
-                text-base
-                leading-8
+                max-w-xl
+                text-[0.95rem]
+                leading-7
                 text-muted
-
-                sm:text-[1.05rem]
+                sm:text-base
               "
             >
-              What we build will change.
-              The technologies will change.
-              The problems will change. The
-              principles shaping how
-              Evolvaer approaches them
-              should not.
+              What we build will change. The technologies will change.
+              The problems will change. The principles shaping how
+              Evolvaer approaches them should not.
             </p>
 
             <div
               className="
-                mt-10
-
+                mt-8
                 border-t
                 border-navy/[0.08]
-
                 dark:border-white/[0.08]
               "
             >
-              {principles.map(
-                (principle) => {
-                  const Icon =
-                    principle.icon;
+              {principles.map((principle) => {
+                const Icon = principle.icon;
+                const accent = accents[principle.accent];
 
-                  const accent =
-                    accents[
-                      principle.accent
-                    ];
+                return (
+                  <article
+                    key={principle.number}
+                    className={`
+                      group
+                      relative
+                      grid
+                      gap-4
+                      overflow-hidden
 
-                  return (
-                    <article
-                      key={
-                        principle.number
-                      }
+                      border-b
+                      border-navy/[0.08]
+
+                      py-6
+
+                      transition-[background-color,border-color]
+                      duration-200
+
+                      hover:bg-white/[0.22]
+
+                      dark:border-white/[0.075]
+                      dark:hover:bg-white/[0.016]
+
+                      sm:grid-cols-[auto_1fr]
+                      sm:gap-6
+
+                      ${accent.border}
+                    `}
+                  >
+                    <div
+                      aria-hidden="true"
                       className={`
-                        group
-                        relative
-                        grid
-                        gap-5
-
-                        overflow-hidden
-
-                        border-b
-                        border-navy/[0.08]
-
-                        py-8
-
-                        transition-[background-color,border-color]
+                        pointer-events-none
+                        absolute
+                        inset-0
+                        opacity-30
+                        transition-opacity
                         duration-200
 
-                        hover:bg-white/[0.22]
+                        group-hover:opacity-100
 
-                        dark:border-white/[0.075]
-                        dark:hover:bg-white/[0.016]
-
-                        sm:grid-cols-[auto_1fr]
-                        sm:gap-7
-
-                        ${accent.border}
+                        ${accent.atmosphere}
                       `}
-                    >
-                      {/* Static accent */}
+                    />
+
+                    {/* Number + icon */}
+                    <div className="relative z-10 flex items-start gap-3">
+                      <span
+                        className={`
+                          w-7
+                          pt-1.5
+                          text-[0.62rem]
+                          font-semibold
+                          tracking-[0.1em]
+
+                          ${accent.text}
+                        `}
+                      >
+                        {principle.number}
+                      </span>
 
                       <div
-                        aria-hidden="true"
                         className={`
-                          pointer-events-none
-                          absolute
-                          inset-0
+                          flex
+                          h-9
+                          w-9
+                          items-center
+                          justify-center
 
-                          opacity-35
+                          rounded-lg
+                          border
+                          border-navy/[0.08]
 
-                          transition-opacity
+                          transition-transform
                           duration-200
 
-                          group-hover:opacity-100
+                          group-hover:-translate-y-0.5
 
-                          ${accent.atmosphere}
+                          dark:border-white/[0.08]
+
+                          ${accent.icon}
                         `}
-                      />
+                      >
+                        <Icon
+                          aria-hidden="true"
+                          strokeWidth={1.7}
+                          className="h-3.5 w-3.5"
+                        />
+                      </div>
+                    </div>
 
-                      {/* Number + icon */}
-
-                      <div
+                    {/* Copy */}
+                    <div className="relative z-10">
+                      <h3
                         className="
-                          relative
-                          z-10
-
-                          flex
-                          items-start
-                          gap-4
+                          text-[1.45rem]
+                          font-semibold
+                          leading-tight
+                          tracking-[-0.03em]
                         "
                       >
-                        <span
-                          className={`
-                            w-8
-                            pt-2
+                        {principle.title}
+                      </h3>
 
-                            text-sm
-                            font-semibold
-                            tracking-[0.1em]
-
-                            ${accent.text}
-                          `}
-                        >
-                          {
-                            principle.number
-                          }
-                        </span>
-
-                        <div
-                          className={`
-                            flex
-                            h-10
-                            w-10
-                            items-center
-                            justify-center
-
-                            rounded-xl
-                            border
-                            border-navy/[0.08]
-
-                            transition-transform
-                            duration-200
-
-                            group-hover:-translate-y-0.5
-
-                            dark:border-white/[0.08]
-
-                            ${accent.icon}
-                          `}
-                        >
-                          <Icon
-                            aria-hidden="true"
-                            strokeWidth={
-                              1.7
-                            }
-                            className="h-4 w-4"
-                          />
-                        </div>
-                      </div>
-
-                      {/* Copy */}
-
-                      <div
+                      <p
                         className="
-                          relative
-                          z-10
+                          mt-2.5
+                          max-w-xl
+                          text-[0.82rem]
+                          leading-6
+                          text-muted
                         "
                       >
-                        <h3
-                          className="
-                            text-[2rem]
-                            font-semibold
-                            tracking-[-0.035em]
-                          "
-                        >
-                          {
-                            principle.title
-                          }
-                        </h3>
-
-                        <p
-                          className="
-                            mt-3
-                            max-w-2xl
-
-                            text-sm
-                            leading-7
-                            text-muted
-                          "
-                        >
-                          {
-                            principle.description
-                          }
-                        </p>
-                      </div>
-                    </article>
-                  );
-                },
-              )}
+                        {principle.description}
+                      </p>
+                    </div>
+                  </article>
+                );
+              })}
             </div>
           </div>
         </div>
 
-        {/* ===================================================
-            CLOSING BELIEF
-        =================================================== */}
-
+        {/* Closing belief */}
         <div
           className="
             relative
-            mt-16
+            mt-12
             overflow-hidden
 
-            rounded-[2.25rem]
+            rounded-[1.75rem]
             border
             border-white/[0.08]
 
             bg-[#0a1d2f]/[0.96]
 
-            p-7
+            p-6
             text-white
 
-            shadow-[0_18px_56px_rgba(10,29,47,0.1)]
+            shadow-[0_16px_46px_rgba(10,29,47,0.1)]
 
             dark:bg-[#0f1622]/[0.96]
 
-            sm:p-10
-            lg:p-12
+            sm:p-8
+            lg:p-10
           "
         >
-          {/* Blue light field */}
-
           <div
             aria-hidden="true"
             className="
@@ -479,8 +373,6 @@ export function PhilosophySection() {
               bg-[radial-gradient(circle_at_93%_8%,rgba(59,130,246,0.17),transparent_35%)]
             "
           />
-
-          {/* Teal balance */}
 
           <div
             aria-hidden="true"
@@ -500,8 +392,7 @@ export function PhilosophySection() {
               pointer-events-none
               absolute
               inset-0
-
-              opacity-[0.06]
+              opacity-[0.05]
             "
           />
 
@@ -510,17 +401,17 @@ export function PhilosophySection() {
               relative
               z-10
               grid
-              gap-10
+              gap-6
 
-              lg:grid-cols-[0.35fr_1.65fr]
+              lg:grid-cols-[0.3fr_1.7fr]
             "
           >
             <p
               className="
-                text-[0.62rem]
+                text-[0.56rem]
                 font-semibold
                 uppercase
-                tracking-[0.28em]
+                tracking-[0.26em]
                 text-teal
               "
             >
@@ -529,20 +420,18 @@ export function PhilosophySection() {
 
             <p
               className="
-                max-w-5xl
+                max-w-[54rem]
 
-                text-[clamp(2.5rem,4.4vw,5rem)]
+                text-[clamp(1.8rem,3vw,3.5rem)]
                 font-semibold
-                leading-[1]
-                tracking-[-0.05em]
+                leading-[1.03]
+                tracking-[-0.04em]
               "
             >
-              The future is not
-              something we simply
-              predict.
+              The future is not something we simply predict.
               <br />
-              It is something we{" "}
 
+              It is something we{" "}
               <span className="text-blue">
                 help shape.
               </span>

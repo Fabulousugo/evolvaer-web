@@ -10,7 +10,7 @@ const evolution = [
 
 export function AboutEvolution() {
   return (
-    <section className="relative overflow-hidden py-24 text-white sm:py-28 lg:py-36">
+    <section className="relative overflow-hidden py-24 text-white sm:py-24 lg:py-28">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
@@ -70,7 +70,7 @@ export function AboutEvolution() {
               </span>
             </div>
 
-            <h2 className="mt-8 max-w-3xl text-[clamp(3.2rem,5vw,5.8rem)] font-semibold leading-[0.94] tracking-[-0.055em]">
+            <h2 className="mt-8 max-w-3xl text-[clamp(2.5rem,4vw,4.3rem)] font-semibold leading-[0.94] tracking-[-0.055em]">
               Progress is a
               <br />
               process of{" "}

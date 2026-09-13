@@ -104,7 +104,7 @@ export function ResearchApplication() {
   return (
     <section
       id="research-application"
-      className="relative overflow-hidden py-24 sm:py-28 lg:py-36"
+      className="relative overflow-hidden py-20 sm:py-24 lg:py-28"
     >
       {/* =====================================================
           ATMOSPHERE
@@ -159,7 +159,7 @@ export function ResearchApplication() {
               </p>
             </div>
 
-            <h2 className="mt-6 max-w-[800px] text-[clamp(2.8rem,4.8vw,5.2rem)] font-semibold leading-[0.96] tracking-[-0.052em] text-[#0A1D2F] dark:text-white">
+            <h2 className="mt-6 max-w-[800px] text-[clamp(2.35rem,4vw,4.2rem)] font-semibold leading-[0.96] tracking-[-0.052em] text-[#0A1D2F] dark:text-white">
               Understanding should
               <br />
               inform{" "}
@@ -185,11 +185,30 @@ export function ResearchApplication() {
           </div>
         </div>
 
+        <div className="relative mt-12 overflow-hidden rounded-[1.8rem] border border-[#0A1D2F]/[0.08] dark:border-white/[0.08] lg:mt-16">
+          <div
+            className="min-h-[17rem] bg-cover bg-center sm:min-h-[21rem]"
+            style={{
+              backgroundImage:
+                "linear-gradient(90deg, rgba(7,17,29,.66), rgba(7,17,29,.12)), url('https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&w=1800&q=82')",
+            }}
+          >
+            <div className="flex min-h-[17rem] max-w-2xl flex-col justify-end p-7 text-white sm:min-h-[21rem] sm:p-9">
+              <span className="text-[0.55rem] font-semibold uppercase tracking-[0.24em] text-[#67E8F9]">
+                Applied research
+              </span>
+              <p className="mt-4 text-[clamp(1.5rem,2.4vw,2.35rem)] font-semibold leading-[1.08] tracking-[-0.035em]">
+                Research matters most when it changes what we build, test or decide next.
+              </p>
+            </div>
+          </div>
+        </div>
+
         {/* =====================================================
             KNOWLEDGE CORE
         ===================================================== */}
 
-        <div className="mt-16 overflow-hidden rounded-[2rem] border border-[#0A1D2F]/[0.08] bg-white/[0.46] dark:border-white/[0.08] dark:bg-white/[0.025] lg:mt-24">
+        <div className="mt-10 overflow-hidden rounded-[2rem] border border-[#0A1D2F]/[0.08] bg-white/[0.46] dark:border-white/[0.08] dark:bg-white/[0.025] lg:mt-24">
           <div className="grid lg:grid-cols-[0.74fr_1.26fr]">
             {/* LEFT */}
 
@@ -223,7 +242,7 @@ export function ResearchApplication() {
 
             {/* RIGHT — APPLICATION MAP */}
 
-            <div className="relative min-h-[34rem] overflow-hidden p-7 sm:p-9 lg:p-11">
+            <div className="relative min-h-[27rem] overflow-hidden p-7 sm:p-9 lg:p-11">
               <div
                 aria-hidden="true"
                 className="pointer-events-none absolute inset-0"
@@ -251,7 +270,7 @@ export function ResearchApplication() {
               return (
                 <article
                   key={path.number}
-                  className="group relative min-h-[26rem] overflow-hidden bg-white/[0.64] p-7 transition-colors duration-300 hover:bg-white/[0.78] dark:bg-[#0D1117]/[0.7] dark:hover:bg-[#0D1117]/[0.8] sm:p-9"
+                  className="group relative min-h-[17rem] overflow-hidden bg-white/[0.64] p-7 transition-colors duration-300 hover:bg-white/[0.78] dark:bg-[#0D1117]/[0.7] dark:hover:bg-[#0D1117]/[0.8] sm:p-9"
                 >
                   <div
                     aria-hidden="true"

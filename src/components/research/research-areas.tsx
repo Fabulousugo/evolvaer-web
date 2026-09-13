@@ -101,7 +101,7 @@ export function ResearchAreas() {
   return (
     <section
       id="research-areas"
-      className="relative overflow-hidden py-24 sm:py-28 lg:py-36"
+      className="relative overflow-hidden py-20 sm:py-24 lg:py-28"
     >
       {/* =====================================================
           ATMOSPHERE
@@ -141,7 +141,7 @@ export function ResearchAreas() {
               </p>
             </div>
 
-            <h2 className="mt-6 max-w-[760px] text-[clamp(2.8rem,4.8vw,5.2rem)] font-semibold leading-[0.96] tracking-[-0.052em] text-[#0A1D2F] dark:text-white">
+            <h2 className="mt-6 max-w-[760px] text-[clamp(2.35rem,4vw,4.2rem)] font-semibold leading-[0.96] tracking-[-0.052em] text-[#0A1D2F] dark:text-white">
               Where we choose
               <br />
               to{" "}
@@ -179,7 +179,7 @@ export function ResearchAreas() {
               return (
                 <article
                   key={area.number}
-                  className="group relative min-h-[31rem] overflow-hidden bg-white/[0.64] p-7 transition-colors duration-300 hover:bg-white/[0.78] dark:bg-[#0D1117]/[0.7] dark:hover:bg-[#0D1117]/[0.8] sm:p-9 lg:p-10"
+                  className="group relative min-h-[17rem] overflow-hidden bg-white/[0.64] p-7 transition-colors duration-300 hover:bg-white/[0.78] dark:bg-[#0D1117]/[0.7] dark:hover:bg-[#0D1117]/[0.8] sm:p-9 lg:p-10"
                 >
                   {/* Cheap hover accent */}
 
@@ -318,7 +318,7 @@ export function ResearchAreas() {
 
             {/* MAP */}
 
-            <div className="relative min-h-[34rem] overflow-hidden p-7 sm:p-9">
+            <div className="relative min-h-[27rem] overflow-hidden p-7 sm:p-9">
               <div
                 aria-hidden="true"
                 className="absolute inset-0"

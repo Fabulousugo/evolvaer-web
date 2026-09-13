@@ -42,7 +42,7 @@ export function WhyResearch() {
   return (
     <section
       id="why-research"
-      className="relative overflow-hidden py-24 sm:py-28 lg:py-36"
+      className="relative overflow-hidden py-20 sm:py-24 lg:py-28"
     >
       {/* =====================================================
           ATMOSPHERE
@@ -96,7 +96,7 @@ export function WhyResearch() {
               </p>
             </div>
 
-            <h2 className="mt-6 max-w-[760px] text-[clamp(2.8rem,4.8vw,5.2rem)] font-semibold leading-[0.96] tracking-[-0.052em] text-[#0A1D2F] dark:text-white">
+            <h2 className="mt-6 max-w-[760px] text-[clamp(2.35rem,4vw,4.2rem)] font-semibold leading-[0.96] tracking-[-0.052em] text-[#0A1D2F] dark:text-white">
               Innovation without
               <br />
               understanding is{" "}
@@ -268,7 +268,7 @@ export function WhyResearch() {
                     key={
                       reason.number
                     }
-                    className="group relative min-h-[21rem] overflow-hidden bg-white/[0.66] p-7 transition-colors duration-300 hover:bg-white/[0.82] dark:bg-[#0D1117]/[0.72] dark:hover:bg-[#0D1117]/[0.82] sm:p-8"
+                    className="group relative min-h-[18rem] overflow-hidden bg-white/[0.66] p-7 transition-colors duration-300 hover:bg-white/[0.82] dark:bg-[#0D1117]/[0.72] dark:hover:bg-[#0D1117]/[0.82] sm:p-8"
                   >
                     <div
                       aria-hidden="true"

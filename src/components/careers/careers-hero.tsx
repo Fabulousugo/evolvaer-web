@@ -51,7 +51,7 @@ export function CareersHero() {
             HERO
         ===================================================== */}
 
-        <div className="grid gap-14 py-14 sm:py-16 lg:min-h-[40rem] lg:grid-cols-[0.94fr_1.06fr] lg:items-center lg:gap-8 lg:py-20">
+        <div className="grid gap-14 py-14 sm:py-16 lg:min-h-[17rem] lg:grid-cols-[0.94fr_1.06fr] lg:items-center lg:gap-8 lg:py-20">
           {/* LEFT — CONTENT */}
 
           <div className="relative z-20 max-w-[760px]">
@@ -71,7 +71,7 @@ export function CareersHero() {
               </div>
             </div>
 
-            <h1 className="mt-7 max-w-[760px] text-[3rem] font-semibold leading-[0.98] tracking-[-0.05em] text-[#0A1D2F] dark:text-white sm:text-[3.8rem] md:text-[4.4rem] lg:text-[4.7rem] xl:text-[5.25rem]">
+            <h1 className="mt-7 max-w-[760px] text-[3rem] font-semibold leading-[0.98] tracking-[-0.05em] text-[#0A1D2F] dark:text-white sm:text-[3.8rem] md:text-[4.4rem] lg:text-[4.5rem] xl:text-[4.9rem]">
               Build what
               <br />
               <span className="bg-gradient-to-r from-[#2563EB] via-[#22D3EE] to-[#A855F7] bg-clip-text text-transparent dark:from-[#60A5FA] dark:via-[#67E8F9] dark:to-[#C084FC]">
@@ -120,7 +120,18 @@ export function CareersHero() {
               RIGHT — OPEN SPACE FOR 3D
           =================================================== */}
 
-          <div className="relative hidden min-h-[34rem] lg:block">
+          <div className="relative hidden min-h-[27rem] overflow-hidden rounded-[2rem] border border-[#0A1D2F]/[0.08] bg-[#0A1D2F]/[0.03] lg:block dark:border-white/[0.08] dark:bg-white/[0.02]">
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 bg-cover bg-center opacity-90 dark:opacity-65"
+              style={{
+                backgroundImage:
+                  "linear-gradient(180deg, rgba(7,17,29,.08), rgba(7,17,29,.42)), url('https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1600&q=82')",
+              }}
+            />
+
+            <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#07111d]/35" />
+
             <div className="absolute right-[3%] top-[7%]">
               <HeroAnnotation
                 index="01"

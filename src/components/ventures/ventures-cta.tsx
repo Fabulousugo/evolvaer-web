@@ -29,7 +29,7 @@ export function VenturesCta() {
   return (
     <section
       id="ventures-cta"
-      className="relative overflow-hidden py-24 sm:py-28 lg:py-36"
+      className="relative overflow-hidden py-20 sm:py-24 lg:py-28"
     >
       {/* =====================================================
           ATMOSPHERE
@@ -82,7 +82,7 @@ export function VenturesCta() {
               </div>
             </div>
 
-            <h2 className="mt-8 max-w-[900px] text-[clamp(3.3rem,6vw,7rem)] font-semibold leading-[0.9] tracking-[-0.06em] text-white">
+            <h2 className="mt-8 max-w-[900px] text-[clamp(2.8rem,4.8vw,5.2rem)] font-semibold leading-[0.9] tracking-[-0.06em] text-white">
               Build what
               <br />
               deserves to{" "}
@@ -125,7 +125,7 @@ export function VenturesCta() {
 
           <div
             aria-hidden="true"
-            className="relative hidden min-h-[31rem] lg:block"
+            className="relative hidden min-h-[17rem] lg:block"
           >
             <div className="absolute right-[5%] top-[10%]">
               <div className="flex items-center gap-3">

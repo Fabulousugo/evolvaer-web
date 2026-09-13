@@ -52,7 +52,7 @@ export function CareersProcess() {
   return (
     <section
       id="hiring-process"
-      className="relative overflow-x-clip border-t border-[#0A1D2F]/[0.06] bg-[#F8FAFC]/[0.56] py-24 backdrop-blur-[2px] dark:border-white/[0.06] dark:bg-[#0D1117]/[0.54] sm:py-28 lg:py-32"
+      className="relative overflow-x-clip border-t border-[#0A1D2F]/[0.06] bg-[#F8FAFC]/[0.56] py-20 backdrop-blur-[2px] dark:border-white/[0.06] dark:bg-[#0D1117]/[0.54] sm:py-24 lg:py-28"
     >
       {/* =====================================================
           ATMOSPHERE
@@ -140,7 +140,7 @@ export function CareersProcess() {
               return (
                 <article
                   key={step.title}
-                  className="group relative min-h-[28rem] border-r border-[#0A1D2F]/[0.07] bg-white/[0.48] p-7 backdrop-blur-xl transition-colors duration-300 last:border-r-0 hover:bg-white/[0.68] dark:border-white/[0.07] dark:bg-[#0D1117]/[0.5] dark:hover:bg-white/[0.035]"
+                  className="group relative min-h-[24rem] border-r border-[#0A1D2F]/[0.07] bg-white/[0.48] p-7 backdrop-blur-xl transition-colors duration-300 last:border-r-0 hover:bg-white/[0.68] dark:border-white/[0.07] dark:bg-[#0D1117]/[0.5] dark:hover:bg-white/[0.035]"
                 >
                   {index < processSteps.length - 1 && (
                     <div
@@ -298,7 +298,7 @@ export function CareersProcess() {
         ===================================================== */}
 
         <div className="mt-16 grid gap-px overflow-hidden border-y border-[#0A1D2F]/[0.075] bg-[#0A1D2F]/[0.05] dark:border-white/[0.075] dark:bg-white/[0.05] lg:grid-cols-[1.1fr_0.9fr]">
-          <div className="relative min-h-[29rem] overflow-hidden bg-white/[0.42] p-7 backdrop-blur-xl dark:bg-[#0D1117]/[0.45] sm:p-9">
+          <div className="relative min-h-[24rem] overflow-hidden bg-white/[0.42] p-7 backdrop-blur-xl dark:bg-[#0D1117]/[0.45] sm:p-9">
             <div className="flex items-center justify-between gap-5">
               <div className="flex items-center gap-3">
                 <Route className="h-4 w-4 text-[#22D3EE]" />

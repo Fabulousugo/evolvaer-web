@@ -77,7 +77,7 @@ const accents = {
 
 export function AboutOperatingModel() {
   return (
-    <section className="relative overflow-hidden py-24 sm:py-28 lg:py-36">
+    <section className="relative overflow-hidden py-20 sm:py-24 lg:py-28">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"

@@ -48,7 +48,7 @@ export function OpenRoles() {
   return (
     <section
       id="open-roles"
-      className="relative overflow-x-clip border-t border-[#0A1D2F]/[0.06] bg-white/[0.46] py-24 backdrop-blur-[2px] dark:border-white/[0.06] dark:bg-[#0D1117]/[0.48] sm:py-28 lg:py-32"
+      className="relative overflow-x-clip border-t border-[#0A1D2F]/[0.06] bg-white/[0.46] py-20 backdrop-blur-[2px] dark:border-white/[0.06] dark:bg-[#0D1117]/[0.48] sm:py-24 lg:py-28"
     >
       {/* =====================================================
           ATMOSPHERE
@@ -223,7 +223,7 @@ export function OpenRoles() {
         ===================================================== */}
 
         <div className="mt-16 grid gap-px overflow-hidden border-y border-[#0A1D2F]/[0.075] bg-[#0A1D2F]/[0.05] dark:border-white/[0.075] dark:bg-white/[0.05] lg:grid-cols-[1.12fr_0.88fr]">
-          <div className="relative min-h-[28rem] overflow-hidden bg-white/[0.42] p-7 backdrop-blur-xl dark:bg-[#0D1117]/[0.45] sm:p-9">
+          <div className="relative min-h-[24rem] overflow-hidden bg-white/[0.42] p-7 backdrop-blur-xl dark:bg-[#0D1117]/[0.45] sm:p-9">
             <div className="flex items-center justify-between gap-5">
               <div className="flex items-center gap-3">
                 <Sparkles className="h-4 w-4 text-[#22D3EE]" />

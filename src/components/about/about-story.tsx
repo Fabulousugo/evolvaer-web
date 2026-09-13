@@ -46,7 +46,7 @@ export function AboutStory() {
   return (
     <section
       id="our-story"
-      className="relative overflow-hidden py-24 sm:py-28 lg:py-36"
+      className="relative overflow-hidden py-20 sm:py-24 lg:py-28"
     >
       <div
         aria-hidden="true"
@@ -112,7 +112,7 @@ export function AboutStory() {
           </div>
 
           <div>
-            <p className="max-w-5xl text-[clamp(2.8rem,4.8vw,5.6rem)] font-semibold leading-[0.98] tracking-[-0.055em] text-[#0A1D2F] dark:text-white">
+            <p className="max-w-5xl text-[clamp(2.35rem,4vw,4.25rem)] font-semibold leading-[0.98] tracking-[-0.055em] text-[#0A1D2F] dark:text-white">
               Technology moves quickly.
               <br />
               Useful innovation requires{" "}
@@ -140,7 +140,26 @@ export function AboutStory() {
           </div>
         </div>
 
-        <div className="mt-16 grid gap-4 md:grid-cols-3 lg:mt-20">
+        <div className="relative mt-12 overflow-hidden rounded-[1.8rem] border border-[#0A1D2F]/[0.08] dark:border-white/[0.08] lg:mt-16">
+          <div
+            className="min-h-[18rem] bg-cover bg-center sm:min-h-[22rem] lg:min-h-[24rem]"
+            style={{
+              backgroundImage:
+                "linear-gradient(90deg, rgba(7,17,29,.62), rgba(7,17,29,.08)), url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1800&q=82')",
+            }}
+          >
+            <div className="flex min-h-[18rem] max-w-xl flex-col justify-end p-7 text-white sm:min-h-[22rem] sm:p-9 lg:min-h-[24rem] lg:p-10">
+              <span className="text-[0.56rem] font-semibold uppercase tracking-[0.25em] text-[#67E8F9]">
+                Where ideas become systems
+              </span>
+              <p className="mt-4 text-[clamp(1.55rem,2.6vw,2.5rem)] font-semibold leading-[1.06] tracking-[-0.035em]">
+                We work where emerging capability meets a problem worth solving.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-10 grid gap-4 md:grid-cols-3 lg:mt-12">
           {signals.map((signal) => {
             const Icon = signal.icon;
 

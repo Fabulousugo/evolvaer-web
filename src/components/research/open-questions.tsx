@@ -119,7 +119,7 @@ export function OpenQuestions() {
   return (
     <section
       id="open-questions"
-      className="relative overflow-hidden py-24 sm:py-28 lg:py-36"
+      className="relative overflow-hidden py-20 sm:py-24 lg:py-28"
     >
       {/* =====================================================
           ATMOSPHERE
@@ -172,7 +172,7 @@ export function OpenQuestions() {
               </p>
             </div>
 
-            <h2 className="mt-6 max-w-[800px] text-[clamp(2.8rem,4.8vw,5.2rem)] font-semibold leading-[0.96] tracking-[-0.052em] text-[#0A1D2F] dark:text-white">
+            <h2 className="mt-6 max-w-[800px] text-[clamp(2.35rem,4vw,4.2rem)] font-semibold leading-[0.96] tracking-[-0.052em] text-[#0A1D2F] dark:text-white">
               What we don&apos;t know
               <br />
 

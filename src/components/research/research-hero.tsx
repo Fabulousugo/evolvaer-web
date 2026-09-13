@@ -88,7 +88,7 @@ export function ResearchHero() {
             MAIN HERO
         ===================================================== */}
 
-        <div className="grid gap-12 py-14 sm:py-16 lg:min-h-[39rem] lg:grid-cols-[0.88fr_1.12fr] lg:items-center lg:py-20">
+        <div className="grid gap-12 py-14 sm:py-16 lg:min-h-[17rem] lg:grid-cols-[0.88fr_1.12fr] lg:items-center lg:py-20">
           {/* LEFT — MESSAGE */}
 
           <div className="relative z-20 max-w-[760px]">
@@ -108,7 +108,7 @@ export function ResearchHero() {
               </div>
             </div>
 
-            <h1 className="mt-7 max-w-[760px] text-[3.2rem] font-semibold leading-[0.96] tracking-[-0.052em] text-[#0A1D2F] sm:text-[4rem] md:text-[4.6rem] lg:text-[4.8rem] xl:text-[5.35rem] dark:text-white">
+            <h1 className="mt-7 max-w-[760px] text-[3.2rem] font-semibold leading-[0.96] tracking-[-0.052em] text-[#0A1D2F] sm:text-[4rem] md:text-[4.6rem] lg:text-[4.55rem] xl:text-[4.9rem] dark:text-white">
               Questions worth
               <br />
               <span className="bg-gradient-to-r from-[#2563EB] via-[#22D3EE] to-[#10B981] bg-clip-text text-transparent dark:from-[#60A5FA] dark:via-[#67E8F9] dark:to-[#34D399]">
@@ -157,7 +157,7 @@ export function ResearchHero() {
 
           <div
             aria-hidden="true"
-            className="relative hidden min-h-[31rem] lg:block"
+            className="relative hidden min-h-[17rem] lg:block"
           >
             <div className="absolute right-[5%] top-[8%]">
               <div className="flex items-center gap-3">

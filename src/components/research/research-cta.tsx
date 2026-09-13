@@ -51,7 +51,7 @@ export function ResearchCta() {
   return (
     <section
       id="research-cta"
-      className="relative overflow-hidden py-24 sm:py-28 lg:py-36"
+      className="relative overflow-hidden py-20 sm:py-24 lg:py-28"
     >
       {/* =====================================================
           DARK RESOLUTION FIELD
@@ -138,7 +138,7 @@ export function ResearchCta() {
 
             {/* HEADLINE */}
 
-            <h2 className="mx-auto mt-8 max-w-[900px] text-[clamp(3rem,6vw,6.3rem)] font-semibold leading-[0.94] tracking-[-0.055em] text-white">
+            <h2 className="mx-auto mt-8 max-w-[900px] text-[clamp(2.8rem,4.8vw,5.2rem)] font-semibold leading-[0.94] tracking-[-0.055em] text-white">
               Keep asking
               <br />
 

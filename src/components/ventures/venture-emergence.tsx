@@ -83,7 +83,7 @@ export function VentureEmergence() {
   return (
     <section
       id="how-ventures-emerge"
-      className="relative overflow-hidden py-24 sm:py-28 lg:py-36"
+      className="relative overflow-hidden py-20 sm:py-24 lg:py-28"
     >
       {/* =====================================================
           ATMOSPHERE
@@ -135,7 +135,7 @@ export function VentureEmergence() {
               </p>
             </div>
 
-            <h2 className="mt-6 max-w-[720px] text-[clamp(2.9rem,4.8vw,5.4rem)] font-semibold leading-[0.96] tracking-[-0.052em] text-[#0A1D2F] dark:text-white">
+            <h2 className="mt-6 max-w-[720px] text-[clamp(2.4rem,4vw,4.3rem)] font-semibold leading-[0.96] tracking-[-0.052em] text-[#0A1D2F] dark:text-white">
               Ideas don&apos;t become
               <br />
               ventures{" "}
@@ -237,7 +237,7 @@ export function VentureEmergence() {
 
                     {/* content */}
 
-                    <div className="relative min-h-[23rem] overflow-hidden rounded-[1.6rem] border border-[#0A1D2F]/[0.08] bg-white/[0.72] p-7 transition-[transform,border-color,background-color] duration-300 group-hover:-translate-y-0.5 group-hover:border-[#0A1D2F]/[0.11] group-hover:bg-white/[0.88] dark:border-white/[0.08] dark:bg-white/[0.028] dark:group-hover:border-white/[0.12] dark:group-hover:bg-white/[0.045]">
+                    <div className="relative min-h-[20rem] overflow-hidden rounded-[1.6rem] border border-[#0A1D2F]/[0.08] bg-white/[0.72] p-7 transition-[transform,border-color,background-color] duration-300 group-hover:-translate-y-0.5 group-hover:border-[#0A1D2F]/[0.11] group-hover:bg-white/[0.88] dark:border-white/[0.08] dark:bg-white/[0.028] dark:group-hover:border-white/[0.12] dark:group-hover:bg-white/[0.045]">
                       <div
                         aria-hidden="true"
                         className="pointer-events-none absolute right-0 top-0 h-32 w-32 opacity-25 transition-opacity duration-300 group-hover:opacity-65"

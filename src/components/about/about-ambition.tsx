@@ -3,7 +3,7 @@ import { ArrowUpRight } from "lucide-react";
 
 export function AboutAmbition() {
   return (
-    <section className="relative min-h-[85svh] overflow-hidden py-24 sm:py-28 lg:flex lg:items-center lg:py-40">
+    <section className="relative min-h-[85svh] overflow-hidden py-24 sm:py-28 lg:flex lg:items-center lg:py-28">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
@@ -46,7 +46,7 @@ export function AboutAmbition() {
             <span className="h-px w-10 bg-[#22D3EE]" />
           </div>
 
-          <h2 className="mt-10 text-center text-[clamp(3.1rem,6.2vw,7.2rem)] font-semibold leading-[0.94] tracking-[-0.06em] text-[#0A1D2F] dark:text-white">
+          <h2 className="mt-10 text-center text-[clamp(2.8rem,4.8vw,5.2rem)] font-semibold leading-[0.94] tracking-[-0.06em] text-[#0A1D2F] dark:text-white">
             To build an enduring
             <br />
             technology company

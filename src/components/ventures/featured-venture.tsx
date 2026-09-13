@@ -79,7 +79,7 @@ export function FeaturedVenture() {
   return (
     <section
       id="featured-venture"
-      className="relative overflow-hidden py-24 sm:py-28 lg:py-36"
+      className="relative overflow-hidden py-20 sm:py-24 lg:py-28"
     >
       {/* =====================================================
           ATMOSPHERE
@@ -125,7 +125,7 @@ export function FeaturedVenture() {
               </div>
             </div>
 
-            <h2 className="mt-8 text-[clamp(3.6rem,6.6vw,7.4rem)] font-semibold leading-[0.88] tracking-[-0.065em] text-[#0A1D2F] dark:text-white">
+            <h2 className="mt-8 text-[clamp(3rem,5vw,5.2rem)] font-semibold leading-[0.88] tracking-[-0.065em] text-[#0A1D2F] dark:text-white">
               Adaptcues
             </h2>
 
@@ -159,7 +159,7 @@ export function FeaturedVenture() {
 
           <div
             aria-hidden="true"
-            className="relative hidden min-h-[500px] lg:block"
+            className="relative hidden min-h-[420px] lg:block"
           >
             <div className="absolute right-[3%] top-[6%]">
               <div className="flex items-center gap-3">
@@ -239,7 +239,7 @@ export function FeaturedVenture() {
                       key={
                         item.label
                       }
-                      className="group relative min-h-[23rem] overflow-hidden bg-white/[0.72] p-7 transition-colors duration-300 hover:bg-white/[0.9] dark:bg-[#0D1117]/[0.76] dark:hover:bg-[#111820]"
+                      className="group relative min-h-[20rem] overflow-hidden bg-white/[0.72] p-7 transition-colors duration-300 hover:bg-white/[0.9] dark:bg-[#0D1117]/[0.76] dark:hover:bg-[#111820]"
                     >
                       <div
                         aria-hidden="true"

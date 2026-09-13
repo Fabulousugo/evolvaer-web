@@ -46,7 +46,7 @@ export function VenturePortfolio() {
   return (
     <section
       id="portfolio"
-      className="relative overflow-hidden py-24 sm:py-28 lg:py-32"
+      className="relative overflow-hidden py-20 sm:py-24 lg:py-28"
     >
       {/* =====================================================
           ATMOSPHERE
@@ -86,7 +86,7 @@ export function VenturePortfolio() {
               </p>
             </div>
 
-            <h2 className="mt-6 max-w-[700px] text-[clamp(2.9rem,4.8vw,5.4rem)] font-semibold leading-[0.96] tracking-[-0.052em] text-[#0A1D2F] dark:text-white">
+            <h2 className="mt-6 max-w-[700px] text-[clamp(2.4rem,4vw,4.3rem)] font-semibold leading-[0.96] tracking-[-0.052em] text-[#0A1D2F] dark:text-white">
               Where selected ideas
               <br />
               become{" "}
@@ -115,7 +115,7 @@ export function VenturePortfolio() {
               ACTIVE VENTURE — ADAPTCUES
           ================================================= */}
 
-          <article className="group relative min-h-[34rem] overflow-hidden rounded-[2rem] border border-[#0A1D2F]/[0.08] bg-white/[0.78] p-7 shadow-[0_24px_70px_rgba(10,29,47,.045)] transition-[transform,border-color,box-shadow] duration-500 hover:-translate-y-0.5 hover:border-[#22D3EE]/20 hover:shadow-[0_28px_75px_rgba(10,29,47,.06)] dark:border-white/[0.08] dark:bg-[#10161D]/[0.78] dark:shadow-none dark:hover:border-[#22D3EE]/20 sm:p-9 lg:p-11">
+          <article className="group relative min-h-[27rem] overflow-hidden rounded-[2rem] border border-[#0A1D2F]/[0.08] bg-white/[0.78] p-7 shadow-[0_24px_70px_rgba(10,29,47,.045)] transition-[transform,border-color,box-shadow] duration-500 hover:-translate-y-0.5 hover:border-[#22D3EE]/20 hover:shadow-[0_28px_75px_rgba(10,29,47,.06)] dark:border-white/[0.08] dark:bg-[#10161D]/[0.78] dark:shadow-none dark:hover:border-[#22D3EE]/20 sm:p-9 lg:p-11">
             {/* static atmosphere */}
 
             <div

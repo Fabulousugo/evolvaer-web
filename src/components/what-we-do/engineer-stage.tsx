@@ -58,7 +58,7 @@ export function EngineerStage() {
   return (
     <section
       id="engineer"
-      className="relative overflow-hidden py-24 sm:py-28 lg:py-32"
+      className="relative overflow-hidden py-20 sm:py-24 lg:py-28"
     >
       {/* =====================================================
           ATMOSPHERE
@@ -165,7 +165,7 @@ export function EngineerStage() {
                 return (
                   <article
                     key={area.title}
-                    className="group relative min-h-[22rem] overflow-hidden bg-white/[0.72] p-7 dark:bg-[#0D1117]/[0.74] sm:p-9"
+                    className="group relative min-h-[17rem] overflow-hidden bg-white/[0.72] p-7 dark:bg-[#0D1117]/[0.74] sm:p-9"
                   >
                     <div
                       aria-hidden="true"

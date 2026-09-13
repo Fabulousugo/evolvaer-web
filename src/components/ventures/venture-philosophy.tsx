@@ -61,7 +61,7 @@ export function VenturePhilosophy() {
   return (
     <section
       id="venture-philosophy"
-      className="relative overflow-hidden py-24 sm:py-28 lg:py-32"
+      className="relative overflow-hidden py-20 sm:py-24 lg:py-28"
     >
       {/* =====================================================
           ATMOSPHERE
@@ -93,7 +93,7 @@ export function VenturePhilosophy() {
               Venture philosophy
             </p>
 
-            <h2 className="mt-6 max-w-[700px] text-[clamp(2.9rem,4.9vw,5.5rem)] font-semibold leading-[0.96] tracking-[-0.052em] text-[#0A1D2F] dark:text-white">
+            <h2 className="mt-6 max-w-[700px] text-[clamp(2.4rem,4vw,4.3rem)] font-semibold leading-[0.96] tracking-[-0.052em] text-[#0A1D2F] dark:text-white">
               Not every idea
               <br />
               should become a{" "}
@@ -131,7 +131,7 @@ export function VenturePhilosophy() {
             return (
               <article
                 key={item.label}
-                className="group relative min-h-[22rem] overflow-hidden bg-white/[0.78] p-7 transition-colors duration-300 hover:bg-white/[0.92] dark:bg-[#0D1117]/[0.8] dark:hover:bg-[#111820] sm:p-9"
+                className="group relative min-h-[17rem] overflow-hidden bg-white/[0.78] p-7 transition-colors duration-300 hover:bg-white/[0.92] dark:bg-[#0D1117]/[0.8] dark:hover:bg-[#111820] sm:p-9"
               >
                 <div
                   aria-hidden="true"

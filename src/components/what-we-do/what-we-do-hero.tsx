@@ -153,7 +153,7 @@ export function WhatWeDoHero() {
               RIGHT — SPACE RESERVED FOR 3D
           ================================================= */}
 
-          <div className="relative hidden min-h-[28rem] lg:block">
+          <div className="relative hidden min-h-[24rem] lg:block">
             <div className="absolute right-0 top-1/2 w-[78%] -translate-y-1/2">
               <div className="relative rounded-[2rem] border border-[#0A1D2F]/[0.07] bg-white/[0.12] p-5 dark:border-white/[0.07] dark:bg-white/[0.025]">
                 <div className="flex items-center justify-between border-b border-[#0A1D2F]/[0.06] pb-4 dark:border-white/[0.07]">

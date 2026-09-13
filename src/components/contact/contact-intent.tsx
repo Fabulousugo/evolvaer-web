@@ -1,5 +1,4 @@
 import {
-  ArrowDown,
   BriefcaseBusiness,
   CircleDot,
   FlaskConical,
@@ -10,118 +9,38 @@ import {
 
 const enquiryTypes = [
   {
-    number: "01",
-    title: "Technology opportunity",
+    title: "Technology",
     description:
-      "You are exploring an emerging technology, new capability or technical opportunity and want to investigate where it could create value.",
+      "Emerging technologies, technical opportunities and new capabilities.",
     icon: Lightbulb,
     accent: "#2563EB",
   },
   {
-    number: "02",
-    title: "Product or venture",
+    title: "Product & venture",
     description:
-      "You have a product idea, validated problem or venture opportunity that may benefit from research, engineering and product development.",
+      "Product ideas, validated problems and venture opportunities.",
     icon: BriefcaseBusiness,
     accent: "#22D3EE",
   },
   {
-    number: "03",
-    title: "Research collaboration",
+    title: "Research",
     description:
-      "You are working on a technical, academic or applied research question that overlaps with Evolvaer’s areas of exploration.",
+      "Academic, applied or technical research collaborations.",
     icon: FlaskConical,
     accent: "#A855F7",
   },
   {
-    number: "04",
-    title: "Partnership",
+    title: "Partnerships",
     description:
-      "You represent an organisation interested in collaborating around technology, innovation, research or new venture creation.",
+      "Organisations exploring innovation, technology or venture collaboration.",
     icon: Handshake,
     accent: "#10B981",
   },
   {
-    number: "05",
-    title: "Careers & collaboration",
+    title: "Careers & expertise",
     description:
-      "You are interested in contributing to Evolvaer through future roles, research, specialist expertise or collaboration.",
+      "Roles, specialist expertise and ways to contribute to Evolvaer.",
     icon: Sparkles,
-    accent: "#3B82F6",
-  },
-] as const;
-
-const intentSignals = [
-  {
-    label: "The problem",
-    accent: "#2563EB",
-  },
-  {
-    label: "Who it affects",
-    accent: "#22D3EE",
-  },
-  {
-    label: "What you have tried",
-    accent: "#A855F7",
-  },
-  {
-    label: "What could be possible",
-    accent: "#10B981",
-  },
-] as const;
-
-const mapPoints = [
-  {
-    className: "left-[6%] top-[10%]",
-    label: "Technology",
-    accent: "#2563EB",
-  },
-  {
-    className: "left-[1%] top-[44%]",
-    label: "Product",
-    accent: "#22D3EE",
-  },
-  {
-    className: "bottom-[7%] left-[8%]",
-    label: "Research",
-    accent: "#A855F7",
-  },
-  {
-    className: "right-[3%] top-[13%]",
-    label: "Partnership",
-    accent: "#10B981",
-  },
-  {
-    className: "bottom-[12%] right-[1%]",
-    label: "Careers",
-    accent: "#3B82F6",
-  },
-] as const;
-
-const mapRoutes = [
-  {
-    className:
-      "left-[9%] top-[14%] w-[39%] rotate-[24deg]",
-    accent: "#2563EB",
-  },
-  {
-    className:
-      "left-[4%] top-[48%] w-[44%] rotate-[2deg]",
-    accent: "#22D3EE",
-  },
-  {
-    className:
-      "bottom-[14%] left-[10%] w-[39%] -rotate-[22deg]",
-    accent: "#A855F7",
-  },
-  {
-    className:
-      "right-[7%] top-[18%] w-[42%] origin-right -rotate-[22deg]",
-    accent: "#10B981",
-  },
-  {
-    className:
-      "bottom-[20%] right-[4%] w-[44%] origin-right rotate-[18deg]",
     accent: "#3B82F6",
   },
 ] as const;
@@ -130,12 +49,24 @@ export function ContactIntent() {
   return (
     <section
       id="contact-intent"
-      className="relative overflow-x-clip border-t border-[#0A1D2F]/[0.06] bg-white/[0.62] py-24 dark:border-white/[0.06] dark:bg-[#0D1117]/[0.62] sm:py-28 lg:py-32"
-    >
-      {/* =====================================================
-          ATMOSPHERE
-      ===================================================== */}
+      className="
+        relative
+        overflow-hidden
 
+        border-t
+        border-[#0A1D2F]/[0.07]
+
+        bg-white/[0.52]
+
+        py-12
+
+        dark:border-white/[0.07]
+        dark:bg-[#0D1117]/[0.52]
+
+        sm:py-14
+        lg:py-16
+      "
+    >
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
@@ -144,357 +75,208 @@ export function ContactIntent() {
           className="absolute inset-0"
           style={{
             background:
-              "radial-gradient(circle at 3% 30%, rgba(37,99,235,.045), transparent 28%), radial-gradient(circle at 94% 82%, rgba(168,85,247,.045), transparent 28%)",
-          }}
-        />
-
-        <div
-          className="absolute inset-0 opacity-[0.035] dark:opacity-[0.024]"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(37,99,235,.18) 1px, transparent 1px), linear-gradient(90deg, rgba(37,99,235,.18) 1px, transparent 1px)",
-            backgroundSize: "72px 72px",
-            maskImage:
-              "linear-gradient(to bottom, transparent, black 14%, black 86%, transparent)",
-            WebkitMaskImage:
-              "linear-gradient(to bottom, transparent, black 14%, black 86%, transparent)",
+              "radial-gradient(circle at 8% 30%, rgba(37,99,235,.035), transparent 28%), radial-gradient(circle at 92% 80%, rgba(168,85,247,.03), transparent 28%)",
           }}
         />
       </div>
 
       <div className="evolvaer-container relative z-10">
-        {/* =====================================================
-            INTRODUCTION
-        ===================================================== */}
+        <div
+          className="
+            grid
+            gap-5
 
-        <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
+            lg:grid-cols-[0.9fr_1.1fr]
+            lg:items-end
+            lg:gap-10
+          "
+        >
           <div>
-            <div className="flex items-center gap-4">
-              <span className="font-mono text-[0.5rem] text-[#2563EB] dark:text-[#60A5FA]">
+            <div className="flex items-center gap-3">
+              <span className="font-mono text-[0.46rem] text-[#2563EB] dark:text-[#60A5FA]">
                 02
               </span>
 
-              <span className="h-px w-8 bg-[#2563EB]/35" />
+              <span className="h-px w-7 bg-[#2563EB]/35" />
 
-              <div className="flex items-center gap-2.5">
-                <CircleDot className="h-3.5 w-3.5 text-[#22D3EE]" />
+              <div className="flex items-center gap-2">
+                <CircleDot className="h-3 w-3 text-[#22D3EE]" />
 
-                <p className="text-[0.6rem] font-semibold uppercase tracking-[0.3em] text-[#2563EB] dark:text-[#60A5FA]">
-                  What to contact us about
+                <p
+                  className="
+                    text-[0.54rem]
+                    font-semibold
+                    uppercase
+                    tracking-[0.23em]
+
+                    text-[#2563EB]
+
+                    dark:text-[#60A5FA]
+                  "
+                >
+                  Start anywhere
                 </p>
               </div>
             </div>
 
-            <h2 className="mt-6 max-w-[660px] text-[2.55rem] font-semibold leading-[1.02] tracking-[-0.045em] text-[#0A1D2F] dark:text-white sm:text-[3.2rem] lg:text-[3.8rem]">
-              Different signals.
-              <br />
+            <h2
+              className="
+                mt-4
+                max-w-[520px]
 
+                text-[clamp(2rem,3vw,2.8rem)]
+                font-semibold
+                leading-[1.03]
+                tracking-[-0.04em]
+
+                text-[#0A1D2F]
+
+                dark:text-white
+              "
+            >
+              What can we{" "}
               <span className="text-[#22D3EE]">
-                One place to begin.
+                talk about?
               </span>
             </h2>
           </div>
 
-          <div className="lg:pt-10">
-            <p className="max-w-[700px] text-lg leading-8 text-[#0A1D2F]/58 dark:text-white/54">
-              You do not need to force your enquiry into a
-              narrow category. These are simply useful
-              starting points for understanding what you
-              want to explore.
-            </p>
+          <p
+            className="
+              max-w-[590px]
 
-            <p className="mt-5 max-w-[650px] text-sm leading-7 text-[#0A1D2F]/40 dark:text-white/36">
-              Start with the route that feels closest. The
-              conversation can move from there.
-            </p>
-          </div>
+              text-[0.88rem]
+              leading-6
+
+              text-[#0A1D2F]/70
+
+              dark:text-white/68
+
+              sm:text-[0.93rem]
+            "
+          >
+            You do not need a finished brief. Choose the area closest
+            to what you&apos;re exploring and tell us what you&apos;re
+            trying to understand, build or change.
+          </p>
         </div>
 
-        {/* =====================================================
-            ENQUIRY TYPES
-        ===================================================== */}
+        <div
+          className="
+            mt-8
+            grid
+            gap-3
 
-        <div className="mt-16 border-y border-[#0A1D2F]/[0.08] dark:border-white/[0.08]">
+            sm:grid-cols-2
+            lg:grid-cols-5
+          "
+        >
           {enquiryTypes.map((item) => {
             const Icon = item.icon;
 
             return (
               <article
                 key={item.title}
-                className="group relative grid gap-6 border-b border-[#0A1D2F]/[0.07] bg-white/[0.46] px-5 py-8 transition-colors duration-300 last:border-b-0 hover:bg-white/[0.72] dark:border-white/[0.07] dark:bg-[#0D1117]/[0.52] dark:hover:bg-white/[0.045] sm:px-7 lg:grid-cols-[0.1fr_0.18fr_0.72fr_1.3fr] lg:items-center lg:px-8 lg:py-9"
-              >
-                <span
-                  className="font-mono text-[0.46rem]"
-                  style={{
-                    color: item.accent,
-                  }}
-                >
-                  {item.number}
-                </span>
+                className="
+                  group
+                  relative
 
+                  min-h-[8.75rem]
+
+                  overflow-hidden
+                  rounded-[1rem]
+
+                  border
+                  border-[#0A1D2F]/[0.08]
+
+                  bg-white/[0.72]
+
+                  p-4
+
+                  transition-[transform,border-color,background-color]
+                  duration-300
+
+                  hover:-translate-y-1
+                  hover:bg-white
+
+                  dark:border-white/[0.08]
+                  dark:bg-white/[0.035]
+                  dark:hover:bg-white/[0.055]
+                "
+              >
                 <div
-                  className="flex h-11 w-11 items-center justify-center rounded-full border transition-transform duration-300 group-hover:scale-105"
+                  className="
+                    flex
+                    h-8
+                    w-8
+                    items-center
+                    justify-center
+
+                    rounded-full
+                    border
+                  "
                   style={{
-                    borderColor: `${item.accent}28`,
-                    backgroundColor: `${item.accent}08`,
+                    borderColor: `${item.accent}32`,
+                    backgroundColor: `${item.accent}0D`,
                   }}
                 >
                   <Icon
-                    className="h-4 w-4"
+                    className="h-3.5 w-3.5"
                     style={{
                       color: item.accent,
                     }}
                   />
                 </div>
 
-                <h3 className="text-[1.45rem] font-semibold tracking-[-0.03em] text-[#0A1D2F] dark:text-white">
+                <h3
+                  className="
+                    mt-4
+
+                    text-[0.95rem]
+                    font-semibold
+                    tracking-[-0.02em]
+
+                    text-[#0A1D2F]
+
+                    dark:text-white
+                  "
+                >
                   {item.title}
                 </h3>
 
-                <div className="flex items-start gap-5">
-                  <span
-                    aria-hidden="true"
-                    className="mt-2 hidden h-px w-8 shrink-0 lg:block"
-                    style={{
-                      background: `linear-gradient(90deg, ${item.accent}55, transparent)`,
-                    }}
-                  />
+                <p
+                  className="
+                    mt-1.5
 
-                  <p className="max-w-[680px] text-sm leading-7 text-[#0A1D2F]/42 dark:text-white/37">
-                    {item.description}
-                  </p>
-                </div>
+                    text-[0.74rem]
+                    leading-[1.45]
+
+                    text-[#0A1D2F]/68
+
+                    dark:text-white/64
+                  "
+                >
+                  {item.description}
+                </p>
 
                 <span
                   aria-hidden="true"
-                  className="absolute inset-y-0 left-0 w-px origin-top scale-y-0 transition-transform duration-500 group-hover:scale-y-100"
+                  className="
+                    absolute
+                    inset-x-4
+                    bottom-0
+
+                    h-px
+                  "
                   style={{
-                    backgroundColor: item.accent,
+                    background: `linear-gradient(90deg, ${item.accent}65, transparent)`,
                   }}
                 />
               </article>
             );
           })}
         </div>
-
-        {/* =====================================================
-            ROUTING / BEFORE THE BRIEF
-        ===================================================== */}
-
-        <div className="mt-16 grid gap-px overflow-hidden border-y border-[#0A1D2F]/[0.075] bg-[#0A1D2F]/[0.05] dark:border-white/[0.075] dark:bg-white/[0.05] lg:grid-cols-[1.08fr_0.92fr]">
-          <div className="relative min-h-[28rem] overflow-hidden bg-white/[0.54] p-7 dark:bg-[#0D1117]/[0.56] sm:p-9">
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-0"
-              style={{
-                background:
-                  "radial-gradient(circle at 50% 50%, rgba(34,211,238,.035), transparent 38%)",
-              }}
-            />
-
-            <div className="relative z-10">
-              <div className="flex items-center justify-between gap-5">
-                <div className="flex items-center gap-3">
-                  <Sparkles className="h-4 w-4 text-[#22D3EE]" />
-
-                  <p className="text-[0.52rem] font-semibold uppercase tracking-[0.2em] text-[#0A1D2F]/36 dark:text-white/31">
-                    Signal routing
-                  </p>
-                </div>
-
-                <span className="font-mono text-[0.42rem] uppercase tracking-[0.13em] text-[#22D3EE]">
-                  Multiple entry points
-                </span>
-              </div>
-
-              <div className="mt-8">
-                <IntentMap />
-              </div>
-            </div>
-          </div>
-
-          <div className="flex flex-col justify-between bg-white/[0.68] p-7 dark:bg-[#0D1117]/[0.68] sm:p-9">
-            <div>
-              <p className="text-[0.5rem] font-semibold uppercase tracking-[0.2em] text-[#A855F7]">
-                Before the brief
-              </p>
-
-              <p className="mt-7 max-w-[500px] text-[1.55rem] font-medium leading-[1.4] tracking-[-0.035em] text-[#0A1D2F]/69 dark:text-white/64 sm:text-[1.85rem]">
-                Start with the{" "}
-                <span className="text-[#A855F7]">
-                  problem worth understanding.
-                </span>
-              </p>
-
-              <p className="mt-5 max-w-[470px] text-sm leading-7 text-[#0A1D2F]/40 dark:text-white/36">
-                A useful first message does not need to be a
-                finished brief. The problem, the context and
-                what you think may be possible are enough to
-                begin.
-              </p>
-            </div>
-
-            <div className="mt-10 space-y-4 border-t border-[#0A1D2F]/[0.07] pt-6 dark:border-white/[0.07]">
-              {intentSignals.map((signal) => (
-                <IntentSignal
-                  key={signal.label}
-                  {...signal}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* =====================================================
-            HANDOFF
-        ===================================================== */}
-
-        <div className="mt-16 flex items-center justify-between border-t border-[#0A1D2F]/[0.08] pt-6 dark:border-white/[0.08]">
-          <span className="font-mono text-[0.43rem] uppercase tracking-[0.15em] text-[#0A1D2F]/22 dark:text-white/19">
-            Contact / 02
-          </span>
-
-          <a
-            href="#contact-form"
-            className="group inline-flex items-center gap-3 text-[0.5rem] font-semibold uppercase tracking-[0.17em] text-[#0A1D2F]/35 transition-colors hover:text-[#2563EB] dark:text-white/30 dark:hover:text-[#60A5FA]"
-          >
-            Open the channel
-
-            <span className="flex h-8 w-8 items-center justify-center rounded-full border border-[#0A1D2F]/[0.08] transition-colors group-hover:border-[#2563EB]/25 dark:border-white/[0.08]">
-              <ArrowDown className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-y-0.5" />
-            </span>
-          </a>
-        </div>
       </div>
     </section>
-  );
-}
-
-/* ============================================================
-   INTENT MAP
-============================================================ */
-
-function IntentMap() {
-  return (
-    <div className="relative mx-auto h-[19rem] max-w-[42rem]">
-      {mapRoutes.map((route) => (
-        <SignalRoute
-          key={route.accent}
-          {...route}
-        />
-      ))}
-
-      {mapPoints.map((point) => (
-        <SignalPoint
-          key={point.label}
-          {...point}
-        />
-      ))}
-
-      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-        <div className="relative flex h-20 w-20 items-center justify-center">
-          <span className="absolute h-20 w-20 rounded-full border border-[#22D3EE]/[0.06]" />
-
-          <span className="absolute h-12 w-12 rounded-full border border-[#22D3EE]/10" />
-
-          <span className="h-3.5 w-3.5 rounded-full bg-[#22D3EE] shadow-[0_0_10px_rgba(34,211,238,.4)]" />
-        </div>
-
-        <p className="mt-4 -translate-x-[20%] whitespace-nowrap text-[0.44rem] font-semibold uppercase tracking-[0.13em] text-[#0A1D2F]/32 dark:text-white/28">
-          Conversation
-        </p>
-      </div>
-    </div>
-  );
-}
-
-/* ============================================================
-   SIGNAL ROUTE
-============================================================ */
-
-function SignalRoute({
-  className,
-  accent,
-}: {
-  className: string;
-  accent: string;
-}) {
-  return (
-    <span
-      aria-hidden="true"
-      className={`absolute h-px origin-left ${className}`}
-      style={{
-        background: `linear-gradient(90deg, ${accent}20, ${accent}55, ${accent}12)`,
-      }}
-    />
-  );
-}
-
-/* ============================================================
-   SIGNAL POINT
-============================================================ */
-
-function SignalPoint({
-  className,
-  label,
-  accent,
-}: {
-  className: string;
-  label: string;
-  accent: string;
-}) {
-  return (
-    <div
-      className={`absolute ${className}`}
-    >
-      <div className="flex items-center gap-3">
-        <span
-          className="h-2.5 w-2.5 rounded-full"
-          style={{
-            backgroundColor: accent,
-            boxShadow: `0 0 8px ${accent}50`,
-          }}
-        />
-
-        <span className="text-[0.43rem] font-semibold uppercase tracking-[0.12em] text-[#0A1D2F]/32 dark:text-white/28">
-          {label}
-        </span>
-      </div>
-    </div>
-  );
-}
-
-/* ============================================================
-   INTENT SIGNAL
-============================================================ */
-
-function IntentSignal({
-  label,
-  accent,
-}: {
-  label: string;
-  accent: string;
-}) {
-  return (
-    <div className="flex items-center gap-4">
-      <span
-        className="h-2 w-2 rounded-full"
-        style={{
-          backgroundColor: accent,
-          boxShadow: `0 0 6px ${accent}48`,
-        }}
-      />
-
-      <span className="text-[0.5rem] font-semibold uppercase tracking-[0.13em] text-[#0A1D2F]/35 dark:text-white/30">
-        {label}
-      </span>
-
-      <span
-        className="h-px flex-1"
-        style={{
-          background: `linear-gradient(90deg, ${accent}25, transparent)`,
-        }}
-      />
-    </div>
   );
 }

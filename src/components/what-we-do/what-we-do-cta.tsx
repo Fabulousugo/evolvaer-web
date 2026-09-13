@@ -8,7 +8,7 @@ export function WhatWeDoCta() {
   return (
     <section
       id="what-we-do-cta"
-      className="relative overflow-hidden py-24 sm:py-28 lg:py-36"
+      className="relative overflow-hidden py-20 sm:py-24 lg:py-28"
     >
       {/* =====================================================
           CINEMATIC BACKDROP
@@ -76,7 +76,7 @@ export function WhatWeDoCta() {
               What we do
             </p>
 
-            <h2 className="mt-7 text-[clamp(3.1rem,5.8vw,6.5rem)] font-semibold leading-[0.93] tracking-[-0.055em] text-white">
+            <h2 className="mt-7 text-[clamp(2.8rem,4.6vw,5rem)] font-semibold leading-[0.93] tracking-[-0.055em] text-white">
               From possibility
               <br />
               to something{" "}

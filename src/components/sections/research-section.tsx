@@ -79,26 +79,16 @@ export function ResearchSection() {
         relative
         overflow-hidden
 
-        py-24
-
-        sm:py-28
-        lg:py-36
+        py-20
+        sm:py-24
+        lg:py-28
       "
     >
-      {/* =====================================================
-          ATMOSPHERE
-      ===================================================== */}
-
+      {/* Background */}
       <div
         aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-        "
+        className="pointer-events-none absolute inset-0"
       >
-        {/* Persistent 3D remains visible */}
-
         <div
           className="
             absolute
@@ -109,8 +99,6 @@ export function ResearchSection() {
             dark:bg-[#0d1117]/[0.62]
           "
         />
-
-        {/* Violet field */}
 
         <div
           className="
@@ -123,8 +111,6 @@ export function ResearchSection() {
           "
         />
 
-        {/* Blue field */}
-
         <div
           className="
             absolute
@@ -135,8 +121,6 @@ export function ResearchSection() {
             dark:bg-[radial-gradient(circle_at_91%_86%,rgba(59,130,246,0.105),transparent_36%)]
           "
         />
-
-        {/* Teal balance */}
 
         <div
           className="
@@ -155,51 +139,32 @@ export function ResearchSection() {
             absolute
             inset-0
 
-            opacity-[0.12]
+            opacity-[0.1]
 
-            dark:opacity-[0.085]
+            dark:opacity-[0.07]
           "
         />
       </div>
 
-      {/* =====================================================
-          CONTENT
-      ===================================================== */}
-
-      <div
-        className="
-          evolvaer-container
-          relative
-          z-10
-        "
-      >
-        {/* ===================================================
-            HEADING
-        =================================================== */}
-
+      {/* Content */}
+      <div className="evolvaer-container relative z-10">
+        {/* Heading */}
         <div
           className="
             grid
-            gap-10
+            gap-8
 
             lg:grid-cols-[1.05fr_0.95fr]
             lg:items-end
           "
         >
           <div>
-            <div
-              className="
-                mb-5
-                flex
-                items-center
-                gap-4
-              "
-            >
+            <div className="mb-4 flex items-center gap-3">
               <span
                 aria-hidden="true"
                 className="
                   h-px
-                  w-10
+                  w-9
 
                   bg-gradient-to-r
                   from-violet
@@ -210,10 +175,10 @@ export function ResearchSection() {
 
               <span
                 className="
-                  text-[0.67rem]
+                  text-[0.58rem]
                   font-semibold
                   uppercase
-                  tracking-[0.32em]
+                  tracking-[0.28em]
                   text-muted
                 "
               >
@@ -223,12 +188,12 @@ export function ResearchSection() {
 
             <h2
               className="
-                max-w-4xl
+                max-w-[42rem]
 
-                text-[clamp(3.2rem,5vw,5.8rem)]
+                text-[clamp(2.4rem,4vw,4.3rem)]
                 font-bold
-                leading-[0.92]
-                tracking-[-0.055em]
+                leading-[0.96]
+                tracking-[-0.045em]
               "
             >
               Questions first.
@@ -241,28 +206,19 @@ export function ResearchSection() {
             </h2>
           </div>
 
-          <div
-            className="
-              max-w-xl
-
-              lg:justify-self-end
-            "
-          >
+          <div className="max-w-xl lg:justify-self-end">
             <p
               className="
-                text-base
-                leading-8
+                text-[0.95rem]
+                leading-7
                 text-muted
 
-                sm:text-[1.05rem]
+                sm:text-base
               "
             >
-              We investigate emerging
-              technologies through the
-              problems they could solve,
-              the value they might create
-              and the consequences of
-              putting them into the real
+              We investigate emerging technologies through the
+              problems they could solve, the value they might create
+              and the consequences of putting them into the real
               world.
             </p>
 
@@ -270,12 +226,12 @@ export function ResearchSection() {
               href="/research"
               className="
                 group
-                mt-7
+                mt-6
                 inline-flex
                 items-center
                 gap-3
 
-                text-sm
+                text-[0.82rem]
                 font-semibold
               "
             >
@@ -284,8 +240,8 @@ export function ResearchSection() {
               <span
                 className="
                   flex
-                  h-9
-                  w-9
+                  h-8
+                  w-8
                   items-center
                   justify-center
 
@@ -306,265 +262,233 @@ export function ResearchSection() {
               >
                 <ArrowUpRight
                   aria-hidden="true"
-                  className="h-4 w-4"
+                  className="h-3.5 w-3.5"
                 />
               </span>
             </Link>
           </div>
         </div>
 
-        {/* ===================================================
-            RESEARCH AREAS
-        =================================================== */}
-
+        {/* Research areas */}
         <div
           className="
-            mt-16
-
+            mt-12
             border-t
             border-navy/[0.08]
 
             dark:border-white/[0.08]
 
-            lg:mt-20
+            lg:mt-16
           "
         >
-          {researchAreas.map(
-            (item) => {
-              const Icon =
-                item.icon;
+          {researchAreas.map((item) => {
+            const Icon = item.icon;
+            const accent = accents[item.accent];
 
-              const accent =
-                accents[
-                  item.accent
-                ];
+            return (
+              <article
+                key={item.number}
+                className={`
+                  group
+                  relative
+                  grid
+                  gap-5
+                  overflow-hidden
 
-              return (
-                <article
-                  key={item.number}
+                  border-b
+                  border-navy/[0.08]
+
+                  py-7
+
+                  transition-[background-color,border-color]
+                  duration-200
+
+                  hover:bg-white/[0.24]
+
+                  dark:border-white/[0.08]
+                  dark:hover:bg-white/[0.018]
+
+                  lg:grid-cols-[0.08fr_0.22fr_0.95fr_auto]
+                  lg:items-start
+                  lg:gap-7
+                  lg:py-8
+
+                  ${accent.border}
+                `}
+              >
+                <div
+                  aria-hidden="true"
                   className={`
-                    group
-                    relative
-                    grid
-                    gap-7
-
-                    overflow-hidden
-
-                    border-b
-                    border-navy/[0.08]
-
-                    py-10
-
-                    transition-[background-color,border-color]
+                    pointer-events-none
+                    absolute
+                    inset-0
+                    opacity-35
+                    transition-opacity
                     duration-200
 
-                    hover:bg-white/[0.24]
+                    group-hover:opacity-100
 
-                    dark:border-white/[0.08]
-                    dark:hover:bg-white/[0.018]
+                    ${accent.atmosphere}
+                  `}
+                />
 
-                    lg:grid-cols-[0.1fr_0.25fr_0.9fr_auto]
-                    lg:items-start
-                    lg:gap-9
-                    lg:py-12
+                {/* Number */}
+                <span
+                  className={`
+                    relative
+                    z-10
 
-                    ${accent.border}
+                    text-[0.62rem]
+                    font-semibold
+                    tracking-[0.12em]
+
+                    ${accent.text}
                   `}
                 >
-                  {/* Static accent field */}
+                  {item.number}
+                </span>
 
+                {/* Category */}
+                <div className="relative z-10">
                   <div
-                    aria-hidden="true"
                     className={`
-                      pointer-events-none
-                      absolute
-                      inset-0
-
-                      opacity-40
-
-                      transition-opacity
-                      duration-200
-
-                      group-hover:opacity-100
-
-                      ${accent.atmosphere}
-                    `}
-                  />
-
-                  {/* Number */}
-
-                  <span
-                    className={`
-                      relative
-                      z-10
-
-                      text-sm
-                      font-semibold
-                      tracking-[0.12em]
-
-                      ${accent.text}
-                    `}
-                  >
-                    {item.number}
-                  </span>
-
-                  {/* Category */}
-
-                  <div className="relative z-10">
-                    <div
-                      className={`
-                        flex
-                        h-11
-                        w-11
-                        items-center
-                        justify-center
-
-                        rounded-2xl
-                        border
-                        border-navy/[0.08]
-
-                        transition-transform
-                        duration-200
-
-                        group-hover:-translate-y-0.5
-
-                        dark:border-white/[0.08]
-
-                        ${accent.icon}
-                      `}
-                    >
-                      <Icon
-                        aria-hidden="true"
-                        strokeWidth={1.7}
-                        className="h-4 w-4"
-                      />
-                    </div>
-
-                    <p
-                      className="
-                        mt-4
-
-                        text-[0.58rem]
-                        font-semibold
-                        uppercase
-                        tracking-[0.24em]
-                        text-muted
-                      "
-                    >
-                      {item.category}
-                    </p>
-                  </div>
-
-                  {/* Copy */}
-
-                  <div
-                    className="
-                      relative
-                      z-10
-                      max-w-3xl
-                    "
-                  >
-                    <h3
-                      className="
-                        text-[clamp(2rem,3vw,3.25rem)]
-                        font-semibold
-                        leading-[1.02]
-                        tracking-[-0.04em]
-                      "
-                    >
-                      {item.title}
-                    </h3>
-
-                    <p
-                      className="
-                        mt-4
-                        max-w-2xl
-
-                        text-sm
-                        leading-7
-                        text-muted
-                      "
-                    >
-                      {
-                        item.description
-                      }
-                    </p>
-                  </div>
-
-                  {/* Arrow */}
-
-                  <span
-                    className={`
-                      relative
-                      z-10
-
                       flex
                       h-10
                       w-10
                       items-center
                       justify-center
 
-                      rounded-full
+                      rounded-xl
                       border
                       border-navy/[0.08]
 
-                      transition-[transform,border-color,background-color]
+                      transition-transform
                       duration-200
 
-                      group-hover:translate-x-0.5
+                      group-hover:-translate-y-0.5
 
                       dark:border-white/[0.08]
 
-                      ${accent.text}
+                      ${accent.icon}
                     `}
                   >
-                    <ArrowUpRight
+                    <Icon
                       aria-hidden="true"
+                      strokeWidth={1.7}
                       className="h-4 w-4"
                     />
-                  </span>
-                </article>
-              );
-            },
-          )}
+                  </div>
+
+                  <p
+                    className="
+                      mt-3
+
+                      text-[0.54rem]
+                      font-semibold
+                      uppercase
+                      tracking-[0.22em]
+                      text-muted
+                    "
+                  >
+                    {item.category}
+                  </p>
+                </div>
+
+                {/* Copy */}
+                <div className="relative z-10 max-w-3xl">
+                  <h3
+                    className="
+                      text-[clamp(1.55rem,2.4vw,2.4rem)]
+                      font-semibold
+                      leading-[1.05]
+                      tracking-[-0.035em]
+                    "
+                  >
+                    {item.title}
+                  </h3>
+
+                  <p
+                    className="
+                      mt-3
+                      max-w-2xl
+
+                      text-[0.82rem]
+                      leading-6
+                      text-muted
+                    "
+                  >
+                    {item.description}
+                  </p>
+                </div>
+
+                {/* Arrow */}
+                <span
+                  className={`
+                    relative
+                    z-10
+
+                    flex
+                    h-9
+                    w-9
+                    items-center
+                    justify-center
+
+                    rounded-full
+                    border
+                    border-navy/[0.08]
+
+                    transition-[transform,border-color,background-color]
+                    duration-200
+
+                    group-hover:translate-x-0.5
+
+                    dark:border-white/[0.08]
+
+                    ${accent.text}
+                  `}
+                >
+                  <ArrowUpRight
+                    aria-hidden="true"
+                    className="h-3.5 w-3.5"
+                  />
+                </span>
+              </article>
+            );
+          })}
         </div>
 
-        {/* ===================================================
-            MANIFESTO
-        =================================================== */}
-
+        {/* Manifesto */}
         <div
           className="
-            mt-16
+            mt-12
             grid
-            gap-5
+            gap-4
 
             lg:grid-cols-[1.25fr_0.75fr]
           "
         >
           {/* Principle */}
-
           <article
             className="
               relative
               overflow-hidden
 
-              rounded-[2rem]
+              rounded-[1.6rem]
               border
               border-navy/[0.08]
 
               bg-white/[0.72]
 
-              p-7
+              p-6
 
-              shadow-[0_12px_36px_rgba(10,29,47,0.035)]
+              shadow-[0_10px_30px_rgba(10,29,47,0.035)]
 
               dark:border-white/[0.08]
               dark:bg-[#111821]/[0.72]
-              dark:shadow-[0_14px_40px_rgba(0,0,0,0.14)]
+              dark:shadow-[0_12px_34px_rgba(0,0,0,0.14)]
 
-              sm:p-9
-              lg:p-11
+              sm:p-8
+              lg:p-9
             "
           >
             <div
@@ -585,10 +509,10 @@ export function ResearchSection() {
                 relative
                 z-10
 
-                text-[0.62rem]
+                text-[0.56rem]
                 font-semibold
                 uppercase
-                tracking-[0.28em]
+                tracking-[0.26em]
                 text-violet
               "
             >
@@ -600,17 +524,16 @@ export function ResearchSection() {
                 relative
                 z-10
 
-                mt-9
-                max-w-5xl
+                mt-7
+                max-w-[48rem]
 
-                text-[clamp(2.3rem,3.8vw,4.4rem)]
+                text-[clamp(1.8rem,3vw,3.3rem)]
                 font-semibold
-                leading-[1.02]
-                tracking-[-0.045em]
+                leading-[1.04]
+                tracking-[-0.04em]
               "
             >
-              We are less interested
-              in what technology{" "}
+              We are less interested in what technology{" "}
 
               <span className="text-blue">
                 can
@@ -625,29 +548,27 @@ export function ResearchSection() {
           </article>
 
           {/* Research loop */}
-
           <article
             className="
               relative
               flex
-              min-h-[22rem]
+              min-h-[18rem]
               flex-col
               justify-between
-
               overflow-hidden
 
-              rounded-[2rem]
+              rounded-[1.6rem]
 
               bg-[#0a1d2f]/[0.96]
 
-              p-7
+              p-6
               text-white
 
-              shadow-[0_16px_48px_rgba(10,29,47,0.1)]
+              shadow-[0_14px_40px_rgba(10,29,47,0.1)]
 
               dark:bg-[#101523]/[0.96]
 
-              sm:p-9
+              sm:p-8
             "
           >
             <div
@@ -669,7 +590,7 @@ export function ResearchSection() {
                 absolute
                 inset-0
 
-                opacity-[0.07]
+                opacity-[0.06]
               "
             />
 
@@ -678,10 +599,10 @@ export function ResearchSection() {
                 relative
                 z-10
 
-                text-[0.6rem]
+                text-[0.54rem]
                 font-semibold
                 uppercase
-                tracking-[0.27em]
+                tracking-[0.25em]
                 text-white/35
               "
             >
@@ -691,10 +612,10 @@ export function ResearchSection() {
             <div className="relative z-10">
               <p
                 className="
-                  text-[2.4rem]
+                  text-[1.85rem]
                   font-semibold
-                  leading-[1.05]
-                  tracking-[-0.035em]
+                  leading-[1.07]
+                  tracking-[-0.03em]
                 "
               >
                 Question.
@@ -709,9 +630,9 @@ export function ResearchSection() {
               <div
                 aria-hidden="true"
                 className="
-                  mt-8
+                  mt-6
                   h-px
-                  w-16
+                  w-14
 
                   bg-gradient-to-r
                   from-violet

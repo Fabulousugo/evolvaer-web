@@ -161,7 +161,7 @@
      ---------------------------------------------------------- */
 
   --page-padding: clamp(1.25rem, 4vw, 5rem);
-  --section-spacing: clamp(6rem, 11vw, 10rem);
+  --section-spacing: clamp(4.75rem, 8vw, 7.5rem);
   --content-width: 1440px;
 
   /* ----------------------------------------------------------

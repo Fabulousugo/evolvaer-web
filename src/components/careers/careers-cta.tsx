@@ -11,7 +11,7 @@ export function CareersCta() {
   return (
     <section
       id="careers-cta"
-      className="relative overflow-hidden border-t border-white/[0.06] bg-[#0D1117]/[0.84] py-24 backdrop-blur-md sm:py-28 lg:py-32"
+      className="relative overflow-hidden border-t border-white/[0.06] bg-[#0D1117]/[0.84] py-24 backdrop-blur-md sm:py-24 lg:py-28"
     >
       {/* =====================================================
           ATMOSPHERE
@@ -131,7 +131,7 @@ export function CareersCta() {
               RIGHT — OPEN FOR FINAL 3D STATE
           =================================================== */}
 
-          <div className="relative hidden min-h-[29rem] lg:block">
+          <div className="relative hidden min-h-[24rem] lg:block">
             <FinalSignal
               className="right-[5%] top-[5%]"
               number="01"

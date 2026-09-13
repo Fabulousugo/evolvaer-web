@@ -86,7 +86,7 @@ export function ResearchPrinciples() {
   return (
     <section
       id="research-principles"
-      className="relative overflow-hidden py-24 sm:py-28 lg:py-36"
+      className="relative overflow-hidden py-20 sm:py-24 lg:py-28"
     >
       {/* =====================================================
           ATMOSPHERE
@@ -139,7 +139,7 @@ export function ResearchPrinciples() {
               </p>
             </div>
 
-            <h2 className="mt-6 max-w-[780px] text-[clamp(2.8rem,4.8vw,5.2rem)] font-semibold leading-[0.96] tracking-[-0.052em] text-[#0A1D2F] dark:text-white">
+            <h2 className="mt-6 max-w-[780px] text-[clamp(2.35rem,4vw,4.2rem)] font-semibold leading-[0.96] tracking-[-0.052em] text-[#0A1D2F] dark:text-white">
               How we investigate
               <br />
               <span className="bg-gradient-to-r from-[#2563EB] via-[#22D3EE] to-[#10B981] bg-clip-text text-transparent dark:from-[#60A5FA] dark:via-[#67E8F9] dark:to-[#34D399]">
@@ -176,7 +176,7 @@ export function ResearchPrinciples() {
               return (
                 <article
                   key={principle.number}
-                  className="group relative min-h-[30rem] overflow-hidden bg-white/[0.64] p-7 transition-colors duration-300 hover:bg-white/[0.78] dark:bg-[#0D1117]/[0.7] dark:hover:bg-[#0D1117]/[0.8] sm:p-9 lg:p-10"
+                  className="group relative min-h-[18rem] overflow-hidden bg-white/[0.64] p-7 transition-colors duration-300 hover:bg-white/[0.78] dark:bg-[#0D1117]/[0.7] dark:hover:bg-[#0D1117]/[0.8] sm:p-9 lg:p-10"
                 >
                   {/* CHEAP HOVER ACCENTS */}
 
@@ -316,7 +316,7 @@ export function ResearchPrinciples() {
 
             {/* PRINCIPLE MAP */}
 
-            <div className="relative min-h-[35rem] overflow-hidden p-7 sm:p-9 lg:p-11">
+            <div className="relative min-h-[24rem] overflow-hidden p-7 sm:p-9 lg:p-11">
               <div
                 aria-hidden="true"
                 className="pointer-events-none absolute inset-0"

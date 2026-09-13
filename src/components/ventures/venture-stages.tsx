@@ -101,7 +101,7 @@ export function VentureStages() {
   return (
     <section
       id="venture-stages"
-      className="relative overflow-hidden py-24 sm:py-28 lg:py-36"
+      className="relative overflow-hidden py-20 sm:py-24 lg:py-28"
     >
       {/* =====================================================
           ATMOSPHERE
@@ -152,7 +152,7 @@ export function VentureStages() {
               </p>
             </div>
 
-            <h2 className="mt-6 max-w-[720px] text-[clamp(2.9rem,4.8vw,5.4rem)] font-semibold leading-[0.96] tracking-[-0.052em] text-[#0A1D2F] dark:text-white">
+            <h2 className="mt-6 max-w-[720px] text-[clamp(2.4rem,4vw,4.3rem)] font-semibold leading-[0.96] tracking-[-0.052em] text-[#0A1D2F] dark:text-white">
               Different ventures need
               <br />
               different kinds of{" "}

@@ -106,7 +106,7 @@ export function VentureCapabilities() {
   return (
     <section
       id="venture-capabilities"
-      className="relative overflow-hidden py-24 sm:py-28 lg:py-36"
+      className="relative overflow-hidden py-20 sm:py-24 lg:py-28"
     >
       {/* =====================================================
           ATMOSPHERE
@@ -146,7 +146,7 @@ export function VentureCapabilities() {
               </p>
             </div>
 
-            <h2 className="mt-6 max-w-[760px] text-[clamp(2.9rem,4.8vw,5.4rem)] font-semibold leading-[0.96] tracking-[-0.052em] text-[#0A1D2F] dark:text-white">
+            <h2 className="mt-6 max-w-[760px] text-[clamp(2.4rem,4vw,4.3rem)] font-semibold leading-[0.96] tracking-[-0.052em] text-[#0A1D2F] dark:text-white">
               More than capital.
               <br />
 
@@ -180,7 +180,7 @@ export function VentureCapabilities() {
         <div className="mt-16 grid gap-5 lg:mt-24 lg:grid-cols-[0.92fr_1.08fr]">
           {/* LEFT — SYSTEM CORE */}
 
-          <div className="relative min-h-[36rem] overflow-hidden rounded-[2rem] border border-[#0A1D2F]/[0.08] bg-white/[0.52] p-7 dark:border-white/[0.08] dark:bg-white/[0.025] sm:p-9">
+          <div className="relative min-h-[24rem] overflow-hidden rounded-[2rem] border border-[#0A1D2F]/[0.08] bg-white/[0.52] p-7 dark:border-white/[0.08] dark:bg-white/[0.025] sm:p-9">
             <div
               aria-hidden="true"
               className="absolute left-1/2 top-1/2 h-[22rem] w-[22rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#22D3EE]/[0.07]"
@@ -200,7 +200,7 @@ export function VentureCapabilities() {
               }}
             />
 
-            <div className="relative flex h-full min-h-[30rem] items-center justify-center">
+            <div className="relative flex h-full min-h-[18rem] items-center justify-center">
               <CapabilityDiagram />
             </div>
 
@@ -229,7 +229,7 @@ export function VentureCapabilities() {
                     key={
                       capability.label
                     }
-                    className="group relative min-h-[21rem] overflow-hidden bg-white/[0.72] p-7 transition-colors duration-300 hover:bg-white/[0.9] dark:bg-[#0D1117]/[0.76] dark:hover:bg-[#111820] sm:p-8"
+                    className="group relative min-h-[18rem] overflow-hidden bg-white/[0.72] p-7 transition-colors duration-300 hover:bg-white/[0.9] dark:bg-[#0D1117]/[0.76] dark:hover:bg-[#111820] sm:p-8"
                   >
                     <div
                       aria-hidden="true"

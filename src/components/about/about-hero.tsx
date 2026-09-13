@@ -68,7 +68,7 @@ export function AboutHero() {
               </span>
             </div>
 
-            <h1 className="text-[clamp(3.9rem,7.8vw,8.5rem)] font-semibold leading-[0.87] tracking-[-0.065em] text-[#0A1D2F] dark:text-white">
+            <h1 className="text-[clamp(3rem,5vw,5.4rem)] font-semibold leading-[0.87] tracking-[-0.065em] text-[#0A1D2F] dark:text-white">
               Built to explore
               <br />
               <span className="inline-flex flex-wrap items-baseline gap-x-[0.18em]">

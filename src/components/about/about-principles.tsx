@@ -71,7 +71,7 @@ const accents = {
 
 export function AboutPrinciples() {
   return (
-    <section className="relative overflow-hidden py-24 sm:py-28 lg:py-36">
+    <section className="relative overflow-hidden py-20 sm:py-24 lg:py-28">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
@@ -118,7 +118,7 @@ export function AboutPrinciples() {
               </span>
             </div>
 
-            <h2 className="mt-7 text-[clamp(3rem,5vw,5.7rem)] font-semibold leading-[0.94] tracking-[-0.055em] text-[#0A1D2F] dark:text-white">
+            <h2 className="mt-7 text-[clamp(2.5rem,4vw,4.3rem)] font-semibold leading-[0.94] tracking-[-0.055em] text-[#0A1D2F] dark:text-white">
               What changes.
               <br />
 
@@ -152,7 +152,7 @@ export function AboutPrinciples() {
                 key={
                   principle.number
                 }
-                className="group relative min-h-[22rem] overflow-hidden bg-white/70 p-7 transition-colors duration-300 hover:bg-white/85 dark:bg-[#0D1117]/78 dark:hover:bg-[#111823]/90 sm:p-9"
+                className="group relative min-h-[17rem] overflow-hidden bg-white/70 p-7 transition-colors duration-300 hover:bg-white/85 dark:bg-[#0D1117]/78 dark:hover:bg-[#111823]/90 sm:p-9"
               >
                 <div
                   aria-hidden="true"

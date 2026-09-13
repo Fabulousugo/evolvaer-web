@@ -43,7 +43,7 @@ export function ResearchStage() {
   return (
     <section
       id="research"
-      className="relative min-h-[100svh] overflow-hidden py-24 sm:py-28 lg:py-32"
+      className="relative min-h-[100svh] overflow-hidden py-20 sm:py-24 lg:py-28"
     >
       {/* =====================================================
           ATMOSPHERE
@@ -149,7 +149,7 @@ export function ResearchStage() {
                 return (
                   <article
                     key={item.title}
-                    className="group relative min-h-[25rem] overflow-hidden bg-white/[0.78] p-7 dark:bg-[#0D1117]/[0.78] sm:p-8 lg:p-9"
+                    className="group relative min-h-[18rem] overflow-hidden bg-white/[0.78] p-7 dark:bg-[#0D1117]/[0.78] sm:p-8 lg:p-9"
                   >
                     <div
                       aria-hidden="true"
